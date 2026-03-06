@@ -1,0 +1,45 @@
+name: Daily Data Collection
+
+on:
+  # Run every day at 6:00 AM KST (21:00 UTC previous day)
+  schedule:
+    - cron: '0 21 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+env:
+  APP_URL: ${{ secrets.APP_URL }}
+  COLLECT_API_KEY: ${{ secrets.COLLECT_API_KEY }}
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Data Collection
+        run: |
+          echo "Starting data collection..."
+
+          response=$(curl -s -w "\n%{http_code}" -X POST "$APP_URL/api/collect" \
+            -H "Authorization: Bearer $COLLECT_API_KEY" \
+            -H "Content-Type: application/json")
+
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+
+          echo "Response: $body"
+          echo "HTTP Code: $http_code"
+
+          if [ "$http_code" -ne 200 ]; then
+            echo "Collection failed with status $http_code"
+            exit 1
+          fi
+
+          echo "Collection completed successfully!"
+
+      - name: Send Notification (Optional)
+        if: failure()
+        run: |
+          echo "Data collection failed! Check the logs."
+          # Add Slack/Discord notification here if needed

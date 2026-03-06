@@ -1,0 +1,65 @@
+// Prisma Schema for Viral Shorts Dashboard
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id            String   @id @default(cuid())
+  platform      Platform
+  videoId       String   @unique
+  title         String
+  description   String?
+  thumbnailUrl  String
+  videoUrl      String
+  authorName    String?
+  authorUrl     String?
+
+  // Statistics
+  viewCount     BigInt   @default(0)
+  likeCount     BigInt   @default(0)
+  shareCount    BigInt   @default(0)
+  commentCount  BigInt   @default(0)
+
+  // Viral tracking
+  viewCountHistory Json   @default("[]") // [{date, count}, ...]
+  viralScore       Float  @default(0)    // Growth rate score
+
+  // Classification
+  category      Category?
+  targetAge     String?   // "10s", "20s", "30s", etc.
+  tags          String[]
+
+  // Metadata
+  publishedAt   DateTime?
+  collectedAt   DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([platform])
+  @@index([category])
+  @@index([viralScore(sort: Desc)])
+  @@index([collectedAt(sort: Desc)])
+}
+
+enum Platform {
+  YOUTUBE
+  TIKTOK
+  INSTAGRAM
+}
+
+enum Category {
+  BEAUTY
+  FOOD
+  FASHION
+  ELECTRONICS
+  LIFESTYLE
+  HEALTH
+  KIDS
+  OTHER
+}
