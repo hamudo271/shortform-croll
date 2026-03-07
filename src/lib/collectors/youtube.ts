@@ -91,13 +91,13 @@ export async function searchYouTubeShorts(
       query = productQueries[Math.floor(Math.random() * productQueries.length)];
   }
 
-  // Search for videos
+  // Search for videos - 관련성 우선 (상품 검색에 최적화)
   const searchUrl = new URL(`${YOUTUBE_API_BASE}/search`);
   searchUrl.searchParams.set('part', 'snippet');
   searchUrl.searchParams.set('type', 'video');
   searchUrl.searchParams.set('q', query);
   searchUrl.searchParams.set('maxResults', String(maxResults));
-  searchUrl.searchParams.set('order', 'viewCount');
+  searchUrl.searchParams.set('order', 'relevance'); // 키워드 관련성 우선
   searchUrl.searchParams.set('regionCode', regionCode);
   searchUrl.searchParams.set('videoDuration', 'short'); // Under 4 minutes
   searchUrl.searchParams.set('publishedAfter', getRecentDate(7)); // Last 7 days
@@ -141,13 +141,17 @@ export async function searchYouTubeShorts(
   const videos: YouTubeVideo[] = [];
   const liveKeywords = ['[LIVE]', '라이브', '🔴'];
 
+  const MIN_VIEWS = 10000; // 최소 조회수 1만 이상만 수집
+
   for (const item of searchData.items) {
     const stats = statsMap.get(item.id.videoId);
     if (stats) {
+      const viewCount = parseInt(stats.statistics.viewCount || '0', 10);
       const title = item.snippet.title.toUpperCase();
       const isLive = liveKeywords.some(keyword => title.includes(keyword.toUpperCase()));
-      
-      if (!isLive) {
+
+      // 최소 조회수 필터 + 라이브 제외
+      if (!isLive && viewCount >= MIN_VIEWS) {
         videos.push({
           id: item.id.videoId,
           title: item.snippet.title,
@@ -160,7 +164,7 @@ export async function searchYouTubeShorts(
           channelTitle: item.snippet.channelTitle,
           channelId: item.snippet.channelId,
           publishedAt: item.snippet.publishedAt,
-          viewCount: parseInt(stats.statistics.viewCount || '0', 10),
+          viewCount,
           likeCount: parseInt(stats.statistics.likeCount || '0', 10),
           commentCount: parseInt(stats.statistics.commentCount || '0', 10),
           country: regionCode,
