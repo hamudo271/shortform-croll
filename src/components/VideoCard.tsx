@@ -1,5 +1,7 @@
 'use client';
 
+import { memo } from 'react';
+import Image from 'next/image';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
 
@@ -24,7 +26,7 @@ const platformColors: Record<Platform, { bg: string; text: string; icon: string;
   INSTAGRAM: { bg: 'bg-fuchsia-500/10', text: 'text-fuchsia-400', icon: '📷', border: 'border-fuchsia-500/20', badgeText: 'text-fuchsia-300' },
 };
 
-export default function VideoCard({
+const VideoCard = memo(function VideoCard({
   platform,
   title,
   thumbnailUrl,
@@ -47,14 +49,16 @@ export default function VideoCard({
       {/* Thumbnail */}
       <div className="relative aspect-[9/16] bg-zinc-900 border-b border-zinc-800/80 overflow-hidden">
         {thumbnailUrl ? (
-          <img
+          <Image
             src={thumbnailUrl}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            alt={title || 'Video thumbnail'}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-zinc-600 bg-zinc-800/50">
-            No Image
+            이미지 없음
           </div>
         )}
 
@@ -99,7 +103,7 @@ export default function VideoCard({
           <div className="relative z-10">
             {/* Title */}
             <h3 className="font-semibold text-sm text-zinc-100 line-clamp-2 leading-snug drop-shadow-md mb-2" title={title}>
-              {title || 'Untitled'}
+              {title || '무제'}
             </h3>
 
             {/* Author */}
@@ -143,14 +147,16 @@ export default function VideoCard({
           )}
           {targetAge && (
             <span className="px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-md text-[10px] font-medium uppercase tracking-wider">
-              {targetAge === '10s' ? '10s' :
-               targetAge === '20s' ? '20s' :
-               targetAge === '30s' ? '30s' :
-               targetAge === '40s' ? '40s' : '50s+'}
+              {targetAge === '10s' ? '10대' :
+               targetAge === '20s' ? '20대' :
+               targetAge === '30s' ? '30대' :
+               targetAge === '40s' ? '40대' : '50대+'}
             </span>
           )}
         </div>
       </div>
     </div>
   );
-}
+});
+
+export default VideoCard;

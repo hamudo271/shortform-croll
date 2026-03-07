@@ -25,12 +25,21 @@ export async function POST(request: NextRequest) {
     instagram: { collected: 0, errors: 0 },
   };
 
+  let keyword: string | undefined;
+  try {
+    const body = await request.json();
+    if (body.keyword) keyword = body.keyword;
+  } catch (e) {
+    // Ignore JSON parse errors if body is empty
+  }
+
   try {
     // 1. Collect YouTube Shorts
     if (process.env.YOUTUBE_API_KEY) {
       try {
         const youtubeVideos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
           maxResults: 50,
+          keyword,
         });
 
         for (const video of youtubeVideos) {
@@ -82,6 +91,7 @@ export async function POST(request: NextRequest) {
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
+                country: video.country || 'Global',
                 updatedAt: new Date(),
               },
               create: {
@@ -101,6 +111,7 @@ export async function POST(request: NextRequest) {
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
+                country: video.country || 'Global',
                 publishedAt: new Date(video.publishedAt),
               },
             });
@@ -119,7 +130,7 @@ export async function POST(request: NextRequest) {
 
     // 2. Collect TikTok videos
     try {
-      const tiktokVideos = await collectTrendingTikToks();
+      const tiktokVideos = await collectTrendingTikToks(keyword);
 
       for (const video of tiktokVideos) {
         try {
@@ -181,6 +192,7 @@ export async function POST(request: NextRequest) {
               category: classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
+              country: video.country || 'Global',
             },
           });
 
@@ -199,7 +211,7 @@ export async function POST(request: NextRequest) {
 
     // 3. Collect Instagram Reels
     try {
-      const instagramReels = await collectTrendingReels();
+      const instagramReels = await collectTrendingReels(keyword);
 
       for (const reel of instagramReels) {
         try {
@@ -259,6 +271,7 @@ export async function POST(request: NextRequest) {
               category: classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
+              country: reel.country || 'Global',
             },
           });
 

@@ -3,7 +3,7 @@
  * Uses YouTube Data API v3 to fetch trending shorts
  */
 
-interface YouTubeVideo {
+export interface YouTubeVideo {
   id: string;
   title: string;
   description: string;
@@ -14,6 +14,7 @@ interface YouTubeVideo {
   viewCount: number;
   likeCount: number;
   commentCount: number;
+  country?: string;
 }
 
 interface YouTubeSearchResult {
@@ -60,9 +61,35 @@ export async function searchYouTubeShorts(
     query?: string;
     maxResults?: number;
     regionCode?: string;
+    keyword?: string;
   } = {}
 ): Promise<YouTubeVideo[]> {
-  const { query = '#shorts', maxResults = 50, regionCode = 'KR' } = options;
+  // Randomly select between target regions (US, KR, JP) for broader trend coverage
+  const targetRegions = ['US', 'KR', 'JP'];
+  const defaultRegion = targetRegions[Math.floor(Math.random() * targetRegions.length)];
+
+  const { maxResults = 50, regionCode = defaultRegion, keyword } = options;
+
+  let query = options.query || '#shorts';
+  if (keyword) {
+    query = keyword;
+  } else if (!options.query) {
+      // 상품 발굴에 최적화된 검색어 (유통업 목적)
+      const productQueries = [
+        // 한국 상품 트렌드
+        '틱톡템 추천', '다이소 꿀템', '쿠팡 추천템', '올리브영 추천',
+        '쇼핑하울 shorts', '언박싱 추천', '아이디어상품 리뷰',
+        '생활용품 추천', '주방용품 추천', '인테리어 소품',
+        // 글로벌 상품 트렌드
+        'tiktokmademebuyit', 'amazon finds', 'aliexpress haul',
+        'viral products 2024', 'gadget review shorts', 'unboxing haul',
+        'must have products', 'kitchen gadgets viral', 'home gadgets',
+        // 카테고리별 상품
+        '화장품 추천 shorts', '패션 하울', '전자기기 리뷰',
+        '폰케이스 추천', '악세사리 하울', '가방 추천'
+      ];
+      query = productQueries[Math.floor(Math.random() * productQueries.length)];
+  }
 
   // Search for videos
   const searchUrl = new URL(`${YOUTUBE_API_BASE}/search`);
@@ -112,25 +139,33 @@ export async function searchYouTubeShorts(
   }
 
   const videos: YouTubeVideo[] = [];
+  const liveKeywords = ['[LIVE]', '라이브', '🔴'];
+
   for (const item of searchData.items) {
     const stats = statsMap.get(item.id.videoId);
     if (stats) {
-      videos.push({
-        id: item.id.videoId,
-        title: item.snippet.title,
-        description: item.snippet.description,
-        thumbnailUrl:
-          item.snippet.thumbnails.high?.url ||
-          item.snippet.thumbnails.medium?.url ||
-          item.snippet.thumbnails.default?.url ||
-          '',
-        channelTitle: item.snippet.channelTitle,
-        channelId: item.snippet.channelId,
-        publishedAt: item.snippet.publishedAt,
-        viewCount: parseInt(stats.statistics.viewCount || '0', 10),
-        likeCount: parseInt(stats.statistics.likeCount || '0', 10),
-        commentCount: parseInt(stats.statistics.commentCount || '0', 10),
-      });
+      const title = item.snippet.title.toUpperCase();
+      const isLive = liveKeywords.some(keyword => title.includes(keyword.toUpperCase()));
+      
+      if (!isLive) {
+        videos.push({
+          id: item.id.videoId,
+          title: item.snippet.title,
+          description: item.snippet.description,
+          thumbnailUrl:
+            item.snippet.thumbnails.high?.url ||
+            item.snippet.thumbnails.medium?.url ||
+            item.snippet.thumbnails.default?.url ||
+            '',
+          channelTitle: item.snippet.channelTitle,
+          channelId: item.snippet.channelId,
+          publishedAt: item.snippet.publishedAt,
+          viewCount: parseInt(stats.statistics.viewCount || '0', 10),
+          likeCount: parseInt(stats.statistics.likeCount || '0', 10),
+          commentCount: parseInt(stats.statistics.commentCount || '0', 10),
+          country: regionCode,
+        });
+      }
     }
   }
 
@@ -145,13 +180,14 @@ export async function searchShortsByCategory(
   category: string
 ): Promise<YouTubeVideo[]> {
   const categoryKeywords: Record<string, string[]> = {
-    BEAUTY: ['뷰티', '메이크업', '화장품', '스킨케어', 'beauty', 'makeup'],
-    FOOD: ['먹방', '레시피', '요리', '음식', 'food', 'cooking', 'mukbang'],
-    FASHION: ['패션', '코디', 'OOTD', '옷', 'fashion', 'outfit'],
-    ELECTRONICS: ['가젯', '전자기기', '테크', '리뷰', 'tech', 'gadget', 'unboxing'],
-    LIFESTYLE: ['라이프스타일', 'VLOG', '일상', '인테리어', 'lifestyle'],
-    HEALTH: ['운동', '헬스', '다이어트', '피트니스', 'fitness', 'workout'],
-    KIDS: ['육아', '키즈', '아기', '장난감', 'kids', 'toys'],
+    // 유통업 상품 발굴용 키워드 (상품 중심)
+    GADGETS: ['아이디어상품 추천', '꿀템 리뷰', '틱톡템', 'tiktokmademebuyit', '생활용품 추천'],
+    BEAUTY: ['화장품 추천', '올리브영 하울', '스킨케어 추천', '뷰티템 리뷰', 'beauty haul'],
+    FASHION: ['옷 하울', '패션 추천템', '악세사리 추천', 'fashion haul', 'outfit haul'],
+    ELECTRONICS: ['전자기기 리뷰', '가젯 추천', 'tech gadget', 'unboxing shorts', '충전기 추천'],
+    HOME: ['주방용품 추천', '인테리어 소품', '생활용품 하울', 'home gadgets', 'kitchen gadgets'],
+    FOOD: ['식품 추천', '간식 추천', '음료 리뷰', '먹거리 추천', 'food review'],
+    KIDS: ['육아템 추천', '장난감 리뷰', '유아용품', 'toy review', 'kids gadgets'],
   };
 
   const keywords = categoryKeywords[category] || [];

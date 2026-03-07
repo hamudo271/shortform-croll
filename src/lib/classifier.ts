@@ -49,7 +49,7 @@ export async function classifyVideo(
   const model = getGeminiClient(apiKey);
 
   const prompt = `
-당신은 숏폼 비디오 분류 전문가입니다. 다음 비디오 정보를 분석하여 JSON 형식으로 분류해주세요.
+당신은 유통업을 위한 바이럴 상품 분석가입니다. 이 영상이 "판매할 수 있는 상품"을 소개하는지 분석해주세요.
 
 비디오 정보:
 - 제목: ${video.title}
@@ -57,32 +57,33 @@ export async function classifyVideo(
 - 해시태그: ${video.tags?.join(', ') || '없음'}
 - 제작자: ${video.authorName || '알 수 없음'}
 
-다음 형식으로 JSON만 반환해주세요 (다른 텍스트 없이):
+핵심 질문: 이 영상에서 소개하는 "구매 가능한 상품"이 있는가?
+
+JSON 형식으로 반환 (다른 텍스트 없이):
 {
-  "category": "카테고리",
-  "targetAge": "연령대",
-  "tags": ["관련", "태그", "목록"],
+  "category": "상품 카테고리",
+  "targetAge": "타겟 연령대",
+  "tags": ["상품명", "브랜드", "특징"],
   "confidence": 0.0-1.0
 }
 
-카테고리 옵션:
-- BEAUTY: 뷰티, 화장품, 스킨케어, 메이크업
-- FOOD: 음식, 요리, 레시피, 먹방
-- FASHION: 패션, 의류, 코디, OOTD
-- ELECTRONICS: 전자기기, 가젯, 테크 리뷰
-- LIFESTYLE: 라이프스타일, 일상, 인테리어, VLOG
-- HEALTH: 건강, 운동, 피트니스, 다이어트
-- KIDS: 육아, 키즈, 장난감, 아기
-- OTHER: 기타
+카테고리 (상품 유형 기준):
+- BEAUTY: 화장품, 스킨케어, 뷰티 도구, 향수
+- FOOD: 식품, 간식, 음료, 건강식품, 다이어트 식품
+- FASHION: 의류, 신발, 가방, 악세사리, 주얼리
+- ELECTRONICS: 전자기기, 폰케이스, 충전기, 이어폰, 가젯
+- LIFESTYLE: 생활용품, 주방용품, 인테리어 소품, 수납용품
+- HEALTH: 건강용품, 운동기구, 마사지기, 자세교정
+- KIDS: 유아용품, 장난감, 아동복, 교육용품
+- OTHER: 상품이 아니거나 분류 불가
 
-연령대 옵션:
-- 10s: 10대 (청소년)
-- 20s: 20대 (청년층)
-- 30s: 30대
-- 40s: 40대
-- 50s+: 50대 이상
+중요: 상품 리뷰/언박싱/추천 영상이 아니면 OTHER로 분류하세요.
 
-JSON 응답만 출력하세요:
+연령대: 10s, 20s, 30s, 40s, 50s+
+
+tags에는 영상에서 소개하는 구체적인 상품명이나 상품 특징을 넣으세요.
+
+JSON 응답만:
 `;
 
   try {
@@ -195,14 +196,15 @@ function delay(ms: number): Promise<void> {
 export function classifyByKeywords(video: VideoInput): ClassificationResult {
   const text = `${video.title} ${video.description || ''} ${video.tags?.join(' ') || ''}`.toLowerCase();
 
+  // 상품 중심 키워드 (유통업 목적)
   const categoryKeywords: Record<Category, string[]> = {
-    BEAUTY: ['뷰티', '메이크업', '화장', '스킨케어', 'beauty', 'makeup', '립스틱', '파운데이션'],
-    FOOD: ['먹방', '요리', '레시피', '음식', 'food', 'cooking', '맛집', '푸드'],
-    FASHION: ['패션', '코디', 'ootd', '옷', 'fashion', 'outfit', '스타일', '룩북'],
-    ELECTRONICS: ['가젯', '전자', '테크', 'tech', 'gadget', '리뷰', '언박싱', 'unboxing'],
-    LIFESTYLE: ['일상', 'vlog', '라이프', '인테리어', 'lifestyle', '브이로그', '루틴'],
-    HEALTH: ['운동', '헬스', '다이어트', '피트니스', 'fitness', 'workout', '건강'],
-    KIDS: ['육아', '키즈', '아기', '장난감', 'kids', 'baby', '유아', 'toy'],
+    BEAUTY: ['화장품', '스킨케어', '올리브영', '뷰티템', '파운데이션', '립', '세럼', 'skincare', 'makeup'],
+    FOOD: ['식품', '간식', '음료', '건강식품', '다이어트', '영양제', '단백질', 'snack', 'supplement'],
+    FASHION: ['옷', '하울', '악세사리', '가방', '신발', '주얼리', 'haul', 'fashion', 'outfit'],
+    ELECTRONICS: ['가젯', '충전기', '이어폰', '폰케이스', '언박싱', 'unboxing', 'gadget', 'tech', '전자기기'],
+    LIFESTYLE: ['생활용품', '주방', '인테리어', '수납', '다이소', '꿀템', '추천템', 'home', 'kitchen'],
+    HEALTH: ['운동기구', '마사지', '자세교정', '헬스', '홈트', 'fitness', 'massage', '건강용품'],
+    KIDS: ['장난감', '유아용품', '아동복', '교육용품', 'toy', 'kids', '육아템', '아기용품'],
     OTHER: [],
   };
 

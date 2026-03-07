@@ -15,12 +15,14 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0', 10);
     const search = searchParams.get('search');
     const days = parseInt(searchParams.get('days') || '7', 10);
+    const country = searchParams.get('country');
 
     // Build where clause
     const where: {
       platform?: Platform;
       category?: Category;
       targetAge?: string;
+      country?: string;
       title?: { contains: string; mode: 'insensitive' };
       collectedAt?: { gte: Date };
     } = {};
@@ -35,6 +37,10 @@ export async function GET(request: NextRequest) {
 
     if (targetAge) {
       where.targetAge = targetAge;
+    }
+
+    if (country) {
+      where.country = country;
     }
 
     if (search) {
@@ -118,6 +124,7 @@ export async function POST(request: NextRequest) {
       targetAge,
       tags,
       publishedAt,
+      country,
     } = body;
 
     // Upsert video (update if exists, create if not)
@@ -134,6 +141,7 @@ export async function POST(request: NextRequest) {
         category,
         targetAge,
         tags,
+        country,
         updatedAt: new Date(),
       },
       create: {
@@ -152,6 +160,7 @@ export async function POST(request: NextRequest) {
         category,
         targetAge,
         tags: tags || [],
+        country,
         publishedAt: publishedAt ? new Date(publishedAt) : null,
       },
     });

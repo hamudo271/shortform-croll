@@ -34,6 +34,7 @@ model Video {
   category      Category?
   targetAge     String?   // "10s", "20s", "30s", etc.
   tags          String[]
+  country       String?   // "KR", "US", "JP", "Global" etc.
 
   // Metadata
   publishedAt   DateTime?
@@ -43,6 +44,7 @@ model Video {
 
   @@index([platform])
   @@index([category])
+  @@index([country])
   @@index([viralScore(sort: Desc)])
   @@index([collectedAt(sort: Desc)])
 }

@@ -59,9 +59,9 @@ export function getRelativeTime(date: Date): string {
  * Platform display names
  */
 export const PLATFORM_NAMES = {
-  YOUTUBE: 'YouTube Shorts',
-  TIKTOK: 'TikTok',
-  INSTAGRAM: 'Instagram Reels',
+  YOUTUBE: '유튜브 쇼츠',
+  TIKTOK: '틱톡',
+  INSTAGRAM: '인스타그램 릴스',
 } as const;
 
 /**
