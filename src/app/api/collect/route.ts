@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
-import { collectTrendingTikToks, closeBrowser as closeTikTokBrowser } from '@/lib/collectors/tiktok';
-import { collectTrendingReels, closeBrowser as closeInstagramBrowser } from '@/lib/collectors/instagram';
+import { getProductSearchQueries } from '@/lib/collectors/googleTrends';
 import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
 import { calculateViralScore } from '@/lib/utils';
 import { Platform } from '@prisma/client';
 
 // This endpoint triggers data collection
-// Should be called by GitHub Actions or manually
+// Uses Google Trends to find trending product keywords
+// Then searches YouTube for product videos
 
 export async function POST(request: NextRequest) {
   // Simple auth check
@@ -21,28 +21,81 @@ export async function POST(request: NextRequest) {
 
   const results = {
     youtube: { collected: 0, errors: 0 },
-    tiktok: { collected: 0, errors: 0 },
-    instagram: { collected: 0, errors: 0 },
+    trends: { keywords: 0 },
   };
 
   let keyword: string | undefined;
+  let category: string | undefined;
+  let useGoogleTrends = true;
+
   try {
     const body = await request.json();
-    if (body.keyword) keyword = body.keyword;
-  } catch (e) {
+    if (body.keyword) {
+      keyword = body.keyword;
+      useGoogleTrends = false; // Manual keyword provided, skip Google Trends
+    }
+    if (body.category) category = body.category;
+    if (body.useGoogleTrends === false) useGoogleTrends = false;
+  } catch {
     // Ignore JSON parse errors if body is empty
   }
 
   try {
-    // 1. Collect YouTube Shorts
-    if (process.env.YOUTUBE_API_KEY) {
+    if (!process.env.YOUTUBE_API_KEY) {
+      return NextResponse.json(
+        { error: 'YOUTUBE_API_KEY not configured' },
+        { status: 500 }
+      );
+    }
+
+    // Step 1: Get trending product keywords from Google Trends
+    let searchQueries: string[] = [];
+
+    if (useGoogleTrends) {
+      try {
+        console.log('Fetching trending keywords from Google Trends...');
+        searchQueries = await getProductSearchQueries({
+          category,
+          geo: 'KR',
+          count: 5, // Get 5 trending queries
+        });
+        results.trends.keywords = searchQueries.length;
+        console.log(`Found ${searchQueries.length} trending keywords:`, searchQueries);
+      } catch (err) {
+        console.error('Google Trends error:', err);
+        // Fall back to manual keyword or default
+      }
+    }
+
+    // If manual keyword provided or Google Trends failed, use that
+    if (keyword) {
+      searchQueries = [keyword];
+    } else if (searchQueries.length === 0) {
+      // Default fallback queries
+      searchQueries = [
+        '틱톡템 추천 shorts',
+        '다이소 꿀템 shorts',
+        'tiktokmademebuyit',
+      ];
+    }
+
+    // Step 2: Search YouTube for each trending keyword
+    const processedVideoIds = new Set<string>();
+
+    for (const query of searchQueries) {
+      console.log(`Searching YouTube for: "${query}"`);
+
       try {
         const youtubeVideos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
-          maxResults: 50,
-          keyword,
+          query,
+          maxResults: 20, // 20 per keyword
         });
 
         for (const video of youtubeVideos) {
+          // Skip if already processed
+          if (processedVideoIds.has(video.id)) continue;
+          processedVideoIds.add(video.id);
+
           try {
             // Classify video
             let classification;
@@ -57,6 +110,12 @@ export async function POST(request: NextRequest) {
                 title: video.title,
                 description: video.description,
               });
+            }
+
+            // Skip non-product videos (classified as OTHER)
+            if (classification.category === 'OTHER') {
+              console.log(`Skipping non-product video: ${video.title.substring(0, 30)}...`);
+              continue;
             }
 
             // Get existing video for history tracking
@@ -123,174 +182,18 @@ export async function POST(request: NextRequest) {
           }
         }
       } catch (err) {
-        console.error('YouTube collection error:', err);
+        console.error(`YouTube search error for "${query}":`, err);
         results.youtube.errors++;
       }
-    }
 
-    // 2. Collect TikTok videos
-    try {
-      const tiktokVideos = await collectTrendingTikToks(keyword);
-
-      for (const video of tiktokVideos) {
-        try {
-          let classification;
-          if (process.env.GEMINI_API_KEY) {
-            classification = await classifyVideo(process.env.GEMINI_API_KEY, {
-              title: video.title,
-              description: video.description,
-              authorName: video.authorName,
-            });
-          } else {
-            classification = classifyByKeywords({
-              title: video.title,
-              description: video.description,
-            });
-          }
-
-          const existing = await prisma.video.findUnique({
-            where: { videoId: video.id },
-          });
-
-          const history = existing?.viewCountHistory as Array<{ date: string; count: number }> || [];
-          history.push({
-            date: new Date().toISOString(),
-            count: video.viewCount,
-          });
-
-          const recentHistory = history.slice(-30);
-          const viralScore = calculateViralScore(recentHistory);
-
-          await prisma.video.upsert({
-            where: { videoId: video.id },
-            update: {
-              title: video.title,
-              viewCount: BigInt(video.viewCount),
-              likeCount: BigInt(video.likeCount),
-              shareCount: BigInt(video.shareCount),
-              viewCountHistory: recentHistory,
-              viralScore,
-              category: classification.category,
-              targetAge: classification.targetAge,
-              tags: classification.tags,
-              updatedAt: new Date(),
-            },
-            create: {
-              platform: Platform.TIKTOK,
-              videoId: video.id,
-              title: video.title,
-              description: video.description,
-              thumbnailUrl: video.thumbnailUrl,
-              videoUrl: video.videoUrl,
-              authorName: video.authorName,
-              authorUrl: video.authorUrl,
-              viewCount: BigInt(video.viewCount),
-              likeCount: BigInt(video.likeCount),
-              shareCount: BigInt(video.shareCount),
-              viewCountHistory: recentHistory,
-              viralScore,
-              category: classification.category,
-              targetAge: classification.targetAge,
-              tags: classification.tags,
-              country: video.country || 'Global',
-            },
-          });
-
-          results.tiktok.collected++;
-        } catch (err) {
-          console.error('TikTok video save error:', err);
-          results.tiktok.errors++;
-        }
-      }
-    } catch (err) {
-      console.error('TikTok collection error:', err);
-      results.tiktok.errors++;
-    } finally {
-      await closeTikTokBrowser();
-    }
-
-    // 3. Collect Instagram Reels
-    try {
-      const instagramReels = await collectTrendingReels(keyword);
-
-      for (const reel of instagramReels) {
-        try {
-          let classification;
-          if (process.env.GEMINI_API_KEY) {
-            classification = await classifyVideo(process.env.GEMINI_API_KEY, {
-              title: reel.title,
-              description: reel.description,
-              authorName: reel.authorName,
-            });
-          } else {
-            classification = classifyByKeywords({
-              title: reel.title,
-              description: reel.description,
-            });
-          }
-
-          const existing = await prisma.video.findUnique({
-            where: { videoId: reel.id },
-          });
-
-          const history = existing?.viewCountHistory as Array<{ date: string; count: number }> || [];
-          history.push({
-            date: new Date().toISOString(),
-            count: reel.viewCount,
-          });
-
-          const recentHistory = history.slice(-30);
-          const viralScore = calculateViralScore(recentHistory);
-
-          await prisma.video.upsert({
-            where: { videoId: reel.id },
-            update: {
-              title: reel.title,
-              viewCount: BigInt(reel.viewCount),
-              likeCount: BigInt(reel.likeCount),
-              viewCountHistory: recentHistory,
-              viralScore,
-              category: classification.category,
-              targetAge: classification.targetAge,
-              tags: classification.tags,
-              updatedAt: new Date(),
-            },
-            create: {
-              platform: Platform.INSTAGRAM,
-              videoId: reel.id,
-              title: reel.title,
-              description: reel.description,
-              thumbnailUrl: reel.thumbnailUrl,
-              videoUrl: reel.videoUrl,
-              authorName: reel.authorName,
-              authorUrl: reel.authorUrl,
-              viewCount: BigInt(reel.viewCount),
-              likeCount: BigInt(reel.likeCount),
-              viewCountHistory: recentHistory,
-              viralScore,
-              category: classification.category,
-              targetAge: classification.targetAge,
-              tags: classification.tags,
-              country: reel.country || 'Global',
-            },
-          });
-
-          results.instagram.collected++;
-        } catch (err) {
-          console.error('Instagram reel save error:', err);
-          results.instagram.errors++;
-        }
-      }
-    } catch (err) {
-      console.error('Instagram collection error:', err);
-      results.instagram.errors++;
-    } finally {
-      await closeInstagramBrowser();
+      // Rate limiting between searches
+      await delay(1000);
     }
 
     return NextResponse.json({
       success: true,
       results,
+      searchQueries,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -310,6 +213,11 @@ export async function GET() {
       _count: true,
     });
 
+    const categoryCounts = await prisma.video.groupBy({
+      by: ['category'],
+      _count: true,
+    });
+
     const lastCollected = await prisma.video.findFirst({
       orderBy: { collectedAt: 'desc' },
       select: { collectedAt: true },
@@ -317,9 +225,14 @@ export async function GET() {
 
     return NextResponse.json({
       counts: counts.reduce((acc, c) => ({ ...acc, [c.platform]: c._count }), {}),
+      categories: categoryCounts.reduce((acc, c) => ({ ...acc, [c.category || 'UNKNOWN']: c._count }), {}),
       lastCollected: lastCollected?.collectedAt,
     });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to get status' }, { status: 500 });
   }
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

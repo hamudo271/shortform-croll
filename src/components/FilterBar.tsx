@@ -90,8 +90,6 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
             options: [
               { value: '', label: '모든 플랫폼' },
               { value: 'YOUTUBE', label: '유튜브 쇼츠' },
-              { value: 'TIKTOK', label: '틱톡' },
-              { value: 'INSTAGRAM', label: '인스타그램 릴스' },
             ]
           },
           {
