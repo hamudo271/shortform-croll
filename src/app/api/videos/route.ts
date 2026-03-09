@@ -77,8 +77,26 @@ export async function GET(request: NextRequest) {
       prisma.video.count({ where }),
     ]);
 
+    // 인도/동남아 영상 필터링
+    const excludePatterns = [
+      /[\u0900-\u097F]/, // Hindi
+      /[\u0980-\u09FF]/, // Bengali
+      /[\u0B80-\u0BFF]/, // Tamil
+      /[\u0C00-\u0C7F]/, // Telugu
+      /[\u0C80-\u0CFF]/, // Kannada
+      /[\u0D00-\u0D7F]/, // Malayalam
+      /[\u0E00-\u0E7F]/, // Thai
+      /[\u0600-\u06FF]/, // Arabic
+      /\b(india|indian|hindi|desi|pakistan|bangladesh|tamil|telugu|indonesia|thai|pinoy|filipino|vietnam)\b/i,
+    ];
+
+    const filteredVideos = videos.filter((video) => {
+      const text = `${video.title} ${video.authorName || ''}`;
+      return !excludePatterns.some(pattern => pattern.test(text));
+    });
+
     // Transform BigInt to number for JSON serialization
-    const transformedVideos = videos.map((video) => ({
+    const transformedVideos = filteredVideos.map((video) => ({
       ...video,
       viewCount: Number(video.viewCount),
       likeCount: Number(video.likeCount),
