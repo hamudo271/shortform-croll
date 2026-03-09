@@ -36,6 +36,7 @@ interface VideoInput {
  */
 function getGeminiClient(apiKey: string) {
   const genAI = new GoogleGenerativeAI(apiKey);
+  // Try using 'gemini-1.5-flash' which is the standard model name
   return genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 }
 
@@ -108,12 +109,8 @@ JSON 응답만:
     };
   } catch (error) {
     console.error('Classification error:', error);
-    return {
-      category: 'OTHER',
-      targetAge: '20s',
-      tags: [],
-      confidence: 0,
-    };
+    // Fallback to keyword-based classification on API error
+    return classifyByKeywords(video);
   }
 }
 

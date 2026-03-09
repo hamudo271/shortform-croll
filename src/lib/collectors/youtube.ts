@@ -64,8 +64,8 @@ export async function searchYouTubeShorts(
     keyword?: string;
   } = {}
 ): Promise<YouTubeVideo[]> {
-  // Randomly select between target regions (US, KR, JP) for broader trend coverage
-  const targetRegions = ['US', 'KR', 'JP'];
+  // 선진국 시장만 타겟 (인도, 동남아 등 제외)
+  const targetRegions = ['US', 'GB', 'CA', 'AU', 'DE', 'KR', 'JP'];
   const defaultRegion = targetRegions[Math.floor(Math.random() * targetRegions.length)];
 
   const { maxResults = 50, regionCode = defaultRegion, keyword } = options;
@@ -143,15 +143,43 @@ export async function searchYouTubeShorts(
 
   const MIN_VIEWS = 10000; // 최소 조회수 1만 이상만 수집
 
+  // 인도/동남아 등 제외 필터 (언어/문자 기반)
+  const excludePatterns = [
+    // 힌디어/인도
+    /[\u0900-\u097F]/, // Devanagari (Hindi)
+    /[\u0980-\u09FF]/, // Bengali
+    /[\u0A00-\u0A7F]/, // Gurmukhi (Punjabi)
+    /[\u0A80-\u0AFF]/, // Gujarati
+    /[\u0B00-\u0B7F]/, // Oriya
+    /[\u0B80-\u0BFF]/, // Tamil
+    /[\u0C00-\u0C7F]/, // Telugu
+    /[\u0C80-\u0CFF]/, // Kannada
+    /[\u0D00-\u0D7F]/, // Malayalam
+    // 태국어
+    /[\u0E00-\u0E7F]/, // Thai
+    // 베트남어 특수문자
+    /[ăâđêôơưàảãáạằẳẵắặầẩẫấậèẻẽéẹềểễếệìỉĩíịòỏõóọồổỗốộờởỡớợùủũúụừửữứựỳỷỹýỵ]/i,
+    // 아랍어
+    /[\u0600-\u06FF]/, // Arabic
+    // 인도네시아/말레이시아 특정 키워드
+    /\b(india|indian|hindi|desi|pakistan|bangladesh|tamil|telugu|malayalam|indonesia|vietnamese|thailand|thai|pinoy|filipino)\b/i,
+  ];
+
   for (const item of searchData.items) {
     const stats = statsMap.get(item.id.videoId);
     if (stats) {
       const viewCount = parseInt(stats.statistics.viewCount || '0', 10);
-      const title = item.snippet.title.toUpperCase();
-      const isLive = liveKeywords.some(keyword => title.includes(keyword.toUpperCase()));
+      const title = item.snippet.title;
+      const titleUpper = title.toUpperCase();
+      const channelTitle = item.snippet.channelTitle;
+      const isLive = liveKeywords.some(keyword => titleUpper.includes(keyword.toUpperCase()));
 
-      // 최소 조회수 필터 + 라이브 제외
-      if (!isLive && viewCount >= MIN_VIEWS) {
+      // 제외 국가 필터
+      const textToCheck = `${title} ${channelTitle}`;
+      const isExcludedRegion = excludePatterns.some(pattern => pattern.test(textToCheck));
+
+      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터
+      if (!isLive && !isExcludedRegion && viewCount >= MIN_VIEWS) {
         videos.push({
           id: item.id.videoId,
           title: item.snippet.title,
