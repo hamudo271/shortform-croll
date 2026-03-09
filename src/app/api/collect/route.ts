@@ -1,17 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
-import { getProductSearchQueries } from '@/lib/collectors/googleTrends';
+import {
+  getRisingProductTrends,
+  getDailyTrendingProducts,
+  generateSearchQueries,
+  VIRAL_PRODUCT_KEYWORDS,
+} from '@/lib/collectors/trendCollector';
 import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
 import { calculateViralScore } from '@/lib/utils';
 import { Platform } from '@prisma/client';
 
-// This endpoint triggers data collection
-// Uses Google Trends to find trending product keywords
-// Then searches YouTube for product videos
+/**
+ * Smart Dropshipping Product Video Collector
+ *
+ * 전략:
+ * 1. Google Trends에서 급상승 상품 키워드 수집
+ * 2. 해당 키워드로 YouTube 검색 (최근 48시간, 조회수 높은 것)
+ * 3. 드랍쉬핑 특화 키워드 병행 검색
+ * 4. 높은 engagement 영상만 저장
+ */
 
 export async function POST(request: NextRequest) {
-  // Simple auth check
   const authHeader = request.headers.get('authorization');
   const expectedToken = process.env.COLLECT_API_KEY || process.env.AUTH_PASSWORD;
 
@@ -20,84 +30,107 @@ export async function POST(request: NextRequest) {
   }
 
   const results = {
-    youtube: { collected: 0, errors: 0 },
-    trends: { keywords: 0 },
+    trendsFound: 0,
+    videosSearched: 0,
+    videosCollected: 0,
+    videosSkipped: 0,
+    errors: [] as string[],
   };
 
-  let keyword: string | undefined;
-  let category: string | undefined;
-  let useGoogleTrends = true;
+  // Parse request options
+  let manualKeyword: string | undefined;
+  let targetGeo = 'US'; // 기본: 미국 (드랍쉬핑 주요 시장)
 
   try {
     const body = await request.json();
-    if (body.keyword) {
-      keyword = body.keyword;
-      useGoogleTrends = false; // Manual keyword provided, skip Google Trends
-    }
-    if (body.category) category = body.category;
-    if (body.useGoogleTrends === false) useGoogleTrends = false;
+    if (body.keyword) manualKeyword = body.keyword;
+    if (body.geo) targetGeo = body.geo;
   } catch {
-    // Ignore JSON parse errors if body is empty
+    // Empty body is OK
   }
 
   try {
     if (!process.env.YOUTUBE_API_KEY) {
-      return NextResponse.json(
-        { error: 'YOUTUBE_API_KEY not configured' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'YOUTUBE_API_KEY required' }, { status: 500 });
     }
 
-    // Step 1: Get trending product keywords from Google Trends
+    // ===== STEP 1: 검색 키워드 수집 =====
     let searchQueries: string[] = [];
 
-    if (useGoogleTrends) {
+    if (manualKeyword) {
+      // 수동 키워드 제공시 해당 키워드만 사용
+      searchQueries = [`${manualKeyword} unboxing shorts`, `${manualKeyword} review`];
+    } else {
+      // Google Trends에서 급상승 상품 트렌드 가져오기
+      console.log('🔍 Fetching rising product trends from Google Trends...');
+
       try {
-        console.log('Fetching trending keywords from Google Trends...');
-        searchQueries = await getProductSearchQueries({
-          category,
-          geo: 'KR',
-          count: 5, // Get 5 trending queries
-        });
-        results.trends.keywords = searchQueries.length;
-        console.log(`Found ${searchQueries.length} trending keywords:`, searchQueries);
+        const [risingTrends, dailyTrends] = await Promise.all([
+          getRisingProductTrends(targetGeo),
+          getDailyTrendingProducts(targetGeo),
+        ]);
+
+        results.trendsFound = risingTrends.length + dailyTrends.length;
+        console.log(`📈 Found ${risingTrends.length} rising trends, ${dailyTrends.length} daily trends`);
+
+        // 트렌드 기반 검색 쿼리 생성
+        searchQueries = generateSearchQueries(risingTrends);
+
+        // 일일 트렌드 추가
+        for (const trend of dailyTrends.slice(0, 5)) {
+          searchQueries.push(`${trend} shorts review`);
+        }
       } catch (err) {
         console.error('Google Trends error:', err);
-        // Fall back to manual keyword or default
+        results.errors.push('Google Trends fetch failed');
+      }
+
+      // 트렌드가 없으면 기본 드랍쉬핑 키워드 사용
+      if (searchQueries.length === 0) {
+        console.log('⚠️ No trends found, using default dropshipping keywords');
+        searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global, ...VIRAL_PRODUCT_KEYWORDS.korean];
       }
     }
 
-    // If manual keyword provided or Google Trends failed, use that
-    if (keyword) {
-      searchQueries = [keyword];
-    } else if (searchQueries.length === 0) {
-      // Default fallback queries
-      searchQueries = [
-        '틱톡템 추천 shorts',
-        '다이소 꿀템 shorts',
-        'tiktokmademebuyit',
-      ];
-    }
+    console.log(`🔎 Search queries (${searchQueries.length}):`, searchQueries.slice(0, 5));
 
-    // Step 2: Search YouTube for each trending keyword
+    // ===== STEP 2: YouTube 검색 =====
     const processedVideoIds = new Set<string>();
+    const MIN_VIEWS = 50000;      // 최소 5만 조회
+    const MIN_ENGAGEMENT = 0.02; // 최소 2% 참여율 (likes/views)
 
-    for (const query of searchQueries) {
-      console.log(`Searching YouTube for: "${query}"`);
+    for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
+      console.log(`\n🎬 Searching: "${query}"`);
 
       try {
-        const youtubeVideos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
+        // 최근 48시간 영상만, 조회수순 정렬
+        const videos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
           query,
-          maxResults: 20, // 20 per keyword
+          maxResults: 15,
+          regionCode: targetGeo === 'KR' ? 'KR' : 'US',
         });
 
-        for (const video of youtubeVideos) {
-          // Skip if already processed
+        results.videosSearched += videos.length;
+
+        for (const video of videos) {
           if (processedVideoIds.has(video.id)) continue;
           processedVideoIds.add(video.id);
 
+          // Engagement 필터
+          const engagement = video.viewCount > 0 ? video.likeCount / video.viewCount : 0;
+
+          if (video.viewCount < MIN_VIEWS) {
+            results.videosSkipped++;
+            continue;
+          }
+
+          if (engagement < MIN_ENGAGEMENT) {
+            results.videosSkipped++;
+            continue;
+          }
+
           try {
-            // Classify video
+            // AI 분류
             let classification;
             if (process.env.GEMINI_API_KEY) {
               classification = await classifyVideo(process.env.GEMINI_API_KEY, {
@@ -112,28 +145,21 @@ export async function POST(request: NextRequest) {
               });
             }
 
-            // Skip non-product videos (classified as OTHER)
+            // 상품이 아닌 영상 스킵
             if (classification.category === 'OTHER') {
-              console.log(`Skipping non-product video: ${video.title.substring(0, 30)}...`);
+              console.log(`  ❌ Skip (not product): ${video.title.substring(0, 40)}...`);
+              results.videosSkipped++;
               continue;
             }
 
-            // Get existing video for history tracking
+            // DB 저장
             const existing = await prisma.video.findUnique({
               where: { videoId: video.id },
             });
 
-            // Build view count history
-            const history = existing?.viewCountHistory as Array<{ date: string; count: number }> || [];
-            history.push({
-              date: new Date().toISOString(),
-              count: video.viewCount,
-            });
-
-            // Keep only last 30 days of history
+            const history = (existing?.viewCountHistory as Array<{ date: string; count: number }>) || [];
+            history.push({ date: new Date().toISOString(), count: video.viewCount });
             const recentHistory = history.slice(-30);
-
-            // Calculate viral score
             const viralScore = calculateViralScore(recentHistory);
 
             await prisma.video.upsert({
@@ -150,7 +176,7 @@ export async function POST(request: NextRequest) {
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
-                country: video.country || 'Global',
+                country: video.country || targetGeo,
                 updatedAt: new Date(),
               },
               create: {
@@ -170,30 +196,30 @@ export async function POST(request: NextRequest) {
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
-                country: video.country || 'Global',
+                country: video.country || targetGeo,
                 publishedAt: new Date(video.publishedAt),
               },
             });
 
-            results.youtube.collected++;
+            console.log(`  ✅ Saved: ${video.title.substring(0, 40)}... (${formatNumber(video.viewCount)} views, ${(engagement * 100).toFixed(1)}% eng)`);
+            results.videosCollected++;
           } catch (err) {
-            console.error('YouTube video save error:', err);
-            results.youtube.errors++;
+            console.error('Video save error:', err);
+            results.errors.push(`Save failed: ${video.id}`);
           }
         }
       } catch (err) {
-        console.error(`YouTube search error for "${query}":`, err);
-        results.youtube.errors++;
+        console.error(`Search error for "${query}":`, err);
+        results.errors.push(`Search failed: ${query}`);
       }
 
-      // Rate limiting between searches
-      await delay(1000);
+      await delay(500); // Rate limiting
     }
 
     return NextResponse.json({
       success: true,
       results,
-      searchQueries,
+      searchQueries: searchQueries.slice(0, 10),
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -206,33 +232,42 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  // Return collection status
   try {
-    const counts = await prisma.video.groupBy({
-      by: ['platform'],
-      _count: true,
-    });
-
-    const categoryCounts = await prisma.video.groupBy({
-      by: ['category'],
-      _count: true,
-    });
-
-    const lastCollected = await prisma.video.findFirst({
-      orderBy: { collectedAt: 'desc' },
-      select: { collectedAt: true },
-    });
+    const [counts, categoryCounts, lastCollected, topVideos] = await Promise.all([
+      prisma.video.groupBy({ by: ['platform'], _count: true }),
+      prisma.video.groupBy({ by: ['category'], _count: true }),
+      prisma.video.findFirst({
+        orderBy: { collectedAt: 'desc' },
+        select: { collectedAt: true },
+      }),
+      prisma.video.findMany({
+        orderBy: { viralScore: 'desc' },
+        take: 5,
+        select: { title: true, viewCount: true, viralScore: true },
+      }),
+    ]);
 
     return NextResponse.json({
       counts: counts.reduce((acc, c) => ({ ...acc, [c.platform]: c._count }), {}),
       categories: categoryCounts.reduce((acc, c) => ({ ...acc, [c.category || 'UNKNOWN']: c._count }), {}),
       lastCollected: lastCollected?.collectedAt,
+      topVideos: topVideos.map(v => ({
+        title: v.title?.substring(0, 50),
+        views: Number(v.viewCount),
+        score: v.viralScore,
+      })),
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to get status' }, { status: 500 });
   }
 }
 
 function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function formatNumber(n: number): string {
+  if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+  return String(n);
 }

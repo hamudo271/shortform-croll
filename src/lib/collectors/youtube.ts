@@ -97,10 +97,10 @@ export async function searchYouTubeShorts(
   searchUrl.searchParams.set('type', 'video');
   searchUrl.searchParams.set('q', query);
   searchUrl.searchParams.set('maxResults', String(maxResults));
-  searchUrl.searchParams.set('order', 'relevance'); // 키워드 관련성 우선
+  searchUrl.searchParams.set('order', 'viewCount'); // 조회수 높은 것 우선
   searchUrl.searchParams.set('regionCode', regionCode);
   searchUrl.searchParams.set('videoDuration', 'short'); // Under 4 minutes
-  searchUrl.searchParams.set('publishedAfter', getRecentDate(7)); // Last 7 days
+  searchUrl.searchParams.set('publishedAfter', getRecentDate(3)); // Last 3 days (실시간)
   searchUrl.searchParams.set('key', apiKey);
 
   const searchRes = await fetch(searchUrl.toString());
