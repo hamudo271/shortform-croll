@@ -1,6 +1,0 @@
-[build]
-builder = "nixpacks"
-
-[build.nixpacks]
-# Force fresh build
-buildCache = false
