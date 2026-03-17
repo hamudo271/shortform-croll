@@ -42,7 +42,6 @@ interface StatsData {
   categories: Record<string, number>;
   lastCollectedAt: string | null;
   topVideos: Video[];
-  recentCollections: Array<{ date: string; count: number }>;
 }
 
 export default function DashboardPage() {

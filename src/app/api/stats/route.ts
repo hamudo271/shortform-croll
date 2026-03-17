@@ -11,11 +11,14 @@ export async function GET() {
       categoryCounts,
       lastCollected,
       topVideos,
-      recentCollections,
     ] = await Promise.all([
       prisma.video.count(),
       prisma.video.groupBy({ by: ['platform'], _count: true }),
-      prisma.video.groupBy({ by: ['category'], _count: true, orderBy: { _count: { category: 'desc' } } }),
+      prisma.video.groupBy({
+        by: ['category'],
+        _count: true,
+        orderBy: { _count: { category: 'desc' } },
+      }),
       prisma.video.findFirst({
         orderBy: { collectedAt: 'desc' },
         select: { collectedAt: true },
@@ -37,14 +40,6 @@ export async function GET() {
           collectedAt: true,
         },
       }),
-      // Collection activity: count of videos collected per day for last 7 days
-      prisma.$queryRaw`
-        SELECT DATE(\"collectedAt\") as date, COUNT(*)::int as count
-        FROM "Video"
-        WHERE "collectedAt" >= NOW() - INTERVAL '7 days'
-        GROUP BY DATE("collectedAt")
-        ORDER BY date ASC
-      ` as Promise<Array<{ date: string; count: number }>>,
     ]);
 
     return NextResponse.json({
@@ -65,7 +60,6 @@ export async function GET() {
         viewCount: Number(v.viewCount),
         likeCount: Number(v.likeCount),
       })),
-      recentCollections,
     });
   } catch (error) {
     console.error('Stats error:', error);
