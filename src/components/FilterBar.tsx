@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CATEGORY_NAMES, TARGET_AGE_OPTIONS } from '@/lib/utils';
 
 interface FilterBarProps {
@@ -31,6 +31,20 @@ const defaultFilters: FilterState = {
 export default function FilterBar({ onFilterChange, initialFilters }: FilterBarProps) {
   const [filters, setFilters] = useState<FilterState>(initialFilters || defaultFilters);
   const [searchInput, setSearchInput] = useState(filters.search);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync when parent changes filters (e.g. stats card clicks)
+  useEffect(() => {
+    if (!initialFilters) return;
+    const changed = (Object.keys(initialFilters) as (keyof FilterState)[]).some(
+      k => initialFilters[k] !== filters[k]
+    );
+    if (changed) {
+      setFilters(initialFilters);
+      setSearchInput(initialFilters.search);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFilters?.platform, initialFilters?.category, initialFilters?.targetAge, initialFilters?.country, initialFilters?.sortBy, initialFilters?.days, initialFilters?.search]);
 
   const handleChange = (key: keyof FilterState, value: string | number) => {
     const newFilters = { ...filters, [key]: value };
@@ -38,13 +52,19 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
     onFilterChange(newFilters);
   };
 
-  const handleSearch = () => {
-    handleChange('search', searchInput);
+  const handleSearchInput = (value: string) => {
+    setSearchInput(value);
+    // Debounce search
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      handleChange('search', value);
+    }, 400);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      handleChange('search', searchInput);
     }
   };
 
@@ -67,13 +87,13 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
           type="text"
           placeholder="영상, 크리에이터 또는 키워드 검색..."
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={(e) => handleSearchInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="w-full pl-11 pr-12 py-3 bg-zinc-900/50 border border-zinc-800/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-zinc-200 placeholder-zinc-500 transition-all shadow-inner"
         />
         {searchInput && (
           <button 
-            onClick={() => { setSearchInput(''); handleChange('search', ''); }}
+            onClick={() => { setSearchInput(''); if (debounceRef.current) clearTimeout(debounceRef.current); handleChange('search', ''); }}
             className="absolute inset-y-0 right-0 pr-4 flex items-center text-zinc-500 hover:text-zinc-300"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -113,9 +133,13 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
             key: 'country' as keyof FilterState,
             options: [
               { value: '', label: '모든 국가' },
-              { value: 'KR', label: '대한민국' },
               { value: 'US', label: '미국' },
+              { value: 'KR', label: '대한민국' },
               { value: 'JP', label: '일본' },
+              { value: 'GB', label: '영국' },
+              { value: 'DE', label: '독일' },
+              { value: 'CA', label: '캐나다' },
+              { value: 'AU', label: '호주' },
             ]
           },
           {

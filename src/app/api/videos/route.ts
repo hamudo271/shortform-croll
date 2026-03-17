@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { Platform, Category } from '@prisma/client';
+import { Platform, Category, Prisma } from '@prisma/client';
+
+// 인도/동남아 제외 키워드 (DB 레벨 NOT contains 필터)
+const EXCLUDE_KEYWORDS = [
+  'india', 'indian', 'hindi', 'desi', 'pakistan', 'bangladesh',
+  'tamil', 'telugu', 'indonesia', 'thai', 'pinoy', 'filipino', 'vietnam',
+];
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
-    // Parse query parameters
     const platform = searchParams.get('platform') as Platform | null;
     const category = searchParams.get('category') as Category | null;
     const targetAge = searchParams.get('targetAge');
@@ -17,43 +22,23 @@ export async function GET(request: NextRequest) {
     const days = parseInt(searchParams.get('days') || '7', 10);
     const country = searchParams.get('country');
 
-    // Build where clause
-    const where: {
-      platform?: Platform;
-      category?: Category;
-      targetAge?: string;
-      country?: string;
-      title?: { contains: string; mode: 'insensitive' };
-      collectedAt?: { gte: Date };
-    } = {};
-
-    if (platform) {
-      where.platform = platform;
-    }
-
-    if (category) {
-      where.category = category;
-    }
-
-    if (targetAge) {
-      where.targetAge = targetAge;
-    }
-
-    if (country) {
-      where.country = country;
-    }
-
-    if (search) {
-      where.title = {
-        contains: search,
-        mode: 'insensitive',
-      };
-    }
-
     // Filter by collection date
     const dateThreshold = new Date();
     dateThreshold.setDate(dateThreshold.getDate() - days);
-    where.collectedAt = { gte: dateThreshold };
+
+    // Build where clause with AND conditions for exclude filter
+    const where: Prisma.VideoWhereInput = {
+      ...(platform && { platform }),
+      ...(category && { category }),
+      ...(targetAge && { targetAge }),
+      ...(country && { country }),
+      ...(search && { title: { contains: search, mode: 'insensitive' as const } }),
+      collectedAt: { gte: dateThreshold },
+      // Exclude Indian/SE Asian content at DB level
+      AND: EXCLUDE_KEYWORDS.map(keyword => ({
+        title: { not: { contains: keyword, mode: 'insensitive' as const } },
+      })),
+    };
 
     // Build orderBy
     type OrderByField = 'viralScore' | 'viewCount' | 'likeCount' | 'collectedAt';
@@ -66,7 +51,7 @@ export async function GET(request: NextRequest) {
 
     const orderBy = orderByMap[sortBy as OrderByField] || orderByMap.viralScore;
 
-    // Fetch videos
+    // Fetch videos and count in parallel - total is now accurate
     const [videos, total] = await Promise.all([
       prisma.video.findMany({
         where,
@@ -77,26 +62,8 @@ export async function GET(request: NextRequest) {
       prisma.video.count({ where }),
     ]);
 
-    // 인도/동남아 영상 필터링
-    const excludePatterns = [
-      /[\u0900-\u097F]/, // Hindi
-      /[\u0980-\u09FF]/, // Bengali
-      /[\u0B80-\u0BFF]/, // Tamil
-      /[\u0C00-\u0C7F]/, // Telugu
-      /[\u0C80-\u0CFF]/, // Kannada
-      /[\u0D00-\u0D7F]/, // Malayalam
-      /[\u0E00-\u0E7F]/, // Thai
-      /[\u0600-\u06FF]/, // Arabic
-      /\b(india|indian|hindi|desi|pakistan|bangladesh|tamil|telugu|indonesia|thai|pinoy|filipino|vietnam)\b/i,
-    ];
-
-    const filteredVideos = videos.filter((video) => {
-      const text = `${video.title} ${video.authorName || ''}`;
-      return !excludePatterns.some(pattern => pattern.test(text));
-    });
-
     // Transform BigInt to number for JSON serialization
-    const transformedVideos = filteredVideos.map((video) => ({
+    const transformedVideos = videos.map((video) => ({
       ...video,
       viewCount: Number(video.viewCount),
       likeCount: Number(video.likeCount),
