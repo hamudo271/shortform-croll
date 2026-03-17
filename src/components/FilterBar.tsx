@@ -24,7 +24,7 @@ const defaultFilters: FilterState = {
   targetAge: '',
   country: '',
   sortBy: 'viralScore',
-  days: 7,
+  days: 30,
   search: '',
 };
 

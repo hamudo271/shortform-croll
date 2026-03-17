@@ -64,7 +64,7 @@ export default function DashboardPage() {
     category: '',
     targetAge: '',
     sortBy: 'viralScore',
-    days: 7,
+    days: 30,
     search: '',
     country: '',
   });

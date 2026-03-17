@@ -19,14 +19,14 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50', 10);
     const offset = parseInt(searchParams.get('offset') || '0', 10);
     const search = searchParams.get('search');
-    const days = parseInt(searchParams.get('days') || '7', 10);
+    const days = parseInt(searchParams.get('days') || '30', 10);
     const country = searchParams.get('country');
 
     // Filter by collection date
     const dateThreshold = new Date();
     dateThreshold.setDate(dateThreshold.getDate() - days);
 
-    // Build where clause with AND conditions for exclude filter
+    // Build where clause with NOT conditions for exclude filter
     const where: Prisma.VideoWhereInput = {
       ...(platform && { platform }),
       ...(category && { category }),
@@ -35,8 +35,8 @@ export async function GET(request: NextRequest) {
       ...(search && { title: { contains: search, mode: 'insensitive' as const } }),
       collectedAt: { gte: dateThreshold },
       // Exclude Indian/SE Asian content at DB level
-      AND: EXCLUDE_KEYWORDS.map(keyword => ({
-        title: { not: { contains: keyword, mode: 'insensitive' as const } },
+      NOT: EXCLUDE_KEYWORDS.map(keyword => ({
+        title: { contains: keyword, mode: 'insensitive' as const },
       })),
     };
 
