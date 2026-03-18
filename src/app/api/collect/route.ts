@@ -88,7 +88,19 @@ export async function POST(request: NextRequest) {
       // 트렌드가 없으면 기본 드랍쉬핑 키워드 사용
       if (searchQueries.length === 0) {
         console.log('⚠️ No trends found, using default dropshipping keywords');
-        searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global, ...VIRAL_PRODUCT_KEYWORDS.korean];
+        if (targetGeo === 'KR') {
+          // 한국 수집: 한국어 키워드 우선, 글로벌은 소량
+          searchQueries = [...VIRAL_PRODUCT_KEYWORDS.korean, ...VIRAL_PRODUCT_KEYWORDS.global.slice(0, 3)];
+        } else {
+          searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global, ...VIRAL_PRODUCT_KEYWORDS.korean];
+        }
+      }
+
+      // 한국 수집 시 한국어 키워드를 앞에 배치
+      if (targetGeo === 'KR' && searchQueries.length > 0) {
+        const koreanQueries = searchQueries.filter(q => /[가-힣]/.test(q));
+        const otherQueries = searchQueries.filter(q => !/[가-힣]/.test(q));
+        searchQueries = [...koreanQueries, ...otherQueries];
       }
     }
 
@@ -96,8 +108,8 @@ export async function POST(request: NextRequest) {
 
     // ===== STEP 2: YouTube 검색 =====
     const processedVideoIds = new Set<string>();
-    const MIN_VIEWS = 50000;      // 최소 5만 조회
-    const MIN_ENGAGEMENT = 0.02; // 최소 2% 참여율 (likes/views)
+    const MIN_VIEWS = targetGeo === 'KR' ? 10000 : 50000; // 한국은 1만, 글로벌은 5만
+    const MIN_ENGAGEMENT = 0.01; // 최소 1% 참여율
 
     for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
       console.log(`\n🎬 Searching: "${query}"`);
