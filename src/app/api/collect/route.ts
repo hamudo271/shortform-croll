@@ -58,8 +58,13 @@ export async function POST(request: NextRequest) {
     let searchQueries: string[] = [];
 
     if (manualKeyword) {
-      // 수동 키워드 제공시 해당 키워드만 사용
-      searchQueries = [`${manualKeyword} unboxing shorts`, `${manualKeyword} review`];
+      // 수동 키워드: 한국어면 그대로, 영어면 suffix 추가
+      const isKorean = /[가-힣]/.test(manualKeyword);
+      if (isKorean) {
+        searchQueries = [manualKeyword, `${manualKeyword} 추천`, `${manualKeyword} 리뷰`];
+      } else {
+        searchQueries = [`${manualKeyword} unboxing shorts`, `${manualKeyword} review`];
+      }
     } else {
       // Google Trends에서 급상승 상품 트렌드 가져오기
       console.log('🔍 Fetching rising product trends from Google Trends...');
