@@ -14,15 +14,10 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^5.22.0",
-    "chart.js": "^4.5.1",
-    "date-fns": "^4.1.0",
     "google-trends-api": "^4.9.2",
     "next": "16.1.6",
-    "next-auth": "^4.24.13",
     "prisma": "^5.22.0",
-    "puppeteer": "^24.38.0",
     "react": "19.2.3",
-    "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
