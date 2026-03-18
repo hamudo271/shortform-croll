@@ -1,4 +1,4 @@
-/**
+              /**
  * YouTube Shorts Collector
  * Uses YouTube Data API v3 to fetch trending shorts
  */
@@ -74,19 +74,15 @@ export async function searchYouTubeShorts(
   if (keyword) {
     query = keyword;
   } else if (!options.query) {
-      // 상품 발굴에 최적화된 검색어 (유통업 목적)
+      // 한국 인스타 세일즈 바이럴 콘텐츠
       const productQueries = [
-        // 한국 상품 트렌드
-        '틱톡템 추천', '다이소 꿀템', '쿠팡 추천템', '올리브영 추천',
-        '쇼핑하울 shorts', '언박싱 추천', '아이디어상품 리뷰',
-        '생활용품 추천', '주방용품 추천', '인테리어 소품',
-        // 글로벌 상품 트렌드
-        'tiktokmademebuyit', 'amazon finds', 'aliexpress haul',
-        'viral products 2024', 'gadget review shorts', 'unboxing haul',
-        'must have products', 'kitchen gadgets viral', 'home gadgets',
-        // 카테고리별 상품
-        '화장품 추천 shorts', '패션 하울', '전자기기 리뷰',
-        '폰케이스 추천', '악세사리 하울', '가방 추천'
+        '인스타 바이럴 제품', '인스타 추천템', '인스타 광고 리뷰',
+        '올리브영 추천', '올리브영 신상', '화장품 추천',
+        '스킨케어 추천', '뷰티 하울', '메이크업 추천',
+        '다이소 꿀템', '가성비 꿀템', '쇼핑 하울',
+        '데일리룩 추천', '패션 하울', '악세사리 추천',
+        '쿠팡 추천', '알리 추천템', '생활용품 추천',
+        '언박싱 리뷰', '편의점 신상', '홈카페 용품',
       ];
       query = productQueries[Math.floor(Math.random() * productQueries.length)];
   }
