@@ -101,6 +101,10 @@ export async function searchYouTubeShorts(
   searchUrl.searchParams.set('regionCode', regionCode);
   searchUrl.searchParams.set('videoDuration', 'short'); // Under 4 minutes
   searchUrl.searchParams.set('publishedAfter', getRecentDate(3)); // Last 3 days (실시간)
+  // 한국 지역이면 한국어 영상 우선
+  if (regionCode === 'KR') {
+    searchUrl.searchParams.set('relevanceLanguage', 'ko');
+  }
   searchUrl.searchParams.set('key', apiKey);
 
   const searchRes = await fetch(searchUrl.toString());
@@ -178,8 +182,12 @@ export async function searchYouTubeShorts(
       const textToCheck = `${title} ${channelTitle}`;
       const isExcludedRegion = excludePatterns.some(pattern => pattern.test(textToCheck));
 
-      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터
-      if (!isLive && !isExcludedRegion && viewCount >= MIN_VIEWS) {
+      // 한국 지역에서는 한국어 제목만 허용
+      const hasKorean = /[가-힣]/.test(title);
+      const isKoreanRegionNonKorean = regionCode === 'KR' && !hasKorean;
+
+      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터 + 한국 필터
+      if (!isLive && !isExcludedRegion && !isKoreanRegionNonKorean && viewCount >= MIN_VIEWS) {
         videos.push({
           id: item.id.videoId,
           title: item.snippet.title,
