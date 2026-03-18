@@ -5,15 +5,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'i.ytimg.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i9.ytimg.com',
-      },
-      {
-        protocol: 'https',
         hostname: '*.ytimg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.tiktokcdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.tiktokcdn-us.com',
       },
     ],
     formats: ['image/avif', 'image/webp'],
