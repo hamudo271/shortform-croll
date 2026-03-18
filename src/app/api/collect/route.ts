@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
+import { searchTikTokVideos, getTikTokTrending } from '@/lib/collectors/tiktok-api';
 import {
   getRisingProductTrends,
   getDailyTrendingProducts,
@@ -233,9 +234,141 @@ export async function POST(request: NextRequest) {
       await delay(500); // Rate limiting
     }
 
+    // ===== STEP 3: 틱톡 수집 =====
+    console.log('\n🎵 Collecting TikTok videos...');
+    let tiktokCollected = 0;
+
+    try {
+      // 틱톡 트렌딩 (한국)
+      const trendingVideos = await getTikTokTrending({ count: 30 });
+      console.log(`  Found ${trendingVideos.length} trending TikTok videos`);
+
+      for (const video of trendingVideos) {
+        if (processedVideoIds.has(video.id)) continue;
+        if (video.viewCount < 10000) continue;
+        if (!/[가-힣]/.test(video.title)) continue;
+        processedVideoIds.add(video.id);
+
+        try {
+          let classification;
+          if (process.env.GEMINI_API_KEY) {
+            classification = await classifyVideo(process.env.GEMINI_API_KEY, {
+              title: video.title,
+              description: video.description,
+              authorName: video.authorName,
+            });
+          } else {
+            classification = classifyByKeywords({ title: video.title, description: video.description });
+          }
+
+          await prisma.video.upsert({
+            where: { videoId: `tiktok_${video.id}` },
+            update: {
+              title: video.title,
+              thumbnailUrl: video.thumbnailUrl,
+              viewCount: BigInt(video.viewCount),
+              likeCount: BigInt(video.likeCount),
+              commentCount: BigInt(video.commentCount),
+              shareCount: BigInt(video.shareCount),
+              category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+              targetAge: classification.targetAge,
+              tags: classification.tags,
+              country: 'KR',
+              updatedAt: new Date(),
+            },
+            create: {
+              platform: Platform.TIKTOK,
+              videoId: `tiktok_${video.id}`,
+              title: video.title,
+              description: video.description,
+              thumbnailUrl: video.thumbnailUrl,
+              videoUrl: video.videoUrl,
+              authorName: video.authorName,
+              authorUrl: `https://www.tiktok.com/@${video.authorId}`,
+              viewCount: BigInt(video.viewCount),
+              likeCount: BigInt(video.likeCount),
+              commentCount: BigInt(video.commentCount),
+              shareCount: BigInt(video.shareCount),
+              viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
+              category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+              targetAge: classification.targetAge,
+              tags: classification.tags,
+              country: 'KR',
+              publishedAt: new Date(),
+            },
+          });
+          tiktokCollected++;
+        } catch (err) {
+          console.error('TikTok save error:', err);
+        }
+      }
+    } catch (err) {
+      console.error('TikTok trending error:', err);
+      results.errors.push('TikTok trending failed');
+    }
+
+    // 틱톡 키워드 검색
+    const tiktokKeywords = [
+      '추천템', '꿀템', '올리브영', '다이소', '쇼핑하울',
+      '뷰티', '패션', '인스타 바이럴', '가성비', '언박싱',
+    ];
+    for (const kw of tiktokKeywords) {
+      try {
+        const videos = await searchTikTokVideos(kw, { count: 20 });
+        for (const video of videos) {
+          if (processedVideoIds.has(video.id)) continue;
+          if (video.viewCount < 10000) continue;
+          if (!/[가-힣]/.test(video.title)) continue;
+          processedVideoIds.add(video.id);
+
+          try {
+            const classification = classifyByKeywords({ title: video.title, description: video.description });
+
+            await prisma.video.upsert({
+              where: { videoId: `tiktok_${video.id}` },
+              update: {
+                viewCount: BigInt(video.viewCount),
+                likeCount: BigInt(video.likeCount),
+                updatedAt: new Date(),
+              },
+              create: {
+                platform: Platform.TIKTOK,
+                videoId: `tiktok_${video.id}`,
+                title: video.title,
+                description: video.description,
+                thumbnailUrl: video.thumbnailUrl,
+                videoUrl: video.videoUrl,
+                authorName: video.authorName,
+                authorUrl: `https://www.tiktok.com/@${video.authorId}`,
+                viewCount: BigInt(video.viewCount),
+                likeCount: BigInt(video.likeCount),
+                commentCount: BigInt(video.commentCount),
+                shareCount: BigInt(video.shareCount),
+                viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
+                category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+                targetAge: classification.targetAge,
+                tags: classification.tags,
+                country: 'KR',
+                publishedAt: new Date(),
+              },
+            });
+            tiktokCollected++;
+          } catch {}
+        }
+        await delay(300);
+      } catch (err) {
+        console.error(`TikTok search error for "${kw}":`, err);
+      }
+    }
+
+    console.log(`🎵 TikTok: collected ${tiktokCollected} videos`);
+
     return NextResponse.json({
       success: true,
-      results,
+      results: {
+        ...results,
+        tiktokCollected,
+      },
       searchQueries: searchQueries.slice(0, 10),
       timestamp: new Date().toISOString(),
     });
