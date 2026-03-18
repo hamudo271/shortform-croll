@@ -30,6 +30,8 @@ const EXCLUDE_PATTERNS = [
 ];
 
 function shouldExclude(title: string, authorName: string | null): boolean {
+  // 한글이 없는 영상은 전부 제외
+  if (!/[가-힣]/.test(title)) return true;
   const textToCheck = `${title} ${authorName || ''}`;
   return EXCLUDE_PATTERNS.some(pattern => pattern.test(textToCheck));
 }

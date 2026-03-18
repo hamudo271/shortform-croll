@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
   // Parse request options
   let manualKeyword: string | undefined;
-  let targetGeo = 'US'; // 기본: 미국 (드랍쉬핑 주요 시장)
+  let targetGeo = 'KR'; // 기본: 한국
 
   try {
     const body = await request.json();

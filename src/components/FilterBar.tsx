@@ -129,20 +129,6 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
             ]
           },
           {
-            value: filters.country,
-            key: 'country' as keyof FilterState,
-            options: [
-              { value: '', label: '모든 국가' },
-              { value: 'US', label: '미국' },
-              { value: 'KR', label: '대한민국' },
-              { value: 'JP', label: '일본' },
-              { value: 'GB', label: '영국' },
-              { value: 'DE', label: '독일' },
-              { value: 'CA', label: '캐나다' },
-              { value: 'AU', label: '호주' },
-            ]
-          },
-          {
             value: filters.sortBy,
             key: 'sortBy' as keyof FilterState,
             options: [
