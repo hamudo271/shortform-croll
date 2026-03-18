@@ -48,7 +48,7 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({
+    const res = NextResponse.json({
       totalCount,
       platforms,
       categories,
@@ -59,6 +59,8 @@ export async function GET() {
         likeCount: Number(v.likeCount),
       })),
     });
+    res.headers.set('Cache-Control', 's-maxage=120, stale-while-revalidate=600');
+    return res;
   } catch (error) {
     console.error('Stats error:', error);
     return NextResponse.json(

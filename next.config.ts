@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -17,9 +18,15 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 3600,
+    deviceSizes: [640, 828, 1200],
+    imageSizes: [16, 32, 64, 128],
   },
   compress: true,
   poweredByHeader: false,
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 export default nextConfig;

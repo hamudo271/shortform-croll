@@ -84,12 +84,14 @@ export async function GET(request: NextRequest) {
         commentCount: Number(video.commentCount),
       }));
 
-    return NextResponse.json({
+    const res = NextResponse.json({
       videos: filteredVideos,
       total: rawTotal,
       limit,
       offset,
     });
+    res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+    return res;
   } catch (error) {
     console.error('Error fetching videos:', error);
     return NextResponse.json(
