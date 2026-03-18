@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import VideoCard from '@/components/VideoCard';
 import VideoDetailModal from '@/components/VideoDetailModal';
 import FilterBar, { FilterState } from '@/components/FilterBar';
@@ -55,6 +56,7 @@ export default function DashboardPage() {
   const [offset, setOffset] = useState(0);
   const [stats, setStats] = useState<StatsData | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const LIMIT = 24;
 
@@ -120,6 +122,20 @@ export default function DashboardPage() {
       setLoadingMore(false);
     }
   }, [filters]);
+
+  const router = useRouter();
+
+  // Check auth
+  useEffect(() => {
+    fetch('/api/auth/me').then(r => r.json()).then(data => {
+      if (data.authenticated) setUsername(data.username);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
 
   useEffect(() => {
     fetchVideos(0, true);
@@ -232,6 +248,19 @@ export default function DashboardPage() {
                   </>
                 )}
               </button>
+
+              {/* User / Logout */}
+              {username && (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-zinc-900/60 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-600 text-zinc-400 hover:text-zinc-200 rounded-xl transition-all text-sm"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  <span className="hidden sm:inline">{username}</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
