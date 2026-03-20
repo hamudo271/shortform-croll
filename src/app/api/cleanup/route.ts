@@ -29,11 +29,34 @@ const EXCLUDE_PATTERNS = [
   /\b(malaysia|malay|singapore|singapura)\b/i,
 ];
 
+const COMMERCE_KEYWORDS = [
+  '추천','꿀템','리뷰','언박싱','하울','신상','가성비','구매','제품','상품',
+  '사용','후기','비교','순위','베스트','할인','세일','특가','핫딜',
+  '쿠팡','다이소','올리브영','알리','직구','맛집','레시피',
+  '인테리어','소품','용품','화장품','스킨케어','메이크업','향수','뷰티',
+  '패션','코디','데일리룩','악세사리','가방','신발','옷',
+  '주방','생활','전자','가젯','폰케이스','이어폰',
+  '다이어트','영양제','건강','운동','홈트','캠핑','차박','여행','호텔',
+  '육아','아기','반려','강아지','고양이','편의점','카페','디저트','빵','음식',
+  '브랜드','명품','나이키','아디다스','팝마트','레고','피규어','굿즈',
+  '광고','협찬','링크',
+];
+
+const EXCLUDE_COMMERCE = [
+  '챌린지','challenge','댄스','dance','커플','남친','여친',
+  '학교','학생','군대','게임','롤','배그','game',
+  '팬캠','fancam','직캠','콘서트','드라마','영화','스포',
+  '웃긴','몰카','prank','반응',
+];
+
 function shouldExclude(title: string, authorName: string | null): boolean {
-  // 한글이 없는 영상은 전부 제외
   if (!/[가-힣]/.test(title)) return true;
   const textToCheck = `${title} ${authorName || ''}`;
-  return EXCLUDE_PATTERNS.some(pattern => pattern.test(textToCheck));
+  if (EXCLUDE_PATTERNS.some(pattern => pattern.test(textToCheck))) return true;
+  const lower = title.toLowerCase();
+  if (EXCLUDE_COMMERCE.some(kw => lower.includes(kw))) return true;
+  if (!COMMERCE_KEYWORDS.some(kw => lower.includes(kw))) return true;
+  return false;
 }
 
 export async function POST(request: NextRequest) {
