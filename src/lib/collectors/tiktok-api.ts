@@ -19,6 +19,16 @@ export interface TikTokVideo {
 
 const TIKWM_API = 'https://www.tikwm.com/api';
 
+/** TikTok CDN 서명 URL 대신 만료 없는 프록시 URL 사용 */
+function getStableThumbnail(v: any): string {
+  const videoId = v.video_id || v.id;
+  // tikwm 프록시 URL (만료 없음)
+  if (videoId) {
+    return `https://www.tikwm.com/video/cover/${videoId}.webp`;
+  }
+  return v.cover || v.origin_cover || '';
+}
+
 /**
  * Search TikTok videos by keyword
  */
@@ -54,7 +64,7 @@ export async function searchTikTokVideos(
         id: String(v.video_id || v.id),
         title: v.title || '',
         description: v.title || '',
-        thumbnailUrl: v.cover || v.origin_cover || '',
+        thumbnailUrl: getStableThumbnail(v),
         videoUrl: `https://www.tiktok.com/@${v.author?.unique_id || 'user'}/video/${v.video_id || v.id}`,
         authorName: v.author?.nickname || v.author?.unique_id || '',
         authorId: v.author?.unique_id || '',
@@ -98,7 +108,7 @@ export async function getTikTokTrending(
         id: String(v.video_id || v.id),
         title: v.title || '',
         description: v.title || '',
-        thumbnailUrl: v.cover || v.origin_cover || '',
+        thumbnailUrl: getStableThumbnail(v),
         videoUrl: `https://www.tiktok.com/@${v.author?.unique_id || 'user'}/video/${v.video_id || v.id}`,
         authorName: v.author?.nickname || v.author?.unique_id || '',
         authorId: v.author?.unique_id || '',
