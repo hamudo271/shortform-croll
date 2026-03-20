@@ -10,35 +10,26 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const tiktokVideos = await prisma.video.findMany({
-      where: { platform: 'TIKTOK' },
-      select: { id: true, videoUrl: true, thumbnailUrl: true },
+    // 깨진 썸네일(tikwm proxy URL)을 가진 TikTok 영상 삭제
+    // 다시 수집하면 새 CDN URL을 받아옴
+    const broken = await prisma.video.findMany({
+      where: {
+        platform: 'TIKTOK',
+        thumbnailUrl: { contains: 'tikwm.com/video/cover' },
+      },
+      select: { id: true },
     });
 
-    let fixed = 0;
-
-    for (const video of tiktokVideos) {
-      // videoUrl에서 video ID 추출: .../video/1234567890
-      const match = video.videoUrl.match(/\/video\/(\d+)/);
-      if (!match) continue;
-
-      const videoId = match[1];
-      const stableUrl = `https://www.tikwm.com/video/cover/${videoId}.webp`;
-
-      // 이미 stable URL이면 스킵
-      if (video.thumbnailUrl === stableUrl) continue;
-
-      await prisma.video.update({
-        where: { id: video.id },
-        data: { thumbnailUrl: stableUrl },
+    if (broken.length > 0) {
+      await prisma.video.deleteMany({
+        where: { id: { in: broken.map(v => v.id) } },
       });
-      fixed++;
     }
 
     return NextResponse.json({
       success: true,
-      totalTiktok: tiktokVideos.length,
-      fixed,
+      deletedBroken: broken.length,
+      message: `${broken.length}개 깨진 썸네일 영상 삭제. /api/collect로 다시 수집하세요.`,
     });
   } catch (error) {
     console.error('Fix thumbnails error:', error);

@@ -19,14 +19,9 @@ export interface TikTokVideo {
 
 const TIKWM_API = 'https://www.tikwm.com/api';
 
-/** TikTok CDN 서명 URL 대신 만료 없는 프록시 URL 사용 */
+/** origin_cover가 더 안정적 (만료가 늦거나 없음), 없으면 cover 사용 */
 function getStableThumbnail(v: any): string {
-  const videoId = v.video_id || v.id;
-  // tikwm 프록시 URL (만료 없음)
-  if (videoId) {
-    return `https://www.tikwm.com/video/cover/${videoId}.webp`;
-  }
-  return v.cover || v.origin_cover || '';
+  return v.origin_cover || v.cover || '';
 }
 
 /**
