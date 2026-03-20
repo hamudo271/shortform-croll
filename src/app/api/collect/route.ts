@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
 import { searchTikTokVideos, getTikTokTrending } from '@/lib/collectors/tiktok-api';
-import { collectKoreanReels } from '@/lib/collectors/instagram-api';
+import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
 import {
   getRisingProductTrends,
   getDailyTrendingProducts,
@@ -364,14 +364,13 @@ export async function POST(request: NextRequest) {
 
     console.log(`🎵 TikTok: collected ${tiktokCollected} videos`);
 
-    // ===== STEP 4: 인스타그램 릴스 수집 =====
+    // ===== STEP 4: 인스타그램 릴스 수집 (공개 API, 키 불필요) =====
     let instagramCollected = 0;
-    const rapidApiKey = process.env.RAPIDAPI_KEY;
 
-    if (rapidApiKey) {
-      console.log('\n📷 Collecting Instagram Reels...');
+    {
+      console.log('\n📷 Collecting Instagram Reels (public API)...');
       try {
-        const { reels, errors: igErrors } = await collectKoreanReels(rapidApiKey);
+        const { reels, errors: igErrors } = await collectKoreanReelsPublic();
         console.log(`  Found ${reels.length} reels`);
 
         for (const reel of reels) {
