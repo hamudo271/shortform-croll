@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
 import { searchTikTokVideos, getTikTokTrending } from '@/lib/collectors/tiktok-api';
+import { collectKoreanReels } from '@/lib/collectors/instagram-api';
 import {
   getRisingProductTrends,
   getDailyTrendingProducts,
@@ -363,11 +364,73 @@ export async function POST(request: NextRequest) {
 
     console.log(`🎵 TikTok: collected ${tiktokCollected} videos`);
 
+    // ===== STEP 4: 인스타그램 릴스 수집 =====
+    let instagramCollected = 0;
+    const rapidApiKey = process.env.RAPIDAPI_KEY;
+
+    if (rapidApiKey) {
+      console.log('\n📷 Collecting Instagram Reels...');
+      try {
+        const { reels, errors: igErrors } = await collectKoreanReels(rapidApiKey);
+        console.log(`  Found ${reels.length} reels`);
+
+        for (const reel of reels) {
+          if (processedVideoIds.has(reel.id)) continue;
+          if (reel.viewCount < 5000) continue;
+          processedVideoIds.add(reel.id);
+
+          try {
+            const classification = classifyByKeywords({ title: reel.title, description: reel.description });
+
+            await prisma.video.upsert({
+              where: { videoId: `ig_${reel.id}` },
+              update: {
+                viewCount: BigInt(reel.viewCount),
+                likeCount: BigInt(reel.likeCount),
+                commentCount: BigInt(reel.commentCount),
+                updatedAt: new Date(),
+              },
+              create: {
+                platform: Platform.INSTAGRAM,
+                videoId: `ig_${reel.id}`,
+                title: reel.title,
+                description: reel.description,
+                thumbnailUrl: reel.thumbnailUrl,
+                videoUrl: reel.videoUrl,
+                authorName: reel.authorName,
+                authorUrl: `https://www.instagram.com/${reel.authorId}/`,
+                viewCount: BigInt(reel.viewCount),
+                likeCount: BigInt(reel.likeCount),
+                commentCount: BigInt(reel.commentCount),
+                shareCount: BigInt(reel.shareCount),
+                viralScore: reel.viewCount > 1000000 ? 90 : reel.viewCount > 100000 ? 60 : 30,
+                category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+                targetAge: classification.targetAge,
+                tags: classification.tags,
+                country: 'KR',
+                publishedAt: new Date(),
+              },
+            });
+            instagramCollected++;
+          } catch {}
+        }
+
+        if (igErrors.length > 0) {
+          results.errors.push(...igErrors.slice(0, 3));
+        }
+        console.log(`📷 Instagram: collected ${instagramCollected} reels`);
+      } catch (err) {
+        console.error('Instagram collection error:', err);
+        results.errors.push('Instagram collection failed');
+      }
+    }
+
     return NextResponse.json({
       success: true,
       results: {
         ...results,
         tiktokCollected,
+        instagramCollected,
       },
       searchQueries: searchQueries.slice(0, 10),
       timestamp: new Date().toISOString(),
