@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
@@ -29,7 +29,20 @@ interface VideoDetailModalProps {
   onClose: () => void;
 }
 
+interface AIAnalysis {
+  trendScore: number;
+  trendReason: string;
+  products: string[];
+  sentiment: 'positive' | 'neutral' | 'negative';
+  sentimentScore: number;
+  buyingIntent: number;
+  summary: string;
+}
+
 export default function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
+  const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -45,6 +58,15 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
       document.body.style.overflow = '';
     };
   }, [handleKeyDown]);
+
+  useEffect(() => {
+    setAnalyzing(true);
+    fetch(`/api/analyze?id=${video.id}`)
+      .then(r => r.json())
+      .then(d => setAnalysis(d.analysis))
+      .catch(() => {})
+      .finally(() => setAnalyzing(false));
+  }, [video.id]);
 
   const engagement = video.viewCount > 0
     ? ((video.likeCount / video.viewCount) * 100).toFixed(1)
@@ -185,6 +207,63 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
               </span>
             ))}
           </div>
+
+          {/* AI Analysis */}
+          {analyzing ? (
+            <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-700/20 animate-pulse">
+              <div className="text-xs text-zinc-500">🤖 AI 분석 중...</div>
+            </div>
+          ) : analysis && (
+            <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-700/20 space-y-3">
+              <div className="text-xs text-zinc-500 font-medium">🤖 AI 분석</div>
+
+              {/* 점수 바 */}
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <div className="text-[10px] text-zinc-500 mb-1">트렌드 점수</div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-zinc-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full" style={{ width: `${analysis.trendScore}%` }} />
+                    </div>
+                    <span className="text-xs font-bold text-cyan-400">{analysis.trendScore}</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-zinc-500 mb-1">구매 의도</div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-zinc-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-pink-500 to-rose-400 rounded-full" style={{ width: `${analysis.buyingIntent}%` }} />
+                    </div>
+                    <span className="text-xs font-bold text-rose-400">{analysis.buyingIntent}</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-zinc-500 mb-1">감성</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{analysis.sentiment === 'positive' ? '😊' : analysis.sentiment === 'negative' ? '😞' : '😐'}</span>
+                    <span className={`text-xs font-bold ${analysis.sentiment === 'positive' ? 'text-green-400' : analysis.sentiment === 'negative' ? 'text-red-400' : 'text-zinc-400'}`}>
+                      {analysis.sentimentScore}점
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 상품 감지 */}
+              {analysis.products.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="text-[10px] text-zinc-500">상품:</span>
+                  {analysis.products.map(p => (
+                    <span key={p} className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-300 rounded text-[10px] font-medium">
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* 요약 */}
+              <div className="text-xs text-zinc-400">{analysis.summary}</div>
+            </div>
+          )}
 
           {/* Description */}
           {video.description && (
