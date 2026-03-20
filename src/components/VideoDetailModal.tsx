@@ -152,9 +152,9 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
           {/* Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { label: '조회수', value: formatCount(video.viewCount), icon: '👀', color: 'text-blue-400' },
-              { label: '좋아요', value: formatCount(video.likeCount), icon: '❤️', color: 'text-pink-400' },
-              { label: '댓글', value: formatCount(video.commentCount), icon: '💬', color: 'text-emerald-400' },
+              { label: '조회수', value: video.viewCount.toLocaleString('ko-KR'), icon: '👀', color: 'text-blue-400' },
+              { label: '좋아요', value: video.likeCount.toLocaleString('ko-KR'), icon: '❤️', color: 'text-pink-400' },
+              { label: '댓글', value: video.commentCount.toLocaleString('ko-KR'), icon: '💬', color: 'text-emerald-400' },
               { label: '참여율', value: `${engagement}%`, icon: '📊', color: 'text-amber-400' },
             ].map((stat) => (
               <div key={stat.label} className="bg-zinc-800/50 rounded-xl p-3 border border-zinc-700/30">

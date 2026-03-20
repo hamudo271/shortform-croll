@@ -47,6 +47,8 @@ const EXCLUDE_COMMERCE = [
   '학교','학생','군대','게임','롤','배그','game',
   '팬캠','fancam','직캠','콘서트','드라마','영화','스포',
   '웃긴','몰카','prank','반응',
+  'manhwa','manga','만화','웹툰','bl','fyp','foryoupage',
+  'anime','애니',
 ];
 
 function shouldExclude(title: string, authorName: string | null): boolean {

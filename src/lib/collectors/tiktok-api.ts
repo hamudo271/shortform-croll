@@ -51,6 +51,8 @@ const EXCLUDE_KEYWORDS = [
   '팬캠', 'fancam', '직캠', '콘서트',
   '드라마', '영화', '예고편', '스포',
   '웃긴', '몰카', 'prank', '반응',
+  'manhwa', 'manga', '만화', '웹툰', 'bl', 'fyp', 'foryoupage',
+  'anime', '애니',
 ];
 
 function isCommerceContent(title: string): boolean {
