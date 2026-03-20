@@ -91,7 +91,7 @@ async function fetchUserReels(
       .map((item: any) => {
         const caption = item?.caption?.text || '';
         const code = item?.code || '';
-        const thumb = item?.image_versions2?.candidates?.[0]?.url || '';
+        const thumb = item?.thumbnail_url || item?.image_versions2?.candidates?.[0]?.url || item?.image_versions?.additional_items?.first_frame?.url || '';
         const author = item?.caption?.user || item?.user || {};
 
         return {

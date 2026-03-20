@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '*.tiktokcdn-us.com',
       },
+      {
+        protocol: 'https',
+        hostname: '*.cdninstagram.com',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 3600,
