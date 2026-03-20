@@ -1,9 +1,38 @@
 'use client';
 
-import { memo } from 'react';
-import Image from 'next/image';
+import { memo, useState } from 'react';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
+
+function ThumbnailImage({ src, alt, platform }: { src: string; alt: string; platform: Platform }) {
+  const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  if (!src || failed) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 bg-zinc-800/50 gap-2">
+        <span className="text-3xl">{platform === 'TIKTOK' ? '🎵' : platform === 'INSTAGRAM' ? '📷' : '▶️'}</span>
+        <span className="text-xs">썸네일 없음</span>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 bg-zinc-800 animate-pulse" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+        onError={() => setFailed(true)}
+      />
+    </>
+  );
+}
 
 interface VideoCardProps {
   id: string;
@@ -48,21 +77,11 @@ const VideoCard = memo(function VideoCard({
     >
       {/* Thumbnail */}
       <div className="relative aspect-[9/16] bg-zinc-900 border-b border-zinc-800/80 overflow-hidden">
-        {thumbnailUrl ? (
-          <Image
-            src={thumbnailUrl}
-            alt={title || 'Video thumbnail'}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-            quality={75}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-zinc-600 bg-zinc-800/50">
-            이미지 없음
-          </div>
-        )}
+        <ThumbnailImage
+          src={thumbnailUrl}
+          alt={title || 'Video thumbnail'}
+          platform={platform}
+        />
 
         {/* Top Overlay Gradient */}
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
