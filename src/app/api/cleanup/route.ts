@@ -49,6 +49,12 @@ const EXCLUDE_COMMERCE = [
   '웃긴','몰카','prank','반응',
   'manhwa','manga','만화','웹툰','bl','fyp','foryoupage',
   'anime','애니',
+  '오락실','예능','방송','프로그램','클립','편집',
+  '런닝맨','나혼자산다','놀면뭐하니','지구오락실','출장십오야',
+  '아이돌','데뷔','컴백','엠카','뮤뱅','음방',
+  '연예인','배우','가수','kpop','k-pop','idol',
+  '뉴스','정치','대통령','국회','선거',
+  '축구','야구','농구','올림픽','월드컵',
 ];
 
 function shouldExclude(title: string, authorName: string | null): boolean {
