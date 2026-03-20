@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
       select: { id: true },
     });
 
-    // 2. 빈 썸네일 영상
+    // 2. 빈 썸네일 영상 (빈 문자열)
     const emptyThumb = await prisma.video.findMany({
-      where: { OR: [{ thumbnailUrl: '' }, { thumbnailUrl: null as any }] },
+      where: { thumbnailUrl: { equals: '' } },
       select: { id: true },
     });
 
