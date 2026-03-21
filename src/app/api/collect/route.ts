@@ -328,6 +328,7 @@ export async function POST(request: NextRequest) {
             await prisma.video.upsert({
               where: { videoId: `tiktok_${video.id}` },
               update: {
+                thumbnailUrl: video.thumbnailUrl,
                 viewCount: BigInt(video.viewCount),
                 likeCount: BigInt(video.likeCount),
                 updatedAt: new Date(),
