@@ -65,3 +65,45 @@ enum Category {
   KIDS
   OTHER
 }
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  passwordHash  String
+  name          String?
+  role          Role           @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([email])
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startAt   DateTime           @default(now())
+  endAt     DateTime
+  status    SubscriptionStatus @default(ACTIVE)
+  amount    Int                @default(100000) // KRW
+  memo      String?            // 입금자명 등 어드민 메모
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@index([userId])
+  @@index([endAt])
+  @@index([status])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELED
+}

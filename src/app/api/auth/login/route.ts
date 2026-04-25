@@ -1,28 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateToken, getSessionCookieOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import {
+  generateToken,
+  getSessionCookieOptions,
+  comparePassword,
+} from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, password } = await request.json();
+    const { email, password } = await request.json();
 
-    const validUsername = process.env.AUTH_USERNAME || 'admin';
-    const validPassword = process.env.AUTH_PASSWORD || '28319jjkk';
-
-    if (username !== validUsername || password !== validPassword) {
+    if (typeof email !== 'string' || typeof password !== 'string') {
       return NextResponse.json(
-        { error: '아이디 또는 비밀번호가 틀렸습니다' },
+        { error: '이메일과 비밀번호를 입력해주세요' },
+        { status: 400 }
+      );
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: '이메일 또는 비밀번호가 올바르지 않습니다' },
         { status: 401 }
       );
     }
 
-    const token = generateToken(username);
+    const valid = await comparePassword(password, user.passwordHash);
+    if (!valid) {
+      return NextResponse.json(
+        { error: '이메일 또는 비밀번호가 올바르지 않습니다' },
+        { status: 401 }
+      );
+    }
+
+    const token = generateToken(user.id);
     const cookieOptions = getSessionCookieOptions();
 
-    const response = NextResponse.json({ success: true, username });
+    const response = NextResponse.json({
+      success: true,
+      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+    });
     response.cookies.set(cookieOptions.name, token, cookieOptions);
-
     return response;
   } catch {
-    return NextResponse.json({ error: '로그인 처리 중 오류가 발생했습니다' }, { status: 500 });
+    return NextResponse.json(
+      { error: '로그인 처리 중 오류가 발생했습니다' },
+      { status: 500 }
+    );
   }
 }

@@ -1,21 +1,87 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/**
+ * Friendly Korean SaaS palette (셀프마케팅 reference).
+ *
+ * - Light mode (default): white-ish base, slate text, multi-color accents
+ *   (emerald primary, blue/orange/yellow secondary).
+ * - Dark mode: still supported via toggle, dark slate base.
+ *
+ * The zinc-* utilities are remapped to slate values via CSS vars so existing
+ * markup adopts the new palette automatically. Brand colors are exposed as
+ * --color-emerald-* / --color-sky-* / --color-orange-* via Tailwind defaults
+ * (no need to redefine — those are stock Tailwind colors).
+ */
 @layer base {
   :root {
-    --background: #09090b; /* zinc-950 */
-    --foreground: #fafafa; /* zinc-50 */
-    --border: #27272a; /* zinc-800 */
-    --platform-youtube: #ef4444; /* red-500 */
-    --platform-tiktok: #2dd4bf; /* teal-400 */
-    --platform-instagram: #d946ef; /* fuchsia-500 */
+    /* Light mode (default) — slate scale flipped */
+    --c-zinc-50: #0f172a;   /* slate-900: heading */
+    --c-zinc-100: #1e293b;  /* slate-800 */
+    --c-zinc-200: #334155;  /* slate-700 */
+    --c-zinc-300: #475569;  /* slate-600: body */
+    --c-zinc-400: #64748b;  /* slate-500: muted */
+    --c-zinc-500: #94a3b8;  /* slate-400: subtle */
+    --c-zinc-600: #cbd5e1;  /* slate-300 */
+    --c-zinc-700: #e2e8f0;  /* slate-200: primary border */
+    --c-zinc-800: #f1f5f9;  /* slate-100: subtle bg */
+    --c-zinc-900: #f8fafc;  /* slate-50: surface */
+    --c-zinc-950: #ffffff;  /* page bg */
+
+    --background: #ffffff;
+    --foreground: #0f172a;
+
+    /* Sidebar bg — slightly cooler than main */
+    --sidebar-bg: #fafbfc;
+
+    --scrollbar-track: rgba(241, 245, 249, 0.6);
+    --scrollbar-thumb: rgba(148, 163, 184, 0.5);
+    --scrollbar-thumb-hover: rgba(100, 116, 139, 0.7);
+  }
+
+  .dark {
+    --c-zinc-50: #f8fafc;
+    --c-zinc-100: #f1f5f9;
+    --c-zinc-200: #e2e8f0;
+    --c-zinc-300: #cbd5e1;
+    --c-zinc-400: #94a3b8;
+    --c-zinc-500: #64748b;
+    --c-zinc-600: #475569;
+    --c-zinc-700: #334155;
+    --c-zinc-800: #1e293b;
+    --c-zinc-900: #0f172a;
+    --c-zinc-950: #0a0f1a;
+
+    --background: #0a0f1a;
+    --foreground: #f8fafc;
+
+    --sidebar-bg: #0d1320;
+
+    --scrollbar-track: rgba(15, 23, 42, 0.8);
+    --scrollbar-thumb: rgba(71, 85, 105, 0.6);
+    --scrollbar-thumb-hover: rgba(100, 116, 139, 0.8);
   }
 }
 
-@theme {
+@theme inline {
+  --color-zinc-50: var(--c-zinc-50);
+  --color-zinc-100: var(--c-zinc-100);
+  --color-zinc-200: var(--c-zinc-200);
+  --color-zinc-300: var(--c-zinc-300);
+  --color-zinc-400: var(--c-zinc-400);
+  --color-zinc-500: var(--c-zinc-500);
+  --color-zinc-600: var(--c-zinc-600);
+  --color-zinc-700: var(--c-zinc-700);
+  --color-zinc-800: var(--c-zinc-800);
+  --color-zinc-900: var(--c-zinc-900);
+  --color-zinc-950: var(--c-zinc-950);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-border: var(--border);
-  --font-sans: var(--font-geist-sans);
+  --color-sidebar: var(--sidebar-bg);
+
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -25,34 +91,35 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Custom Scrollbar for Webkit */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+::selection { background: rgba(16, 185, 129, 0.2); color: var(--c-zinc-50); }
+
+/* Display heading rhythm */
+.text-display {
+  letter-spacing: -0.025em;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(9, 9, 11, 0.8);
+/* Soft elevated card shadow (used on feature cards) */
+.shadow-card {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04);
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(82, 82, 91, 0.5); /* zinc-600 with opacity */
-  border-radius: 4px;
+.shadow-card-hover {
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(82, 82, 91, 0.8);
+/* Subtle gradient surface for hero/highlight backgrounds */
+.surface-soft {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
-/* Glassmorphism Utilities */
-@layer utilities {
-  .glass {
-    @apply bg-zinc-900/40 backdrop-blur-md border border-zinc-800/50 shadow-xl;
-  }
-
-  .glass-card {
-    @apply bg-zinc-900/60 backdrop-blur-sm border border-zinc-800/80 hover:border-zinc-700 transition-all duration-300;
-  }
+.dark .surface-soft {
+  background: linear-gradient(180deg, #0a0f1a 0%, #0d1320 100%);
 }

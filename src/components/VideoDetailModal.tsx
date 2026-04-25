@@ -4,6 +4,7 @@ import { useEffect, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
+import { X, Play, ExternalLink, TrendingUp, Sparkles } from '@/components/ui/Icon';
 
 interface VideoDetailModalProps {
   video: {
@@ -39,16 +40,20 @@ interface AIAnalysis {
   summary: string;
 }
 
+const PLATFORM_DOT: Record<Platform, string> = {
+  YOUTUBE: 'bg-red-500',
+  TIKTOK: 'bg-teal-400',
+  INSTAGRAM: 'bg-fuchsia-500',
+};
+
 export default function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
   const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    },
-    [onClose]
-  );
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') onClose();
+  }, [onClose]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -80,27 +85,28 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
     : '50대+'
     : null;
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(video.videoUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
       onClick={onClose}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-
-      {/* Modal */}
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-card rounded-3xl border border-zinc-700/50 shadow-2xl"
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-background border border-zinc-700 rounded-3xl shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700/50 text-zinc-400 hover:text-white transition-all"
+          className="absolute top-3 right-3 z-10 inline-flex items-center justify-center w-9 h-9 rounded-md bg-zinc-950/80 backdrop-blur-sm text-zinc-300 hover:text-zinc-100 hover:bg-zinc-900 transition-colors"
+          aria-label="닫기"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <X size={16} />
         </button>
 
         {/* Thumbnail */}
@@ -113,185 +119,173 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
               className="object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-zinc-600">
+            <div className="w-full h-full flex items-center justify-center text-zinc-500 text-sm">
               이미지 없음
             </div>
           )}
-          {/* Play overlay */}
           <a
             href={video.videoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors group"
+            className="absolute inset-0 flex items-center justify-center bg-zinc-950/40 hover:bg-zinc-950/30 transition-colors group"
+            aria-label="영상 보기"
           >
-            <div className="bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 rounded-full p-5 transition-all group-hover:scale-110">
-              <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white group-hover:scale-105 transition-transform shadow-lg">
+              <Play size={20} />
             </div>
           </a>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-5">
-          {/* Platform + Viral Score */}
-          <div className="flex items-center justify-between">
-            <span className="px-3 py-1.5 rounded-lg bg-zinc-800/80 border border-zinc-700/50 text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+        <div className="p-6 space-y-6">
+          {/* Meta row */}
+          <div className="flex items-center justify-between text-xs font-mono text-zinc-500 uppercase tracking-wider">
+            <span className="inline-flex items-center gap-2">
+              <span className={`w-1.5 h-1.5 rounded-full ${PLATFORM_DOT[video.platform]}`} />
               {PLATFORM_NAMES[video.platform]}
             </span>
             {video.viralScore > 0 && (
-              <span className="px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-sm font-bold text-amber-300 flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-                바이럴 점수: {video.viralScore > 1000 ? '999+' : Math.round(video.viralScore)}%
+              <span className="inline-flex items-center gap-1.5 text-zinc-100">
+                <TrendingUp size={11} />
+                바이럴 {video.viralScore > 1000 ? '999+' : Math.round(video.viralScore)}%
               </span>
             )}
           </div>
 
           {/* Title */}
-          <h2 className="text-lg font-bold text-white leading-snug">{video.title}</h2>
+          <h2 className="text-display text-xl sm:text-2xl font-semibold text-zinc-100 leading-tight tracking-[-0.02em]">
+            {video.title}
+          </h2>
 
           {/* Author */}
           {video.authorName && (
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-xs text-zinc-400">@</span>
+            <div className="text-sm text-zinc-400">
               {video.authorUrl ? (
                 <a
                   href={video.authorUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+                  className="hover:text-zinc-100 transition-colors inline-flex items-center gap-1"
                 >
-                  {video.authorName}
+                  @{video.authorName}
+                  <ExternalLink size={12} />
                 </a>
               ) : (
-                <span className="text-sm font-medium text-zinc-400">{video.authorName}</span>
+                <span>@{video.authorName}</span>
               )}
             </div>
           )}
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {/* Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 border border-zinc-800 rounded-lg divide-x divide-zinc-800 [&>div:nth-child(3)]:border-t [&>div:nth-child(3)]:border-zinc-800 [&>div:nth-child(4)]:border-t [&>div:nth-child(4)]:border-zinc-800 sm:[&>div:nth-child(3)]:border-t-0 sm:[&>div:nth-child(4)]:border-t-0">
             {[
-              { label: '조회수', value: video.viewCount.toLocaleString('ko-KR'), icon: '👀', color: 'text-blue-400' },
-              { label: '좋아요', value: video.likeCount.toLocaleString('ko-KR'), icon: '❤️', color: 'text-pink-400' },
-              { label: '댓글', value: video.commentCount.toLocaleString('ko-KR'), icon: '💬', color: 'text-emerald-400' },
-              { label: '참여율', value: `${engagement}%`, icon: '📊', color: 'text-amber-400' },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-zinc-800/50 rounded-xl p-3 border border-zinc-700/30">
-                <div className="text-xs text-zinc-500 mb-1">{stat.icon} {stat.label}</div>
-                <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
+              { label: '조회수', value: formatCount(video.viewCount) },
+              { label: '좋아요', value: formatCount(video.likeCount) },
+              { label: '댓글', value: formatCount(video.commentCount) },
+              { label: '참여율', value: `${engagement}%` },
+            ].map((s) => (
+              <div key={s.label} className="px-4 py-3">
+                <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono mb-1">{s.label}</div>
+                <div className="text-base font-semibold text-zinc-100 tabular-nums tracking-tight">{s.value}</div>
               </div>
             ))}
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {video.category && (
-              <span className="px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 text-purple-300 rounded-lg text-xs font-medium">
-                {CATEGORY_NAMES[video.category]}
-              </span>
-            )}
-            {ageLabel && (
-              <span className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-lg text-xs font-medium">
-                {ageLabel}
-              </span>
-            )}
-            {video.tags?.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1.5 bg-zinc-800/50 border border-zinc-700/30 text-zinc-400 rounded-lg text-xs"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
+          {(video.category || ageLabel || (video.tags && video.tags.length > 0)) && (
+            <div className="flex flex-wrap gap-1.5">
+              {video.category && (
+                <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 text-xs font-semibold rounded-full">
+                  {CATEGORY_NAMES[video.category]}
+                </span>
+              )}
+              {ageLabel && (
+                <span className="inline-flex items-center px-3 py-1 bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400 text-xs font-semibold rounded-full">
+                  {ageLabel}
+                </span>
+              )}
+              {video.tags?.map((tag) => (
+                <span key={tag} className="inline-flex items-center px-3 py-1 bg-zinc-800 text-zinc-300 text-xs rounded-full">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
 
           {/* AI Analysis */}
           {analyzing ? (
-            <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-700/20 animate-pulse">
-              <div className="text-xs text-zinc-500">🤖 AI 분석 중...</div>
+            <div className="border border-zinc-800 rounded-lg p-4">
+              <div className="text-xs text-zinc-500 inline-flex items-center gap-1.5">
+                <Sparkles size={12} className="animate-pulse" />
+                AI 분석 중...
+              </div>
             </div>
           ) : analysis && (
-            <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-700/20 space-y-3">
-              <div className="text-xs text-zinc-500 font-medium">🤖 AI 분석</div>
-
-              {/* 점수 바 */}
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <div className="text-[10px] text-zinc-500 mb-1">트렌드 점수</div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 h-2 bg-zinc-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full" style={{ width: `${analysis.trendScore}%` }} />
-                    </div>
-                    <span className="text-xs font-bold text-cyan-400">{analysis.trendScore}</span>
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-zinc-500 mb-1">구매 의도</div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 h-2 bg-zinc-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-pink-500 to-rose-400 rounded-full" style={{ width: `${analysis.buyingIntent}%` }} />
-                    </div>
-                    <span className="text-xs font-bold text-rose-400">{analysis.buyingIntent}</span>
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-zinc-500 mb-1">감성</div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{analysis.sentiment === 'positive' ? '😊' : analysis.sentiment === 'negative' ? '😞' : '😐'}</span>
-                    <span className={`text-xs font-bold ${analysis.sentiment === 'positive' ? 'text-green-400' : analysis.sentiment === 'negative' ? 'text-red-400' : 'text-zinc-400'}`}>
-                      {analysis.sentimentScore}점
-                    </span>
-                  </div>
-                </div>
+            <div className="border border-zinc-800 rounded-lg p-5 space-y-4">
+              <div className="text-xs text-zinc-500 font-mono uppercase tracking-wider inline-flex items-center gap-1.5">
+                <Sparkles size={12} />
+                AI 분석
               </div>
 
-              {/* 상품 감지 */}
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { label: '트렌드', value: analysis.trendScore },
+                  { label: '구매의도', value: analysis.buyingIntent },
+                  { label: '감성', value: analysis.sentimentScore },
+                ].map((m) => (
+                  <div key={m.label}>
+                    <div className="flex items-baseline justify-between mb-1.5">
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono">{m.label}</div>
+                      <span className="text-sm font-semibold text-zinc-100 tabular-nums">{m.value}</span>
+                    </div>
+                    <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full transition-all" style={{ width: `${m.value}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               {analysis.products.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[10px] text-zinc-500">상품:</span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono mr-1">상품</span>
                   {analysis.products.map(p => (
-                    <span key={p} className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-300 rounded text-[10px] font-medium">
+                    <span key={p} className="px-2 py-0.5 border border-zinc-700 text-xs text-zinc-300 rounded">
                       {p}
                     </span>
                   ))}
                 </div>
               )}
 
-              {/* 요약 */}
-              <div className="text-xs text-zinc-400">{analysis.summary}</div>
+              <p className="text-sm text-zinc-400 leading-relaxed">{analysis.summary}</p>
             </div>
           )}
 
           {/* Description */}
           {video.description && (
-            <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-700/20">
-              <div className="text-xs text-zinc-500 mb-2 font-medium">설명</div>
-              <p className="text-sm text-zinc-400 whitespace-pre-line line-clamp-6">
+            <div className="border-t border-zinc-800 pt-5">
+              <div className="text-xs text-zinc-500 uppercase tracking-wider font-mono mb-3">설명</div>
+              <p className="text-sm text-zinc-300 leading-relaxed whitespace-pre-line line-clamp-6">
                 {video.description}
               </p>
             </div>
           )}
 
-          {/* Action buttons */}
-          <div className="flex gap-3 pt-2">
+          {/* Actions */}
+          <div className="flex gap-2 pt-2">
             <a
               href={video.videoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 text-center px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-medium text-sm transition-all shadow-lg shadow-purple-500/20"
+              className="flex-1 inline-flex items-center justify-center gap-2 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all shadow-sm"
             >
               영상 보기
+              <ExternalLink size={14} />
             </a>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(video.videoUrl);
-              }}
-              className="px-5 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/50 text-zinc-300 rounded-xl font-medium text-sm transition-all"
+              onClick={handleCopy}
+              className="inline-flex items-center justify-center px-5 h-11 text-sm font-semibold text-zinc-100 border border-zinc-700 hover:bg-zinc-900 rounded-xl transition-colors"
             >
-              링크 복사
+              {copied ? '복사됨' : '링크 복사'}
             </button>
           </div>
         </div>
