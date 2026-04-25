@@ -34,12 +34,18 @@ interface NavGroup {
 
 const NAV: NavGroup[] = [
   {
-    label: '트렌드',
+    label: '쇼핑 트렌드',
+    badge: { label: '핵심', tone: 'green' },
+    items: [
+      { href: '/dashboard/tiktok', label: '틱톡 인기 상품', icon: TrendingUp },
+      { href: '/dashboard/instagram', label: '인스타 인기 상품', icon: TrendingUp },
+    ],
+  },
+  {
+    label: '추가 채널',
     items: [
       { href: '/dashboard', label: '전체 대시보드', icon: TrendingUp, exact: true },
       { href: '/dashboard/youtube', label: '유튜브 쇼츠' },
-      { href: '/dashboard/tiktok', label: '틱톡' },
-      { href: '/dashboard/instagram', label: '인스타 릴스' },
     ],
   },
   {

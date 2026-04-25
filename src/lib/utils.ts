@@ -88,3 +88,78 @@ export const TARGET_AGE_OPTIONS = [
   { value: '40s', label: '40대' },
   { value: '50s+', label: '50대 이상' },
 ] as const;
+
+/**
+ * Rough estimate of revenue a viral product video could drive.
+ *
+ * Heuristic:
+ *   conversion = 1% of viewers click the product link
+ *   buy_rate  = 5% of clickers buy
+ *   avg_price = 30,000 KRW (Korean small-ticket items)
+ *   engagement_boost = (likes/views) * 100, capped at 2x — proxy for trust
+ *   platform_multiplier:
+ *     - INSTAGRAM ×1.2  (high purchase intent in Korea reels)
+ *     - TIKTOK    ×1.0
+ *     - YOUTUBE   ×0.7  (more passive watching)
+ *
+ * This is intentionally rough — the user explicitly accepted "incorrect is OK".
+ */
+export function estimateRevenue(
+  viewCount: number | bigint,
+  likeCount: number | bigint,
+  platform: string
+): number {
+  const views = typeof viewCount === 'bigint' ? Number(viewCount) : viewCount;
+  const likes = typeof likeCount === 'bigint' ? Number(likeCount) : likeCount;
+
+  const platformMultiplier = platform === 'INSTAGRAM' ? 1.2 : platform === 'TIKTOK' ? 1.0 : 0.7;
+  const baseRevenue = views * 0.01 * 0.05 * 30_000;
+  const engagement = views > 0 ? Math.min(2, (likes / views) * 100) : 1;
+  const boosted = baseRevenue * Math.max(0.5, engagement) * platformMultiplier;
+  return Math.round(boosted);
+}
+
+/**
+ * Format KRW amount with Korean unit suffixes (억/만/원).
+ */
+export function formatKRW(amount: number): string {
+  if (amount >= 100_000_000) {
+    const eok = amount / 100_000_000;
+    return `${eok.toFixed(eok >= 10 ? 0 : 1).replace(/\.0$/, '')}억원`;
+  }
+  if (amount >= 10_000) {
+    const man = amount / 10_000;
+    return `${man.toFixed(0)}만원`;
+  }
+  return `${amount.toLocaleString('ko-KR')}원`;
+}
+
+/**
+ * 1688 (Chinese wholesale) search URL for a product title.
+ * The Korean title gets URL-encoded; 1688 will partially translate via its
+ * cross-border search. Not perfect — user said best-effort is fine.
+ */
+export function getWholesalerSearchUrl(productTitle: string): string {
+  const q = productTitle.replace(/#\S+/g, '').trim().slice(0, 80);
+  return `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(q)}`;
+}
+
+/**
+ * Naver Shopping search URL — where the actual seller likely lists it.
+ */
+export function getNaverShoppingSearchUrl(productTitle: string): string {
+  const q = productTitle.replace(/#\S+/g, '').trim().slice(0, 80);
+  return `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(q)}`;
+}
+
+/**
+ * Third-party video downloader URL pre-filled with the platform video URL.
+ * Each platform has a different best-fit downloader.
+ */
+export function getDownloaderUrl(videoUrl: string, platform: string): string {
+  const encoded = encodeURIComponent(videoUrl);
+  if (platform === 'TIKTOK') return `https://ssstik.io/en?url=${encoded}`;
+  if (platform === 'INSTAGRAM') return `https://snapinsta.app/?url=${encoded}`;
+  if (platform === 'YOUTUBE') return `https://en1.savefrom.net/19/?url=${encoded}`;
+  return videoUrl;
+}

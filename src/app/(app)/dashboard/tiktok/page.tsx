@@ -1,16 +1,16 @@
 import PageHeader from '@/components/app/PageHeader';
-import VideoListPage from '@/components/app/VideoListPage';
+import RankedProductList from '@/components/app/RankedProductList';
 
 export default function TikTokDashboardPage() {
   return (
-    <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-10">
+    <div className="max-w-[1200px] mx-auto px-6 sm:px-10 py-10">
       <PageHeader
-        title="바이럴"
+        title="인기 상품"
         accent="틱톡"
         emoji="🎵"
-        description="한국 틱톡에서 상품·리뷰·추천 콘텐츠만 필터링한 인기 영상."
+        description="틱톡에서 잘 팔리는 상품 순위. 클릭하면 상세 정보·도매처·판매처 링크를 볼 수 있습니다."
       />
-      <VideoListPage platform="TIKTOK" />
+      <RankedProductList platform="TIKTOK" />
     </div>
   );
 }
