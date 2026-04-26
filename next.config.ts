@@ -4,22 +4,18 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.ytimg.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.tiktokcdn.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.tiktokcdn-us.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.cdninstagram.com',
-      },
+      // YouTube
+      { protocol: 'https', hostname: '*.ytimg.com' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
+      { protocol: 'https', hostname: '*.youtube.com' },
+      // TikTok (multiple regions/CDNs)
+      { protocol: 'https', hostname: '*.tiktokcdn.com' },
+      { protocol: 'https', hostname: '*.tiktokcdn-us.com' },
+      { protocol: 'https', hostname: '*.tiktok-cdn.com' },
+      { protocol: 'https', hostname: '*.tiktokv.com' },
+      // Instagram (uses cdninstagram.com AND Meta's fbcdn.net)
+      { protocol: 'https', hostname: '*.cdninstagram.com' },
+      { protocol: 'https', hostname: '*.fbcdn.net' },
     ],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 3600,

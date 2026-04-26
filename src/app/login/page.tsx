@@ -33,7 +33,7 @@ function LoginForm() {
     } finally { setLoading(false); }
   };
 
-  const inputCls = 'w-full h-11 px-4 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all';
+  const inputCls = 'w-full h-11 px-4 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all';
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -66,14 +66,14 @@ function LoginForm() {
 
       <button
         type="submit" disabled={loading}
-        className="w-full inline-flex items-center justify-center gap-2 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 rounded-xl transition-all shadow-sm"
+        className="w-full inline-flex items-center justify-center gap-2 h-11 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 disabled:opacity-50 rounded-xl transition-all shadow-sm"
       >
         {loading ? '로그인 중...' : (<>로그인 <ArrowRight size={14} /></>)}
       </button>
 
       <p className="text-center text-sm text-zinc-400 pt-2">
         계정이 없으신가요?{' '}
-        <Link href="/signup" className="text-emerald-700 dark:text-emerald-400 hover:underline underline-offset-4 font-semibold">
+        <Link href="/signup" className="text-blue-700 dark:text-blue-400 hover:underline underline-offset-4 font-semibold">
           회원가입
         </Link>
       </p>
@@ -87,7 +87,7 @@ export default function LoginPage() {
       <header className="border-b border-zinc-700">
         <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-base font-bold tracking-[-0.02em] text-zinc-50 hover:opacity-80 transition-opacity">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 text-white text-sm font-bold shadow-sm">V</span>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 text-white text-sm font-bold shadow-sm">V</span>
             <span>바이럴 쇼츠</span>
           </Link>
         </div>
@@ -96,7 +96,7 @@ export default function LoginPage() {
       <main className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-[400px] bg-zinc-950 border border-zinc-700 rounded-3xl p-8 sm:p-10 shadow-card">
           <div className="mb-8 text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white mb-4 shadow-sm">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 text-white mb-4 shadow-sm">
               <User size={24} strokeWidth={2.25} />
             </div>
             <h1 className="text-display text-2xl sm:text-3xl font-bold text-zinc-50 tracking-[-0.025em] mb-2">

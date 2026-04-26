@@ -7,7 +7,7 @@ const CATEGORIES = [
   { key: 'FOOD', label: '식품', emoji: '🍱', color: 'from-orange-400 to-red-500' },
   { key: 'FASHION', label: '패션', emoji: '👗', color: 'from-purple-400 to-fuchsia-500' },
   { key: 'ELECTRONICS', label: '전자기기', emoji: '🎧', color: 'from-blue-400 to-indigo-500' },
-  { key: 'LIFESTYLE', label: '라이프', emoji: '🏠', color: 'from-emerald-400 to-teal-500' },
+  { key: 'LIFESTYLE', label: '라이프', emoji: '🏠', color: 'from-sky-400 to-blue-600' },
   { key: 'HEALTH', label: '헬스/피트니스', emoji: '💪', color: 'from-cyan-400 to-blue-500' },
   { key: 'KIDS', label: '키즈/육아', emoji: '🧸', color: 'from-amber-400 to-yellow-500' },
 ];

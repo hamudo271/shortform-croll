@@ -77,9 +77,9 @@ interface Props {
 }
 
 const BADGE_STYLES: Record<Badge['tone'], string> = {
-  green: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30',
+  green: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30',
   yellow: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30',
-  blue: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:border-sky-500/30',
+  blue: 'bg-sky-50 text-blue-700 border-sky-200 dark:bg-sky-500/10 dark:text-blue-400 dark:border-sky-500/30',
   gray: 'bg-zinc-800 text-zinc-400 border-zinc-700',
 };
 
@@ -139,7 +139,7 @@ export default function Sidebar({ user }: Props) {
       {/* Top — logo + collapse toggle */}
       <div className="h-16 px-3 flex items-center justify-between border-b border-zinc-700 shrink-0">
         <Link href="/" className="flex items-center gap-2 min-w-0 group">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shrink-0 shadow-sm">
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white shrink-0 shadow-sm">
             <span className="text-base font-bold">V</span>
           </span>
           {!collapsed && (
@@ -185,7 +185,7 @@ export default function Sidebar({ user }: Props) {
                       href={item.href}
                       className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
                         active
-                          ? 'bg-emerald-50 text-emerald-700 font-semibold dark:bg-emerald-500/10 dark:text-emerald-400'
+                          ? 'bg-blue-50 text-blue-700 font-semibold dark:bg-blue-500/10 dark:text-blue-400'
                           : 'text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800'
                       } ${collapsed ? 'justify-center' : ''}`}
                       title={collapsed ? item.label : undefined}

@@ -11,6 +11,7 @@ import {
   PLATFORM_NAMES,
 } from '@/lib/utils';
 import { ChevronDown, ChevronRight, Refresh, TrendingUp, Eye, Heart } from '@/components/ui/Icon';
+import SafeThumbnail from '@/components/ui/SafeThumbnail';
 
 interface Video {
   id: string;
@@ -116,7 +117,7 @@ export default function RankedProductList({ platform }: Props) {
         <button
           onClick={handleRefresh}
           disabled={loading || scraping}
-          className="inline-flex items-center gap-1.5 px-4 h-10 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 rounded-lg transition-all shadow-sm"
+          className="inline-flex items-center gap-1.5 px-4 h-10 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 disabled:opacity-50 rounded-lg transition-all shadow-sm"
         >
           <Refresh size={14} className={scraping ? 'animate-spin' : ''} />
           {scraping ? '수집 중...' : '새로고침'}
@@ -124,7 +125,7 @@ export default function RankedProductList({ platform }: Props) {
       </div>
 
       {scrapingStatus && (
-        <div className="bg-emerald-50 border border-emerald-200 dark:bg-emerald-500/10 dark:border-emerald-500/30 rounded-lg px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+        <div className="bg-blue-50 border border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/30 rounded-lg px-4 py-2.5 text-sm text-blue-700 dark:text-blue-400 flex items-center gap-2">
           {scraping && <Refresh size={12} className="animate-spin" />}
           {scrapingStatus}
         </div>
@@ -150,7 +151,7 @@ export default function RankedProductList({ platform }: Props) {
           <button
             onClick={handleRefresh}
             disabled={scraping}
-            className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 rounded-xl transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 disabled:opacity-50 rounded-xl transition-all shadow-sm"
           >
             <Refresh size={14} className={scraping ? 'animate-spin' : ''} />
             {scraping ? '수집 중' : '데이터 수집하기'}
@@ -168,7 +169,7 @@ export default function RankedProductList({ platform }: Props) {
               <Link
                 key={video.id + video.videoId}
                 href={`/dashboard/${PLATFORM_PATH[video.platform]}/${video.id}`}
-                className="group flex items-center gap-4 sm:gap-5 bg-zinc-950 border border-zinc-700 hover:border-emerald-500 rounded-2xl p-4 sm:p-5 shadow-card hover:shadow-card-hover transition-all"
+                className="group flex items-center gap-4 sm:gap-5 bg-zinc-950 border border-zinc-700 hover:border-blue-500 rounded-2xl p-4 sm:p-5 shadow-card hover:shadow-card-hover transition-all"
               >
                 {/* Rank badge */}
                 <div className={`shrink-0 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl text-lg sm:text-xl font-bold border-2 ${rankClass(rank)}`}>
@@ -176,19 +177,14 @@ export default function RankedProductList({ platform }: Props) {
                 </div>
 
                 {/* Thumbnail */}
-                <div className="shrink-0 w-14 h-20 sm:w-16 sm:h-24 rounded-lg overflow-hidden bg-zinc-800 relative">
-                  {video.thumbnailUrl ? (
-                    <img
-                      src={video.thumbnailUrl}
-                      alt=""
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-zinc-500 text-[9px]">
-                      이미지 없음
-                    </div>
-                  )}
+                <div className="shrink-0 w-14 h-20 sm:w-16 sm:h-24 rounded-lg overflow-hidden bg-zinc-900 relative">
+                  <SafeThumbnail
+                    src={video.thumbnailUrl}
+                    alt={video.title || ''}
+                    platform={video.platform}
+                    fallbackIconSize={24}
+                    noShimmer
+                  />
                 </div>
 
                 {/* Title + meta */}
@@ -215,7 +211,7 @@ export default function RankedProductList({ platform }: Props) {
                       </span>
                     )}
                     {video.category && (
-                      <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 font-semibold">
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 font-semibold">
                         {CATEGORY_NAMES[video.category]}
                       </span>
                     )}
@@ -225,12 +221,12 @@ export default function RankedProductList({ platform }: Props) {
                 {/* Revenue + chevron */}
                 <div className="shrink-0 hidden sm:flex flex-col items-end gap-1">
                   <div className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">예상 매출</div>
-                  <div className="text-display text-lg sm:text-xl font-bold text-emerald-700 dark:text-emerald-400 tabular-nums tracking-[-0.02em]">
+                  <div className="text-display text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-400 tabular-nums tracking-[-0.02em]">
                     {formatKRW(revenue)}
                   </div>
                 </div>
 
-                <ChevronRight size={20} className="shrink-0 text-zinc-400 group-hover:text-emerald-500 transition-colors" />
+                <ChevronRight size={20} className="shrink-0 text-zinc-400 group-hover:text-blue-500 transition-colors" />
               </Link>
             );
           })}

@@ -112,7 +112,15 @@ body {
 }
 
 .shadow-card-hover {
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 12px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.12);
+}
+
+.dark .shadow-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-card-hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 24px 48px rgba(16, 185, 129, 0.15);
 }
 
 /* Subtle gradient surface for hero/highlight backgrounds */
@@ -122,4 +130,51 @@ body {
 
 .dark .surface-soft {
   background: linear-gradient(180deg, #0a0f1a 0%, #0d1320 100%);
+}
+
+/* Hero card animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes badgePop {
+  0%   { transform: scale(0.6) rotate(-15deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.animate-float-slow {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+.animate-badge-pop {
+  animation: badgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-fade-up,
+  .animate-shimmer,
+  .animate-badge-pop {
+    animation: none !important;
+  }
 }

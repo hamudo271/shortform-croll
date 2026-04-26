@@ -42,17 +42,32 @@ const KOREAN_ACCOUNTS = [
 
 async function fetchUserReels(username: string): Promise<InstagramReel[]> {
   try {
+    // Instagram now enforces Sec-Fetch-* policy on its private web API.
+    // We mimic a browser fetch from the user's own profile page —
+    // tested 2026-04, returns 200 with reels payload.
     const res = await fetch(
       `https://www.instagram.com/api/v1/users/web_profile_info/?username=${username}`,
       {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+          'Accept': '*/*',
+          'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
           'X-IG-App-ID': IG_APP_ID,
+          'X-IG-WWW-Claim': '0',
+          'X-ASBD-ID': '129477',
+          'Sec-Fetch-Dest': 'empty',
+          'Sec-Fetch-Mode': 'cors',
+          'Sec-Fetch-Site': 'same-origin',
+          'Referer': `https://www.instagram.com/${username}/`,
         },
       }
     );
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error(`IG @${username}: HTTP ${res.status}`);
+      return [];
+    }
 
     const data = await res.json();
     const user = data?.data?.user;

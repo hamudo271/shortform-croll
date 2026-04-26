@@ -13,7 +13,7 @@ export default function PageHeader({ title, accent, emoji, description, children
         <h1 className="text-display text-2xl sm:text-3xl font-bold text-zinc-50 tracking-[-0.02em] leading-tight">
           {accent ? (
             <>
-              <span className="text-emerald-500">{accent}</span>{' '}
+              <span className="text-blue-500">{accent}</span>{' '}
             </>
           ) : null}
           {title}

@@ -31,7 +31,7 @@ export default function CategoryChart({ categories }: CategoryChartProps) {
             </div>
             <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-gradient-to-r from-sky-400 to-blue-600 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${pct}%` }}
               />
             </div>

@@ -1,9 +1,10 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
 import { Eye, Heart, TrendingUp } from '@/components/ui/Icon';
+import SafeThumbnail from '@/components/ui/SafeThumbnail';
 
 const PLATFORM_DOT: Record<Platform, string> = {
   YOUTUBE: 'bg-red-500',
@@ -16,32 +17,6 @@ const PLATFORM_BADGE: Record<Platform, string> = {
   TIKTOK: 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30',
   INSTAGRAM: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:border-fuchsia-500/30',
 };
-
-function ThumbnailImage({ src, alt }: { src: string; alt: string }) {
-  const [failed, setFailed] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  if (!src || failed) {
-    return (
-      <div className="w-full h-full flex items-center justify-center text-zinc-400 bg-zinc-800 text-xs">
-        썸네일 없음
-      </div>
-    );
-  }
-
-  return (
-    <>
-      {!loaded && <div className="absolute inset-0 bg-zinc-800" />}
-      <img
-        src={src} alt={alt}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-        loading="lazy" decoding="async"
-        onLoad={() => setLoaded(true)}
-        onError={() => setFailed(true)}
-      />
-    </>
-  );
-}
 
 interface VideoCardProps {
   id: string;
@@ -70,15 +45,15 @@ const VideoCard = memo(function VideoCard({
       style={{ contain: 'layout paint' }}
     >
       <div className="relative aspect-[9/16] bg-zinc-800 overflow-hidden">
-        <ThumbnailImage src={thumbnailUrl} alt={title || 'Video thumbnail'} />
+        <SafeThumbnail src={thumbnailUrl} alt={title || 'Video thumbnail'} platform={platform} fallbackIconSize={48} />
 
-        <div className={`absolute top-2 left-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${PLATFORM_BADGE[platform]}`}>
+        <div className={`absolute top-2 left-2 z-10 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${PLATFORM_BADGE[platform]}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${PLATFORM_DOT[platform]}`} />
           {PLATFORM_NAMES[platform].split(' ')[0]}
         </div>
 
         {viralScore > 0 && (
-          <div className="absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[10px] font-bold shadow-sm">
+          <div className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[10px] font-bold shadow-sm">
             <TrendingUp size={10} strokeWidth={2.5} />
             {viralScore > 1000 ? '999+' : Math.round(viralScore)}%
           </div>
@@ -108,7 +83,7 @@ const VideoCard = memo(function VideoCard({
         {(category || targetAge) && (
           <div className="flex flex-wrap gap-1.5 mt-auto pt-2 border-t border-zinc-700">
             {category && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 text-[10px] font-semibold">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 text-[10px] font-semibold">
                 {CATEGORY_NAMES[category]}
               </span>
             )}

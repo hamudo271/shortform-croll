@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useCallback, useState } from 'react';
-import Image from 'next/image';
 import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
 import { X, Play, ExternalLink, TrendingUp, Sparkles } from '@/components/ui/Icon';
+import SafeThumbnail from '@/components/ui/SafeThumbnail';
 
 interface VideoDetailModalProps {
   video: {
@@ -111,18 +111,13 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
 
         {/* Thumbnail */}
         <div className="relative w-full aspect-video bg-zinc-900 rounded-t-3xl overflow-hidden">
-          {video.thumbnailUrl ? (
-            <Image
-              src={video.thumbnailUrl}
-              alt={video.title}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-zinc-500 text-sm">
-              이미지 없음
-            </div>
-          )}
+          <SafeThumbnail
+            src={video.thumbnailUrl}
+            alt={video.title}
+            platform={video.platform}
+            fallbackIconSize={72}
+            eager
+          />
           <a
             href={video.videoUrl}
             target="_blank"
@@ -130,7 +125,7 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
             className="absolute inset-0 flex items-center justify-center bg-zinc-950/40 hover:bg-zinc-950/30 transition-colors group"
             aria-label="영상 보기"
           >
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white group-hover:scale-105 transition-transform shadow-lg">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 text-white group-hover:scale-105 transition-transform shadow-lg">
               <Play size={20} />
             </div>
           </a>
@@ -195,12 +190,12 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
           {(video.category || ageLabel || (video.tags && video.tags.length > 0)) && (
             <div className="flex flex-wrap gap-1.5">
               {video.category && (
-                <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 text-xs font-semibold rounded-full">
+                <span className="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 text-xs font-semibold rounded-full">
                   {CATEGORY_NAMES[video.category]}
                 </span>
               )}
               {ageLabel && (
-                <span className="inline-flex items-center px-3 py-1 bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400 text-xs font-semibold rounded-full">
+                <span className="inline-flex items-center px-3 py-1 bg-sky-50 text-blue-700 dark:bg-sky-500/10 dark:text-blue-400 text-xs font-semibold rounded-full">
                   {ageLabel}
                 </span>
               )}
@@ -239,7 +234,7 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
                       <span className="text-sm font-semibold text-zinc-100 tabular-nums">{m.value}</span>
                     </div>
                     <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full transition-all" style={{ width: `${m.value}%` }} />
+                      <div className="h-full bg-gradient-to-r from-sky-400 to-blue-600 rounded-full transition-all" style={{ width: `${m.value}%` }} />
                     </div>
                   </div>
                 ))}
@@ -276,7 +271,7 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
               href={video.videoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all shadow-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 h-11 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-xl transition-all shadow-sm"
             >
               영상 보기
               <ExternalLink size={14} />

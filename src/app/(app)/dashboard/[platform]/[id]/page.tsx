@@ -19,6 +19,7 @@ import {
   Play,
   TrendingUp,
 } from '@/components/ui/Icon';
+import SafeThumbnail from '@/components/ui/SafeThumbnail';
 import { Platform } from '@prisma/client';
 
 const PLATFORM_FROM_PARAM: Record<string, Platform> = {
@@ -69,18 +70,13 @@ export default async function ProductDetailPage({
         {/* Left: thumbnail + play */}
         <div className="space-y-4">
           <div className="relative aspect-[9/16] bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-700 shadow-card">
-            {video.thumbnailUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={video.thumbnailUrl}
-                alt={video.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-zinc-500 text-sm">
-                이미지 없음
-              </div>
-            )}
+            <SafeThumbnail
+              src={video.thumbnailUrl}
+              alt={video.title}
+              platform={video.platform}
+              fallbackIconSize={88}
+              eager
+            />
             <a
               href={video.videoUrl}
               target="_blank"
@@ -88,15 +84,15 @@ export default async function ProductDetailPage({
               className="absolute inset-0 flex items-center justify-center bg-zinc-950/40 hover:bg-zinc-950/30 transition-colors group"
               aria-label="원본 영상 재생"
             >
-              <span className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white group-hover:scale-105 transition-transform shadow-2xl">
+              <span className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 text-white group-hover:scale-105 transition-transform shadow-2xl">
                 <Play size={28} />
               </span>
             </a>
           </div>
 
           {/* Estimated revenue (mobile-prominent) */}
-          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-500/5 dark:to-teal-500/5 border border-emerald-200 dark:border-emerald-500/20 rounded-2xl p-5 shadow-card">
-            <div className="text-[10px] uppercase tracking-[0.18em] font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
+          <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-200 dark:border-blue-500/20 rounded-2xl p-5 shadow-card">
+            <div className="text-[10px] uppercase tracking-[0.18em] font-semibold text-blue-700 dark:text-blue-400 mb-2">
               예상 매출
             </div>
             <div className="text-display text-3xl sm:text-4xl font-bold text-zinc-50 tracking-[-0.025em]">
@@ -121,7 +117,7 @@ export default async function ProductDetailPage({
                 {platformName}
               </span>
               {video.category && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/30">
                   {CATEGORY_NAMES[video.category]}
                 </span>
               )}
@@ -134,7 +130,7 @@ export default async function ProductDetailPage({
                 작성자{' '}
                 {video.authorUrl ? (
                   <a href={video.authorUrl} target="_blank" rel="noopener noreferrer"
-                    className="text-zinc-100 hover:text-emerald-500 transition-colors font-medium">
+                    className="text-zinc-100 hover:text-blue-500 transition-colors font-medium">
                     @{video.authorName}
                   </a>
                 ) : (
@@ -166,14 +162,14 @@ export default async function ProductDetailPage({
 
           {/* Action buttons (the main "user wants this" block) */}
           <div className="space-y-3">
-            <h2 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-[0.18em]">바로가기</h2>
+            <h2 className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em]">바로가기</h2>
 
             {/* Video download */}
             <a
               href={downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-emerald-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
+              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-blue-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
             >
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white shrink-0 shadow-sm">
                 <Play size={20} />
@@ -182,7 +178,7 @@ export default async function ProductDetailPage({
                 <div className="text-base font-semibold text-zinc-50 tracking-tight">영상 다운로드</div>
                 <div className="text-xs text-zinc-400 mt-0.5">3rd-party 다운로더로 이동 (URL 자동 입력)</div>
               </div>
-              <ExternalLink size={18} className="text-zinc-400 group-hover:text-emerald-500 transition-colors shrink-0" />
+              <ExternalLink size={18} className="text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
             </a>
 
             {/* Wholesaler — 1688 */}
@@ -190,7 +186,7 @@ export default async function ProductDetailPage({
               href={wholesalerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-emerald-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
+              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-blue-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
             >
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-red-600 text-white shrink-0 shadow-sm font-bold text-sm">
                 1688
@@ -199,7 +195,7 @@ export default async function ProductDetailPage({
                 <div className="text-base font-semibold text-zinc-50 tracking-tight">도매처 바로가기</div>
                 <div className="text-xs text-zinc-400 mt-0.5">중국 1688 도매 사이트에서 같은 상품 검색</div>
               </div>
-              <ExternalLink size={18} className="text-zinc-400 group-hover:text-emerald-500 transition-colors shrink-0" />
+              <ExternalLink size={18} className="text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
             </a>
 
             {/* Seller link — Naver Shopping */}
@@ -207,7 +203,7 @@ export default async function ProductDetailPage({
               href={sellerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-emerald-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
+              className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-blue-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
             >
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 text-white shrink-0 shadow-sm font-bold text-sm">
                 N
@@ -216,7 +212,7 @@ export default async function ProductDetailPage({
                 <div className="text-base font-semibold text-zinc-50 tracking-tight">해당 상품 바로보기</div>
                 <div className="text-xs text-zinc-400 mt-0.5">네이버 쇼핑에서 판매자/판매 링크 검색</div>
               </div>
-              <ExternalLink size={18} className="text-zinc-400 group-hover:text-emerald-500 transition-colors shrink-0" />
+              <ExternalLink size={18} className="text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
             </a>
 
             <p className="text-[11px] text-zinc-500 leading-relaxed pt-2">

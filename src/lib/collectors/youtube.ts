@@ -188,11 +188,10 @@ export async function searchYouTubeShorts(
           id: item.id.videoId,
           title: item.snippet.title,
           description: item.snippet.description,
-          thumbnailUrl:
-            item.snippet.thumbnails.high?.url ||
-            item.snippet.thumbnails.medium?.url ||
-            item.snippet.thumbnails.default?.url ||
-            '',
+          // YouTube CDN 직링크 — `i.ytimg.com/vi/<id>/hqdefault.jpg`는 영구 URL이라
+          // signed URL 만료 문제가 없음. API 응답의 thumbnails.*.url도 같은 호스트지만
+          // 종종 쿼리 파라미터가 붙어 캐시 키가 어긋나므로 표준 형식으로 통일.
+          thumbnailUrl: getYouTubeThumbnailUrl(item.id.videoId),
           channelTitle: item.snippet.channelTitle,
           channelId: item.snippet.channelId,
           publishedAt: item.snippet.publishedAt,
@@ -274,4 +273,12 @@ export function getYouTubeVideoUrl(videoId: string): string {
  */
 export function getYouTubeChannelUrl(channelId: string): string {
   return `https://www.youtube.com/channel/${channelId}`;
+}
+
+/**
+ * Permanent YouTube thumbnail URL (no signed params, never expires).
+ * `hqdefault.jpg` is 480x360 — works for both regular and Shorts videos.
+ */
+export function getYouTubeThumbnailUrl(videoId: string): string {
+  return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 }

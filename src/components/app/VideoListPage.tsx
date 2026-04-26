@@ -147,7 +147,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
             <button
               onClick={handleRefreshData}
               disabled={loading || scraping}
-              className="inline-flex items-center gap-1.5 px-4 h-10 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 rounded-lg transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 h-10 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 disabled:opacity-50 rounded-lg transition-all shadow-sm"
             >
               <Refresh size={14} className={scraping ? 'animate-spin' : ''} />
               {scraping ? '수집 중...' : '새로고침'}
@@ -156,7 +156,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
         </div>
 
         {scrapingStatus && (
-          <div className="bg-emerald-50 border border-emerald-200 dark:bg-emerald-500/10 dark:border-emerald-500/30 rounded-lg px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+          <div className="bg-blue-50 border border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/30 rounded-lg px-4 py-2.5 text-sm text-blue-700 dark:text-blue-400 flex items-center gap-2">
             {scraping && <Refresh size={12} className="animate-spin" />}
             {scrapingStatus}
           </div>
@@ -185,7 +185,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
               <button
                 onClick={handleRefreshData}
                 disabled={scraping}
-                className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 rounded-xl transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 disabled:opacity-50 rounded-xl transition-all shadow-sm"
               >
                 <Refresh size={14} className={scraping ? 'animate-spin' : ''} />
                 {scraping ? '수집 중' : '데이터 수집하기'}

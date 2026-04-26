@@ -37,11 +37,11 @@ export default async function PricingPage() {
       <div className="max-w-[1100px] mx-auto px-6 sm:px-10 py-10 sm:py-14 space-y-16">
         {/* Hero */}
         <section className="text-center">
-          <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-[0.18em] mb-4">
+          <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-4">
             요금제
           </div>
           <h1 className="text-display text-3xl sm:text-5xl font-bold text-zinc-50 leading-tight tracking-[-0.025em] mb-4">
-            한 가지 플랜, <span className="text-emerald-500">모든 기능</span> 포함 ✨
+            한 가지 플랜, <span className="text-blue-500">모든 기능</span> 포함 ✨
           </h1>
           <p className="text-base sm:text-lg text-zinc-400">
             자동 갱신 없이 필요할 때만 결제하세요.
@@ -51,7 +51,7 @@ export default async function PricingPage() {
         {/* Pricing card */}
         <section>
           <div className="max-w-md mx-auto bg-zinc-950 border border-zinc-700 rounded-3xl p-8 sm:p-10 shadow-card">
-            <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-[0.18em] mb-3">
+            <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-3">
               단일 플랜
             </div>
             <div className="flex items-baseline gap-2 mb-2">
@@ -65,7 +65,7 @@ export default async function PricingPage() {
             <ul className="space-y-3 mb-8">
               {INCLUDED.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm text-zinc-200 leading-relaxed">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 mt-0.5 shrink-0">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 mt-0.5 shrink-0">
                     <Check size={12} strokeWidth={3} />
                   </span>
                   <span>{item}</span>
@@ -75,7 +75,7 @@ export default async function PricingPage() {
 
             <Link
               href={ctaHref}
-              className="inline-flex w-full items-center justify-center gap-1.5 h-12 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all shadow-sm"
+              className="inline-flex w-full items-center justify-center gap-1.5 h-12 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-xl transition-all shadow-sm"
             >
               <PlusCircle size={15} strokeWidth={2.25} />
               {ctaLabel}
@@ -86,11 +86,11 @@ export default async function PricingPage() {
         {/* Payment process */}
         <section>
           <div className="text-center mb-10">
-            <div className="text-xs font-semibold text-sky-700 dark:text-sky-400 uppercase tracking-[0.18em] mb-4">
+            <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-4">
               결제 방식
             </div>
             <h2 className="text-display text-2xl sm:text-3xl font-bold text-zinc-50 tracking-[-0.02em] mb-3">
-              현재는 <span className="text-sky-500">수동 승인</span> 방식 💳
+              현재는 <span className="text-blue-500">수동 승인</span> 방식 💳
             </h2>
             <p className="text-base text-zinc-400 max-w-2xl mx-auto">
               카드 결제(PG)는 준비 중입니다. 그동안은 계좌 입금 후 관리자가 직접 활성화해 드립니다.
@@ -141,16 +141,16 @@ export default async function PricingPage() {
 
         {/* Final CTA */}
         <section>
-          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-500/5 dark:to-teal-500/5 border border-emerald-200 dark:border-emerald-500/20 rounded-3xl p-8 sm:p-12 text-center">
+          <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-200 dark:border-blue-500/20 rounded-3xl p-8 sm:p-12 text-center">
             <h2 className="text-display text-3xl sm:text-4xl font-bold text-zinc-50 tracking-[-0.025em] mb-4">
-              지금 <span className="text-emerald-500">시작</span>하세요 🚀
+              지금 <span className="text-blue-500">시작</span>하세요 🚀
             </h2>
             <p className="text-base sm:text-lg text-zinc-400 mb-8 max-w-md mx-auto">
               가입은 무료입니다. 결제 안내는 가입 직후 안내됩니다.
             </p>
             <Link
               href={ctaHref}
-              className="inline-flex items-center justify-center gap-1.5 px-7 h-12 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 px-7 h-12 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-xl transition-all shadow-sm"
             >
               <PlusCircle size={15} strokeWidth={2.25} />
               {ctaLabel}

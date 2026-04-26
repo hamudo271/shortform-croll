@@ -32,13 +32,13 @@ export default async function AccountPage() {
 
       {/* Subscription */}
       <section>
-        <h2 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-[0.18em] mb-4">구독 상태</h2>
+        <h2 className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-4">구독 상태</h2>
 
         {user.hasActiveSubscription ? (
           <div className="bg-zinc-950 border border-zinc-700 rounded-2xl p-7 sm:p-8 shadow-card">
             <div className="flex items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-400 text-xs font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 dark:bg-blue-500/10 dark:border-blue-500/30 dark:text-blue-400 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                 활성
               </span>
               <span className="text-sm text-zinc-400">{remaining}일 남음</span>
@@ -57,7 +57,7 @@ export default async function AccountPage() {
             </div>
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-xl transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-5 h-11 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-xl transition-all shadow-sm"
             >
               <PlusCircle size={14} strokeWidth={2.25} />
               대시보드로 이동
@@ -85,8 +85,8 @@ export default async function AccountPage() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-500/5 dark:to-teal-500/5 border border-emerald-200 dark:border-emerald-500/20 rounded-2xl p-7 sm:p-8 shadow-card">
-              <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-[0.18em] mb-5">입금 안내</div>
+            <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-200 dark:border-blue-500/20 rounded-2xl p-7 sm:p-8 shadow-card">
+              <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-5">입금 안내</div>
               <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm">
                 <div className="text-zinc-400">계좌</div>
                 <div className="text-zinc-50 font-semibold">관리자 문의</div>
@@ -95,7 +95,7 @@ export default async function AccountPage() {
                 <div className="text-zinc-400">금액</div>
                 <div className="text-zinc-50 font-semibold">{formatKRW(SUBSCRIPTION_PRICE_KRW)}</div>
               </div>
-              <p className="text-xs text-zinc-400 leading-relaxed pt-5 mt-5 border-t border-emerald-200 dark:border-emerald-500/20">
+              <p className="text-xs text-zinc-400 leading-relaxed pt-5 mt-5 border-t border-blue-200 dark:border-blue-500/20">
                 입금 확인 후 관리자가 구독을 {SUBSCRIPTION_DAYS}일간 활성화합니다.
               </p>
             </div>
@@ -105,7 +105,7 @@ export default async function AccountPage() {
 
       {/* Account info */}
       <section>
-        <h2 className="text-xs font-semibold text-sky-700 dark:text-sky-400 uppercase tracking-[0.18em] mb-4">계정 정보</h2>
+        <h2 className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-4">계정 정보</h2>
         <div className="bg-zinc-950 border border-zinc-700 rounded-2xl divide-y divide-zinc-700 shadow-card">
           {[
             { label: '이메일', value: user.email },

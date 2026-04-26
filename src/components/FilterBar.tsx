@@ -66,7 +66,7 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
     onFilterChange(defaultFilters);
   };
 
-  const selectCls = 'appearance-none h-10 pl-4 pr-10 bg-zinc-950 border border-zinc-700 text-zinc-100 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 cursor-pointer text-sm font-medium transition-all hover:border-zinc-600';
+  const selectCls = 'appearance-none h-10 pl-4 pr-10 bg-zinc-950 border border-zinc-700 text-zinc-100 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 cursor-pointer text-sm font-medium transition-all hover:border-zinc-600';
 
   return (
     <div className="bg-zinc-950 border border-zinc-700 rounded-2xl p-4 shadow-card">
@@ -80,7 +80,7 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
             value={searchInput}
             onChange={(e) => handleSearchInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all"
+            className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all"
           />
           {searchInput && (
             <button
@@ -158,7 +158,7 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
 
           <button
             onClick={handleReset}
-            className="inline-flex items-center justify-center w-10 h-10 text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-xl transition-colors"
+            className="inline-flex items-center justify-center w-10 h-10 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors"
             title="필터 초기화"
             aria-label="필터 초기화"
           >

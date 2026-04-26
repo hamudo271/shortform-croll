@@ -103,7 +103,7 @@ export default function AdminPage() {
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: '전체 회원', value: users.length, color: 'from-sky-400 to-blue-600' },
-          { label: '활성 구독', value: activeCount, color: 'from-emerald-400 to-teal-600' },
+          { label: '활성 구독', value: activeCount, color: 'from-sky-400 to-blue-600' },
           { label: '미구독', value: users.length - activeCount, color: 'from-zinc-500 to-zinc-700' },
           { label: '예상 매출 (원)', value: (activeCount * 100000).toLocaleString(), color: 'from-amber-400 to-orange-600' },
         ].map((s) => (
@@ -129,7 +129,7 @@ export default function AdminPage() {
             type="text" value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="이메일, 이름, 메모로 검색"
-            className="w-full h-11 pl-10 pr-3.5 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all"
+            className="w-full h-11 pl-10 pr-3.5 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all"
           />
         </div>
       </section>
@@ -168,7 +168,7 @@ export default function AdminPage() {
                       </td>
                       <td className="px-6 py-5">
                         {u.role === 'ADMIN' ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30 text-xs font-semibold">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30 text-xs font-semibold">
                             관리자
                           </span>
                         ) : (
@@ -179,8 +179,8 @@ export default function AdminPage() {
                         {!u.subscription ? (
                           <span className="text-xs text-zinc-400">미구독</span>
                         ) : isActive ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30 text-xs font-semibold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30 text-xs font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                             활성 ({remaining}일)
                           </span>
                         ) : u.subscription.status === 'EXPIRED' ? (
@@ -205,7 +205,7 @@ export default function AdminPage() {
                           <button
                             onClick={() => handleSubscribe(u.id)}
                             disabled={actingId === u.id}
-                            className="inline-flex items-center gap-1.5 px-3 h-9 text-xs font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-lg transition-all disabled:opacity-50 whitespace-nowrap shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-3 h-9 text-xs font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-lg transition-all disabled:opacity-50 whitespace-nowrap shadow-sm"
                           >
                             <PlusCircle size={12} strokeWidth={2.25} />
                             {isActive ? '+28일' : '활성화'}
