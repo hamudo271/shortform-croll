@@ -25,7 +25,7 @@ export default async function CategoryDetailPage({ params }: { params: Promise<{
         title={meta.label}
         accent="카테고리"
         emoji={meta.emoji}
-        description={`${meta.label} 관련 바이럴 쇼츠 모음.`}
+        description={`${meta.label} 관련 스마트렌드 모음.`}
       />
       <VideoListPage category={upper} />
     </div>

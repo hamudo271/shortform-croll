@@ -80,7 +80,7 @@ export default async function AccountPage() {
                 <span className="text-sm text-zinc-400">/ {SUBSCRIPTION_DAYS}일</span>
               </div>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                바이럴 쇼츠 데이터를 보려면 구독이 필요합니다.
+                스마트렌드 데이터를 보려면 구독이 필요합니다.
                 아래 안내에 따라 입금 후 관리자가 활성화해 드립니다.
               </p>
             </div>

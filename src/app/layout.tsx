@@ -10,13 +10,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: '바이럴 쇼츠',
-    template: '%s | 바이럴 쇼츠',
+    default: '스마트렌드',
+    template: '%s | 스마트렌드',
   },
   description:
     '유튜브 쇼츠·틱톡·인스타 릴스에서 매일 자동 수집·AI 분류된 바이럴 영상으로, 잘 팔릴 상품을 먼저 발견하세요.',
   openGraph: {
-    title: '바이럴 쇼츠',
+    title: '스마트렌드',
     description: '3대 쇼츠 플랫폼 트렌드를 한눈에. 28일 100,000원.',
     locale: 'ko_KR',
     type: 'website',

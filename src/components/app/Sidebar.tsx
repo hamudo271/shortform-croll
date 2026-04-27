@@ -140,11 +140,11 @@ export default function Sidebar({ user }: Props) {
       <div className="h-16 px-3 flex items-center justify-between border-b border-zinc-700 shrink-0">
         <Link href="/" className="flex items-center gap-2 min-w-0 group">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white shrink-0 shadow-sm">
-            <span className="text-base font-bold">V</span>
+            <span className="text-base font-bold">S</span>
           </span>
           {!collapsed && (
             <span className="text-display text-base font-bold tracking-[-0.02em] text-zinc-50 truncate group-hover:opacity-80 transition-opacity">
-              바이럴 쇼츠
+              스마트렌드
             </span>
           )}
         </Link>

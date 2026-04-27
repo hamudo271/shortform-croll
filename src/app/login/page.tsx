@@ -87,8 +87,8 @@ export default function LoginPage() {
       <header className="border-b border-zinc-700">
         <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-base font-bold tracking-[-0.02em] text-zinc-50 hover:opacity-80 transition-opacity">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 text-white text-sm font-bold shadow-sm">V</span>
-            <span>바이럴 쇼츠</span>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 text-white text-sm font-bold shadow-sm">S</span>
+            <span>스마트렌드</span>
           </Link>
         </div>
       </header>
