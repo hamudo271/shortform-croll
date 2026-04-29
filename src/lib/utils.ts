@@ -39,11 +39,31 @@ export function calculateViralScore(
 }
 
 /**
+ * Format a date as YYYY.MM.DD. Accepts Date | ISO string | null.
+ */
+export function formatDate(d: Date | string | null | undefined): string {
+  if (!d) return '-';
+  const date = typeof d === 'string' ? new Date(d) : d;
+  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+}
+
+/**
+ * Days remaining until a future date (clamped at 0 in the past).
+ */
+export function daysUntil(d: Date | string | null | undefined): number | null {
+  if (!d) return null;
+  const ms = (typeof d === 'string' ? new Date(d) : d).getTime() - Date.now();
+  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
+}
+
+/**
  * Get relative time string (e.g., "2 hours ago")
  */
-export function getRelativeTime(date: Date): string {
+export function getRelativeTime(date: Date | string | null | undefined): string {
+  if (!date) return '-';
+  const d = typeof date === 'string' ? new Date(date) : date;
   const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
+  const diffMs = now.getTime() - d.getTime();
   const diffMins = Math.floor(diffMs / (1000 * 60));
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));

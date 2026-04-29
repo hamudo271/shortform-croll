@@ -8,6 +8,9 @@ import { ArrowRight, PlusCircle } from '@/components/ui/Icon';
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [businessNumber, setBusinessNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
@@ -24,7 +27,7 @@ export default function SignupPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ email, password, name, phone, companyName, businessNumber }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || '회원가입에 실패했습니다'); return; }
@@ -82,6 +85,45 @@ export default function SignupPage() {
                 className={inputCls}
                 placeholder="홍길동"
                 autoComplete="name" maxLength={50}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-zinc-100" htmlFor="phone">
+                전화번호 <span className="text-zinc-400 font-normal">(선택)</span>
+              </label>
+              <input
+                id="phone" type="tel" value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className={inputCls}
+                placeholder="010-1234-5678"
+                autoComplete="tel" maxLength={20}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-zinc-100" htmlFor="company-name">
+                회사명 <span className="text-zinc-400 font-normal">(선택)</span>
+              </label>
+              <input
+                id="company-name" type="text" value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className={inputCls}
+                placeholder="(주)스마트렌드"
+                autoComplete="organization" maxLength={100}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-zinc-100" htmlFor="business-number">
+                사업자등록번호 <span className="text-zinc-400 font-normal">(선택)</span>
+              </label>
+              <input
+                id="business-number" type="text" value={businessNumber}
+                onChange={(e) => setBusinessNumber(e.target.value)}
+                className={inputCls}
+                placeholder="123-45-67890"
+                inputMode="numeric" maxLength={12}
               />
             </div>
 

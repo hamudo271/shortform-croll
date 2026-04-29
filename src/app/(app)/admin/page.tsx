@@ -1,15 +1,25 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import Link from 'next/link';
 import PageHeader from '@/components/app/PageHeader';
 import { Search, PlusCircle, X } from '@/components/ui/Icon';
+import { formatDate, daysUntil, getRelativeTime } from '@/lib/utils';
 
 interface AdminUser {
   id: string;
   email: string;
   name: string | null;
   role: 'USER' | 'ADMIN';
+  phone: string | null;
+  companyName: string | null;
+  businessNumber: string | null; // already masked by API
+  lastLoginAt: string | null;
+  loginCount: number;
   createdAt: string;
+  subscriptionCount: number;
+  activityCount: number;
+  lastActivityAt: string | null;
   subscription: {
     id: string;
     status: 'ACTIVE' | 'EXPIRED' | 'CANCELED';
@@ -19,18 +29,6 @@ interface AdminUser {
     memo: string | null;
     isActive: boolean;
   } | null;
-}
-
-function formatDate(d: string | null) {
-  if (!d) return '-';
-  const date = new Date(d);
-  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function daysUntil(d: string | null) {
-  if (!d) return null;
-  const ms = new Date(d).getTime() - Date.now();
-  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
 }
 
 export default function AdminPage() {
@@ -53,7 +51,8 @@ export default function AdminPage() {
 
   useEffect(() => { load(); }, [load]);
 
-  const handleSubscribe = async (userId: string) => {
+  const handleSubscribe = async (e: React.MouseEvent, userId: string) => {
+    e.stopPropagation(); e.preventDefault();
     const memo = window.prompt('메모 (입금자명, 비워도 됨)', '');
     if (memo === null) return;
     setActingId(userId);
@@ -70,7 +69,8 @@ export default function AdminPage() {
     } finally { setActingId(null); }
   };
 
-  const handleCancel = async (userId: string) => {
+  const handleCancel = async (e: React.MouseEvent, userId: string) => {
+    e.stopPropagation(); e.preventDefault();
     if (!window.confirm('이 사용자의 구독을 취소하시겠습니까? (즉시 차단)')) return;
     setActingId(userId);
     try {
@@ -89,6 +89,8 @@ export default function AdminPage() {
     return (
       u.email.toLowerCase().includes(q) ||
       (u.name || '').toLowerCase().includes(q) ||
+      (u.companyName || '').toLowerCase().includes(q) ||
+      (u.phone || '').toLowerCase().includes(q) ||
       (u.subscription?.memo || '').toLowerCase().includes(q)
     );
   });
@@ -121,17 +123,23 @@ export default function AdminPage() {
         ))}
       </section>
 
-      {/* Search */}
-      <section>
-        <div className="relative max-w-md">
+      {/* Search + actions */}
+      <section className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
           <input
             type="text" value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="이메일, 이름, 메모로 검색"
+            placeholder="이메일·이름·회사명·전화·메모로 검색"
             className="w-full h-11 pl-10 pr-3.5 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all"
           />
         </div>
+        <a
+          href="/api/admin/users/export"
+          className="inline-flex items-center justify-center h-11 px-4 text-sm font-semibold text-zinc-100 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-colors"
+        >
+          CSV 내보내기
+        </a>
       </section>
 
       {/* Users table */}
@@ -152,6 +160,7 @@ export default function AdminPage() {
                   <th className="text-left px-6 py-4 font-semibold">구독</th>
                   <th className="text-left px-6 py-4 font-semibold">만료</th>
                   <th className="text-left px-6 py-4 font-semibold">메모</th>
+                  <th className="text-left px-6 py-4 font-semibold">마지막 접속</th>
                   <th className="text-left px-6 py-4 font-semibold">가입</th>
                   <th className="text-right px-6 py-4 font-semibold">작업</th>
                 </tr>
@@ -161,10 +170,17 @@ export default function AdminPage() {
                   const isActive = !!u.subscription?.isActive;
                   const remaining = u.subscription ? daysUntil(u.subscription.endAt) : null;
                   return (
-                    <tr key={u.id} className="hover:bg-zinc-900 transition-colors">
+                    <tr
+                      key={u.id}
+                      className="hover:bg-zinc-900 transition-colors cursor-pointer"
+                      onClick={() => { window.location.href = `/admin/users/${u.id}`; }}
+                    >
                       <td className="px-6 py-5">
                         <div className="text-zinc-50 font-semibold tracking-tight">{u.name || '-'}</div>
                         <div className="text-xs text-zinc-400 mt-0.5">{u.email}</div>
+                        {u.companyName && (
+                          <div className="text-xs text-zinc-500 mt-0.5">{u.companyName}</div>
+                        )}
                       </td>
                       <td className="px-6 py-5">
                         {u.role === 'ADMIN' ? (
@@ -198,12 +214,25 @@ export default function AdminPage() {
                         {u.subscription?.memo || '-'}
                       </td>
                       <td className="px-6 py-5 text-zinc-400 text-xs">
+                        {u.lastLoginAt ? getRelativeTime(u.lastLoginAt) : '-'}
+                        {u.loginCount > 0 && (
+                          <span className="ml-1 text-zinc-500">· {u.loginCount}회</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-5 text-zinc-400 text-xs">
                         {formatDate(u.createdAt)}
                       </td>
                       <td className="px-6 py-5 text-right">
                         <div className="inline-flex items-center gap-1.5">
+                          <Link
+                            href={`/admin/users/${u.id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center px-3 h-9 text-xs font-medium text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800 rounded-lg transition-colors"
+                          >
+                            상세
+                          </Link>
                           <button
-                            onClick={() => handleSubscribe(u.id)}
+                            onClick={(e) => handleSubscribe(e, u.id)}
                             disabled={actingId === u.id}
                             className="inline-flex items-center gap-1.5 px-3 h-9 text-xs font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-lg transition-all disabled:opacity-50 whitespace-nowrap shadow-sm"
                           >
@@ -212,7 +241,7 @@ export default function AdminPage() {
                           </button>
                           {isActive && (
                             <button
-                              onClick={() => handleCancel(u.id)}
+                              onClick={(e) => handleCancel(e, u.id)}
                               disabled={actingId === u.id}
                               className="inline-flex items-center gap-1 px-3 h-9 text-xs font-medium text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 rounded-lg transition-colors disabled:opacity-50"
                             >

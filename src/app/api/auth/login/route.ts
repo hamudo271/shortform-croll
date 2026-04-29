@@ -5,6 +5,7 @@ import {
   getSessionCookieOptions,
   comparePassword,
 } from '@/lib/auth';
+import { logActivity } from '@/lib/activity-log';
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,6 +37,13 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+
+    // Bump activity counters in a single round-trip; logActivity is fire-and-forget.
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLoginAt: new Date(), loginCount: { increment: 1 } },
+    });
+    void logActivity({ userId: user.id, action: 'LOGIN', request });
 
     const token = generateToken(user.id);
     const cookieOptions = getSessionCookieOptions();

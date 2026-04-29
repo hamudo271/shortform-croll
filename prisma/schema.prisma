@@ -67,15 +67,26 @@ enum Category {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  email         String         @unique
-  passwordHash  String
-  name          String?
-  role          Role           @default(USER)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id             String         @id @default(cuid())
+  email          String         @unique
+  passwordHash   String
+  name           String?
+  role           Role           @default(USER)
 
-  subscriptions Subscription[]
+  // B2B contact / business profile (유통업자 대상)
+  phone          String?
+  companyName    String?
+  businessNumber String?        // 사업자등록번호 (123-45-67890)
+
+  // Activity tracking
+  lastLoginAt    DateTime?
+  loginCount     Int            @default(0)
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  subscriptions  Subscription[]
+  activityLogs   ActivityLog[]
 
   @@index([email])
 }
@@ -106,4 +117,19 @@ enum SubscriptionStatus {
   ACTIVE
   EXPIRED
   CANCELED
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String   // "LOGIN", "SIGNUP", "VIEW_PRODUCT", "SEARCH", ...
+  metadata  Json?    // free-form context, e.g. { productId, query }
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([action])
+  @@index([createdAt(sort: Desc)])
 }
