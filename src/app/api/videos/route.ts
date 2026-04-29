@@ -72,9 +72,9 @@ export async function GET(request: NextRequest) {
       prisma.video.count({ where }),
     ]);
 
-    // Filter: exclude foreign content + require Korean (hangul in title)
+    // 비영어권 비서구 콘텐츠 제외 (인도/태국/베트남/아랍어 등)
     const filteredVideos = rawVideos
-      .filter(v => !isExcluded(v.title, v.authorName) && /[가-힣]/.test(v.title))
+      .filter(v => !isExcluded(v.title, v.authorName))
       .slice(0, limit)
       .map(video => ({
         ...video,

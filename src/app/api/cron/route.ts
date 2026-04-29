@@ -4,7 +4,8 @@ import { prisma } from '@/lib/prisma';
 /**
  * Cron API - 매일 자동 실행
  * 1. 30일 지난 데이터 삭제
- * 2. 한국 바이럴 영상 수집 트리거
+ * 2. 한글 영상 자동 정리 (해외 풀 전환 후)
+ * 3. 해외 바이럴 상품 영상 수집 트리거
  *
  * Railway Cron 또는 외부 cron 서비스(cron-job.org)에서 호출
  * GET /api/cron?key=COLLECT_API_KEY
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
 
   const results = {
     deletedOld: 0,
-    deletedNonKorean: 0,
+    deletedKorean: 0,
     collected: 0,
     errors: [] as string[],
   };
@@ -34,22 +35,22 @@ export async function GET(request: NextRequest) {
     });
     results.deletedOld = deleteOld.count;
 
-    // Step 2: 한글 없는 영상 삭제 (외국 영상 정리)
+    // Step 2: 한글 들어간 영상 삭제 (해외 풀 전환에 따른 정리)
     const allVideos = await prisma.video.findMany({
-      select: { id: true, title: true },
+      select: { id: true, title: true, description: true },
     });
-    const nonKoreanIds = allVideos
-      .filter(v => !/[가-힣]/.test(v.title))
+    const koreanIds = allVideos
+      .filter(v => /[가-힣]/.test(v.title) || /[가-힣]/.test(v.description || ''))
       .map(v => v.id);
 
-    if (nonKoreanIds.length > 0) {
-      const deleteNonKR = await prisma.video.deleteMany({
-        where: { id: { in: nonKoreanIds } },
+    if (koreanIds.length > 0) {
+      const deleteKR = await prisma.video.deleteMany({
+        where: { id: { in: koreanIds } },
       });
-      results.deletedNonKorean = deleteNonKR.count;
+      results.deletedKorean = deleteKR.count;
     }
 
-    // Step 3: 한국 바이럴 영상 수집
+    // Step 3: 해외 바이럴 상품 영상 수집 (US 기본)
     try {
       const origin = request.nextUrl.origin;
       const token = process.env.COLLECT_API_KEY || process.env.AUTH_PASSWORD;
@@ -60,7 +61,8 @@ export async function GET(request: NextRequest) {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ geo: 'KR' }),
+        // body 비우면 collect/route.ts가 기본 geo='US' 사용
+        body: '{}',
       });
 
       if (collectRes.ok) {

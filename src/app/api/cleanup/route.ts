@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 /**
- * Cleanup API - 인도/동남아 등 제외 국가 영상 삭제
+ * Cleanup API - 비영어권 / 비상업 콘텐츠 정리
+ * (해외 아이디어템 풀 전환 후 영어권 product-showcase 콘텐츠만 유지)
  */
 
 // 제외할 패턴들
@@ -30,36 +31,51 @@ const EXCLUDE_PATTERNS = [
 ];
 
 const COMMERCE_KEYWORDS = [
-  '추천','꿀템','리뷰','언박싱','하울','신상','가성비','구매','제품','상품',
-  '사용','후기','비교','순위','베스트','할인','세일','특가','핫딜',
-  '쿠팡','다이소','올리브영','알리','직구','맛집','레시피',
-  '인테리어','소품','용품','화장품','스킨케어','메이크업','향수','뷰티',
-  '패션','코디','데일리룩','악세사리','가방','신발','옷',
-  '주방','생활','전자','가젯','폰케이스','이어폰',
-  '다이어트','영양제','건강','운동','홈트','캠핑','차박','여행','호텔',
-  '육아','아기','반려','강아지','고양이','편의점','카페','디저트','빵','음식',
-  '브랜드','명품','나이키','아디다스','팝마트','레고','피규어','굿즈',
-  '광고','협찬','링크',
+  // 메가 해시태그
+  'tiktokmademebuyit','amazonfinds','amazonmusthaves','temufinds','sheinfinds','aliexpressfinds',
+  // 시연 / 리뷰
+  'review','unboxing','haul','tested','tried','must have','must-have',
+  // 가젯 / 발명품
+  'gadget','gadgets','invention','tool','product','item','find','finds',
+  // 카테고리
+  'kitchen','home','office','travel','car','pet','desk','organization',
+  'skincare','makeup','beauty','tech','fashion',
+  // 판매 시그널
+  'link in bio','shop','available','use code','discount','deal','sale',
+  'on amazon','on etsy','on temu','buy','order',
+  // 감성 / 시연
+  'satisfying','genius','clever','smart','lifehack','life hack','hack','hacks',
+  // 광고 표시
+  'ad','sponsored','gifted',
 ];
 
 const EXCLUDE_COMMERCE = [
-  '챌린지','challenge','댄스','dance','커플','남친','여친',
-  '학교','학생','군대','게임','롤','배그','game',
-  '팬캠','fancam','직캠','콘서트','드라마','영화','스포',
-  '웃긴','몰카','prank','반응',
-  'manhwa','manga','만화','웹툰','bl','fyp','foryoupage',
-  'anime','애니',
-  '예고','고등학교','중학교','대학교','졸업','입학','교복',
-  '오락실','예능','방송','프로그램','클립','편집',
-  '런닝맨','나혼자산다','놀면뭐하니','지구오락실','출장십오야',
-  '아이돌','데뷔','컴백','엠카','뮤뱅','음방',
-  '연예인','배우','가수','kpop','k-pop','idol',
-  '뉴스','정치','대통령','국회','선거',
-  '축구','야구','농구','올림픽','월드컵',
+  // 댄스 / 챌린지
+  'dance','dancing','challenge','choreography','fancam',
+  // 일상 / vlog
+  'day in my life','day in the life','vlog','morning routine','night routine',
+  'grwm','get ready with me','pov','storytime','story time','relatable',
+  // 코미디 / 장난
+  'prank','reaction','comedy','skit','funny','joke','meme',
+  // 게임
+  'gameplay','gaming','minecraft','fortnite','roblox','valorant',
+  // 음악 / kpop
+  'kpop','k-pop','jpop','j-pop','idol','cover song','singing',
+  // 애니 / 만화
+  'anime','manga','manhwa','webtoon','cosplay',
+  // 뉴스 / 정치
+  'news','politics','election',
+  // 스포츠
+  'football','basketball','soccer','nba','nfl','fifa',
+  // ASMR / mukbang (단독)
+  'mukbang','asmr eating',
 ];
 
 function shouldExclude(title: string, authorName: string | null): boolean {
-  if (!/[가-힣]/.test(title)) return true;
+  // 한글 들어간 영상 제외 (해외 풀 전환)
+  if (/[가-힣]/.test(title)) return true;
+  // 영어가 거의 없으면 제외
+  if (!/[a-zA-Z]{3,}/.test(title)) return true;
   const textToCheck = `${title} ${authorName || ''}`;
   if (EXCLUDE_PATTERNS.some(pattern => pattern.test(textToCheck))) return true;
   const lower = title.toLowerCase();
