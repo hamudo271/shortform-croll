@@ -19,32 +19,14 @@ export interface InstagramReel {
 
 const IG_APP_ID = '936619743392459';
 
-// 해외 아이디어템 / 상품 큐레이션 인스타 계정 (TikTokMadeMeBuyIt 장르)
-// "단일 상품 시연 → 저장/공유 폭발" 콘텐츠를 올리는 페이지 위주
+// 해외 아이디어템 / 상품 큐레이션 인스타 계정
+// IG 공개 web_profile_info API는 일부 계정만 reels timeline을 반환 —
+// 직접 probe로 검증된 계정만 유지 (2026-04-29 기준).
+// 추가 후보가 있으면 probe 후 추가하면 됨.
 const GLOBAL_PRODUCT_ACCOUNTS = [
-  // 아이디어템 / 발명품 큐레이션
-  'awesome_inventions',
-  'gadgetflow',
-  'thegadgetflow',
-  'dudeiwantthat',
-  'awesomeshityoucanbuy',
-  // 아마존 / 온라인 쇼핑 큐레이션
-  'amazonfinds',
-  'amazonfinder',
-  'amazonmusthaves',
-  'tiktokmademebuyit',
-  // 가젯 / 라이프해킹
-  'thegadgetzone',
-  'gadgetsandgizmos',
-  'cleverideas',
-  'lifehacks',
-  'satisfying.products',
-  // 홈 / 키친 가젯
-  'kitchengadgets',
-  'homegadgets',
-  // 트렌드 / 바이럴
-  'viralproducts',
-  'viralthings',
+  'gadgetflow',     // 12 reels (검증됨)
+  'amazonfinds',    // 6 reels (검증됨)
+  'unboxtherapy',   // 10 reels (검증됨)
 ];
 
 async function fetchUserReels(username: string): Promise<InstagramReel[]> {

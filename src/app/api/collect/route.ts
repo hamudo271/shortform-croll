@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     // ===== STEP 2: YouTube 검색 =====
     const processedVideoIds = new Set<string>();
-    const MIN_VIEWS = 50000; // 해외 영상은 조회수 5만 이상만 (저품질 노이즈 차단)
+    const MIN_VIEWS = 20000; // 해외 영상 조회수 2만 이상 (3일 윈도우 고려)
     const MIN_ENGAGEMENT = 0.01; // 최소 1% 참여율
 
     for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
@@ -233,7 +233,7 @@ export async function POST(request: NextRequest) {
 
       for (const video of trendingVideos) {
         if (processedVideoIds.has(video.id)) continue;
-        if (video.viewCount < 50000) continue;
+        if (video.viewCount < 20000) continue;
         // 영어 텍스트 필수, 한글이 들어가면 제외
         if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
         if (/[가-힣]/.test(video.title)) continue;
@@ -368,7 +368,7 @@ export async function POST(request: NextRequest) {
 
         for (const reel of reels) {
           if (processedVideoIds.has(reel.id)) continue;
-          if (reel.viewCount < 20000) continue;
+          if (reel.viewCount < 10000) continue;
           // 한글 콘텐츠 제외 (해외 풀 전환)
           if (/[가-힣]/.test(reel.title) || /[가-힣]/.test(reel.description)) continue;
           processedVideoIds.add(reel.id);

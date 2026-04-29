@@ -96,7 +96,7 @@ export async function searchYouTubeShorts(
   searchUrl.searchParams.set('order', 'viewCount'); // 조회수 높은 것 우선
   searchUrl.searchParams.set('regionCode', regionCode);
   searchUrl.searchParams.set('videoDuration', 'short'); // Under 4 minutes
-  searchUrl.searchParams.set('publishedAfter', getRecentDate(3)); // Last 3 days (실시간)
+  searchUrl.searchParams.set('publishedAfter', getRecentDate(7)); // Last 7 days (충분한 풀 확보)
   // 영어권 우선 (해외 풀)
   searchUrl.searchParams.set('relevanceLanguage', 'en');
   searchUrl.searchParams.set('key', apiKey);
