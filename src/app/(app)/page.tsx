@@ -51,7 +51,7 @@ export default async function LandingPage() {
     ? user.hasActiveSubscription || user.role === 'ADMIN'
       ? '대시보드 가기'
       : '내 정보로 이동'
-    : '무료로 시작하기';
+    : '7일 무료 체험 시작';
 
   return (
     <div className="min-h-screen">
@@ -167,7 +167,7 @@ export default async function LandingPage() {
                 오늘 뜨는 상품,<br className="sm:hidden" /> <span className="text-blue-500">지금 확인하세요</span>
               </h2>
               <p className="text-base sm:text-lg text-zinc-400 mb-10 max-w-md mx-auto leading-relaxed">
-                가입은 무료. 결제 안내는 가입 직후 받아보실 수 있습니다.
+                카드 등록 없이 7일 무료 체험. 마음에 들면 그때 결제하세요.
               </p>
               <Link
                 href={primaryHref}

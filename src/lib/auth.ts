@@ -159,4 +159,6 @@ export function getSessionCookieOptions() {
 }
 
 export const SUBSCRIPTION_DAYS = 28;
-export const SUBSCRIPTION_PRICE_KRW = 100_000;
+export const SUBSCRIPTION_PRICE_KRW = 29_800;
+export const SUBSCRIPTION_ORIGINAL_PRICE_KRW = 57_000;
+export const TRIAL_DAYS = 7;

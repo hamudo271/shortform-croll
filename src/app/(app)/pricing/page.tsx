@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { SUBSCRIPTION_DAYS, SUBSCRIPTION_PRICE_KRW, getCurrentUser } from '@/lib/auth';
+import {
+  SUBSCRIPTION_DAYS,
+  SUBSCRIPTION_PRICE_KRW,
+  SUBSCRIPTION_ORIGINAL_PRICE_KRW,
+  TRIAL_DAYS,
+  getCurrentUser,
+} from '@/lib/auth';
 import { ArrowRight, Check, ChevronDown, PlusCircle } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: '요금제',
-  description: `${SUBSCRIPTION_DAYS}일 ${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원. 한 가지 플랜에 모든 기능 포함.`,
+  description: `${TRIAL_DAYS}일 무료 체험 후 ${SUBSCRIPTION_DAYS}일 ${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원 (정가 ${SUBSCRIPTION_ORIGINAL_PRICE_KRW.toLocaleString('ko-KR')}원 할인). 자동 갱신 없음.`,
 };
 
 const INCLUDED = [
@@ -20,6 +26,8 @@ const INCLUDED = [
 
 const FAQS = [
   { q: '데이터는 얼마나 신선한가요?', a: '매일 새벽 자동 수집됩니다. 실시간은 아니지만 최근 24시간 이내의 트렌드를 매일 새 데이터로 받아보실 수 있습니다.' },
+  { q: '무료 체험은 어떻게 시작하나요?', a: '회원가입만 하시면 자동으로 7일 무료 체험이 시작됩니다. 카드 등록이나 결제 정보 입력은 필요 없습니다. 체험 기간 중 모든 기능을 무제한으로 사용해보실 수 있습니다.' },
+  { q: '체험이 끝나면 자동 결제되나요?', a: '아니요. 자동 결제는 절대 없습니다. 7일 후 체험이 만료되면 이용이 중지될 뿐, 결제는 본인이 입금하실 때만 진행됩니다.' },
   { q: '환불이 되나요?', a: '결제 후 7일 이내, 사용 이력이 없을 경우 100% 환불해 드립니다. 사용을 시작하신 후에는 일할 환불이 어렵습니다.' },
   { q: '자동 갱신되나요?', a: '자동 갱신은 없습니다. 28일 후 만료되며, 연장을 원하시면 재입금하시면 됩니다.' },
   { q: '데이터를 다운로드할 수 있나요?', a: '현재는 화면에서 확인하는 형태만 제공합니다. CSV 내보내기는 로드맵에 있습니다.' },
@@ -30,7 +38,10 @@ const FAQS = [
 export default async function PricingPage() {
   const user = await getCurrentUser();
   const ctaHref = user ? '/account' : '/signup';
-  const ctaLabel = user ? '내 정보로 이동' : '무료로 시작하기';
+  const ctaLabel = user ? '내 정보로 이동' : `${TRIAL_DAYS}일 무료 체험 시작`;
+  const discountPercent = Math.round(
+    (1 - SUBSCRIPTION_PRICE_KRW / SUBSCRIPTION_ORIGINAL_PRICE_KRW) * 100,
+  );
 
   return (
     <div className="min-h-screen">
@@ -41,18 +52,22 @@ export default async function PricingPage() {
             요금제
           </div>
           <h1 className="text-display text-3xl sm:text-5xl font-bold text-zinc-50 leading-tight tracking-[-0.025em] mb-4">
-            한 가지 플랜, <span className="text-blue-500">모든 기능</span> 포함 ✨
+            <span className="text-blue-500">{TRIAL_DAYS}일 무료</span> 체험 후, 한 가지 플랜
           </h1>
           <p className="text-base sm:text-lg text-zinc-400">
-            자동 갱신 없이 필요할 때만 결제하세요.
+            카드 등록 없이 무료로 써보고, 마음에 들면 결제하세요. 자동 갱신 없음.
           </p>
         </section>
 
         {/* Pricing card */}
         <section>
           <div className="max-w-md mx-auto bg-zinc-950 border border-zinc-700 rounded-3xl p-8 sm:p-10 shadow-card">
-            <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-3">
-              단일 플랜
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 text-[11px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-full uppercase tracking-[0.16em]">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+              런칭 특가 · {discountPercent}% 할인
+            </div>
+            <div className="text-base text-zinc-500 line-through tabular-nums mb-1">
+              {SUBSCRIPTION_ORIGINAL_PRICE_KRW.toLocaleString('ko-KR')}원
             </div>
             <div className="flex items-baseline gap-2 mb-2">
               <span className="text-display text-5xl sm:text-6xl font-bold text-zinc-50 tracking-[-0.04em]">
@@ -60,7 +75,9 @@ export default async function PricingPage() {
               </span>
               <span className="text-2xl text-zinc-400 font-medium">원</span>
             </div>
-            <p className="text-sm text-zinc-400 mb-8">{SUBSCRIPTION_DAYS}일 이용 · 자동 갱신 없음</p>
+            <p className="text-sm text-zinc-400 mb-8">
+              {SUBSCRIPTION_DAYS}일 이용 · 자동 갱신 없음 · 가입 즉시 {TRIAL_DAYS}일 무료
+            </p>
 
             <ul className="space-y-3 mb-8">
               {INCLUDED.map((item) => (
@@ -98,8 +115,8 @@ export default async function PricingPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { n: '1', title: '회원가입', body: '이메일과 비밀번호로 무료 가입' },
-              { n: '2', title: '입금', body: `안내된 계좌로 ${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원 입금` },
+              { n: '1', title: '회원가입', body: `가입 즉시 ${TRIAL_DAYS}일 무료 체험 자동 시작` },
+              { n: '2', title: '체험 후 입금', body: `만족하시면 ${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원 계좌 입금` },
               { n: '3', title: '관리자 활성화', body: '입금 확인 후 24시간 이내 활성화' },
               { n: '4', title: `${SUBSCRIPTION_DAYS}일간 이용`, body: '모든 기능 무제한 이용' },
             ].map((step) => (

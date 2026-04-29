@@ -4,6 +4,7 @@ import {
   generateToken,
   getSessionCookieOptions,
   hashPassword,
+  TRIAL_DAYS,
 } from '@/lib/auth';
 import { logActivity } from '@/lib/activity-log';
 import {
@@ -64,6 +65,18 @@ export async function POST(request: NextRequest) {
         companyName: normalizeCompanyName(companyName),
         businessNumber: normalizedBusinessNumber,
         role,
+      },
+    });
+
+    // Auto-grant a free trial subscription on signup.
+    const trialEnd = new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
+    await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        endAt: trialEnd,
+        status: 'ACTIVE',
+        amount: 0,
+        memo: `${TRIAL_DAYS}일 무료 체험`,
       },
     });
 

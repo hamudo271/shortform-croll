@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { SUBSCRIPTION_PRICE_KRW, SUBSCRIPTION_DAYS, type SessionUser } from '@/lib/auth';
+import {
+  SUBSCRIPTION_PRICE_KRW,
+  SUBSCRIPTION_ORIGINAL_PRICE_KRW,
+  SUBSCRIPTION_DAYS,
+  TRIAL_DAYS,
+  type SessionUser,
+} from '@/lib/auth';
 import { ArrowRight, Check, PlusCircle } from '@/components/ui/Icon';
 
 const INCLUDED = [
@@ -26,7 +32,10 @@ export default function PricingCallout({ user }: Props) {
     ? user.hasActiveSubscription || user.role === 'ADMIN'
       ? '대시보드 가기'
       : '내 정보로 이동'
-    : '무료로 시작하기';
+    : `${TRIAL_DAYS}일 무료 체험 시작`;
+  const discountPercent = Math.round(
+    (1 - SUBSCRIPTION_PRICE_KRW / SUBSCRIPTION_ORIGINAL_PRICE_KRW) * 100,
+  );
 
   return (
     <div className="relative overflow-hidden bg-zinc-950 border border-zinc-700 rounded-3xl shadow-card">
@@ -38,12 +47,22 @@ export default function PricingCallout({ user }: Props) {
             요금제
           </div>
           <h2 className="text-display text-3xl sm:text-[40px] font-bold text-zinc-50 leading-[1.15] tracking-[-0.025em] mb-5">
-            한 가지 플랜,<br className="hidden sm:block" />
-            <span className="text-blue-500">자동 갱신 없음</span>
+            먼저 <span className="text-blue-500">{TRIAL_DAYS}일 무료</span>로,<br className="hidden sm:block" />
+            마음에 들면 결제
           </h2>
           <p className="text-base text-zinc-400 leading-[1.7] mb-8">
-            결제는 한 번. 의도하지 않은 결제 걱정 없이 사용하세요.
+            카드 등록 없이 바로 체험. 자동 갱신 없는 단일 결제로 부담 없이 사용하세요.
           </p>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 text-[11px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-full uppercase tracking-[0.16em]">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            런칭 특가 · {discountPercent}% 할인
+          </div>
+          <div className="flex items-baseline gap-3 mb-1">
+            <span className="text-base text-zinc-500 line-through tabular-nums">
+              {SUBSCRIPTION_ORIGINAL_PRICE_KRW.toLocaleString('ko-KR')}원
+            </span>
+          </div>
           <div className="flex items-baseline gap-2 mb-8">
             <span className="text-display text-5xl sm:text-6xl font-bold text-zinc-50 tracking-[-0.04em] tabular-nums">
               {SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}
