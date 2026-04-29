@@ -38,6 +38,9 @@ export async function GET(request: NextRequest) {
     const dateThreshold = new Date();
     dateThreshold.setDate(dateThreshold.getDate() - days);
 
+    // 최신성 컷오프 — 2025-12-01 이전 업로드 영상은 표시 안 함
+    const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
+
     // Build where clause
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
@@ -47,6 +50,7 @@ export async function GET(request: NextRequest) {
       ...(country && { country }),
       ...(search && { title: { contains: search, mode: 'insensitive' } }),
       collectedAt: { gte: dateThreshold },
+      publishedAt: { gte: MIN_PUBLISHED_AT },
     };
 
     // Build orderBy

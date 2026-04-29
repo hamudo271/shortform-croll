@@ -30,23 +30,20 @@ const EXCLUDE_PATTERNS = [
   /\b(malaysia|malay|singapore|singapura)\b/i,
 ];
 
+// STRONG commerce 신호 (1개라도 있어야 keep)
 const COMMERCE_KEYWORDS = [
-  // 메가 해시태그
-  'tiktokmademebuyit','amazonfinds','amazonmusthaves','temufinds','sheinfinds','aliexpressfinds',
-  // 시연 / 리뷰
-  'review','unboxing','haul','tested','tried','must have','must-have',
-  // 가젯 / 발명품
-  'gadget','gadgets','invention','tool','product','item','find','finds',
-  // 카테고리
-  'kitchen','home','office','travel','car','pet','desk','organization',
-  'skincare','makeup','beauty','tech','fashion',
-  // 판매 시그널
-  'link in bio','shop','available','use code','discount','deal','sale',
-  'on amazon','on etsy','on temu','buy','order',
-  // 감성 / 시연
-  'satisfying','genius','clever','smart','lifehack','life hack','hack','hacks',
-  // 광고 표시
-  'ad','sponsored','gifted',
+  'tiktokmademebuyit', 'tiktok made me buy', 'tiktokmademebuy',
+  'amazonfinds', 'amazon finds', 'amazonmusthaves', 'amazon must haves',
+  'amazonhaul', 'amazon haul', 'amazon favorite', 'amazonfavorite',
+  'temufinds', 'temu finds', 'sheinfinds', 'shein finds',
+  'aliexpressfinds', 'aliexpress finds', 'etsyfinds', 'etsy finds',
+  'link in bio', 'link bio', 'use code', 'discount code', 'promo code',
+  'on amazon', 'on etsy', 'on temu', 'on shein',
+  'available now', 'available on', 'shop now', 'get yours',
+  'free shipping', 'order now', 'limited time',
+  'must have', 'must-have', 'must buy', 'must-buy',
+  'i bought this', 'bought this', 'just bought',
+  '#ad', 'sponsored by', 'gifted by', 'paid partnership',
 ];
 
 const EXCLUDE_COMMERCE = [
@@ -55,8 +52,20 @@ const EXCLUDE_COMMERCE = [
   // 일상 / vlog
   'day in my life','day in the life','vlog','morning routine','night routine',
   'grwm','get ready with me','pov','storytime','story time','relatable',
-  // 코미디 / 장난
-  'prank','reaction','comedy','skit','funny','joke','meme',
+  // 코미디 / 장난 / 패러디
+  'prank','reaction','comedy','skit','funny','joke','meme','parody','roast',
+  // 실험 / 사이언스
+  'experiment','experiments','experimenting','science experiment','science fair',
+  'what happens','what happens if','what if you',
+  // 챌린지 / 지속성
+  'for 30 days','for a month','for a year','for a week',
+  'i tried','tried for','days of',
+  // 마술 / 환상
+  'magic trick','magic tricks','illusion','illusions','sleight of hand',
+  // 실패
+  'fail','fails','fail compilation','funny fails',
+  // 호기심
+  'first time trying','reacting to','reaction video','random fact',
   // 게임
   'gameplay','gaming','minecraft','fortnite','roblox','valorant',
   // 음악 / kpop
@@ -93,7 +102,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // 모든 비디오 가져오기
+    // Step 1: 최신성 컷오프 — 2025-12-01 이전 업로드 영상 일괄 삭제
+    const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
+    const oldDeleted = await prisma.video.deleteMany({
+      where: { publishedAt: { lt: MIN_PUBLISHED_AT } },
+    });
+
+    // Step 2: 키워드 기반 비커머스/제외국가 영상 정리
     const allVideos = await prisma.video.findMany({
       select: {
         id: true,
@@ -121,8 +136,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      deletedOld: oldDeleted.count,
       totalVideos: allVideos.length,
-      deletedCount: toDelete.length,
+      deletedKeyword: toDelete.length,
       remainingCount: allVideos.length - toDelete.length,
     });
   } catch (error) {

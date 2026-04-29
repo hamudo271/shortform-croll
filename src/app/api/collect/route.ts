@@ -16,6 +16,9 @@ import { Platform } from '@prisma/client';
 // 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
 export const maxDuration = 300;
 
+// 최신성 컷오프 — 이 날짜 이전 업로드된 영상은 모두 스킵
+const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
+
 /**
  * Smart Dropshipping Product Video Collector
  *
@@ -138,6 +141,13 @@ export async function POST(request: NextRequest) {
             continue;
           }
 
+          // 최신성 컷오프
+          const ytPublished = new Date(video.publishedAt);
+          if (ytPublished < MIN_PUBLISHED_AT) {
+            results.videosSkipped++;
+            continue;
+          }
+
           try {
             // AI 분류
             let classification;
@@ -240,6 +250,11 @@ export async function POST(request: NextRequest) {
         // 영어 텍스트 필수, 한글이 들어가면 제외
         if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
         if (/[가-힣]/.test(video.title)) continue;
+
+        // 최신성 컷오프 — create_time 없으면 안전하게 skip
+        const tkPublished = video.createTime ? new Date(video.createTime * 1000) : null;
+        if (!tkPublished || tkPublished < MIN_PUBLISHED_AT) continue;
+
         processedVideoIds.add(video.id);
 
         try {
@@ -267,6 +282,7 @@ export async function POST(request: NextRequest) {
               targetAge: classification.targetAge,
               tags: classification.tags,
               country: 'US',
+              publishedAt: tkPublished,
               updatedAt: new Date(),
             },
             create: {
@@ -287,7 +303,7 @@ export async function POST(request: NextRequest) {
               targetAge: classification.targetAge,
               tags: classification.tags,
               country: 'US',
-              publishedAt: new Date(),
+              publishedAt: tkPublished,
             },
           });
           tiktokCollected++;
@@ -312,9 +328,14 @@ export async function POST(request: NextRequest) {
         const videos = await searchTikTokVideos(kw, { count: 20 });
         for (const video of videos) {
           if (processedVideoIds.has(video.id)) continue;
-          if (video.viewCount < 50000) continue;
+          if (video.viewCount < 20000) continue;
           if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
           if (/[가-힣]/.test(video.title)) continue;
+
+          // 최신성 컷오프
+          const tkPublished = video.createTime ? new Date(video.createTime * 1000) : null;
+          if (!tkPublished || tkPublished < MIN_PUBLISHED_AT) continue;
+
           processedVideoIds.add(video.id);
 
           try {
@@ -326,6 +347,7 @@ export async function POST(request: NextRequest) {
                 thumbnailUrl: video.thumbnailUrl,
                 viewCount: BigInt(video.viewCount),
                 likeCount: BigInt(video.likeCount),
+                publishedAt: tkPublished,
                 updatedAt: new Date(),
               },
               create: {
@@ -346,7 +368,7 @@ export async function POST(request: NextRequest) {
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: 'US',
-                publishedAt: new Date(),
+                publishedAt: tkPublished,
               },
             });
             tiktokCollected++;
@@ -374,6 +396,11 @@ export async function POST(request: NextRequest) {
           if (reel.viewCount < 10000) continue;
           // 한글 콘텐츠 제외 (해외 풀 전환)
           if (/[가-힣]/.test(reel.title) || /[가-힣]/.test(reel.description)) continue;
+
+          // 최신성 컷오프
+          const igPublished = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
+          if (!igPublished || igPublished < MIN_PUBLISHED_AT) continue;
+
           processedVideoIds.add(reel.id);
 
           try {
@@ -385,6 +412,7 @@ export async function POST(request: NextRequest) {
                 viewCount: BigInt(reel.viewCount),
                 likeCount: BigInt(reel.likeCount),
                 commentCount: BigInt(reel.commentCount),
+                publishedAt: igPublished,
                 updatedAt: new Date(),
               },
               create: {
@@ -405,7 +433,7 @@ export async function POST(request: NextRequest) {
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: 'US',
-                publishedAt: new Date(),
+                publishedAt: igPublished,
               },
             });
             instagramCollected++;

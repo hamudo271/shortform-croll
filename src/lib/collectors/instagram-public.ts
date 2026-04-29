@@ -15,6 +15,8 @@ export interface InstagramReel {
   likeCount: number;
   commentCount: number;
   shareCount: number;
+  /** Unix seconds — 원본 업로드 시각 (IG `taken_at_timestamp`) */
+  takenAt?: number;
 }
 
 const IG_APP_ID = '936619743392459';
@@ -82,6 +84,7 @@ async function fetchUserReels(username: string): Promise<InstagramReel[]> {
         likeCount: node.edge_liked_by?.count || node.edge_media_preview_like?.count || 0,
         commentCount: node.edge_media_to_comment?.count || 0,
         shareCount: 0,
+        takenAt: typeof node.taken_at_timestamp === 'number' ? node.taken_at_timestamp : undefined,
       };
     });
   } catch (error) {

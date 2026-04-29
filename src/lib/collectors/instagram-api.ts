@@ -15,6 +15,8 @@ export interface InstagramReel {
   likeCount: number;
   commentCount: number;
   shareCount: number;
+  /** Unix seconds — 원본 업로드 시각 */
+  takenAt?: number;
 }
 
 const RAPIDAPI_HOST = 'instagram-scraper-20251.p.rapidapi.com';
@@ -41,16 +43,19 @@ const KOREAN_REELS_ACCOUNTS = [
   'viralthings',
 ];
 
-// 해외 상품 시연 / 큐레이션 키워드
+// STRONG commerce 신호 (단일 매치로 통과)
 const COMMERCE_KEYWORDS = [
-  'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves', 'temufinds',
-  'review', 'unboxing', 'haul', 'must have', 'must-have',
-  'gadget', 'gadgets', 'invention', 'tool', 'product', 'find', 'finds',
-  'kitchen', 'home', 'travel', 'office', 'desk', 'organization',
-  'genius', 'clever', 'satisfying', 'lifehack', 'life hack', 'hack',
-  'link in bio', 'shop', 'available', 'use code', 'discount', 'deal',
-  'amazon', 'etsy', 'temu', 'shein', 'aliexpress',
-  'ad', 'sponsored', 'gifted',
+  'tiktokmademebuyit', 'tiktok made me buy', 'amazonfinds', 'amazon finds',
+  'amazonmusthaves', 'amazon must haves', 'amazonhaul', 'amazon haul',
+  'temufinds', 'temu finds', 'sheinfinds', 'shein finds',
+  'aliexpressfinds', 'aliexpress finds', 'etsyfinds', 'etsy finds',
+  'link in bio', 'link bio', 'use code', 'discount code', 'promo code',
+  'on amazon', 'on etsy', 'on temu',
+  'available now', 'available on', 'shop now', 'get yours',
+  'free shipping', 'order now', 'limited time',
+  'must have', 'must-have', 'must buy', 'must-buy',
+  'i bought this', 'bought this', 'just bought',
+  '#ad', 'sponsored by', 'gifted by', 'paid partnership',
 ];
 
 function isCommerce(text: string): boolean {
@@ -106,6 +111,7 @@ async function fetchUserReels(
           likeCount: item.like_count || 0,
           commentCount: item.comment_count || 0,
           shareCount: item.reshare_count || 0,
+          takenAt: typeof item.taken_at === 'number' ? item.taken_at : undefined,
         };
       });
   } catch (error) {

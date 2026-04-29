@@ -16,6 +16,8 @@ export interface TikTokVideo {
   likeCount: number;
   commentCount: number;
   shareCount: number;
+  /** Unix seconds — 원본 업로드 시각 (tikwm `create_time`) */
+  createTime?: number;
 }
 
 const TIKWM_API = 'https://www.tikwm.com/api';
@@ -25,34 +27,28 @@ function getStableThumbnail(v: any): string {
   return v.origin_cover || v.cover || '';
 }
 
-// 해외 아이디어템 / 상품 시연 키워드 — 하나라도 포함되어야 수집
-const COMMERCE_KEYWORDS = [
-  // 메가 해시태그 (단어 매칭)
-  'tiktokmademebuyit', 'tiktokmademebuy', 'amazonfinds', 'amazonmusthaves',
-  'amazonhaul', 'amazonfavorite', 'temufinds', 'aliexpressfinds', 'sheinfinds',
-  // 상품 시연 / 리뷰
-  'review', 'unboxing', 'haul', 'bought', 'tried', 'tested',
-  'try it', 'must have', 'must-have', 'must buy',
-  // 가젯 / 발명품
-  'gadget', 'gadgets', 'invention', 'inventions', 'tool', 'tools',
-  'product', 'products', 'item', 'items', 'find', 'finds',
-  // 카테고리
-  'kitchen', 'home', 'office', 'travel', 'car', 'pet',
-  'skincare', 'makeup', 'beauty', 'fashion', 'outfit',
-  'tech', 'phone', 'desk', 'organization',
-  // 판매 시그널
-  'link in bio', 'shop', 'available', 'get yours', 'use code',
-  'on amazon', 'on etsy', 'on temu', 'discount', 'deal', 'sale',
-  'buy', 'order', 'free shipping', 'limited',
-  // 감성 / 시연
-  'satisfying', 'oddly satisfying', 'genius', 'clever', 'smart',
-  'lifehack', 'life hack', 'hack', 'hacks', 'before and after',
-  // 광고 표시
-  'ad', '#ad', 'sponsored', 'gifted', 'pr',
+// STRONG commerce 신호 — 1개라도 매치되면 통과 (단순 단어 매칭으로 약한 신호 제거)
+export const STRONG_COMMERCE = [
+  // 메가 해시태그
+  'tiktokmademebuyit', 'tiktok made me buy', 'tiktokmademebuy',
+  'amazonfinds', 'amazon finds', 'amazonmusthaves', 'amazon must haves',
+  'amazonhaul', 'amazon haul', 'amazon favorite', 'amazonfavorite',
+  'temufinds', 'temu finds', 'sheinfinds', 'shein finds',
+  'aliexpressfinds', 'aliexpress finds', 'etsyfinds', 'etsy finds',
+  // 명시적 판매 시그널
+  'link in bio', 'link bio', 'use code', 'discount code', 'promo code',
+  'on amazon', 'on etsy', 'on temu', 'on shein',
+  'available now', 'available on', 'shop now', 'get yours',
+  'free shipping', 'order now', 'limited time',
+  // 큐레이션 표현
+  'must have', 'must-have', 'must buy', 'must-buy',
+  'i bought this', 'bought this', 'just bought',
+  // 광고 명시
+  '#ad', 'sponsored by', 'gifted by', 'paid partnership',
 ];
 
-// 제외 키워드 - 일상/유머/논상업 콘텐츠
-const EXCLUDE_KEYWORDS = [
+// 제외 키워드 - 일상 / 유머 / 실험 / 논상업
+export const EXCLUDE_KEYWORDS = [
   // 댄스 / 챌린지 / 팬캠
   'dance', 'dancing', 'choreography', 'challenge',
   'fancam', 'concert', 'tour vlog',
@@ -62,7 +58,22 @@ const EXCLUDE_KEYWORDS = [
   'pov', 'storytime', 'story time', 'relatable', 'mood',
   // 코미디 / 장난
   'prank', 'pranks', 'reaction', 'reacting', 'comedy', 'skit',
-  'funny', 'joke', 'meme', 'cringe',
+  'funny', 'joke', 'meme', 'cringe', 'parody', 'roast',
+  // 실험 / 사이언스
+  'experiment', 'experiments', 'experimenting',
+  'science experiment', 'science fair',
+  'what happens', 'what happens if', 'what if you',
+  // 챌린지/지속성 영상
+  'for 30 days', 'for a month', 'for a year', 'for a week',
+  'i tried', 'tried for', 'days of',
+  // 마술 / 환상
+  'magic trick', 'magic tricks', 'illusion', 'illusions',
+  'sleight of hand',
+  // 실패
+  'fail', 'fails', 'fail compilation', 'funny fails',
+  // 호기심 / 잡지식
+  'first time trying', 'reacting to', 'reaction video',
+  'random fact',
   // 게임
   'gameplay', 'gaming', 'minecraft', 'fortnite', 'roblox', 'valorant',
   // 음악 / K-pop / J-pop
@@ -74,12 +85,10 @@ const EXCLUDE_KEYWORDS = [
   'news', 'politics', 'election', 'biden', 'trump',
   // 스포츠
   'football', 'basketball', 'soccer', 'nba', 'nfl', 'fifa',
-  // ASMR / mukbang (단독, 비상업)
+  // ASMR / mukbang (단독)
   'mukbang', 'asmr eating',
-  // 학교 / 군대
+  // 학교
   'school day', 'classroom', 'teacher', 'high school',
-  // 한국어 콘텐츠 전부 제외 (해외 풀 전환)
-  // 한글이 보이면 한국 콘텐츠로 간주
 ];
 
 function isCommerceContent(title: string): boolean {
@@ -91,8 +100,8 @@ function isCommerceContent(title: string): boolean {
   // 제외 키워드가 있으면 바로 탈락
   if (EXCLUDE_KEYWORDS.some(kw => lower.includes(kw))) return false;
 
-  // 상업 키워드가 하나라도 있으면 통과
-  return COMMERCE_KEYWORDS.some(kw => lower.includes(kw));
+  // STRONG commerce 신호가 1개라도 있어야 통과
+  return STRONG_COMMERCE.some(kw => lower.includes(kw));
 }
 
 /**
@@ -140,6 +149,7 @@ export async function searchTikTokVideos(
         likeCount: v.digg_count || 0,
         commentCount: v.comment_count || 0,
         shareCount: v.share_count || 0,
+        createTime: typeof v.create_time === 'number' ? v.create_time : undefined,
       }));
   } catch (error) {
     console.error(`TikTok search error for "${keyword}":`, error);
@@ -188,6 +198,7 @@ export async function getTikTokTrending(
         likeCount: v.digg_count || 0,
         commentCount: v.comment_count || 0,
         shareCount: v.share_count || 0,
+        createTime: typeof v.create_time === 'number' ? v.create_time : undefined,
       }));
   } catch (error) {
     console.error('TikTok trending error:', error);
