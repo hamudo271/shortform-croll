@@ -13,6 +13,9 @@ import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
 import { calculateViralScore } from '@/lib/utils';
 import { Platform } from '@prisma/client';
 
+// 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
+export const maxDuration = 300;
+
 /**
  * Smart Dropshipping Product Video Collector
  *

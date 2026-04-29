@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
+export const maxDuration = 300;
+
 export async function POST(request: NextRequest) {
   try {
     const origin = request.nextUrl.origin;
@@ -13,8 +16,8 @@ export async function POST(request: NextRequest) {
       // Empty body is OK
     }
 
-    // Always use KR geo
-    const payload: Record<string, string> = { geo: 'KR' };
+    // 해외 풀 (collect/route.ts의 기본값 = 'US')
+    const payload: Record<string, string> = {};
     if (keyword) payload.keyword = keyword;
 
     const response = await fetch(`${origin}/api/collect`, {
