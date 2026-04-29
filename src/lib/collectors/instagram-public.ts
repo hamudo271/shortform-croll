@@ -19,25 +19,32 @@ export interface InstagramReel {
 
 const IG_APP_ID = '936619743392459';
 
-// 한국 인기 상업/리뷰 인스타 계정
-const KOREAN_ACCOUNTS = [
-  'oliveyoung_official',
-  'daiso_kr',
-  'musinsa.official',
-  'kurly.official',
-  'innisfreeofficial',
-  'romand_official',
-  'amuse_official',
-  'etude_official',
-  'abib.official',
-  'stylenanda_korea',
-  'kirsh_official',
-  'mardi_mercredi',
-  'ottogi_official',
-  'cj_onstyle',
-  'gsshop_official',
-  'hmall_official',
-  'ssg.official',
+// 해외 아이디어템 / 상품 큐레이션 인스타 계정 (TikTokMadeMeBuyIt 장르)
+// "단일 상품 시연 → 저장/공유 폭발" 콘텐츠를 올리는 페이지 위주
+const GLOBAL_PRODUCT_ACCOUNTS = [
+  // 아이디어템 / 발명품 큐레이션
+  'awesome_inventions',
+  'gadgetflow',
+  'thegadgetflow',
+  'dudeiwantthat',
+  'awesomeshityoucanbuy',
+  // 아마존 / 온라인 쇼핑 큐레이션
+  'amazonfinds',
+  'amazonfinder',
+  'amazonmusthaves',
+  'tiktokmademebuyit',
+  // 가젯 / 라이프해킹
+  'thegadgetzone',
+  'gadgetsandgizmos',
+  'cleverideas',
+  'lifehacks',
+  'satisfying.products',
+  // 홈 / 키친 가젯
+  'kitchengadgets',
+  'homegadgets',
+  // 트렌드 / 바이럴
+  'viralproducts',
+  'viralthings',
 ];
 
 async function fetchUserReels(username: string): Promise<InstagramReel[]> {
@@ -52,7 +59,7 @@ async function fetchUserReels(username: string): Promise<InstagramReel[]> {
           'User-Agent':
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
           'Accept': '*/*',
-          'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
           'X-IG-App-ID': IG_APP_ID,
           'X-IG-WWW-Claim': '0',
           'X-ASBD-ID': '129477',
@@ -102,12 +109,12 @@ async function fetchUserReels(username: string): Promise<InstagramReel[]> {
 }
 
 /**
- * 한국 인기 계정들의 릴스를 일괄 수집
+ * 해외 product-curation 계정들의 릴스를 일괄 수집
  */
 export async function collectKoreanReelsPublic(
   accounts?: string[],
 ): Promise<{ reels: InstagramReel[]; errors: string[] }> {
-  const targetAccounts = accounts || KOREAN_ACCOUNTS;
+  const targetAccounts = accounts || GLOBAL_PRODUCT_ACCOUNTS;
   const allReels: InstagramReel[] = [];
   const errors: string[] = [];
 

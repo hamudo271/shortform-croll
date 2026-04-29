@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
   // Parse request options
   let manualKeyword: string | undefined;
-  let targetGeo = 'KR'; // 기본: 한국
+  let targetGeo = 'US'; // 기본: 영어권 (해외 아이디어템 풀)
 
   try {
     const body = await request.json();
@@ -60,13 +60,12 @@ export async function POST(request: NextRequest) {
     let searchQueries: string[] = [];
 
     if (manualKeyword) {
-      // 수동 키워드: 한국어면 그대로, 영어면 suffix 추가
-      const isKorean = /[가-힣]/.test(manualKeyword);
-      if (isKorean) {
-        searchQueries = [manualKeyword, `${manualKeyword} 추천`, `${manualKeyword} 리뷰`];
-      } else {
-        searchQueries = [`${manualKeyword} unboxing shorts`, `${manualKeyword} review`];
-      }
+      // 수동 키워드: 영어 product-discovery suffix 자동 부착
+      searchQueries = [
+        `${manualKeyword} review shorts`,
+        `${manualKeyword} unboxing`,
+        `${manualKeyword} amazon finds`,
+      ];
     } else {
       // Google Trends에서 급상승 상품 트렌드 가져오기
       console.log('🔍 Fetching rising product trends from Google Trends...');
@@ -92,22 +91,10 @@ export async function POST(request: NextRequest) {
         results.errors.push('Google Trends fetch failed');
       }
 
-      // 트렌드가 없으면 기본 드랍쉬핑 키워드 사용
+      // 트렌드가 없으면 기본 해외 아이디어템 키워드 사용
       if (searchQueries.length === 0) {
-        console.log('⚠️ No trends found, using default dropshipping keywords');
-        if (targetGeo === 'KR') {
-          // 한국 수집: 한국어 키워드 우선, 글로벌은 소량
-          searchQueries = [...VIRAL_PRODUCT_KEYWORDS.korean, ...VIRAL_PRODUCT_KEYWORDS.global.slice(0, 3)];
-        } else {
-          searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global, ...VIRAL_PRODUCT_KEYWORDS.korean];
-        }
-      }
-
-      // 한국 수집 시 한국어 키워드를 앞에 배치
-      if (targetGeo === 'KR' && searchQueries.length > 0) {
-        const koreanQueries = searchQueries.filter(q => /[가-힣]/.test(q));
-        const otherQueries = searchQueries.filter(q => !/[가-힣]/.test(q));
-        searchQueries = [...koreanQueries, ...otherQueries];
+        console.log('⚠️ No trends found, using default global product keywords');
+        searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global];
       }
     }
 
@@ -115,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     // ===== STEP 2: YouTube 검색 =====
     const processedVideoIds = new Set<string>();
-    const MIN_VIEWS = targetGeo === 'KR' ? 10000 : 50000; // 한국은 1만, 글로벌은 5만
+    const MIN_VIEWS = 50000; // 해외 영상은 조회수 5만 이상만 (저품질 노이즈 차단)
     const MIN_ENGAGEMENT = 0.01; // 최소 1% 참여율
 
     for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
@@ -126,7 +113,7 @@ export async function POST(request: NextRequest) {
         const videos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
           query,
           maxResults: 15,
-          regionCode: targetGeo === 'KR' ? 'KR' : 'US',
+          regionCode: targetGeo,
         });
 
         results.videosSearched += videos.length;
@@ -240,14 +227,16 @@ export async function POST(request: NextRequest) {
     let tiktokCollected = 0;
 
     try {
-      // 틱톡 트렌딩 (한국)
+      // 틱톡 트렌딩 (US)
       const trendingVideos = await getTikTokTrending({ count: 30 });
       console.log(`  Found ${trendingVideos.length} trending TikTok videos`);
 
       for (const video of trendingVideos) {
         if (processedVideoIds.has(video.id)) continue;
-        if (video.viewCount < 10000) continue;
-        if (!/[가-힣]/.test(video.title)) continue;
+        if (video.viewCount < 50000) continue;
+        // 영어 텍스트 필수, 한글이 들어가면 제외
+        if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
+        if (/[가-힣]/.test(video.title)) continue;
         processedVideoIds.add(video.id);
 
         try {
@@ -274,7 +263,7 @@ export async function POST(request: NextRequest) {
               category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
-              country: 'KR',
+              country: 'US',
               updatedAt: new Date(),
             },
             create: {
@@ -294,7 +283,7 @@ export async function POST(request: NextRequest) {
               category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
-              country: 'KR',
+              country: 'US',
               publishedAt: new Date(),
             },
           });
@@ -308,18 +297,21 @@ export async function POST(request: NextRequest) {
       results.errors.push('TikTok trending failed');
     }
 
-    // 틱톡 키워드 검색
+    // 틱톡 키워드 검색 (해외 아이디어템 풀)
     const tiktokKeywords = [
-      '추천템', '꿀템', '올리브영', '다이소', '쇼핑하울',
-      '뷰티', '패션', '인스타 바이럴', '가성비', '언박싱',
+      'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves',
+      'cool gadgets', 'kitchen gadgets', 'home gadgets',
+      'must have products', 'satisfying products', 'genius inventions',
+      'temu finds',
     ];
     for (const kw of tiktokKeywords) {
       try {
         const videos = await searchTikTokVideos(kw, { count: 20 });
         for (const video of videos) {
           if (processedVideoIds.has(video.id)) continue;
-          if (video.viewCount < 10000) continue;
-          if (!/[가-힣]/.test(video.title)) continue;
+          if (video.viewCount < 50000) continue;
+          if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
+          if (/[가-힣]/.test(video.title)) continue;
           processedVideoIds.add(video.id);
 
           try {
@@ -350,7 +342,7 @@ export async function POST(request: NextRequest) {
                 category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
-                country: 'KR',
+                country: 'US',
                 publishedAt: new Date(),
               },
             });
@@ -376,7 +368,9 @@ export async function POST(request: NextRequest) {
 
         for (const reel of reels) {
           if (processedVideoIds.has(reel.id)) continue;
-          if (reel.viewCount < 5000) continue;
+          if (reel.viewCount < 20000) continue;
+          // 한글 콘텐츠 제외 (해외 풀 전환)
+          if (/[가-힣]/.test(reel.title) || /[가-힣]/.test(reel.description)) continue;
           processedVideoIds.add(reel.id);
 
           try {
@@ -407,7 +401,7 @@ export async function POST(request: NextRequest) {
                 category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
-                country: 'KR',
+                country: 'US',
                 publishedAt: new Date(),
               },
             });

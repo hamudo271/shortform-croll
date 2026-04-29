@@ -25,50 +25,68 @@ function getStableThumbnail(v: any): string {
   return v.origin_cover || v.cover || '';
 }
 
-// 상품/구매 관련 키워드 - 이 중 하나라도 포함되어야 수집
+// 해외 아이디어템 / 상품 시연 키워드 — 하나라도 포함되어야 수집
 const COMMERCE_KEYWORDS = [
-  '추천', '꿀템', '리뷰', '언박싱', '하울', '신상', '가성비',
-  '구매', '제품', '상품', '사용', '후기', '비교', '순위', '베스트',
-  '할인', '세일', '특가', '핫딜', '쿠팡', '다이소', '올리브영',
-  '알리', '직구', '맛집', '레시피', '인테리어', '소품', '용품',
-  '화장품', '스킨케어', '메이크업', '향수', '뷰티', '패션',
-  '코디', '데일리룩', '악세사리', '가방', '신발', '옷',
-  '주방', '생활', '전자', '가젯', '폰케이스', '이어폰',
-  '다이어트', '영양제', '건강', '운동', '홈트',
-  '캠핑', '차박', '여행', '호텔',
-  '육아', '아기', '반려', '강아지', '고양이',
-  '편의점', '카페', '디저트', '빵', '음식',
-  '브랜드', '명품', '프라다', '샤넬', '나이키', '아디다스',
-  '팝마트', '레고', '피규어', '굿즈',
-  'ad', '광고', '협찬', '링크',
+  // 메가 해시태그 (단어 매칭)
+  'tiktokmademebuyit', 'tiktokmademebuy', 'amazonfinds', 'amazonmusthaves',
+  'amazonhaul', 'amazonfavorite', 'temufinds', 'aliexpressfinds', 'sheinfinds',
+  // 상품 시연 / 리뷰
+  'review', 'unboxing', 'haul', 'bought', 'tried', 'tested',
+  'try it', 'must have', 'must-have', 'must buy',
+  // 가젯 / 발명품
+  'gadget', 'gadgets', 'invention', 'inventions', 'tool', 'tools',
+  'product', 'products', 'item', 'items', 'find', 'finds',
+  // 카테고리
+  'kitchen', 'home', 'office', 'travel', 'car', 'pet',
+  'skincare', 'makeup', 'beauty', 'fashion', 'outfit',
+  'tech', 'phone', 'desk', 'organization',
+  // 판매 시그널
+  'link in bio', 'shop', 'available', 'get yours', 'use code',
+  'on amazon', 'on etsy', 'on temu', 'discount', 'deal', 'sale',
+  'buy', 'order', 'free shipping', 'limited',
+  // 감성 / 시연
+  'satisfying', 'oddly satisfying', 'genius', 'clever', 'smart',
+  'lifehack', 'life hack', 'hack', 'hacks', 'before and after',
+  // 광고 표시
+  'ad', '#ad', 'sponsored', 'gifted', 'pr',
 ];
 
-// 제외 키워드 - 상업적 가치 없는 콘텐츠
+// 제외 키워드 - 일상/유머/논상업 콘텐츠
 const EXCLUDE_KEYWORDS = [
-  '챌린지', 'challenge', '댄스', 'dance', '커플', '남친', '여친',
-  '학교', '학생', '선생님', '군대', '입대',
-  '게임', '롤', '배그', '오버워치', 'game',
-  '팬캠', 'fancam', '직캠', '콘서트',
-  '드라마', '영화', '예고편', '스포',
-  '웃긴', '몰카', 'prank', '반응',
-  'manhwa', 'manga', '만화', '웹툰', 'bl', 'fyp', 'foryoupage',
-  'anime', '애니',
-  // 학교 관련 추가
-  '예고', '고등학교', '중학교', '대학교', '졸업', '입학', '교복',
-  // 예능/방송/연예인
-  '오락실', '예능', '방송', '프로그램', '클립', '편집',
-  '런닝맨', '나혼자산다', '놀면뭐하니', '지구오락실', '출장십오야',
-  '아이돌', '데뷔', '컴백', '엠카', '뮤뱅', '음방',
-  '연예인', '배우', '가수', '아이돌',
-  'kpop', 'k-pop', 'idol',
-  // 뉴스/정치/시사
-  '뉴스', '정치', '대통령', '국회', '선거',
+  // 댄스 / 챌린지 / 팬캠
+  'dance', 'dancing', 'choreography', 'challenge',
+  'fancam', 'concert', 'tour vlog',
+  // 일상 / vlog
+  'day in my life', 'day in the life', 'vlog', 'vlogs', 'morning routine',
+  'night routine', 'get ready with me', 'grwm', 'come with me',
+  'pov', 'storytime', 'story time', 'relatable', 'mood',
+  // 코미디 / 장난
+  'prank', 'pranks', 'reaction', 'reacting', 'comedy', 'skit',
+  'funny', 'joke', 'meme', 'cringe',
+  // 게임
+  'gameplay', 'gaming', 'minecraft', 'fortnite', 'roblox', 'valorant',
+  // 음악 / K-pop / J-pop
+  'kpop', 'k-pop', 'jpop', 'j-pop', 'idol', 'mv', 'lyrics',
+  'cover song', 'singing',
+  // 애니메이션 / 만화
+  'anime', 'manga', 'manhwa', 'webtoon', 'cosplay',
+  // 뉴스 / 정치
+  'news', 'politics', 'election', 'biden', 'trump',
   // 스포츠
-  '축구', '야구', '농구', '올림픽', '월드컵',
+  'football', 'basketball', 'soccer', 'nba', 'nfl', 'fifa',
+  // ASMR / mukbang (단독, 비상업)
+  'mukbang', 'asmr eating',
+  // 학교 / 군대
+  'school day', 'classroom', 'teacher', 'high school',
+  // 한국어 콘텐츠 전부 제외 (해외 풀 전환)
+  // 한글이 보이면 한국 콘텐츠로 간주
 ];
 
 function isCommerceContent(title: string): boolean {
   const lower = title.toLowerCase();
+
+  // 한글이 들어가면 한국 콘텐츠 → 해외 풀 전환에 따라 제외
+  if (/[가-힣]/.test(title)) return false;
 
   // 제외 키워드가 있으면 바로 탈락
   if (EXCLUDE_KEYWORDS.some(kw => lower.includes(kw))) return false;
@@ -105,8 +123,8 @@ export async function searchTikTokVideos(
     return videos
       .filter((v: any) => {
         const title = v.title || '';
-        // 한국어 필수
-        if (!/[가-힣]/.test(title)) return false;
+        // 영어 텍스트 필수 (해외 아이디어템 풀)
+        if (!/[a-zA-Z]{3,}/.test(title)) return false;
         // 상업적 콘텐츠만
         return isCommerceContent(title);
       })
@@ -142,7 +160,7 @@ export async function getTikTokTrending(
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        region: 'KR',
+        region: 'US',
         count: String(count),
       }),
     });
@@ -155,7 +173,7 @@ export async function getTikTokTrending(
     return videos
       .filter((v: any) => {
         const title = v.title || '';
-        if (!/[가-힣]/.test(title)) return false;
+        if (!/[a-zA-Z]{3,}/.test(title)) return false;
         return isCommerceContent(title);
       })
       .map((v: any) => ({

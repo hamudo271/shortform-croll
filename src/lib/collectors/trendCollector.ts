@@ -18,52 +18,54 @@ const DROPSHIPPING_CHANNELS = [
   'UC0RhatS1pyxInC00YKjjBqQ', // Gadget Zone
 ];
 
-// 한국 인스타 세일즈 바이럴 키워드
+// 해외 아이디어템 / TikTokMadeMeBuyIt 장르 바이럴 키워드
+// "단일 상품 시연 → 저장/공유 폭발" 콘텐츠 타겟
 const VIRAL_PRODUCT_KEYWORDS = {
-  global: [] as string[],
-  korean: [
-    // 인스타 바이럴
-    '인스타 바이럴 제품',
-    '인스타 광고 제품 리뷰',
-    '인스타 릴스 추천템',
-    '인스타 쇼핑 추천',
-    '인스타 핫한 제품',
-    // 뷰티/화장품 (인스타 세일즈 핵심)
-    '올리브영 추천',
-    '올리브영 신상',
-    '화장품 추천 shorts',
-    '스킨케어 추천',
-    '뷰티템 리뷰',
-    '메이크업 추천',
-    '향수 추천',
-    // 패션/악세사리
-    '데일리룩 추천',
-    '패션 하울',
-    '악세사리 추천',
-    '가방 추천',
-    '신발 추천',
-    // 리빙/라이프스타일
-    '다이소 꿀템',
-    '생활용품 추천',
-    '주방용품 추천',
-    '인테리어 소품',
-    '홈카페 용품',
-    // 쇼핑 전반
-    '쿠팡 추천템',
-    '알리 추천템',
-    '가성비 꿀템',
-    '쇼핑하울',
-    '언박싱 리뷰',
-    '편의점 신상',
-    // 건강/식품
-    '건강식품 추천',
-    '다이어트 식품',
-    '영양제 추천',
-    // 전자기기
-    '가젯 추천',
-    '전자기기 리뷰',
-    '폰케이스 추천',
+  global: [
+    // 메가 해시태그
+    'tiktokmademebuyit',
+    'tiktok made me buy it',
+    'amazon finds',
+    'amazon must haves',
+    'amazon haul',
+    'amazon favorites',
+    // 가젯 / 발명품
+    'cool gadgets',
+    'kitchen gadgets',
+    'home gadgets',
+    'office gadgets',
+    'travel gadgets',
+    'car gadgets',
+    'pet gadgets',
+    'cool inventions',
+    'genius inventions',
+    'must have gadgets',
+    // 아이디어 / 문제해결
+    'problem solving products',
+    'lifehack products',
+    'organization products',
+    'space saving gadgets',
+    'handy tools',
+    'clever products',
+    // 리뷰 / 언박싱
+    'product review shorts',
+    'unboxing shorts',
+    'satisfying products',
+    'oddly satisfying gadgets',
+    // 쇼핑몰
+    'temu finds',
+    'aliexpress finds',
+    'shein finds',
+    'etsy finds',
+    // 파생
+    'viral products',
+    'viral tiktok products',
+    'must have products',
+    'cool products you need',
+    'you need this product',
   ],
+  // 한국어 키워드는 사용 중지 (해외 전환)
+  korean: [] as string[],
 };
 
 export interface TrendingProduct {
@@ -207,11 +209,8 @@ export function generateSearchQueries(trends: TrendingProduct[]): string[] {
     queries.push(`${trend.keyword} unboxing`);
   }
 
-  // 2. 고정 바이럴 키워드
-  queries.push(...VIRAL_PRODUCT_KEYWORDS.global.slice(0, 5));
-
-  // 3. 한국어 키워드 (한국 시장)
-  queries.push(...VIRAL_PRODUCT_KEYWORDS.korean.slice(0, 3));
+  // 2. 고정 바이럴 키워드 (해외 아이디어템 풀)
+  queries.push(...VIRAL_PRODUCT_KEYWORDS.global.slice(0, 12));
 
   return [...new Set(queries)]; // 중복 제거
 }

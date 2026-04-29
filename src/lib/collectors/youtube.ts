@@ -64,8 +64,8 @@ export async function searchYouTubeShorts(
     keyword?: string;
   } = {}
 ): Promise<YouTubeVideo[]> {
-  // 선진국 시장만 타겟 (인도, 동남아 등 제외)
-  const targetRegions = ['US', 'GB', 'CA', 'AU', 'DE', 'KR', 'JP'];
+  // 영어권 시장 타겟 (해외 아이디어템 / 드랍쉬핑 풀)
+  const targetRegions = ['US', 'GB', 'CA', 'AU'];
   const defaultRegion = targetRegions[Math.floor(Math.random() * targetRegions.length)];
 
   const { maxResults = 50, regionCode = defaultRegion, keyword } = options;
@@ -74,15 +74,15 @@ export async function searchYouTubeShorts(
   if (keyword) {
     query = keyword;
   } else if (!options.query) {
-      // 한국 인스타 세일즈 바이럴 콘텐츠
+      // 해외 아이디어템 / TikTokMadeMeBuyIt 장르
       const productQueries = [
-        '인스타 바이럴 제품', '인스타 추천템', '인스타 광고 리뷰',
-        '올리브영 추천', '올리브영 신상', '화장품 추천',
-        '스킨케어 추천', '뷰티 하울', '메이크업 추천',
-        '다이소 꿀템', '가성비 꿀템', '쇼핑 하울',
-        '데일리룩 추천', '패션 하울', '악세사리 추천',
-        '쿠팡 추천', '알리 추천템', '생활용품 추천',
-        '언박싱 리뷰', '편의점 신상', '홈카페 용품',
+        'tiktokmademebuyit', 'amazon finds', 'amazon must haves',
+        'cool gadgets', 'kitchen gadgets', 'home gadgets',
+        'office gadgets', 'travel gadgets', 'car gadgets',
+        'genius inventions', 'cool inventions', 'must have gadgets',
+        'lifehack products', 'organization gadgets', 'satisfying products',
+        'temu finds', 'aliexpress finds',
+        'product review shorts', 'unboxing shorts', 'viral products',
       ];
       query = productQueries[Math.floor(Math.random() * productQueries.length)];
   }
@@ -97,10 +97,8 @@ export async function searchYouTubeShorts(
   searchUrl.searchParams.set('regionCode', regionCode);
   searchUrl.searchParams.set('videoDuration', 'short'); // Under 4 minutes
   searchUrl.searchParams.set('publishedAfter', getRecentDate(3)); // Last 3 days (실시간)
-  // 한국 지역이면 한국어 영상 우선
-  if (regionCode === 'KR') {
-    searchUrl.searchParams.set('relevanceLanguage', 'ko');
-  }
+  // 영어권 우선 (해외 풀)
+  searchUrl.searchParams.set('relevanceLanguage', 'en');
   searchUrl.searchParams.set('key', apiKey);
 
   const searchRes = await fetch(searchUrl.toString());
@@ -174,16 +172,15 @@ export async function searchYouTubeShorts(
       const channelTitle = item.snippet.channelTitle;
       const isLive = liveKeywords.some(keyword => titleUpper.includes(keyword.toUpperCase()));
 
-      // 제외 국가 필터
+      // 제외 국가 필터 (인도/동남아/아랍권 등)
       const textToCheck = `${title} ${channelTitle}`;
       const isExcludedRegion = excludePatterns.some(pattern => pattern.test(textToCheck));
 
-      // 한국 지역에서는 한국어 제목만 허용
-      const hasKorean = /[가-힣]/.test(title);
-      const isKoreanRegionNonKorean = regionCode === 'KR' && !hasKorean;
+      // 영어 텍스트가 거의 없으면 제외 (한글/일어/중국어 단독 제외)
+      const hasEnglish = /[a-zA-Z]{3,}/.test(title);
 
-      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터 + 한국 필터
-      if (!isLive && !isExcludedRegion && !isKoreanRegionNonKorean && viewCount >= MIN_VIEWS) {
+      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터 + 영어 필수
+      if (!isLive && !isExcludedRegion && hasEnglish && viewCount >= MIN_VIEWS) {
         videos.push({
           id: item.id.videoId,
           title: item.snippet.title,
@@ -215,14 +212,14 @@ export async function searchShortsByCategory(
   category: string
 ): Promise<YouTubeVideo[]> {
   const categoryKeywords: Record<string, string[]> = {
-    // 유통업 상품 발굴용 키워드 (상품 중심)
-    GADGETS: ['아이디어상품 추천', '꿀템 리뷰', '틱톡템', 'tiktokmademebuyit', '생활용품 추천'],
-    BEAUTY: ['화장품 추천', '올리브영 하울', '스킨케어 추천', '뷰티템 리뷰', 'beauty haul'],
-    FASHION: ['옷 하울', '패션 추천템', '악세사리 추천', 'fashion haul', 'outfit haul'],
-    ELECTRONICS: ['전자기기 리뷰', '가젯 추천', 'tech gadget', 'unboxing shorts', '충전기 추천'],
-    HOME: ['주방용품 추천', '인테리어 소품', '생활용품 하울', 'home gadgets', 'kitchen gadgets'],
-    FOOD: ['식품 추천', '간식 추천', '음료 리뷰', '먹거리 추천', 'food review'],
-    KIDS: ['육아템 추천', '장난감 리뷰', '유아용품', 'toy review', 'kids gadgets'],
+    // 해외 아이디어템 풀 (영어권)
+    GADGETS: ['cool gadgets', 'tiktokmademebuyit', 'amazon finds', 'genius inventions', 'must have gadgets'],
+    BEAUTY: ['beauty finds', 'beauty hacks', 'skincare must haves', 'makeup gadgets', 'beauty tools'],
+    FASHION: ['fashion finds', 'amazon fashion finds', 'outfit haul', 'fashion accessories', 'shein finds'],
+    ELECTRONICS: ['tech gadgets', 'cool tech', 'unboxing shorts', 'tech finds', 'gadget review'],
+    HOME: ['home gadgets', 'kitchen gadgets', 'home finds', 'organization gadgets', 'home hacks'],
+    FOOD: ['food gadgets', 'kitchen tools', 'food review', 'snack review', 'cooking gadgets'],
+    KIDS: ['baby gadgets', 'kids products', 'toy review', 'parenting hacks', 'baby must haves'],
   };
 
   const keywords = categoryKeywords[category] || [];

@@ -19,39 +19,38 @@ export interface InstagramReel {
 
 const RAPIDAPI_HOST = 'instagram-scraper-20251.p.rapidapi.com';
 
-// 한국 인기 상업/리뷰 인스타 계정 목록
+// 해외 product-curation 인스타 계정 (TikTokMadeMeBuyIt 장르)
 const KOREAN_REELS_ACCOUNTS = [
-  'oliveyoung_official',   // 올리브영
-  'daiso_kr',              // 다이소
-  'kurly.official',        // 마켓컬리
-  'coupang.official',      // 쿠팡
-  'musinsa_official',      // 무신사
-  'casamia_official',      // 까사미아
-  'ssg.official',          // SSG
-  'lotteon_official',      // 롯데온
-  'innisfreeofficial',     // 이니스프리
-  'etloq_official',        // 에뛰드
-  'stylenanda_korea',      // 스타일난다
-  'abib.official',         // 아비브
-  'romand_official',       // 롬앤
-  'amuse_official',        // 어뮤즈
-  'kirsh_official',        // 키르시
-  'mardi_mercredi',        // 마르디메크르디
-  'ottogi_official',       // 오뚜기
-  'goshopping_official',   // GS SHOP
-  'hmall_official',        // 현대홈쇼핑
-  'cj.onstyle',           // CJ 온스타일
+  'awesome_inventions',
+  'gadgetflow',
+  'thegadgetflow',
+  'dudeiwantthat',
+  'awesomeshityoucanbuy',
+  'amazonfinds',
+  'amazonfinder',
+  'amazonmusthaves',
+  'tiktokmademebuyit',
+  'thegadgetzone',
+  'gadgetsandgizmos',
+  'cleverideas',
+  'lifehacks',
+  'satisfying.products',
+  'kitchengadgets',
+  'homegadgets',
+  'viralproducts',
+  'viralthings',
 ];
 
-// 상업 키워드 필터
+// 해외 상품 시연 / 큐레이션 키워드
 const COMMERCE_KEYWORDS = [
-  '추천', '꿀템', '리뷰', '언박싱', '하울', '신상', '가성비',
-  '구매', '제품', '상품', '후기', '비교', '순위', '베스트',
-  '할인', '세일', '특가', '핫딜', '맛집', '레시피',
-  '화장품', '스킨케어', '메이크업', '향수', '뷰티', '패션',
-  '코디', '데일리룩', '용품', '소품', '인테리어',
-  '다이어트', '영양제', '건강', '편의점', '카페', '디저트',
-  '광고', '협찬', '링크', '출시', '한정', 'new', 'best',
+  'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves', 'temufinds',
+  'review', 'unboxing', 'haul', 'must have', 'must-have',
+  'gadget', 'gadgets', 'invention', 'tool', 'product', 'find', 'finds',
+  'kitchen', 'home', 'travel', 'office', 'desk', 'organization',
+  'genius', 'clever', 'satisfying', 'lifehack', 'life hack', 'hack',
+  'link in bio', 'shop', 'available', 'use code', 'discount', 'deal',
+  'amazon', 'etsy', 'temu', 'shein', 'aliexpress',
+  'ad', 'sponsored', 'gifted',
 ];
 
 function isCommerce(text: string): boolean {
@@ -85,8 +84,9 @@ async function fetchUserReels(
     return items
       .filter((item: any) => {
         const text = item?.caption?.text || '';
-        // 한국어 포함 또는 상업 키워드 포함
-        return /[가-힣]/.test(text) || isCommerce(text);
+        // 한글 콘텐츠 제외 (해외 풀 전환), 상업 키워드 필수
+        if (/[가-힣]/.test(text)) return false;
+        return isCommerce(text);
       })
       .map((item: any) => {
         const caption = item?.caption?.text || '';
