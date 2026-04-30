@@ -14,6 +14,7 @@ import {
   Shield,
   Sun,
   Moon,
+  X,
 } from '@/components/ui/Icon';
 
 type Badge = { label: string; tone: 'green' | 'yellow' | 'blue' | 'gray' };
@@ -98,12 +99,31 @@ export default function Sidebar({ user }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     setCollapsed(readInitialCollapsed());
     setTheme(readInitialTheme());
     setMounted(true);
   }, []);
+
+  // 라우트 변경 시 모바일 드로어 자동 닫기
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // 드로어 열려 있을 때 body 스크롤 잠금
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  // 라벨 표시 여부: 모바일 드로어가 열렸거나 데스크톱에서 collapsed가 아닐 때
+  const showLabels = mobileOpen || !collapsed;
 
   const toggleCollapsed = () => {
     const next = !collapsed;
@@ -131,26 +151,64 @@ export default function Sidebar({ user }: Props) {
   };
 
   return (
-    <aside
-      className={`shrink-0 sticky top-0 h-screen bg-sidebar border-r border-zinc-700 flex flex-col transition-[width] duration-200 ease-out ${
-        collapsed ? 'w-16' : 'w-64'
-      }`}
-    >
+    <>
+      {/* 모바일 햄버거 트리거 (드로어 닫혀 있을 때만) */}
+      {!mobileOpen && (
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="md:hidden fixed top-3 left-3 z-40 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-zinc-900/95 backdrop-blur border border-zinc-700 text-zinc-100 shadow-lg active:scale-95 transition-transform"
+          aria-label="메뉴 열기"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      )}
+
+      {/* 모바일 backdrop */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={`
+          fixed md:sticky top-0 left-0 z-50 md:z-auto h-screen
+          bg-sidebar border-r border-zinc-700 flex flex-col
+          transition-transform md:transition-[width] duration-200 ease-out
+          md:shrink-0
+          ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          w-72 ${collapsed ? 'md:w-16' : 'md:w-64'}
+        `}
+      >
       {/* Top — logo + collapse toggle */}
       <div className="h-16 px-3 flex items-center justify-between border-b border-zinc-700 shrink-0">
         <Link href="/" className="flex items-center gap-2 min-w-0 group">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white shrink-0 shadow-sm">
             <span className="text-base font-bold">S</span>
           </span>
-          {!collapsed && (
+          {showLabels && (
             <span className="text-display text-base font-bold tracking-[-0.02em] text-zinc-50 truncate group-hover:opacity-80 transition-opacity">
               스마트렌드
             </span>
           )}
         </Link>
+        {/* 모바일: 닫기(X) | 데스크톱: 접기 토글 */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-md text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 transition-colors"
+          aria-label="메뉴 닫기"
+        >
+          <X size={18} />
+        </button>
         <button
           onClick={toggleCollapsed}
-          className={`shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-md text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${collapsed ? 'rotate-180' : ''}`}
+          className={`hidden md:inline-flex shrink-0 items-center justify-center w-7 h-7 rounded-md text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${collapsed ? 'rotate-180' : ''}`}
           aria-label={collapsed ? '사이드바 펼치기' : '사이드바 접기'}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -163,7 +221,7 @@ export default function Sidebar({ user }: Props) {
       <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-6">
         {NAV.map((group) => (
           <div key={group.label}>
-            {!collapsed && (
+            {showLabels && (
               <div className="flex items-center gap-2 px-3 mb-2">
                 <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.15em]">
                   {group.label}
@@ -187,11 +245,11 @@ export default function Sidebar({ user }: Props) {
                         active
                           ? 'bg-blue-50 text-blue-700 font-semibold dark:bg-blue-500/10 dark:text-blue-400'
                           : 'text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800'
-                      } ${collapsed ? 'justify-center' : ''}`}
-                      title={collapsed ? item.label : undefined}
+                      } ${!showLabels ? 'justify-center' : ''}`}
+                      title={!showLabels ? item.label : undefined}
                     >
                       {Icon ? <Icon size={16} className="shrink-0" /> : <span className="w-4 shrink-0" />}
-                      {!collapsed && (
+                      {showLabels && (
                         <>
                           <span className="truncate">{item.label}</span>
                           {item.badge && (
@@ -215,21 +273,21 @@ export default function Sidebar({ user }: Props) {
         <button
           onClick={toggleTheme}
           suppressHydrationWarning
-          className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${collapsed ? 'justify-center' : ''}`}
+          className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${!showLabels ? 'justify-center' : ''}`}
           title={theme === 'dark' ? '라이트 모드' : '다크 모드'}
         >
           {mounted && theme === 'dark' ? <Sun size={16} className="shrink-0" /> : <Moon size={16} className="shrink-0" />}
-          {!collapsed && <span>{mounted && theme === 'dark' ? '라이트 모드' : '다크 모드'}</span>}
+          {showLabels && <span>{mounted && theme === 'dark' ? '라이트 모드' : '다크 모드'}</span>}
         </button>
 
         {user?.role === 'ADMIN' && (
           <Link
             href="/admin"
-            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${collapsed ? 'justify-center' : ''}`}
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-zinc-300 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${!showLabels ? 'justify-center' : ''}`}
             title="관리자"
           >
             <Shield size={16} className="shrink-0" />
-            {!collapsed && <span>관리자</span>}
+            {showLabels && <span>관리자</span>}
           </Link>
         )}
 
@@ -237,13 +295,13 @@ export default function Sidebar({ user }: Props) {
           <>
             <Link
               href="/account"
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm hover:bg-zinc-800 transition-colors ${collapsed ? 'justify-center' : ''}`}
+              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm hover:bg-zinc-800 transition-colors ${!showLabels ? 'justify-center' : ''}`}
               title={user.email}
             >
               <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-zinc-800 text-zinc-300 text-xs font-semibold shrink-0">
                 {(user.name || user.email).charAt(0).toUpperCase()}
               </span>
-              {!collapsed && (
+              {showLabels && (
                 <div className="min-w-0 flex-1">
                   <div className="text-zinc-50 font-medium truncate">{user.name || user.email}</div>
                   <div className="text-[11px] text-zinc-500 truncate">
@@ -254,15 +312,15 @@ export default function Sidebar({ user }: Props) {
             </Link>
             <button
               onClick={handleLogout}
-              className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${collapsed ? 'justify-center' : ''}`}
+              className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800 transition-colors ${!showLabels ? 'justify-center' : ''}`}
             >
               <LogOut size={16} className="shrink-0" />
-              {!collapsed && <span>로그아웃</span>}
+              {showLabels && <span>로그아웃</span>}
             </button>
           </>
         ) : (
           <>
-            {!collapsed && (
+            {showLabels && (
               <div className="px-3 py-3 rounded-lg bg-zinc-800 mb-2">
                 <div className="flex items-center gap-2.5 mb-1">
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-zinc-700 text-zinc-400 shrink-0">
@@ -277,20 +335,21 @@ export default function Sidebar({ user }: Props) {
             )}
             <Link
               href="/login"
-              className={`flex items-center justify-center gap-2 w-full h-10 text-sm font-semibold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-lg transition-all shadow-sm ${collapsed ? 'px-0' : 'px-3'}`}
+              className={`flex items-center justify-center gap-2 w-full h-10 text-sm font-semibold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-lg transition-all shadow-sm ${!showLabels ? 'px-0' : 'px-3'}`}
             >
               <User size={16} className="shrink-0" />
-              {!collapsed && <span>로그인</span>}
+              {showLabels && <span>로그인</span>}
             </Link>
             <Link
               href="/signup"
-              className={`flex items-center justify-center gap-2 w-full h-10 text-sm font-semibold text-zinc-100 border border-zinc-700 hover:bg-zinc-800 rounded-lg transition-colors ${collapsed ? 'px-0' : 'px-3'}`}
+              className={`flex items-center justify-center gap-2 w-full h-10 text-sm font-semibold text-zinc-100 border border-zinc-700 hover:bg-zinc-800 rounded-lg transition-colors ${!showLabels ? 'px-0' : 'px-3'}`}
             >
-              {collapsed ? <ChevronRight size={16} /> : <span>회원가입</span>}
+              {!showLabels ? <ChevronRight size={16} /> : <span>회원가입</span>}
             </Link>
           </>
         )}
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

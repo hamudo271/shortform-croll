@@ -19,7 +19,7 @@ export default async function AppShellLayout({
   return (
     <div className="flex min-h-screen">
       <Sidebar user={user} />
-      <main className="flex-1 min-w-0 overflow-x-hidden">{children}</main>
+      <main className="flex-1 min-w-0 overflow-x-hidden pt-14 md:pt-0">{children}</main>
     </div>
   );
 }
