@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { searchYouTubeShorts, getYouTubeVideoUrl, getYouTubeChannelUrl } from '@/lib/collectors/youtube';
-import { searchTikTokVideos, getTikTokTrending } from '@/lib/collectors/tiktok-api';
+import {
+  searchYouTubeShorts,
+  getYouTubeVideoUrl,
+  getYouTubeChannelUrl,
+  fetchYouTubeChannel,
+  fetchYouTubeComments,
+} from '@/lib/collectors/youtube';
+import {
+  searchTikTokVideos,
+  getTikTokTrending,
+  fetchTikTokUser,
+  fetchTikTokComments,
+} from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
+import { getOrFetchCreator, computeHasSalesLink } from '@/lib/creators';
+import { scorePurchaseIntent, MIN_INTENT_SCORE } from '@/lib/comments';
 import {
   getRisingProductTrends,
   getDailyTrendingProducts,
@@ -148,6 +161,29 @@ export async function POST(request: NextRequest) {
             continue;
           }
 
+          // 셀러 검증 게이트 — creator profile 또는 댓글 구매 의도
+          const ytCreator = await getOrFetchCreator(Platform.YOUTUBE, video.channelId, () =>
+            fetchYouTubeChannel(video.channelId, process.env.YOUTUBE_API_KEY!),
+          );
+          let ytPass = false;
+          let ytPassReason: string | null = null;
+          let ytIntentScore = 0;
+          if (ytCreator?.hasSalesLink) {
+            ytPass = true;
+            ytPassReason = 'creator_link';
+          } else {
+            const comments = await fetchYouTubeComments(video.id, process.env.YOUTUBE_API_KEY!, 20);
+            ytIntentScore = scorePurchaseIntent(comments);
+            if (ytIntentScore >= MIN_INTENT_SCORE) {
+              ytPass = true;
+              ytPassReason = 'comment_intent';
+            }
+          }
+          if (!ytPass) {
+            results.videosSkipped++;
+            continue;
+          }
+
           try {
             // AI 분류
             let classification;
@@ -196,6 +232,9 @@ export async function POST(request: NextRequest) {
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: video.country || targetGeo,
+                hasPurchaseIntent: ytPassReason === 'comment_intent' || ytPassReason === 'both',
+                purchaseIntentScore: ytIntentScore,
+                passReason: ytPassReason,
                 updatedAt: new Date(),
               },
               create: {
@@ -216,6 +255,9 @@ export async function POST(request: NextRequest) {
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: video.country || targetGeo,
+                hasPurchaseIntent: ytPassReason === 'comment_intent' || ytPassReason === 'both',
+                purchaseIntentScore: ytIntentScore,
+                passReason: ytPassReason,
                 publishedAt: new Date(video.publishedAt),
               },
             });
@@ -255,6 +297,29 @@ export async function POST(request: NextRequest) {
         const tkPublished = video.createTime ? new Date(video.createTime * 1000) : null;
         if (!tkPublished || tkPublished < MIN_PUBLISHED_AT) continue;
 
+        // 셀러 검증 게이트
+        const tkCreator = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
+          fetchTikTokUser(video.authorId),
+        );
+        let tkPass = false;
+        let tkPassReason: string | null = null;
+        let tkIntentScore = 0;
+        if (tkCreator?.hasSalesLink) {
+          tkPass = true;
+          tkPassReason = 'creator_link';
+        } else {
+          const comments = await fetchTikTokComments(video.videoUrl, 20);
+          tkIntentScore = scorePurchaseIntent(comments);
+          if (tkIntentScore >= MIN_INTENT_SCORE) {
+            tkPass = true;
+            tkPassReason = 'comment_intent';
+          }
+        }
+        if (!tkPass) {
+          results.videosSkipped++;
+          continue;
+        }
+
         processedVideoIds.add(video.id);
 
         try {
@@ -283,6 +348,9 @@ export async function POST(request: NextRequest) {
               tags: classification.tags,
               country: 'US',
               publishedAt: tkPublished,
+              hasPurchaseIntent: tkPassReason === 'comment_intent' || tkPassReason === 'both',
+              purchaseIntentScore: tkIntentScore,
+              passReason: tkPassReason,
               updatedAt: new Date(),
             },
             create: {
@@ -304,6 +372,9 @@ export async function POST(request: NextRequest) {
               tags: classification.tags,
               country: 'US',
               publishedAt: tkPublished,
+              hasPurchaseIntent: tkPassReason === 'comment_intent' || tkPassReason === 'both',
+              purchaseIntentScore: tkIntentScore,
+              passReason: tkPassReason,
             },
           });
           tiktokCollected++;
@@ -336,6 +407,26 @@ export async function POST(request: NextRequest) {
           const tkPublished = video.createTime ? new Date(video.createTime * 1000) : null;
           if (!tkPublished || tkPublished < MIN_PUBLISHED_AT) continue;
 
+          // 셀러 검증 게이트
+          const tkCreator2 = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
+            fetchTikTokUser(video.authorId),
+          );
+          let tkPass2 = false;
+          let tkPassReason2: string | null = null;
+          let tkIntentScore2 = 0;
+          if (tkCreator2?.hasSalesLink) {
+            tkPass2 = true;
+            tkPassReason2 = 'creator_link';
+          } else {
+            const comments = await fetchTikTokComments(video.videoUrl, 20);
+            tkIntentScore2 = scorePurchaseIntent(comments);
+            if (tkIntentScore2 >= MIN_INTENT_SCORE) {
+              tkPass2 = true;
+              tkPassReason2 = 'comment_intent';
+            }
+          }
+          if (!tkPass2) continue;
+
           processedVideoIds.add(video.id);
 
           try {
@@ -348,6 +439,9 @@ export async function POST(request: NextRequest) {
                 viewCount: BigInt(video.viewCount),
                 likeCount: BigInt(video.likeCount),
                 publishedAt: tkPublished,
+                hasPurchaseIntent: tkPassReason2 === 'comment_intent' || tkPassReason2 === 'both',
+                purchaseIntentScore: tkIntentScore2,
+                passReason: tkPassReason2,
                 updatedAt: new Date(),
               },
               create: {
@@ -369,6 +463,9 @@ export async function POST(request: NextRequest) {
                 tags: classification.tags,
                 country: 'US',
                 publishedAt: tkPublished,
+                hasPurchaseIntent: tkPassReason2 === 'comment_intent' || tkPassReason2 === 'both',
+                purchaseIntentScore: tkIntentScore2,
+                passReason: tkPassReason2,
               },
             });
             tiktokCollected++;
@@ -388,8 +485,18 @@ export async function POST(request: NextRequest) {
     {
       console.log('\n📷 Collecting Instagram Reels (public API)...');
       try {
-        const { reels, errors: igErrors } = await collectKoreanReelsPublic();
+        const { reels, errors: igErrors, creators: igCreators } = await collectKoreanReelsPublic();
         console.log(`  Found ${reels.length} reels`);
+
+        // 1) 한 번에 모든 IG creator를 DB에 동기화 (추가 API 호출 0회 — payload에 이미 있음)
+        for (const [username, info] of igCreators.entries()) {
+          await getOrFetchCreator(Platform.INSTAGRAM, username, async () => ({
+            bioUrl: info.bioUrl,
+            signature: info.signature,
+            authorName: info.authorName,
+            followerCount: info.followerCount,
+          }));
+        }
 
         for (const reel of reels) {
           if (processedVideoIds.has(reel.id)) continue;
@@ -400,6 +507,11 @@ export async function POST(request: NextRequest) {
           // 최신성 컷오프
           const igPublished = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
           if (!igPublished || igPublished < MIN_PUBLISHED_AT) continue;
+
+          // 셀러 검증 게이트 — IG는 creator-only (댓글 fetch 안 함)
+          const igCreatorInfo = igCreators.get(reel.authorId);
+          const igHasSalesLink = computeHasSalesLink(igCreatorInfo?.bioUrl, igCreatorInfo?.signature);
+          if (!igHasSalesLink) continue;
 
           processedVideoIds.add(reel.id);
 
@@ -413,6 +525,7 @@ export async function POST(request: NextRequest) {
                 likeCount: BigInt(reel.likeCount),
                 commentCount: BigInt(reel.commentCount),
                 publishedAt: igPublished,
+                passReason: 'creator_link',
                 updatedAt: new Date(),
               },
               create: {
@@ -434,6 +547,7 @@ export async function POST(request: NextRequest) {
                 tags: classification.tags,
                 country: 'US',
                 publishedAt: igPublished,
+                passReason: 'creator_link',
               },
             });
             instagramCollected++;

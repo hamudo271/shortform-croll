@@ -22,6 +22,62 @@ export interface TikTokVideo {
 
 const TIKWM_API = 'https://www.tikwm.com/api';
 
+/**
+ * TikTok 작성자 프로필 정보. bioLink.link / signature / 팔로워 수 등.
+ * tikwm /api/user/info?unique_id=X
+ */
+export async function fetchTikTokUser(uniqueId: string): Promise<{
+  bioUrl: string | null;
+  signature: string;
+  followerCount: number | null;
+  videoCount: number | null;
+  authorName: string;
+} | null> {
+  try {
+    const res = await fetch(`${TIKWM_API}/user/info`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ unique_id: uniqueId }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const user = data?.data?.user;
+    if (!user) return null;
+    const stats = data?.data?.stats || {};
+    return {
+      bioUrl: user?.bioLink?.link || null,
+      signature: user?.signature || '',
+      followerCount: typeof stats.followerCount === 'number' ? stats.followerCount : null,
+      videoCount: typeof stats.videoCount === 'number' ? stats.videoCount : null,
+      authorName: user?.nickname || user?.uniqueId || uniqueId,
+    };
+  } catch (err) {
+    console.error(`TikTok user fetch error (@${uniqueId}):`, err);
+    return null;
+  }
+}
+
+/**
+ * 영상의 상위 N개 댓글 텍스트만 추출.
+ * tikwm /api/comment/list (POST, form-encoded `url` param)
+ */
+export async function fetchTikTokComments(videoUrl: string, count = 20): Promise<string[]> {
+  try {
+    const res = await fetch(`${TIKWM_API}/comment/list`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ url: videoUrl, count: String(count), cursor: '0' }),
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const comments = data?.data?.comments || [];
+    return comments.map((c: { text?: string }) => c?.text || '').filter(Boolean);
+  } catch (err) {
+    console.error(`TikTok comments error (${videoUrl}):`, err);
+    return [];
+  }
+}
+
 /** origin_cover가 더 안정적 (만료가 늦거나 없음), 없으면 cover 사용 */
 function getStableThumbnail(v: any): string {
   return v.origin_cover || v.cover || '';

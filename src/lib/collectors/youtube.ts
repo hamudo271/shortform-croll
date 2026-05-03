@@ -53,6 +53,70 @@ interface YouTubeVideoDetails {
 const YOUTUBE_API_BASE = 'https://www.googleapis.com/youtube/v3';
 
 /**
+ * 채널 description + statistics 조회.
+ * description 안 첫 https?:// URL을 bioUrl로 사용.
+ */
+export async function fetchYouTubeChannel(channelId: string, apiKey: string): Promise<{
+  bioUrl: string | null;
+  signature: string;
+  followerCount: number | null;
+  videoCount: number | null;
+  authorName: string;
+} | null> {
+  try {
+    const url = new URL(`${YOUTUBE_API_BASE}/channels`);
+    url.searchParams.set('part', 'snippet,statistics');
+    url.searchParams.set('id', channelId);
+    url.searchParams.set('key', apiKey);
+    const res = await fetch(url.toString());
+    if (!res.ok) return null;
+    const data = await res.json();
+    const ch = data?.items?.[0];
+    if (!ch) return null;
+    const desc: string = ch?.snippet?.description || '';
+    const linkMatch = desc.match(/https?:\/\/[^\s\)]+/);
+    const stats = ch?.statistics || {};
+    return {
+      bioUrl: linkMatch ? linkMatch[0] : null,
+      signature: desc,
+      followerCount: stats.subscriberCount ? parseInt(stats.subscriberCount, 10) : null,
+      videoCount: stats.videoCount ? parseInt(stats.videoCount, 10) : null,
+      authorName: ch?.snippet?.title || channelId,
+    };
+  } catch (err) {
+    console.error(`YouTube channel fetch error (${channelId}):`, err);
+    return null;
+  }
+}
+
+/**
+ * 영상의 top-level 댓글 텍스트만 추출.
+ * 댓글 비활성화 채널은 빈 배열 반환.
+ */
+export async function fetchYouTubeComments(videoId: string, apiKey: string, max = 20): Promise<string[]> {
+  try {
+    const url = new URL(`${YOUTUBE_API_BASE}/commentThreads`);
+    url.searchParams.set('part', 'snippet');
+    url.searchParams.set('videoId', videoId);
+    url.searchParams.set('maxResults', String(max));
+    url.searchParams.set('order', 'relevance');
+    url.searchParams.set('key', apiKey);
+    const res = await fetch(url.toString());
+    if (!res.ok) return []; // 403 = comments disabled, etc.
+    const data = await res.json();
+    const items = data?.items || [];
+    return items
+      .map((it: { snippet?: { topLevelComment?: { snippet?: { textOriginal?: string } } } }) =>
+        it?.snippet?.topLevelComment?.snippet?.textOriginal || '',
+      )
+      .filter(Boolean);
+  } catch (err) {
+    console.error(`YouTube comments error (${videoId}):`, err);
+    return [];
+  }
+}
+
+/**
  * Search for YouTube Shorts (videos under 60 seconds)
  */
 export async function searchYouTubeShorts(

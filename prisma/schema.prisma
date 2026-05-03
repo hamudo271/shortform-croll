@@ -42,11 +42,36 @@ model Video {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  // Seller-validation signals (creator profile + comment intent)
+  hasPurchaseIntent    Boolean @default(false)
+  purchaseIntentScore  Int     @default(0)  // 0-100, 상위 20 댓글 중 구매 의도 비율
+  passReason           String?              // "creator_link" | "comment_intent" | "both"
+
   @@index([platform])
   @@index([category])
   @@index([country])
   @@index([viralScore(sort: Desc)])
   @@index([collectedAt(sort: Desc)])
+  @@index([hasPurchaseIntent])
+}
+
+model Creator {
+  id            String   @id @default(cuid())
+  platform      Platform
+  authorId      String   // tiktok unique_id, youtube channelId, ig username
+  authorName    String?
+  bioUrl        String?
+  signature     String?  // tiktok signature / ig biography / yt channel description (앞 500자)
+  hasSalesLink  Boolean  @default(false)
+  followerCount Int?
+  videoCount    Int?
+  lastCheckedAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([platform, authorId])
+  @@index([hasSalesLink])
+  @@index([lastCheckedAt])
 }
 
 enum Platform {

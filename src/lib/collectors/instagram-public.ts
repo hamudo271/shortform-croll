@@ -31,7 +31,15 @@ const GLOBAL_PRODUCT_ACCOUNTS = [
   'unboxtherapy',   // 10 reels (검증됨)
 ];
 
-async function fetchUserReels(username: string): Promise<InstagramReel[]> {
+export interface InstagramCreatorInfo {
+  username: string;
+  authorName: string;
+  bioUrl: string | null;
+  signature: string;
+  followerCount: number | null;
+}
+
+async function fetchUserReels(username: string): Promise<{ reels: InstagramReel[]; creator: InstagramCreatorInfo | null }> {
   try {
     // Instagram now enforces Sec-Fetch-* policy on its private web API.
     // We mimic a browser fetch from the user's own profile page —
@@ -57,57 +65,79 @@ async function fetchUserReels(username: string): Promise<InstagramReel[]> {
 
     if (!res.ok) {
       console.error(`IG @${username}: HTTP ${res.status}`);
-      return [];
+      return { reels: [], creator: null };
     }
 
     const data = await res.json();
     const user = data?.data?.user;
-    if (!user) return [];
+    if (!user) return { reels: [], creator: null };
 
     const fullName = user.full_name || username;
     const reels = user.edge_felix_video_timeline?.edges || [];
 
-    return reels.map((edge: any) => {
-      const node = edge.node || {};
+    const creator: InstagramCreatorInfo = {
+      username,
+      authorName: fullName,
+      bioUrl: user.external_url || null,
+      signature: user.biography || '',
+      followerCount: user.edge_followed_by?.count || null,
+    };
+
+    const mappedReels = reels.map((edge: { node?: Record<string, unknown> }) => {
+      const node = (edge.node || {}) as Record<string, unknown> & {
+        edge_media_to_caption?: { edges?: Array<{ node?: { text?: string } }> };
+        edge_liked_by?: { count?: number };
+        edge_media_preview_like?: { count?: number };
+        edge_media_to_comment?: { count?: number };
+      };
       const caption = node.edge_media_to_caption?.edges?.[0]?.node?.text || '';
-      const shortcode = node.shortcode || '';
+      const shortcode = (node.shortcode as string) || '';
 
       return {
-        id: node.id || shortcode,
+        id: (node.id as string) || shortcode,
         title: caption.split('\n')[0].substring(0, 200) || '무제',
         description: caption.substring(0, 500),
-        thumbnailUrl: node.thumbnail_src || node.display_url || '',
+        thumbnailUrl: (node.thumbnail_src as string) || (node.display_url as string) || '',
         videoUrl: `https://www.instagram.com/reel/${shortcode}/`,
         authorName: fullName,
         authorId: username,
-        viewCount: node.video_view_count || 0,
+        viewCount: (node.video_view_count as number) || 0,
         likeCount: node.edge_liked_by?.count || node.edge_media_preview_like?.count || 0,
         commentCount: node.edge_media_to_comment?.count || 0,
         shareCount: 0,
-        takenAt: typeof node.taken_at_timestamp === 'number' ? node.taken_at_timestamp : undefined,
+        takenAt: typeof node.taken_at_timestamp === 'number' ? (node.taken_at_timestamp as number) : undefined,
       };
     });
+
+    return { reels: mappedReels, creator };
   } catch (error) {
     console.error(`Instagram public API error for @${username}:`, error);
-    return [];
+    return { reels: [], creator: null };
   }
 }
 
 /**
- * 해외 product-curation 계정들의 릴스를 일괄 수집
+ * 해외 product-curation 계정들의 릴스를 일괄 수집.
+ * 동시에 각 계정의 creator info(외부 링크 + bio)도 함께 반환 — 추가 API 호출 없음.
  */
 export async function collectKoreanReelsPublic(
   accounts?: string[],
-): Promise<{ reels: InstagramReel[]; errors: string[] }> {
+): Promise<{
+  reels: InstagramReel[];
+  errors: string[];
+  creators: Map<string, InstagramCreatorInfo>;
+}> {
   const targetAccounts = accounts || GLOBAL_PRODUCT_ACCOUNTS;
   const allReels: InstagramReel[] = [];
   const errors: string[] = [];
+  const creators = new Map<string, InstagramCreatorInfo>();
 
   for (const username of targetAccounts) {
     try {
-      const reels = await fetchUserReels(username);
+      const { reels, creator } = await fetchUserReels(username);
       allReels.push(...reels);
-      console.log(`  @${username}: ${reels.length}개 릴스`);
+      if (creator) creators.set(username, creator);
+      console.log(`  @${username}: ${reels.length}개 릴스 (bio=${creator?.bioUrl ? '✓' : '✗'})`);
     } catch (err) {
       errors.push(`@${username}: ${String(err)}`);
     }
@@ -115,5 +145,5 @@ export async function collectKoreanReelsPublic(
     await new Promise(r => setTimeout(r, 2000));
   }
 
-  return { reels: allReels, errors };
+  return { reels: allReels, errors, creators };
 }
