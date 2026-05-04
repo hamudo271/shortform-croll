@@ -39,41 +39,40 @@ export interface InstagramCreatorInfo {
   followerCount: number | null;
 }
 
+const IG_HEADERS = (referer: string) => ({
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+  'Accept': '*/*',
+  'Accept-Language': 'en-US,en;q=0.9',
+  'X-IG-App-ID': IG_APP_ID,
+  'X-IG-WWW-Claim': '0',
+  'X-ASBD-ID': '129477',
+  'Sec-Fetch-Dest': 'empty',
+  'Sec-Fetch-Mode': 'cors',
+  'Sec-Fetch-Site': 'same-origin',
+  'Referer': referer,
+});
+
 async function fetchUserReels(username: string): Promise<{ reels: InstagramReel[]; creator: InstagramCreatorInfo | null }> {
   try {
-    // Instagram now enforces Sec-Fetch-* policy on its private web API.
-    // We mimic a browser fetch from the user's own profile page —
-    // tested 2026-04, returns 200 with reels payload.
-    const res = await fetch(
+    // Step 1: web_profile_info → user.id + bio/external_url + biography
+    // (edge_felix_video_timeline은 폐지된 IGTV라 비어있거나 옛날 콘텐츠뿐)
+    const profileRes = await fetch(
       `https://www.instagram.com/api/v1/users/web_profile_info/?username=${username}`,
-      {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-          'Accept': '*/*',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'X-IG-App-ID': IG_APP_ID,
-          'X-IG-WWW-Claim': '0',
-          'X-ASBD-ID': '129477',
-          'Sec-Fetch-Dest': 'empty',
-          'Sec-Fetch-Mode': 'cors',
-          'Sec-Fetch-Site': 'same-origin',
-          'Referer': `https://www.instagram.com/${username}/`,
-        },
-      }
+      { headers: IG_HEADERS(`https://www.instagram.com/${username}/`) }
     );
 
-    if (!res.ok) {
-      console.error(`IG @${username}: HTTP ${res.status}`);
+    if (!profileRes.ok) {
+      console.error(`IG @${username}: profile HTTP ${profileRes.status}`);
       return { reels: [], creator: null };
     }
 
-    const data = await res.json();
-    const user = data?.data?.user;
+    const profileData = await profileRes.json();
+    const user = profileData?.data?.user;
     if (!user) return { reels: [], creator: null };
 
+    const userId = user.id;
     const fullName = user.full_name || username;
-    const reels = user.edge_felix_video_timeline?.edges || [];
 
     const creator: InstagramCreatorInfo = {
       username,
@@ -83,31 +82,61 @@ async function fetchUserReels(username: string): Promise<{ reels: InstagramReel[
       followerCount: user.edge_followed_by?.count || null,
     };
 
-    const mappedReels = reels.map((edge: { node?: Record<string, unknown> }) => {
-      const node = (edge.node || {}) as Record<string, unknown> & {
-        edge_media_to_caption?: { edges?: Array<{ node?: { text?: string } }> };
-        edge_liked_by?: { count?: number };
-        edge_media_preview_like?: { count?: number };
-        edge_media_to_comment?: { count?: number };
-      };
-      const caption = node.edge_media_to_caption?.edges?.[0]?.node?.text || '';
-      const shortcode = (node.shortcode as string) || '';
+    if (!userId) return { reels: [], creator };
 
-      return {
-        id: (node.id as string) || shortcode,
-        title: caption.split('\n')[0].substring(0, 200) || '무제',
-        description: caption.substring(0, 500),
-        thumbnailUrl: (node.thumbnail_src as string) || (node.display_url as string) || '',
-        videoUrl: `https://www.instagram.com/reel/${shortcode}/`,
-        authorName: fullName,
-        authorId: username,
-        viewCount: (node.video_view_count as number) || 0,
-        likeCount: node.edge_liked_by?.count || node.edge_media_preview_like?.count || 0,
-        commentCount: node.edge_media_to_comment?.count || 0,
-        shareCount: 0,
-        takenAt: typeof node.taken_at_timestamp === 'number' ? (node.taken_at_timestamp as number) : undefined,
-      };
-    });
+    // Step 2: i.instagram.com modern feed → 최신 reels (clips)
+    // 12개 default, count 늘려도 IG가 무시하기도 함
+    const feedRes = await fetch(
+      `https://i.instagram.com/api/v1/feed/user/${userId}/?count=24`,
+      { headers: IG_HEADERS(`https://www.instagram.com/${username}/`) }
+    );
+
+    if (!feedRes.ok) {
+      console.error(`IG @${username}: feed HTTP ${feedRes.status}`);
+      return { reels: [], creator };
+    }
+
+    const feedData = await feedRes.json();
+    const items: Array<Record<string, unknown>> = feedData?.items || [];
+
+    // 릴스(클립)만 — product_type === 'clips' 또는 media_type === 2
+    type FeedItem = {
+      pk?: string | number;
+      id?: string;
+      code?: string;
+      product_type?: string;
+      media_type?: number;
+      taken_at?: number;
+      play_count?: number;
+      view_count?: number;
+      like_count?: number;
+      comment_count?: number;
+      caption?: { text?: string };
+      image_versions2?: { candidates?: Array<{ url?: string }> };
+      user?: { username?: string; full_name?: string };
+    };
+
+    const mappedReels = (items as FeedItem[])
+      .filter((it) => it.product_type === 'clips' || it.media_type === 2)
+      .map((it) => {
+        const code = it.code || '';
+        const caption = it.caption?.text || '';
+        const thumb = it.image_versions2?.candidates?.[0]?.url || '';
+        return {
+          id: String(it.pk || it.id || code),
+          title: caption.split('\n')[0].substring(0, 200) || '무제',
+          description: caption.substring(0, 500),
+          thumbnailUrl: thumb,
+          videoUrl: `https://www.instagram.com/reel/${code}/`,
+          authorName: it.user?.full_name || it.user?.username || fullName,
+          authorId: username,
+          viewCount: it.play_count || it.view_count || 0,
+          likeCount: it.like_count || 0,
+          commentCount: it.comment_count || 0,
+          shareCount: 0,
+          takenAt: typeof it.taken_at === 'number' ? it.taken_at : undefined,
+        };
+      });
 
     return { reels: mappedReels, creator };
   } catch (error) {
@@ -141,8 +170,8 @@ export async function collectKoreanReelsPublic(
     } catch (err) {
       errors.push(`@${username}: ${String(err)}`);
     }
-    // rate limit 방지
-    await new Promise(r => setTimeout(r, 2000));
+    // rate limit 방지 — 2단계 호출(profile + feed) 하므로 더 보수적으로
+    await new Promise(r => setTimeout(r, 4000));
   }
 
   return { reels: allReels, errors, creators };
