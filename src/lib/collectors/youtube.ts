@@ -343,3 +343,4 @@ export function getYouTubeChannelUrl(channelId: string): string {
 export function getYouTubeThumbnailUrl(videoId: string): string {
   return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 }
+
