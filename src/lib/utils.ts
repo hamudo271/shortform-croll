@@ -173,14 +173,14 @@ export function getNaverShoppingSearchUrl(productTitle: string): string {
 }
 
 /**
- * Video download URL.
- * - TikTok: 자체 프록시 엔드포인트 (/api/download/tiktok) — 클릭 한 번으로
- *   워터마크 없는 MP4가 바로 다운로드됨. tikwm API 사용.
- * - Instagram/YouTube: 외부 다운로더로 이동 (서비스가 client-side JS로
- *   ?url= 파라미터를 읽어 자동 입력).
+ * 외부 다운로더 URL — `?url=` 쿼리 파라미터로 영상 URL을 미리 채워서
+ * 새창으로 열면 다운로더가 자동으로 입력값을 읽는다.
+ *
+ * TikTok: ssstik.io는 루트(`/?url=`)에서만 prefill 동작. `/en?url=`은 안 됨.
  */
 export function getDownloaderUrl(videoUrl: string, platform: string): string {
   const encoded = encodeURIComponent(videoUrl);
+  // TikTok: tikvideo.app/ko 로 POST 자동 제출 (URL 자동 입력 + 검색 결과 즉시 표시)
   if (platform === 'TIKTOK') return `/api/download/tiktok?url=${encoded}`;
   if (platform === 'INSTAGRAM') return `https://snapinsta.app/?url=${encoded}`;
   if (platform === 'YOUTUBE') return `https://en1.savefrom.net/19/?url=${encoded}`;

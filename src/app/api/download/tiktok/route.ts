@@ -1,63 +1,64 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * TikTok video download proxy.
+ * TikTok 다운로드 — tikvideo.app/ko로 자동 제출하는 인터스티셜.
  *
- * Click 한 번이면 워터마크 없는 MP4가 곧장 다운로드되도록 — 3rd-party
- * 다운로더 사이트로 이동하지 않는다.
+ * tikvideo.app은 GET ?url=... 으로 prefill을 안 받지만 폼은 POST q=URL로
+ * 결과 페이지를 바로 렌더링해준다. 그래서 우리 쪽에서 작은 HTML을 돌려주고
+ * onload 타이밍에 form.submit()을 트리거하면, 사용자는 새 탭이 열리자마자
+ * 그 영상의 다운로드 옵션이 나오는 페이지를 보게 된다 (URL 붙여넣기 불필요).
  *
- * 흐름:
- * 1. 영상 URL을 tikwm API에 넘겨 직접 다운로드 가능한 play URL을 받음
- * 2. 그 URL의 바이트를 그대로 프록시하면서 Content-Disposition: attachment
- *    헤더를 붙여 브라우저가 "다른 이름으로 저장" 동작을 트리거하게 함
- *
- * 비용: 영상당 2~5MB 트래픽. 호출량이 늘면 캐싱/직접 redirect 검토.
+ * 노스크립트 사용자도 안 막히도록 <noscript>에서 직접 클릭할 수 있는 버튼 제공.
  */
-
-// 다운로드는 시간이 좀 걸릴 수 있어 maxDuration 넉넉히
-export const maxDuration = 60;
-
 export async function GET(req: NextRequest) {
   const videoUrl = req.nextUrl.searchParams.get('url');
   if (!videoUrl || !videoUrl.includes('tiktok.com')) {
     return NextResponse.json({ error: 'Missing or invalid url' }, { status: 400 });
   }
 
-  try {
-    // 1) tikwm API로 play URL 가져오기 (hd=1로 고화질 우선)
-    const apiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(videoUrl)}&hd=1`;
-    const apiRes = await fetch(apiUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-    });
-    if (!apiRes.ok) {
-      return NextResponse.json({ error: 'tikwm API failed', status: apiRes.status }, { status: 502 });
-    }
-    const apiData = await apiRes.json();
-    const playUrl: string | undefined = apiData?.data?.hdplay || apiData?.data?.play || apiData?.data?.wmplay;
-    if (!playUrl) {
-      return NextResponse.json({ error: 'Video URL not found in tikwm response' }, { status: 502 });
-    }
+  // 사용자 입력이 그대로 HTML에 들어가므로 quote 이스케이프
+  const safeUrl = videoUrl.replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
-    // 2) MP4 바이트를 프록시해서 attachment로 내려보내기
-    const videoRes = await fetch(playUrl);
-    if (!videoRes.ok || !videoRes.body) {
-      return NextResponse.json({ error: 'Could not fetch video bytes' }, { status: 502 });
-    }
+  const html = `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>다운로더로 이동 중…</title>
+<style>
+  html,body{margin:0;height:100%;background:#0a0a0a;color:#e4e4e7;font-family:-apple-system,system-ui,sans-serif}
+  .wrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+  .spinner{width:36px;height:36px;border:3px solid #27272a;border-top-color:#3b82f6;border-radius:50%;animation:s 1s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .label{font-size:14px;color:#a1a1aa}
+  button{margin-top:8px;background:linear-gradient(to right,#0ea5e9,#2563eb);border:0;color:#fff;padding:10px 18px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
+  noscript .label{color:#fca5a5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="spinner"></div>
+  <div class="label">tikvideo.app으로 이동 중…</div>
+  <form id="f" action="https://tikvideo.app/ko" method="post" target="_self" rel="noopener">
+    <input type="hidden" name="q" value="${safeUrl}">
+    <input type="hidden" name="lang" value="ko">
+    <noscript>
+      <div class="label">자동 이동이 차단됐습니다. 아래 버튼을 눌러주세요.</div>
+      <button type="submit">다운로더 열기</button>
+    </noscript>
+  </form>
+</div>
+<script>document.getElementById('f').submit();</script>
+</body>
+</html>`;
 
-    // 파일명: 영상 ID 우선, 없으면 timestamp
-    const videoId = String(apiData?.data?.id || Date.now());
-    const filename = `tiktok_${videoId}.mp4`;
-
-    const headers = new Headers();
-    headers.set('Content-Type', 'video/mp4');
-    headers.set('Content-Disposition', `attachment; filename="${filename}"`);
-    const len = videoRes.headers.get('content-length');
-    if (len) headers.set('Content-Length', len);
-    headers.set('Cache-Control', 'public, max-age=3600');
-
-    return new NextResponse(videoRes.body, { status: 200, headers });
-  } catch (err) {
-    console.error('TikTok download proxy error:', err);
-    return NextResponse.json({ error: 'Download failed', details: String(err) }, { status: 500 });
-  }
+  return new NextResponse(html, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      // 인터스티셜이라 캐시 유의미. 같은 영상 재클릭 시 즉시 응답.
+      'Cache-Control': 'public, max-age=3600',
+    },
+  });
 }

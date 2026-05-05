@@ -167,9 +167,8 @@ export default async function ProductDetailPage({
             {/* Video download */}
             <a
               href={downloadUrl}
-              target={video.platform === 'TIKTOK' ? '_self' : '_blank'}
+              target="_blank"
               rel="noopener noreferrer"
-              {...(video.platform === 'TIKTOK' ? { download: '' } : {})}
               className="group flex items-center gap-4 bg-zinc-950 border border-zinc-700 hover:border-blue-500 rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all"
             >
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white shrink-0 shadow-sm">
@@ -177,11 +176,7 @@ export default async function ProductDetailPage({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-base font-semibold text-zinc-50 tracking-tight">영상 다운로드</div>
-                <div className="text-xs text-zinc-400 mt-0.5">
-                  {video.platform === 'TIKTOK'
-                    ? '워터마크 없는 MP4 바로 다운로드'
-                    : '3rd-party 다운로더로 이동 (URL 자동 입력)'}
-                </div>
+                <div className="text-xs text-zinc-400 mt-0.5">다운로더 사이트로 이동 (URL 자동 입력)</div>
               </div>
               <ExternalLink size={18} className="text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
             </a>
