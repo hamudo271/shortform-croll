@@ -86,6 +86,11 @@ export async function GET(request: NextRequest) {
         likeCount: Number(video.likeCount),
         shareCount: Number(video.shareCount),
         commentCount: Number(video.commentCount),
+        // TikTok CDN signed URL은 며칠이면 만료되므로 프록시로 우회 (tikwm에서 fresh cover 받아 302)
+        thumbnailUrl:
+          video.platform === 'TIKTOK' && video.videoUrl
+            ? `/api/thumbnail/tiktok?url=${encodeURIComponent(video.videoUrl)}`
+            : video.thumbnailUrl,
       }));
 
     const res = NextResponse.json({

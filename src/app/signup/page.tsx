@@ -60,7 +60,7 @@ export default function SignupPage() {
             <h1 className="text-display text-2xl sm:text-3xl font-bold text-zinc-50 tracking-[-0.025em] mb-2">
               7일 무료 체험 시작
             </h1>
-            <p className="text-sm text-zinc-400">카드 등록 없이 가입 즉시 모든 기능 이용 가능 ✨</p>
+            <p className="text-sm text-zinc-400">카드 등록 없이 가입 즉시 모든 기능 이용 가능</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

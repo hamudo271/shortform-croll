@@ -7,7 +7,6 @@ export default function SearchPage() {
       <PageHeader
         title="검색"
         accent="키워드"
-        emoji="🔎"
         description="제목·설명·작성자로 영상을 검색하고 데이터 새로고침으로 새 키워드 수집을 트리거하세요."
       />
       <VideoListPage />

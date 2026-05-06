@@ -7,7 +7,6 @@ export default function TopPage() {
       <PageHeader
         title="바이럴"
         accent="Top"
-        emoji="🔥"
         description="조회수 급상승률(바이럴 점수) 기준 Top 영상."
       />
       <VideoListPage initialFilters={{ sortBy: 'viralScore', days: 7 }} />

@@ -7,7 +7,6 @@ export default function DashboardMainPage() {
       <PageHeader
         title="대시보드"
         accent="전체"
-        emoji="📊"
         description="3대 플랫폼에서 매일 자동 수집된 스마트렌드를 한눈에."
       />
       <VideoListPage />

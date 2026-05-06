@@ -160,7 +160,7 @@ export default async function PricingPage() {
         <section>
           <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-200 dark:border-blue-500/20 rounded-3xl p-8 sm:p-12 text-center">
             <h2 className="text-display text-3xl sm:text-4xl font-bold text-zinc-50 tracking-[-0.025em] mb-4">
-              지금 <span className="text-blue-500">시작</span>하세요 🚀
+              지금 <span className="text-blue-500">시작</span>하세요
             </h2>
             <p className="text-base sm:text-lg text-zinc-400 mb-8 max-w-md mx-auto">
               가입은 무료입니다. 결제 안내는 가입 직후 안내됩니다.
