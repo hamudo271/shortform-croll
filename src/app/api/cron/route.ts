@@ -75,6 +75,27 @@ export async function GET(request: NextRequest) {
       results.errors.push('Collection error: ' + String(err));
     }
 
+    // Step 4: TikTok 썸네일 일괄 갱신 (CDN signed URL이 ~24-48h 유효 → 매일 새로)
+    try {
+      const origin = request.nextUrl.origin;
+      const token = process.env.COLLECT_API_KEY || process.env.AUTH_PASSWORD;
+      const thumbRes = await fetch(`${origin}/api/refresh-thumbnails`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (thumbRes.ok) {
+        const data = await thumbRes.json();
+        (results as Record<string, unknown>).thumbnailsRefreshed = data.refreshed || 0;
+      } else {
+        results.errors.push('Thumbnail refresh failed: ' + thumbRes.statusText);
+      }
+    } catch (err) {
+      results.errors.push('Thumbnail refresh error: ' + String(err));
+    }
+
     return NextResponse.json({
       success: true,
       results,

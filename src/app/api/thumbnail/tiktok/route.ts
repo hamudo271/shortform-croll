@@ -1,21 +1,77 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * TikTok 썸네일 프록시 — 만료된 CDN signed URL 문제 해결.
+ * TikTok 썸네일 프록시.
  *
- * 문제: tikwm 응답으로 받은 cover URL은 `x-expires` + `x-signature` 쿼리가
- * 붙은 서명 URL이라 보통 1시간~며칠 안에 만료. DB에 저장한 URL을 그대로
- * 화면에 쓰면 며칠 뒤엔 전부 broken-image.
+ * 만료되는 CDN signed URL 문제와 tikwm의 1 req/sec rate limit을 동시에 해결:
+ * - 모듈 레벨 인메모리 캐시 (50분 TTL — CDN 서명 만료보다 짧게)
+ * - 요청 직렬화 (1.1s 간격) + Free Api Limit 응답 시 재시도 2회
+ * - 같은 videoUrl에 대한 동시 요청은 한 번만 fetch하고 결과 공유 (in-flight dedup)
  *
- * 해결: GET /api/thumbnail/tiktok?url=TIKTOK_VIDEO_URL 가 들어오면
- * tikwm /api/?url=... 를 호출해서 fresh cover URL을 받아 302 리다이렉트.
- * 브라우저는 fresh CDN URL로 직접 가서 이미지 로드.
- *
- * 캐시: 1시간. 같은 영상에 대한 두 번째 요청은 우리 서버를 거치지 않음
- * (브라우저/Next.js fetch cache에서 바로 응답).
+ * 결과: 페이지에 카드 26개 있어도 같은 URL은 1번만 tikwm을 거치고,
+ * 다른 URL들은 1.1초 간격으로 순차 처리. 두 번째 방문부터는 캐시 히트.
  */
 
-export const maxDuration = 30;
+export const maxDuration = 60;
+
+const TTL_MS = 50 * 60 * 1000; // 50분 — CDN x-expires가 보통 1시간이라 그 안쪽
+const RATE_LIMIT_MS = 1100; // tikwm 무료 한도 = 1 req/sec, 여유 100ms
+
+const cache = new Map<string, { coverUrl: string; expiresAt: number }>();
+const inflight = new Map<string, Promise<string | null>>();
+let lastCallAt = 0;
+
+async function fetchCoverFromTikwm(videoUrl: string): Promise<string | null> {
+  // Rate limit: 마지막 호출과 1.1s 간격 보장
+  const now = Date.now();
+  const wait = Math.max(0, lastCallAt + RATE_LIMIT_MS - now);
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastCallAt = Date.now();
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const res = await fetch(
+        `https://www.tikwm.com/api/?url=${encodeURIComponent(videoUrl)}`,
+        { headers: { 'User-Agent': 'Mozilla/5.0' } },
+      );
+      if (!res.ok) continue;
+      const data = await res.json();
+      const cover: string | undefined =
+        data?.data?.origin_cover || data?.data?.cover || data?.data?.ai_dynamic_cover;
+      if (cover) return cover;
+      // rate-limit 응답은 msg에 "Free Api Limit" — 한 번 더 기다렸다 재시도
+      if (typeof data?.msg === 'string' && data.msg.toLowerCase().includes('limit')) {
+        await new Promise((r) => setTimeout(r, RATE_LIMIT_MS));
+        lastCallAt = Date.now();
+        continue;
+      }
+      return null;
+    } catch {
+      // 네트워크 에러는 짧게 대기 후 재시도
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  }
+  return null;
+}
+
+async function getCover(videoUrl: string): Promise<string | null> {
+  const cached = cache.get(videoUrl);
+  if (cached && cached.expiresAt > Date.now()) return cached.coverUrl;
+
+  const flying = inflight.get(videoUrl);
+  if (flying) return flying;
+
+  const promise = (async () => {
+    const cover = await fetchCoverFromTikwm(videoUrl);
+    if (cover) {
+      cache.set(videoUrl, { coverUrl: cover, expiresAt: Date.now() + TTL_MS });
+    }
+    inflight.delete(videoUrl);
+    return cover;
+  })();
+  inflight.set(videoUrl, promise);
+  return promise;
+}
 
 export async function GET(req: NextRequest) {
   const videoUrl = req.nextUrl.searchParams.get('url');
@@ -24,24 +80,13 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const apiRes = await fetch(
-      `https://www.tikwm.com/api/?url=${encodeURIComponent(videoUrl)}`,
-      { headers: { 'User-Agent': 'Mozilla/5.0' } },
-    );
-    if (!apiRes.ok) {
-      return NextResponse.json({ error: 'tikwm API failed' }, { status: 502 });
-    }
-    const apiData = await apiRes.json();
-    const coverUrl: string | undefined =
-      apiData?.data?.origin_cover || apiData?.data?.cover || apiData?.data?.ai_dynamic_cover;
+    const coverUrl = await getCover(videoUrl);
     if (!coverUrl) {
-      return NextResponse.json({ error: 'No cover in response' }, { status: 502 });
+      return NextResponse.json({ error: 'Cover not available' }, { status: 502 });
     }
-
-    // 302 리다이렉트 + 1시간 캐시. 브라우저가 fresh CDN URL을 직접 받음.
     return NextResponse.redirect(coverUrl, {
       status: 302,
-      headers: { 'Cache-Control': 'public, max-age=3600' },
+      headers: { 'Cache-Control': 'public, max-age=3000' }, // 50분 — 캐시 TTL과 맞춤
     });
   } catch (err) {
     console.error('TikTok thumbnail proxy error:', err);
