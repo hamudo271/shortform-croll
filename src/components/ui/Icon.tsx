@@ -292,6 +292,78 @@ export function PlusCircle({ className, size = 16, strokeWidth = 1.75 }: IconPro
   );
 }
 
+export function Utensils({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      {/* Fork */}
+      <path d="M3 2v7a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V2" />
+      <line x1="5" y1="11" x2="5" y2="22" />
+      {/* Knife */}
+      <path d="M17 2c-1.66 0-3 1.34-3 3v6h3" />
+      <line x1="17" y1="2" x2="17" y2="22" />
+    </svg>
+  );
+}
+
+export function Home({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z" />
+    </svg>
+  );
+}
+
+export function Baby({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      {/* 머리 */}
+      <circle cx="12" cy="9" r="5" />
+      {/* 눈 */}
+      <line x1="10" y1="9" x2="10" y2="9" strokeWidth={strokeWidth + 0.6} />
+      <line x1="14" y1="9" x2="14" y2="9" strokeWidth={strokeWidth + 0.6} />
+      {/* 입 (살짝 미소) */}
+      <path d="M10 11.5c.5.6 1.2 1 2 1s1.5-.4 2-1" />
+      {/* 어깨/팔 */}
+      <path d="M5 19c1-2 3-3 7-3s6 1 7 3" />
+    </svg>
+  );
+}
+
+export function Dumbbell({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      {/* 좌측 추 */}
+      <rect x="2" y="9" width="3" height="6" rx="0.5" />
+      <rect x="5" y="7" width="2" height="10" rx="0.5" />
+      {/* 막대 */}
+      <line x1="7" y1="12" x2="17" y2="12" />
+      {/* 우측 추 */}
+      <rect x="17" y="7" width="2" height="10" rx="0.5" />
+      <rect x="19" y="9" width="3" height="6" rx="0.5" />
+    </svg>
+  );
+}
+
+export function Shirt({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      <path d="M16 3l4 2-2 5-2-1v12H8V9L6 10 4 5l4-2 2 2c.5.6 1.2 1 2 1s1.5-.4 2-1l2-2z" />
+    </svg>
+  );
+}
+
+export function Lipstick({ className, size = 16, strokeWidth = 1.75 }: IconProps) {
+  return (
+    <svg {...baseSvg(size, strokeWidth, className)}>
+      {/* 끝부분 (사선) */}
+      <path d="M9 2l4 0 1 5h-6l1-5z" />
+      {/* 케이스 본체 */}
+      <rect x="7" y="7" width="8" height="4" rx="0.5" />
+      <rect x="8" y="11" width="6" height="11" rx="0.5" />
+    </svg>
+  );
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
  * Platform brand logos (filled, brand-recognizable shapes).
  * These bypass the stroke-based base style and use `fill="currentColor"`

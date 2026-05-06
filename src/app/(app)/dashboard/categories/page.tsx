@@ -1,15 +1,24 @@
 import PageHeader from '@/components/app/PageHeader';
 import Link from 'next/link';
-import { ChevronRight } from '@/components/ui/Icon';
+import {
+  ChevronRight,
+  Lipstick,
+  Utensils,
+  Shirt,
+  Smartphone,
+  Home,
+  Dumbbell,
+  Baby,
+} from '@/components/ui/Icon';
 
 const CATEGORIES = [
-  { key: 'BEAUTY', label: '뷰티', emoji: '💄', color: 'from-pink-400 to-rose-500' },
-  { key: 'FOOD', label: '식품', emoji: '🍱', color: 'from-orange-400 to-red-500' },
-  { key: 'FASHION', label: '패션', emoji: '👗', color: 'from-purple-400 to-fuchsia-500' },
-  { key: 'ELECTRONICS', label: '전자기기', emoji: '🎧', color: 'from-blue-400 to-indigo-500' },
-  { key: 'LIFESTYLE', label: '라이프', emoji: '🏠', color: 'from-sky-400 to-blue-600' },
-  { key: 'HEALTH', label: '헬스/피트니스', emoji: '💪', color: 'from-cyan-400 to-blue-500' },
-  { key: 'KIDS', label: '키즈/육아', emoji: '🧸', color: 'from-amber-400 to-yellow-500' },
+  { key: 'BEAUTY', label: '뷰티', Icon: Lipstick },
+  { key: 'FOOD', label: '식품', Icon: Utensils },
+  { key: 'FASHION', label: '패션', Icon: Shirt },
+  { key: 'ELECTRONICS', label: '전자기기', Icon: Smartphone },
+  { key: 'LIFESTYLE', label: '라이프', Icon: Home },
+  { key: 'HEALTH', label: '헬스/피트니스', Icon: Dumbbell },
+  { key: 'KIDS', label: '키즈/육아', Icon: Baby },
 ];
 
 export default function CategoriesPage() {
@@ -18,7 +27,6 @@ export default function CategoriesPage() {
       <PageHeader
         title="카테고리별"
         accent="모음"
-        emoji="🗂️"
         description="관심 카테고리만 골라서 보세요."
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -26,10 +34,10 @@ export default function CategoriesPage() {
           <Link
             key={c.key}
             href={`/dashboard/categories/${c.key.toLowerCase()}`}
-            className="group bg-zinc-950 border border-zinc-700 rounded-2xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-4"
+            className="group bg-zinc-950 border border-zinc-700 rounded-2xl p-6 shadow-card hover:shadow-card-hover hover:border-blue-500 hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-4"
           >
-            <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${c.color} text-white text-2xl shadow-sm shrink-0`}>
-              {c.emoji}
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-zinc-700 bg-zinc-900 text-zinc-200 shrink-0 group-hover:border-blue-500 group-hover:text-blue-400 transition-colors">
+              <c.Icon size={26} strokeWidth={1.5} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-display text-lg font-bold text-zinc-50 tracking-[-0.015em]">
