@@ -37,6 +37,7 @@ export interface InstagramCreatorInfo {
   bioUrl: string | null;
   signature: string;
   followerCount: number | null;
+  videoCount: number | null;
 }
 
 const IG_HEADERS = (referer: string) => ({
@@ -80,6 +81,8 @@ async function fetchUserReels(username: string): Promise<{ reels: InstagramReel[
       bioUrl: user.external_url || null,
       signature: user.biography || '',
       followerCount: user.edge_followed_by?.count || null,
+      // 게시물 총 개수 — IG는 reels와 사진을 분리하지 않으므로 전체 미디어 카운트
+      videoCount: user.edge_owner_to_timeline_media?.count ?? null,
     };
 
     if (!userId) return { reels: [], creator };

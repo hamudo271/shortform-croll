@@ -14,7 +14,7 @@ import {
   fetchTikTokComments,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
-import { getOrFetchCreator, computeHasSalesLink } from '@/lib/creators';
+import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
 import { scorePurchaseIntent, MIN_INTENT_SCORE } from '@/lib/comments';
 import {
   getRisingProductTrends,
@@ -510,8 +510,13 @@ export async function POST(request: NextRequest) {
 
           // 셀러 검증 게이트 — IG는 creator-only (댓글 fetch 안 함)
           const igCreatorInfo = igCreators.get(reel.authorId);
-          const igHasSalesLink = computeHasSalesLink(igCreatorInfo?.bioUrl, igCreatorInfo?.signature);
-          if (!igHasSalesLink) continue;
+          const igPass = isQualifiedSeller({
+            authorId: reel.authorId,
+            bioUrl: igCreatorInfo?.bioUrl,
+            signature: igCreatorInfo?.signature,
+            videoCount: igCreatorInfo?.videoCount,
+          });
+          if (!igPass) continue;
 
           processedVideoIds.add(reel.id);
 

@@ -114,6 +114,73 @@ export function computeHasSalesLink(
   return false;
 }
 
+// 개인 lifestyle/얼굴 위주 계정의 시그널.
+// "I'm obsessed with girly things", "motherhood | daily life",
+// "lifestyle creator", "my journey" 등 1인칭/감정 표현이 박혀있으면
+// 셀러보다는 인플루언서/일상 채널일 확률이 높음.
+const PERSONAL_BIO_RE = new RegExp(
+  [
+    'content creator',
+    'lifestyle creator',
+    'tech.{0,5}lifestyle',
+    'motherhood',
+    'mama',
+    'my journey',
+    "i'?m obsessed",
+    "i'?m a (?!seller|shop)",
+    'daily life',
+    'my happy place',
+    'my world',
+    'my heart',
+    "girly\\s+things",
+    "girlies",
+    'personality',
+    "i\\s+yap",
+    'partnerships?@',
+  ].join('|'),
+  'i',
+);
+
+// 핸들에 "finds/shop/store/deals/products/gadget/...": 셀러 핸들 패턴 (개인 lifestyle을 우회 통과)
+const SELLER_HANDLE_RE = /finds?|\bshop|store|deals|official|products?|hauls?\b|gadget|favorite|picks|amazon|temu|ali/i;
+
+// 일관된 컨텐츠 = 셀러: 일정 수 이상의 영상이 누적돼야 함 (1회성 광고 인플루언서 거름)
+const MIN_VIDEO_COUNT_FOR_SELLER = 50;
+
+export interface QualifiedSellerSignals {
+  authorId?: string | null;
+  bioUrl?: string | null;
+  signature?: string | null;
+  videoCount?: number | null;
+}
+
+/**
+ * 영상 수집 게이트의 최종 셀러 판정.
+ * - hasSalesLink (commerce host) ✅
+ * - 개인 lifestyle 패턴 거부 (단, 셀러 핸들 패턴이면 살림)
+ * - videoCount ≥ 50 (제품 위주로 꾸준히 올리는 계정)
+ * - videoCount 미상(null/undefined)인 경우는 신뢰 (예: 일부 플랫폼 응답 누락)
+ */
+export function isQualifiedSeller({
+  authorId,
+  bioUrl,
+  signature,
+  videoCount,
+}: QualifiedSellerSignals): boolean {
+  if (!computeHasSalesLink(bioUrl, signature)) return false;
+
+  const handleSellerLike = SELLER_HANDLE_RE.test(authorId || '');
+  const personal = signature ? PERSONAL_BIO_RE.test(signature) : false;
+  if (personal && !handleSellerLike) return false;
+
+  // videoCount가 명시적으로 작은 숫자면 거부. null/undefined면 통과
+  if (typeof videoCount === 'number' && videoCount > 0 && videoCount < MIN_VIDEO_COUNT_FOR_SELLER) {
+    return false;
+  }
+
+  return true;
+}
+
 export interface CreatorFetchResult {
   bioUrl?: string | null;
   signature?: string | null;
@@ -155,14 +222,20 @@ export async function getOrFetchCreator(
     return existing;
   }
 
-  const hasSalesLink = computeHasSalesLink(info.bioUrl, info.signature);
+  const sigTrimmed = (info.signature ?? '').substring(0, 500);
+  const hasSalesLink = isQualifiedSeller({
+    authorId,
+    bioUrl: info.bioUrl,
+    signature: sigTrimmed,
+    videoCount: info.videoCount,
+  });
 
   const data = {
     platform,
     authorId,
     authorName: info.authorName ?? existing?.authorName ?? null,
     bioUrl: info.bioUrl ?? null,
-    signature: (info.signature ?? '').substring(0, 500),
+    signature: sigTrimmed,
     followerCount: info.followerCount ?? null,
     videoCount: info.videoCount ?? null,
     hasSalesLink,
