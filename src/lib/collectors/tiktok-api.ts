@@ -147,6 +147,32 @@ export const EXCLUDE_KEYWORDS = [
   'school day', 'classroom', 'teacher', 'high school',
 ];
 
+// Talking-head / 리스티클 패턴 — 사람이 카메라 앞에서 "Here are 10 things…" 식으로
+// 말하는 영상. 사용자가 원하는 톤 (단일 제품 시연, 얼굴 안 나옴) 과 정반대라 거름.
+const TALKING_HEAD_RE = new RegExp(
+  [
+    // First-person opener with number: "here are 10 ...", "here's the 5 ..."
+    '\\bhere\\s+(?:are|is|\'?s)\\s+(?:the\\s+|my\\s+)?\\d',
+    // "These are the 10 ..."
+    '\\bthese\\s+are\\s+(?:the\\s+|my\\s+)\\d',
+    // 직접 호명 + 발화 동사
+    '\\byou\\s+all\\s+(?:have\\s+)?asked',
+    '\\b(?:i|i\'ll)\\s+shall\\b',
+    '\\blet\\s+me\\s+show\\s+you',
+    '\\bi\'?m\\s+sharing',
+    // "my favorite/favourite" — 인플루언서 큐레이션 멘트
+    '\\bmy\\s+(?:amazon\\s+)?favou?rites?\\b',
+    '\\bmy\\s+(?:weekly|monthly)\\s+(?:haul|picks?|favou?rites?)\\b',
+    // 숫자 + 리스티클 단어
+    '\\b\\d{1,2}\\s+amazon\\s+(?:finds?|must.?haves?|essentials?|items?|tech|things|gadgets?)\\b',
+    '\\b\\d{1,2}\\s+winning\\s+\\w+\\s+products?\\b',
+    '\\b\\d{1,2}\\s+things\\s+(?:you|i|that|every|to)\\b',
+    '\\b(?:top|best)\\s+\\d{1,2}\\s+amazon\\b',
+    '\\bmust.?haves?\\s+you\\s+(?:didn\'?t|don\'?t|need)\\b',
+  ].join('|'),
+  'i',
+);
+
 function isCommerceContent(title: string): boolean {
   const lower = title.toLowerCase();
 
@@ -155,6 +181,9 @@ function isCommerceContent(title: string): boolean {
 
   // 제외 키워드가 있으면 바로 탈락
   if (EXCLUDE_KEYWORDS.some(kw => lower.includes(kw))) return false;
+
+  // talking-head / 리스티클 영상 거부 (사용자: "얼굴보다는 제품만 주구장창")
+  if (TALKING_HEAD_RE.test(title)) return false;
 
   // STRONG commerce 신호가 1개라도 있어야 통과
   return STRONG_COMMERCE.some(kw => lower.includes(kw));
