@@ -169,11 +169,17 @@ export async function POST(request: NextRequest) {
           );
           const ytComments = await fetchYouTubeComments(video.id, process.env.YOUTUBE_API_KEY!, 20);
           const ytIntentScore = scorePurchaseIntent(ytComments);
-          const ytPassReason = evaluatePass(!!ytCreator?.hasSalesLink, ytIntentScore);
+          const { passReason: ytPassReason, dpm: ytDpm } = evaluatePass(
+            !!ytCreator?.hasSalesLink,
+            ytIntentScore,
+            video.commentCount,
+            video.viewCount,
+          );
           if (!ytPassReason) {
             results.videosSkipped++;
             continue;
           }
+          void ytDpm; // dpm은 향후 DB 저장 가능, 지금은 game-time만 사용
 
           try {
             // AI 분류
@@ -294,7 +300,12 @@ export async function POST(request: NextRequest) {
         );
         const tkComments = await fetchTikTokComments(video.videoUrl, 20);
         const tkIntentScore = scorePurchaseIntent(tkComments);
-        const tkPassReason = evaluatePass(!!tkCreator?.hasSalesLink, tkIntentScore);
+        const { passReason: tkPassReason } = evaluatePass(
+          !!tkCreator?.hasSalesLink,
+          tkIntentScore,
+          video.commentCount,
+          video.viewCount,
+        );
         if (!tkPassReason) {
           results.videosSkipped++;
           continue;
@@ -393,7 +404,12 @@ export async function POST(request: NextRequest) {
           );
           const tkComments2 = await fetchTikTokComments(video.videoUrl, 20);
           const tkIntentScore2 = scorePurchaseIntent(tkComments2);
-          const tkPassReason2 = evaluatePass(!!tkCreator2?.hasSalesLink, tkIntentScore2);
+          const { passReason: tkPassReason2 } = evaluatePass(
+            !!tkCreator2?.hasSalesLink,
+            tkIntentScore2,
+            video.commentCount,
+            video.viewCount,
+          );
           if (!tkPassReason2) continue;
 
           processedVideoIds.add(video.id);
