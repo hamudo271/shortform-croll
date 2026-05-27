@@ -15,7 +15,7 @@ import {
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
 import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
-import { scorePurchaseIntent, MIN_INTENT_SCORE } from '@/lib/comments';
+import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
 import {
   getRisingProductTrends,
   getDailyTrendingProducts,
@@ -161,25 +161,16 @@ export async function POST(request: NextRequest) {
             continue;
           }
 
-          // 셀러 검증 게이트 — creator profile 또는 댓글 구매 의도
+          // 셀러 검증 게이트 — creator profile + 댓글 구매 의도 둘 다 확인
+          // (이전엔 OR 게이트라 creator 통과하면 댓글 검증 스킵 → "viral but no buyers"
+          //  영상이 새는 문제. 이제는 'both' 또는 'comment_intent'만 통과)
           const ytCreator = await getOrFetchCreator(Platform.YOUTUBE, video.channelId, () =>
             fetchYouTubeChannel(video.channelId, process.env.YOUTUBE_API_KEY!),
           );
-          let ytPass = false;
-          let ytPassReason: string | null = null;
-          let ytIntentScore = 0;
-          if (ytCreator?.hasSalesLink) {
-            ytPass = true;
-            ytPassReason = 'creator_link';
-          } else {
-            const comments = await fetchYouTubeComments(video.id, process.env.YOUTUBE_API_KEY!, 20);
-            ytIntentScore = scorePurchaseIntent(comments);
-            if (ytIntentScore >= MIN_INTENT_SCORE) {
-              ytPass = true;
-              ytPassReason = 'comment_intent';
-            }
-          }
-          if (!ytPass) {
+          const ytComments = await fetchYouTubeComments(video.id, process.env.YOUTUBE_API_KEY!, 20);
+          const ytIntentScore = scorePurchaseIntent(ytComments);
+          const ytPassReason = evaluatePass(!!ytCreator?.hasSalesLink, ytIntentScore);
+          if (!ytPassReason) {
             results.videosSkipped++;
             continue;
           }
@@ -301,21 +292,10 @@ export async function POST(request: NextRequest) {
         const tkCreator = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
           fetchTikTokUser(video.authorId),
         );
-        let tkPass = false;
-        let tkPassReason: string | null = null;
-        let tkIntentScore = 0;
-        if (tkCreator?.hasSalesLink) {
-          tkPass = true;
-          tkPassReason = 'creator_link';
-        } else {
-          const comments = await fetchTikTokComments(video.videoUrl, 20);
-          tkIntentScore = scorePurchaseIntent(comments);
-          if (tkIntentScore >= MIN_INTENT_SCORE) {
-            tkPass = true;
-            tkPassReason = 'comment_intent';
-          }
-        }
-        if (!tkPass) {
+        const tkComments = await fetchTikTokComments(video.videoUrl, 20);
+        const tkIntentScore = scorePurchaseIntent(tkComments);
+        const tkPassReason = evaluatePass(!!tkCreator?.hasSalesLink, tkIntentScore);
+        if (!tkPassReason) {
           results.videosSkipped++;
           continue;
         }
@@ -407,25 +387,14 @@ export async function POST(request: NextRequest) {
           const tkPublished = video.createTime ? new Date(video.createTime * 1000) : null;
           if (!tkPublished || tkPublished < MIN_PUBLISHED_AT) continue;
 
-          // 셀러 검증 게이트
+          // 셀러 검증 게이트 — creator + 댓글 둘 다 확인
           const tkCreator2 = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
             fetchTikTokUser(video.authorId),
           );
-          let tkPass2 = false;
-          let tkPassReason2: string | null = null;
-          let tkIntentScore2 = 0;
-          if (tkCreator2?.hasSalesLink) {
-            tkPass2 = true;
-            tkPassReason2 = 'creator_link';
-          } else {
-            const comments = await fetchTikTokComments(video.videoUrl, 20);
-            tkIntentScore2 = scorePurchaseIntent(comments);
-            if (tkIntentScore2 >= MIN_INTENT_SCORE) {
-              tkPass2 = true;
-              tkPassReason2 = 'comment_intent';
-            }
-          }
-          if (!tkPass2) continue;
+          const tkComments2 = await fetchTikTokComments(video.videoUrl, 20);
+          const tkIntentScore2 = scorePurchaseIntent(tkComments2);
+          const tkPassReason2 = evaluatePass(!!tkCreator2?.hasSalesLink, tkIntentScore2);
+          if (!tkPassReason2) continue;
 
           processedVideoIds.add(video.id);
 
