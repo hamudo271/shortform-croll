@@ -403,26 +403,34 @@ export async function POST(request: NextRequest) {
       results.errors.push('TikTok trending failed');
     }
 
-    // 틱톡 키워드 검색 (해외 아이디어템 풀) — 폭 확대
+    // 틱톡 키워드 검색 — 의뢰인 골든 (Daily Sunbeam 도시락, Good Stuff Diary 모션조명,
+    // CozyPrime 충전기 류)을 잡는 다양한 angle. amazon-중심에서 확장:
+    // 단일 제품 시연 / 스마트홈 / 실생활 해결 / 가성비 / 신박한 아이디어
     const tiktokKeywords = [
       // 메가 해시태그
       'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves',
       'amazonhaul', 'temufinds', 'sheinfinds', 'aliexpressfinds',
-      // 가젯 카테고리
+      'tiktokshop', 'tiktokshopfinds',
+      // 가젯 카테고리 (Daily Sunbeam 도시락 → kitchen, AlexFinds 키보드 → tech)
       'cool gadgets', 'kitchen gadgets', 'home gadgets',
       'office gadgets', 'car gadgets', 'travel gadgets',
-      // 컨셉
+      'tech gadgets', 'smart home gadgets',
+      // 컨셉 (Good Stuff Diary 조명/펜 → 작은 발명)
       'must have products', 'satisfying products', 'genius inventions',
       'cool inventions', 'lifehack products', 'organization gadgets',
-      // 쇼핑몰
-      'temu finds', 'shein finds',
+      'useful gadgets', 'clever inventions', 'smart products',
+      // 진성 셀러 표현
+      'i bought this', 'this changed my life', 'best purchase',
+      'product review', 'unboxing', 'amazon best sellers',
       // 트렌드형
-      'viral products', 'must have gadgets', 'amazon must haves',
-      'tiktok shop finds',
+      'viral products', 'viral gadgets 2026', 'must have gadgets',
+      'amazon must haves', 'tiktok shop finds', 'small business products',
+      // 의뢰인 골든 톤 (Daily Sunbeam 도시락 같은 단일 시연)
+      'portable gadgets', 'mini gadgets', 'compact gadget',
     ];
     for (const kw of tiktokKeywords) {
       try {
-        const videos = await searchTikTokVideos(kw, { count: 20 });
+        const videos = await searchTikTokVideos(kw, { count: 30 });
         for (const video of videos) {
           if (processedVideoIds.has(video.id)) continue;
           if (video.viewCount < 20000) continue;

@@ -243,8 +243,18 @@ export async function searchYouTubeShorts(
       // 영어 텍스트가 거의 없으면 제외 (한글/일어/중국어 단독 제외)
       const hasEnglish = /[a-zA-Z]{3,}/.test(title);
 
-      // 최소 조회수 필터 + 라이브 제외 + 제외 국가 필터 + 영어 필수
-      if (!isLive && !isExcludedRegion && hasEnglish && viewCount >= MIN_VIEWS) {
+      // 의뢰인 톤 (아이디어템 가젯 / 셀러 영상) 미리 거르기.
+      // 인도 makeup 채널이 "amazon finds" 같은 키워드로 검색결과 차지하는데
+      // 제목에 셀러 시그널이 없으면 미리 폐기 → 무의미한 creator fetch 회피.
+      // TikTok과 동일한 STRONG_COMMERCE 패턴 사용.
+      const titleLower = title.toLowerCase();
+      const hasCommerceSignal =
+        /\btiktokmademebuyit\b|tiktok made me buy|amazon\s?(finds|must.?haves|haul|favorite)|temu\s?finds|shein\s?finds|aliexpress\s?finds|etsy\s?finds|link in bio|use code|on amazon|on etsy|on temu|available on|shop now|get yours|free shipping|order now|limited time|must.?have|must.?buy|i bought this|just bought|#ad\b|sponsored by|gifted by|paid partnership/.test(
+          titleLower,
+        );
+
+      // 최소 조회수 + 라이브 제외 + 제외 국가 + 영어 필수 + 제목 commerce 시그널
+      if (!isLive && !isExcludedRegion && hasEnglish && hasCommerceSignal && viewCount >= MIN_VIEWS) {
         videos.push({
           id: item.id.videoId,
           title: item.snippet.title,
