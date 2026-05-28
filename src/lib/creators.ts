@@ -144,8 +144,96 @@ const PERSONAL_BIO_RE = new RegExp(
 // 핸들에 "finds/shop/store/deals/products/gadget/...": 셀러 핸들 패턴 (개인 lifestyle을 우회 통과)
 const SELLER_HANDLE_RE = /finds?|\bshop|store|deals|official|products?|hauls?\b|gadget|favorite|picks|amazon|temu|ali/i;
 
+// 인도 영어 채널 패턴 — 운영자가 "해외 아이디어템 가젯" 풀을 원하는데, 인도 화장품/뷰티
+// 채널들이 영어 검색에 다수 잡힘. 채널 이름 / 시그너처 어디든 매치되면 거부.
+//
+// 검증된 사례: VEER G COSMETICS, Satpal Singh, Fiza Makeup Academy,
+// Parlour Makeup Box 등 — 의뢰인이 원하는 톤(Daily Sunbeam, CozyPrime Finds 류)과 다름.
+const INDIAN_CONTENT_RE = new RegExp(
+  [
+    // 채널명 패턴
+    'cosmetics\\b',
+    'makeup academy',
+    'beauty parlour',
+    'parlour makeup',
+    'mehndi',
+    'bridal makeup',
+    'bridal look',
+    'dulhan',
+    'salon shorts',
+    // 인도 빈출 channel suffix
+    'beauty tips',
+    'beauty world',
+    'beauty studio',
+  ].join('|'),
+  'i',
+);
+
+// 데바나가리 (힌디/마라티 등 인도 문자) 매치
+const DEVANAGARI_RE = /[ऀ-ॿ]/;
+
+export function isLikelyIndianContent(
+  authorId?: string | null,
+  signature?: string | null,
+): boolean {
+  const text = `${authorId || ''} ${signature || ''}`;
+  if (DEVANAGARI_RE.test(text)) return true;
+  if (INDIAN_CONTENT_RE.test(text)) return true;
+  return false;
+}
+
 // 일관된 컨텐츠 = 셀러: 일정 수 이상의 영상이 누적돼야 함 (1회성 광고 인플루언서 거름)
-const MIN_VIDEO_COUNT_FOR_SELLER = 50;
+// 의뢰인 ① 강화: 50 → 100 (꾸준한 셀러만 통과)
+const MIN_VIDEO_COUNT_FOR_SELLER = 100;
+
+// 시그너처에 명시적 셀러 자기소개 — "그냥 bio에 linktree 있는 사람" vs
+// "본인이 셀러임을 자칭하는 계정"을 구분. 의뢰인 ① 일관성 기준의 핵심 시그널.
+//
+// 검증된 A티어 사례:
+//   Daily Sunbeam: "👇 Buy Link 👇"
+//   CozyPrime: "Shop my top picks"
+//   Sam Shan Shops: "AMAZON FINDS 💌"
+//   Anya: "Shop My Videos Here ✨"
+//   theproducthome: "Shop my links 👇"
+//
+// (tikwm /api/user/posts 가 Cloudflare 403 차단되어 최근 영상 직접 분석은 불가 —
+//  자기소개 매칭이 차선책 중 가장 강한 시그널)
+const STRONG_SELLER_SIG_RE = new RegExp(
+  [
+    // 명시적 셀러 멘트
+    'buy link',
+    'buy all',
+    'shop my',
+    'shop here',
+    'shop the link',
+    'product link',
+    'links? (below|here|in bio)',
+    'find(s)? here',
+    // 카테고리 키워드 (셀러 자기소개에 흔히 등장)
+    'amazon finds',
+    'amazon gems',
+    'amazon must.?haves',
+    'best amazon',
+    'daily amazon',
+    'all (my )?(product )?(links|finds)',
+    'click (down below|the link)',
+    'my (amazon )?storefront',
+    'tiktok shop',
+    'curated.{0,30}products',
+    'daily.{0,20}finds',
+    'every.{0,20}finds',
+    'fast (us )?shipping',
+    // 셀러 이모지
+    '🛒',
+    // 가젯/리뷰 큐레이션 자기소개
+    'daily.{0,15}gadgets',
+    'viral.{0,15}gadgets',
+    'cool inventions',
+    'trending products',
+    'sourcing tips',
+  ].join('|'),
+  'i',
+);
 
 export interface QualifiedSellerSignals {
   authorId?: string | null;
@@ -169,14 +257,22 @@ export function isQualifiedSeller({
 }: QualifiedSellerSignals): boolean {
   if (!computeHasSalesLink(bioUrl, signature)) return false;
 
+  // 인도 영어 화장품/뷰티 채널 거부 — 의뢰인이 원하는 "해외 아이디어템" 톤과 다름
+  if (isLikelyIndianContent(authorId, signature)) return false;
+
   const handleSellerLike = SELLER_HANDLE_RE.test(authorId || '');
   const personal = signature ? PERSONAL_BIO_RE.test(signature) : false;
   if (personal && !handleSellerLike) return false;
 
-  // videoCount가 명시적으로 작은 숫자면 거부. null/undefined면 통과
+  // videoCount가 명시적으로 작은 숫자면 거부. null/undefined면 통과 (IG처럼 stats 없는 플랫폼)
   if (typeof videoCount === 'number' && videoCount > 0 && videoCount < MIN_VIDEO_COUNT_FOR_SELLER) {
     return false;
   }
+
+  // 의뢰인 ① 일관성 강화: 시그너처에 명시적 셀러 자기소개 OR 셀러 핸들 패턴 필수.
+  // 단순히 bio에 링크만 있는 게 아니라, 본인이 "셀러로 운영 중"임을 자칭해야 통과.
+  const strongSelfId = signature ? STRONG_SELLER_SIG_RE.test(signature) : false;
+  if (!strongSelfId && !handleSellerLike) return false;
 
   return true;
 }
