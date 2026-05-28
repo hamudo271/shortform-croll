@@ -20,13 +20,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate secrets
+        run: |
+          if [ -z "$APP_URL" ]; then
+            echo "::error::Repository secret APP_URL is not set. Go to Settings → Secrets and variables → Actions and add APP_URL (e.g. https://shortform-croll-production.up.railway.app)."
+            exit 1
+          fi
+          if [ -z "$COLLECT_API_KEY" ]; then
+            echo "::error::Repository secret COLLECT_API_KEY is not set."
+            exit 1
+          fi
+          echo "Secrets OK. APP_URL=${APP_URL}"
+
       - name: Trigger Data Collection
         run: |
           echo "Starting data collection..."
 
-          response=$(curl -s -w "\n%{http_code}" -X POST "$APP_URL/api/collect" \
+          # /api/collect 가 ~150-250s 걸림. curl 기본 타임아웃은 무한 = OK,
+          # 그래도 안전상 --max-time 600 (10분) 명시.
+          response=$(curl -s -w "\n%{http_code}" --max-time 600 -X POST "$APP_URL/api/collect" \
             -H "Authorization: Bearer $COLLECT_API_KEY" \
             -H "Content-Type: application/json")
+
+          curl_exit=$?
+          if [ "$curl_exit" -ne 0 ]; then
+            echo "::error::curl failed with exit code $curl_exit (3=malformed URL, 6=DNS fail, 7=connect fail, 28=timeout). APP_URL=${APP_URL}"
+            exit 1
+          fi
 
           http_code=$(echo "$response" | tail -n1)
           body=$(echo "$response" | sed '$d')
@@ -35,7 +55,7 @@ jobs:
           echo "HTTP Code: $http_code"
 
           if [ "$http_code" -ne 200 ]; then
-            echo "Collection failed with status $http_code"
+            echo "::error::Collection failed with HTTP status $http_code"
             exit 1
           fi
 
