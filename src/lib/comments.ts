@@ -48,38 +48,31 @@ export function computeDemandPerMillion(
 }
 
 /**
- * 최종 통과 판정 — Phase 1(creator_link) + Phase 2(DPM + intent_rate) 종합.
+ * 최종 통과 판정.
  *
- * PASS 조건:
- *   (a) 강한 단독 의도: intent_rate ≥ 30%
- *   (b) 강한 단독 DPM: DPM ≥ 30
- *   (c) 둘 다 보통: hasSalesLink AND intent_rate ≥ 10% AND DPM ≥ 17
+ * 의뢰인 기준 ③ "**필수적으로** 프로필 링크에는 제품구매할 수 있는 링크가
+ * 있어야합니다" — creator_link 는 hard requirement. comment_intent 단독
+ * 통과 경로는 제거됨.
  *
- * 의뢰인 케이스 테스트:
- *   - Daily Sunbeam (55%, DPM 153): (a) ✓ → 'both'
- *   - 혈압계 (12%, DPM 16.7): 어디도 만족 못함 → null (거부) ✓
- *   - CozyPrime (10%, DPM 97): (b) ✓
- *   - Amanda (10%, DPM 6.7) — hasSalesLink Y: (c) DPM<17 → null. 단점이지만 우선 보수적으로
+ * PASS 조건 (creator_link 필수 + 아래 중 하나):
+ *   (a) intent_rate ≥ 30%
+ *   (b) DPM ≥ 30
+ *   (c) intent_rate ≥ 10% AND DPM ≥ 17
  */
 export function evaluatePass(
   hasSalesLink: boolean,
   intentRate: number,
   totalComments: number,
   viewCount: number,
-): { passReason: 'both' | 'comment_intent' | null; dpm: number } {
+): { passReason: 'both' | null; dpm: number } {
   const dpm = computeDemandPerMillion(intentRate, totalComments, viewCount);
 
-  // (a) intent_rate 단독으로 강한 케이스
-  if (intentRate >= MIN_INTENT_SCORE_STRONG) {
-    return { passReason: hasSalesLink ? 'both' : 'comment_intent', dpm };
-  }
-  // (b) DPM 단독으로 강한 케이스
-  if (dpm >= MIN_DPM_STRONG) {
-    return { passReason: hasSalesLink ? 'both' : 'comment_intent', dpm };
-  }
-  // (c) 둘 다 보통 — creator_link 필수
-  if (hasSalesLink && intentRate >= 10 && dpm >= MIN_DPM_PAIRED) {
-    return { passReason: 'both', dpm };
-  }
+  // creator_link 없으면 즉시 거부 — 의뢰인 기준 ③
+  if (!hasSalesLink) return { passReason: null, dpm };
+
+  if (intentRate >= MIN_INTENT_SCORE_STRONG) return { passReason: 'both', dpm };
+  if (dpm >= MIN_DPM_STRONG) return { passReason: 'both', dpm };
+  if (intentRate >= 10 && dpm >= MIN_DPM_PAIRED) return { passReason: 'both', dpm };
+
   return { passReason: null, dpm };
 }
