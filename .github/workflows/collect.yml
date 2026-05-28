@@ -1,9 +1,12 @@
-name: Daily Data Collection
+name: Periodic Data Collection
 
 on:
-  # Run every day at 6:00 AM KST (21:00 UTC previous day)
+  # 하루 4회 — KST 06:00 / 12:00 / 18:00 / 00:00 (= UTC 21 / 03 / 09 / 15)
   schedule:
-    - cron: '0 21 * * *'
+    - cron: '0 21 * * *'  # 06:00 KST
+    - cron: '0 3 * * *'   # 12:00 KST
+    - cron: '0 9 * * *'   # 18:00 KST
+    - cron: '0 15 * * *'  # 00:00 KST
 
   # Allow manual trigger
   workflow_dispatch:
