@@ -403,12 +403,22 @@ export async function POST(request: NextRequest) {
       results.errors.push('TikTok trending failed');
     }
 
-    // 틱톡 키워드 검색 (해외 아이디어템 풀)
+    // 틱톡 키워드 검색 (해외 아이디어템 풀) — 폭 확대
     const tiktokKeywords = [
+      // 메가 해시태그
       'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves',
+      'amazonhaul', 'temufinds', 'sheinfinds', 'aliexpressfinds',
+      // 가젯 카테고리
       'cool gadgets', 'kitchen gadgets', 'home gadgets',
+      'office gadgets', 'car gadgets', 'travel gadgets',
+      // 컨셉
       'must have products', 'satisfying products', 'genius inventions',
-      'temu finds',
+      'cool inventions', 'lifehack products', 'organization gadgets',
+      // 쇼핑몰
+      'temu finds', 'shein finds',
+      // 트렌드형
+      'viral products', 'must have gadgets', 'amazon must haves',
+      'tiktok shop finds',
     ];
     for (const kw of tiktokKeywords) {
       try {

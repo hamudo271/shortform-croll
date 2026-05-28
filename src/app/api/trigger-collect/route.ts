@@ -5,7 +5,6 @@ export const maxDuration = 300;
 
 export async function POST(request: NextRequest) {
   try {
-    const origin = request.nextUrl.origin;
     const token = process.env.COLLECT_API_KEY || process.env.AUTH_PASSWORD;
 
     let keyword = '';
@@ -16,11 +15,16 @@ export async function POST(request: NextRequest) {
       // Empty body is OK
     }
 
-    // 해외 풀 (collect/route.ts의 기본값 = 'US')
     const payload: Record<string, string> = {};
     if (keyword) payload.keyword = keyword;
 
-    const response = await fetch(`${origin}/api/collect`, {
+    // Self-loopback: Railway 컨테이너에서 ${origin} 으로 자기 자신을 호출하면
+    // 프록시 레이어가 fetch failed 로 끊는다. localhost:PORT로 직접 호출하면
+    // 같은 Node 프로세스의 다른 라우트로 가서 안정적.
+    const port = process.env.PORT || '3000';
+    const url = `http://127.0.0.1:${port}/api/collect`;
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

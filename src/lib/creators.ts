@@ -183,8 +183,9 @@ export function isLikelyIndianContent(
 }
 
 // 일관된 컨텐츠 = 셀러: 일정 수 이상의 영상이 누적돼야 함 (1회성 광고 인플루언서 거름)
-// 의뢰인 ① 강화: 50 → 100 (꾸준한 셀러만 통과)
-const MIN_VIDEO_COUNT_FOR_SELLER = 100;
+// 의뢰인 ① 강화: 50 → 100 이었으나 풀이 너무 좁아져서 75로 살짝 완화
+// (시그너처/핸들 양쪽 조건 다 봐서 quality는 유지)
+const MIN_VIDEO_COUNT_FOR_SELLER = 75;
 
 // 시그너처에 명시적 셀러 자기소개 — "그냥 bio에 linktree 있는 사람" vs
 // "본인이 셀러임을 자칭하는 계정"을 구분. 의뢰인 ① 일관성 기준의 핵심 시그널.
