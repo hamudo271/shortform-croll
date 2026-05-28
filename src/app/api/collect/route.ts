@@ -23,6 +23,7 @@ import {
   VIRAL_PRODUCT_KEYWORDS,
 } from '@/lib/collectors/trendCollector';
 import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
+import { classifyThumbnail } from '@/lib/vision';
 import { calculateViralScore } from '@/lib/utils';
 import { Platform } from '@prisma/client';
 
@@ -179,7 +180,17 @@ export async function POST(request: NextRequest) {
             results.videosSkipped++;
             continue;
           }
-          void ytDpm; // dpm은 향후 DB 저장 가능, 지금은 game-time만 사용
+          void ytDpm;
+
+          // 비전 게이트 — 얼굴 위주 영상 거부 (의뢰인 기준 #2)
+          let ytVisualClass: string | null = null;
+          if (process.env.GEMINI_API_KEY) {
+            ytVisualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, video.thumbnailUrl);
+            if (ytVisualClass === 'face') {
+              results.videosSkipped++;
+              continue;
+            }
+          }
 
           try {
             // AI 분류
@@ -232,6 +243,7 @@ export async function POST(request: NextRequest) {
                 hasPurchaseIntent: ytPassReason === 'comment_intent' || ytPassReason === 'both',
                 purchaseIntentScore: ytIntentScore,
                 passReason: ytPassReason,
+                visualClass: ytVisualClass,
                 updatedAt: new Date(),
               },
               create: {
@@ -255,6 +267,7 @@ export async function POST(request: NextRequest) {
                 hasPurchaseIntent: ytPassReason === 'comment_intent' || ytPassReason === 'both',
                 purchaseIntentScore: ytIntentScore,
                 passReason: ytPassReason,
+                visualClass: ytVisualClass,
                 publishedAt: new Date(video.publishedAt),
               },
             });
@@ -311,6 +324,16 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
+        // 비전 게이트
+        let tkVisualClass: string | null = null;
+        if (process.env.GEMINI_API_KEY) {
+          tkVisualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, video.thumbnailUrl);
+          if (tkVisualClass === 'face') {
+            results.videosSkipped++;
+            continue;
+          }
+        }
+
         processedVideoIds.add(video.id);
 
         try {
@@ -342,6 +365,7 @@ export async function POST(request: NextRequest) {
               hasPurchaseIntent: tkPassReason === 'comment_intent' || tkPassReason === 'both',
               purchaseIntentScore: tkIntentScore,
               passReason: tkPassReason,
+              visualClass: tkVisualClass,
               updatedAt: new Date(),
             },
             create: {
@@ -366,6 +390,7 @@ export async function POST(request: NextRequest) {
               hasPurchaseIntent: tkPassReason === 'comment_intent' || tkPassReason === 'both',
               purchaseIntentScore: tkIntentScore,
               passReason: tkPassReason,
+              visualClass: tkVisualClass,
             },
           });
           tiktokCollected++;
@@ -412,6 +437,13 @@ export async function POST(request: NextRequest) {
           );
           if (!tkPassReason2) continue;
 
+          // 비전 게이트
+          let tkVisualClass2: string | null = null;
+          if (process.env.GEMINI_API_KEY) {
+            tkVisualClass2 = await classifyThumbnail(process.env.GEMINI_API_KEY, video.thumbnailUrl);
+            if (tkVisualClass2 === 'face') continue;
+          }
+
           processedVideoIds.add(video.id);
 
           try {
@@ -427,6 +459,7 @@ export async function POST(request: NextRequest) {
                 hasPurchaseIntent: tkPassReason2 === 'comment_intent' || tkPassReason2 === 'both',
                 purchaseIntentScore: tkIntentScore2,
                 passReason: tkPassReason2,
+                visualClass: tkVisualClass2,
                 updatedAt: new Date(),
               },
               create: {
@@ -451,6 +484,7 @@ export async function POST(request: NextRequest) {
                 hasPurchaseIntent: tkPassReason2 === 'comment_intent' || tkPassReason2 === 'both',
                 purchaseIntentScore: tkIntentScore2,
                 passReason: tkPassReason2,
+                visualClass: tkVisualClass2,
               },
             });
             tiktokCollected++;

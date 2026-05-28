@@ -46,6 +46,7 @@ model Video {
   hasPurchaseIntent    Boolean @default(false)
   purchaseIntentScore  Int     @default(0)  // 0-100, 상위 20 댓글 중 구매 의도 비율
   passReason           String?              // "creator_link" | "comment_intent" | "both"
+  visualClass          String?              // "product" | "face" | "mixed" — Gemini Vision 분석 결과
 
   @@index([platform])
   @@index([category])
