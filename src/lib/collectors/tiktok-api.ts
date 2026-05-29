@@ -169,6 +169,18 @@ const TALKING_HEAD_RE = new RegExp(
     '\\b\\d{1,2}\\s+things\\s+(?:you|i|that|every|to)\\b',
     '\\b(?:top|best)\\s+\\d{1,2}\\s+amazon\\b',
     '\\bmust.?haves?\\s+you\\s+(?:didn\'?t|don\'?t|need)\\b',
+    // 다제품 listicle / 베스트픽 — "어떤 상품 파는지 명확하지 않은" 영상 (의뢰인 피드백)
+    '\\bmost\\s+(?:purchased|loved|wanted|viral|popular)\\b',
+    '\\bbest\\s+sellers?\\s+of\\s+20\\d{2}\\b',
+    '\\b(?:amazon|tiktok|temu|shein)\\s+finds?\\s+(?:that\\s+are|of\\s+20\\d{2}|to\\s+(?:buy|get))\\b',
+    '\\bfinds?\\s+blowing\\s+up\\b',
+    '\\bwhich\\s+is\\s+your\\s+favou?rite\\b',
+    '\\brestock(?:s|ing)?\\b',
+    '\\b(?:fridge|pantry|kitchen)\\s+restock\\b',
+    // "Most Viral X of 20YY" 류 베스트픽 — 단일 제품 시연 아님
+    '\\bmost\\s+viral\\s+(?:gadget|product|find|item)\\s+of\\b',
+    // "X favorite/picks of YEAR"
+    '\\bfavou?rites?\\s+of\\s+20\\d{2}\\b',
   ].join('|'),
   'i',
 );
