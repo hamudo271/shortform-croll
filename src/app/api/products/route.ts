@@ -13,18 +13,45 @@ import { computeDemandPerMillion } from '@/lib/comments';
  *  - DPM 은 Video 에 저장돼 있지 않으므로 응답 단계에서
  *    purchaseIntentScore / commentCount / viewCount 로 재계산.
  *  - Profit Margin 은 데이터 없음 → 응답에서 제외, UI 에서도 숨김.
- *  - Competition 은 "콘텐츠 포화도(베타)" 라벨로 추정 표시 — 같은 카테고리
- *    내 상품 후보 수의 로그 정규화.
+ *  - Competition 은 "콘텐츠 포화도(베타)" 라벨로 추정 표시.
  *
  * Query params:
  *  - days (default 30)
  *  - limit (default 50, max 100)
  *  - passReason: 'both' | 'all'  (default 'both')
- *      both = passReason='both' 만
- *      all  = passReason in ('both','creator_link') — IG creator_link 포함
  *  - category (optional)
  *  - search (optional, title contains)
  */
+
+/** 영상 캡션을 상품 제목 후보로 정제. 해시태그/이모지 노이즈 제거 + 길이 트림. */
+function cleanProductTitle(raw: string): string {
+  let t = raw || '';
+  // 해시태그 제거
+  t = t.replace(/#\S+/g, ' ');
+  // 멘션 제거
+  t = t.replace(/@\S+/g, ' ');
+  // URL 제거
+  t = t.replace(/https?:\/\/\S+/g, ' ');
+  // 연속 공백 정리
+  t = t.replace(/\s+/g, ' ').trim();
+  // 너무 길면 첫 문장 또는 80자 컷
+  const sentenceEnd = t.search(/[.!?。！？]/);
+  if (sentenceEnd > 20 && sentenceEnd < 100) {
+    t = t.slice(0, sentenceEnd + 1).trim();
+  } else if (t.length > 80) {
+    t = t.slice(0, 80).trim() + '…';
+  }
+  return t;
+}
+
+/** TikTok 썸네일은 CDN signed URL 이 만료됨 → 프록시 경유. */
+function resolveImageUrl(platform: string, thumbnailUrl: string, videoUrl: string): string {
+  if (platform === 'TIKTOK' && videoUrl) {
+    return `/api/thumbnail/tiktok?url=${encodeURIComponent(videoUrl)}`;
+  }
+  return thumbnailUrl;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const sp = request.nextUrl.searchParams;
@@ -53,7 +80,6 @@ export async function GET(request: NextRequest) {
       ...(search && { title: { contains: search, mode: 'insensitive' } }),
     };
 
-    // Overfetch — 응답 단계 exclude 필터 보정용
     const overfetch = limit * 3;
     const rawVideos = await prisma.video.findMany({
       where,
@@ -65,12 +91,13 @@ export async function GET(request: NextRequest) {
       (v) => !isExcludedContent(v.title, v.authorName),
     );
 
-    // 카테고리별 출현 빈도 — Competition(콘텐츠 포화도 베타) 산출용
+    // 카테고리별 출현 빈도 — 콘텐츠 포화도(베타) 산출용
     const catCount = new Map<string, number>();
     for (const v of filtered) {
       const key = v.category || 'OTHER';
       catCount.set(key, (catCount.get(key) || 0) + 1);
     }
+    const uniqueCats = catCount.size;
     const maxCatCount = Math.max(1, ...catCount.values());
 
     const products = filtered.slice(0, limit).map((v) => {
@@ -78,39 +105,46 @@ export async function GET(request: NextRequest) {
       const commentCount = Number(v.commentCount);
       const intentRate = v.purchaseIntentScore || 0;
 
-      // DPM 재계산 (lib/comments.computeDemandPerMillion 와 동일 식)
+      // DPM 재계산 — DPM=100 이면 만점(10).
       const dpm = computeDemandPerMillion(intentRate, commentCount, viewCount);
+      const marketDemand = Math.max(0, Math.min(10, dpm / 10));
 
-      // Market Demand: DPM 기반 0–10 정규화. DPM=50 이상이면 만점.
-      const marketDemand = Math.max(0, Math.min(10, dpm / 5));
+      // 콘텐츠 포화도(베타):
+      //  - 카테고리 다양성이 1종뿐이면 비교가 의미 없음 → 중립값 5.0
+      //  - 그 외에는 같은 카테고리 후보 수의 로그 정규화
+      let competition = 5.0;
+      if (uniqueCats > 1) {
+        const c = catCount.get(v.category || 'OTHER') || 1;
+        const saturation = Math.log10(c + 1) / Math.log10(maxCatCount + 1);
+        competition = Math.max(0, Math.min(10, saturation * 10));
+      }
 
-      // 콘텐츠 포화도(베타): 같은 카테고리 내 후보 수의 로그 정규화.
-      // 상품 후보가 많이 쌓인 카테고리일수록 경쟁이 심하다고 가정.
-      const c = catCount.get(v.category || 'OTHER') || 1;
-      const saturation =
-        Math.log10(c + 1) / Math.log10(maxCatCount + 1);
-      const competition = Math.max(0, Math.min(10, saturation * 10));
+      const cleanedTitle = cleanProductTitle(v.title);
+      const cleanedDesc = (v.description || '').trim();
+      // 설명이 제목과 같거나 너무 길면 숨김
+      const descShown =
+        cleanedDesc && cleanedDesc !== v.title && cleanedDesc.length < 280
+          ? cleanedDesc
+          : '';
 
       return {
         id: v.id,
         videoId: v.videoId,
         platform: v.platform,
-        title: v.title,
-        desc: v.description || '',
-        image: v.thumbnailUrl,
+        title: cleanedTitle || v.authorName || 'Untitled product',
+        desc: descShown,
+        image: resolveImageUrl(v.platform, v.thumbnailUrl, v.videoUrl),
         authorName: v.authorName,
         category: v.category,
-        keywords: v.tags || [],
+        keywords: (v.tags || []).slice(0, 8),
         links: [
           {
             label: 'Source',
             href: v.videoUrl,
           },
         ],
-        // 0-10 점수
         marketDemand: Math.round(marketDemand * 10) / 10,
         competition: Math.round(competition * 10) / 10,
-        // 메타
         viewCount,
         commentCount,
         purchaseIntentScore: intentRate,
@@ -126,9 +160,11 @@ export async function GET(request: NextRequest) {
         passReason: passReasonParam,
         days,
         limit,
+        uniqueCategories: uniqueCats,
         notes: {
-          marketDemand: 'DPM (purchase-per-million) 재계산 후 0-10 정규화',
-          competition: '콘텐츠 포화도(베타) — 같은 카테고리 내 후보 수의 로그 정규화',
+          marketDemand: 'DPM(purchase-per-million) 재계산 후 0-10 (DPM=100 만점)',
+          competition:
+            '콘텐츠 포화도(베타) — 같은 카테고리 후보 수 로그 정규화. 카테고리 1종이면 5.0 중립',
           profitMargin: '데이터 없음 — UI 노출 안 함',
         },
       },

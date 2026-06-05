@@ -267,9 +267,11 @@ function ProductCard({ product }: { product: Product }) {
       {/* 우: 컨텐츠 */}
       <div className="flex-1 min-w-0 flex flex-col">
         <div className="flex items-start gap-3 flex-wrap">
-          <h3 className="text-lg sm:text-xl font-bold text-zinc-50 leading-tight">{product.title}</h3>
+          <h3 className="text-base sm:text-lg font-bold text-zinc-50 leading-snug line-clamp-2">
+            {product.title}
+          </h3>
           {product.platform && (
-            <span className="inline-flex items-center px-2 h-6 rounded-md bg-zinc-800 border border-zinc-700 text-zinc-300 text-[11px] font-semibold uppercase">
+            <span className="inline-flex items-center px-2 h-6 rounded-md bg-zinc-800 border border-zinc-700 text-zinc-300 text-[11px] font-semibold uppercase shrink-0">
               {product.platform}
             </span>
           )}
