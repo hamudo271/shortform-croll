@@ -1,18 +1,26 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Search } from '@/components/ui/Icon';
 
 type Product = {
   id: string;
+  videoId: string;
+  platform: string;
   title: string;
   desc: string;
   image: string;
-  links: { label: string; href: string }[];
-  marketDemand: number; // 0 – 10
-  competition: number; // 0 – 10
-  profitMargin: number; // %
+  authorName: string | null;
+  category: string | null;
   keywords: string[];
+  links: { label: string; href: string }[];
+  marketDemand: number; // 0 – 10 (DPM 기반)
+  competition: number; // 0 – 10 (콘텐츠 포화도 베타)
+  viewCount: number;
+  commentCount: number;
+  purchaseIntentScore: number;
+  passReason: string | null;
+  publishedAt: string | null;
 };
 
 const LANGS = [
@@ -34,98 +42,6 @@ const COMP_OPTIONS = [
   { value: 'high', label: 'High' },
 ] as const;
 
-// 임시 시드 데이터 — 추후 /api/products 와 교체
-const MOCK_PRODUCTS: Product[] = [
-  {
-    id: 'p-001',
-    title: 'Mini Portable Blender',
-    desc: 'USB 충전식 휴대용 블렌더. 1인 가구·헬스 트렌드 + #TikTokMadeMeBuyIt 누적 8.4M 조회.',
-    image: 'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-      { label: 'Link 3', href: '#' },
-    ],
-    marketDemand: 8.6,
-    competition: 5.4,
-    profitMargin: 42,
-    keywords: ['portable blender', 'usb smoothie', 'mini gadget'],
-  },
-  {
-    id: 'p-002',
-    title: 'Cordless Electric Lint Remover',
-    desc: '의류·소파용 보풀제거기. 가족 단위 구매 강함. Amazon Finds 채널에서 반복 노출.',
-    image: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-    ],
-    marketDemand: 7.2,
-    competition: 6.1,
-    profitMargin: 55,
-    keywords: ['lint remover', 'fabric shaver', 'home gadget'],
-  },
-  {
-    id: 'p-003',
-    title: 'LED Galaxy Star Projector',
-    desc: '리모컨 + 블루투스 스피커 내장. Cozy/룸 인테리어 키워드와 결합해 Q4 강세.',
-    image: 'https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-      { label: 'Link 3', href: '#' },
-      { label: 'Link 4', href: '#' },
-    ],
-    marketDemand: 9.1,
-    competition: 7.8,
-    profitMargin: 38,
-    keywords: ['star projector', 'cozy room', 'tiktokmademebuyit'],
-  },
-  {
-    id: 'p-004',
-    title: 'Toothbrush UV Sanitizer',
-    desc: '욕실 벽걸이형. 위생·키즈 시장 동시 타깃. 단일 상품 쇼케이스 영상 비중 높음.',
-    image: 'https://images.unsplash.com/photo-1559591935-c6c92c6cd5d5?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-    ],
-    marketDemand: 6.4,
-    competition: 3.9,
-    profitMargin: 61,
-    keywords: ['uv sanitizer', 'bathroom gadget', 'mom finds'],
-  },
-  {
-    id: 'p-005',
-    title: 'U-Shape Portable Mini AC',
-    desc: '책상용 미니 에어컨. 여름 시즌 폭증. Rohan_Prasad 등 단일품 셀러 다수 진입.',
-    image: 'https://images.unsplash.com/photo-1631545806609-cca3ec0d9b80?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-      { label: 'Link 3', href: '#' },
-    ],
-    marketDemand: 7.9,
-    competition: 8.2,
-    profitMargin: 29,
-    keywords: ['mini ac', 'desk cooler', 'summer gadget'],
-  },
-  {
-    id: 'p-006',
-    title: 'Self-Stirring Mug',
-    desc: '버튼 한 번에 자동 휘젓는 머그컵. 회사원·홈오피스 타깃, 클립 짧고 강함.',
-    image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80',
-    links: [
-      { label: 'Link 1', href: '#' },
-      { label: 'Link 2', href: '#' },
-    ],
-    marketDemand: 5.8,
-    competition: 4.5,
-    profitMargin: 47,
-    keywords: ['self stirring', 'office gadget', 'gift idea'],
-  },
-];
-
 function demandBand(v: number): 'high' | 'medium' | 'low' {
   if (v >= 8) return 'high';
   if (v >= 5) return 'medium';
@@ -145,18 +61,49 @@ export default function ProductListPage() {
   const [demand, setDemand] = useState<(typeof DEMAND_OPTIONS)[number]['value']>('all');
   const [competition, setCompetition] = useState<(typeof COMP_OPTIONS)[number]['value']>('all');
 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    // 기본 passReason='both' — strongest buyer-intent 만. IG creator_link 만 포함하려면
+    // '/api/products?passReason=all' 로 호출.
+    fetch('/api/products?passReason=both&days=30&limit=60')
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((json) => {
+        if (cancelled) return;
+        setProducts(json.products || []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setError(err instanceof Error ? err.message : String(err));
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const filtered = useMemo(() => {
     const kw = keyword.trim().toLowerCase();
-    return MOCK_PRODUCTS.filter((p) => {
+    return products.filter((p) => {
       if (kw) {
-        const hay = `${p.title} ${p.desc} ${p.keywords.join(' ')}`.toLowerCase();
+        const hay = `${p.title} ${p.desc} ${(p.keywords || []).join(' ')} ${p.authorName || ''}`.toLowerCase();
         if (!hay.includes(kw)) return false;
       }
       if (demand !== 'all' && demandBand(p.marketDemand) !== demand) return false;
       if (competition !== 'all' && compBand(p.competition) !== competition) return false;
       return true;
     });
-  }, [keyword, demand, competition]);
+  }, [products, keyword, demand, competition]);
 
   const onSearch = () => setKeyword(pendingKeyword);
   const onReset = () => {
@@ -216,7 +163,6 @@ export default function ProductListPage() {
             </button>
           ))}
         </div>
-
       </div>
 
       {/* 필터 패널 */}
@@ -258,7 +204,7 @@ export default function ProductListPage() {
             className="h-9 px-3 rounded-md bg-zinc-950 border border-zinc-700 text-sm text-zinc-100 focus:border-blue-500 focus:outline-none"
           >
             {COMP_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>Competition · {o.label}</option>
+              <option key={o.value} value={o.value}>콘텐츠 포화도 · {o.label}</option>
             ))}
           </select>
         </div>
@@ -266,6 +212,7 @@ export default function ProductListPage() {
         <div className="mt-3 flex items-center justify-between text-xs">
           <span className="text-zinc-400">
             결과 <span className="text-zinc-100 font-semibold">{filtered.length}</span>개
+            {loading && <span className="ml-2 text-zinc-500">· 불러오는 중…</span>}
           </span>
           <button
             onClick={onReset}
@@ -278,7 +225,13 @@ export default function ProductListPage() {
 
       {/* 카드 리스트 */}
       <div className="space-y-4">
-        {filtered.length === 0 && (
+        {error && (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+            데이터를 불러오지 못했습니다 — {error}
+          </div>
+        )}
+
+        {!loading && !error && filtered.length === 0 && (
           <div className="rounded-xl border border-dashed border-zinc-700 p-10 text-center text-sm text-zinc-500">
             조건에 맞는 상품이 없습니다. 필터를 초기화해 보세요.
           </div>
@@ -315,11 +268,18 @@ function ProductCard({ product }: { product: Product }) {
       <div className="flex-1 min-w-0 flex flex-col">
         <div className="flex items-start gap-3 flex-wrap">
           <h3 className="text-lg sm:text-xl font-bold text-zinc-50 leading-tight">{product.title}</h3>
-          <span className="inline-flex items-center px-2 h-6 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">
-            Profit Margin {product.profitMargin}%
-          </span>
+          {product.platform && (
+            <span className="inline-flex items-center px-2 h-6 rounded-md bg-zinc-800 border border-zinc-700 text-zinc-300 text-[11px] font-semibold uppercase">
+              {product.platform}
+            </span>
+          )}
         </div>
-        <p className="text-sm text-zinc-400 mt-1.5 leading-relaxed">{product.desc}</p>
+        {product.authorName && (
+          <div className="text-xs text-zinc-500 mt-1">@{product.authorName}</div>
+        )}
+        {product.desc && (
+          <p className="text-sm text-zinc-400 mt-1.5 leading-relaxed line-clamp-2">{product.desc}</p>
+        )}
 
         {/* Link 버튼 묶음 */}
         <div className="mt-3 flex flex-wrap gap-2">
@@ -327,6 +287,8 @@ function ProductCard({ product }: { product: Product }) {
             <a
               key={i}
               href={l.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center h-7 px-3 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold transition-colors"
             >
               {l.label}
@@ -343,29 +305,32 @@ function ProductCard({ product }: { product: Product }) {
             color="rgba(67,236,19,0.9)"
           />
           <Bar
-            label="Competition"
+            label="콘텐츠 포화도 (베타)"
             value={product.competition}
             pct={compPct}
             color="rgba(245,200,40,0.9)"
+            hint="같은 카테고리 내 후보 수 기반 추정치"
           />
         </div>
 
         {/* 키워드 태그 */}
-        <div className="mt-4">
-          <div className="text-[11px] uppercase tracking-[0.15em] text-zinc-500 font-semibold mb-1.5">
-            Search Keywords
+        {product.keywords?.length > 0 && (
+          <div className="mt-4">
+            <div className="text-[11px] uppercase tracking-[0.15em] text-zinc-500 font-semibold mb-1.5">
+              Search Keywords
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {product.keywords.slice(0, 8).map((k) => (
+                <span
+                  key={k}
+                  className="inline-flex items-center h-6 px-2 rounded-full bg-zinc-800 text-zinc-300 text-[11px]"
+                >
+                  #{k}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {product.keywords.map((k) => (
-              <span
-                key={k}
-                className="inline-flex items-center h-6 px-2 rounded-full bg-zinc-800 text-zinc-300 text-[11px]"
-              >
-                #{k}
-              </span>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </article>
   );
@@ -376,16 +341,18 @@ function Bar({
   value,
   pct,
   color,
+  hint,
 }: {
   label: string;
   value: number;
   pct: number;
   color: string;
+  hint?: string;
 }) {
   return (
     <div>
       <div className="flex items-center justify-between text-xs mb-1">
-        <span className="text-zinc-400">{label}</span>
+        <span className="text-zinc-400" title={hint}>{label}</span>
         <span className="text-zinc-100 font-semibold tabular-nums">{value.toFixed(1)} / 10</span>
       </div>
       <div className="h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
