@@ -18,10 +18,6 @@ type Product = {
 const LANGS = [
   { code: 'EN', label: 'EN' },
   { code: 'KO', label: 'KO' },
-  { code: 'ZH', label: '中文' },
-  { code: 'JA', label: '日本語' },
-  { code: 'ES', label: 'ES' },
-  { code: 'FR', label: 'FR' },
 ] as const;
 
 const DEMAND_OPTIONS = [
@@ -178,7 +174,9 @@ export default function ProductListPage() {
           Trending Products <span className="text-blue-500">Database</span>
         </h1>
         <p className="text-sm sm:text-base text-zinc-400 mt-3 max-w-2xl mx-auto leading-relaxed">
-          드롭쉬핑·이커머스 셀러를 위한 바이럴 상품 리서치 보드. 시장 수요·경쟁도·이익률을 한눈에 비교하고 공급사 링크로 즉시 연결됩니다.
+          이커머스 셀러를 위한 리서치 보드.
+          <br />
+          시장 수요·경쟁도·이익률을 한눈에 비교가 가능합니다.
         </p>
 
         {/* 보조 검색창 */}
