@@ -217,15 +217,6 @@ export default function ProductListPage() {
           ))}
         </div>
 
-        {/* Supplier Link CTA */}
-        <div className="mt-5">
-          <a
-            href="#"
-            className="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold shadow-sm transition-colors"
-          >
-            Supplier Link →
-          </a>
-        </div>
       </div>
 
       {/* 필터 패널 */}
