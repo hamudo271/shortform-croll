@@ -57,7 +57,18 @@ export async function POST(request: NextRequest) {
     videosCollected: 0,
     videosSkipped: 0,
     errors: [] as string[],
+    partial: false, // wall-clock budget 초과로 일부 단계를 조기 종료했는지
   };
+
+  // ===== Wall-clock budget =====
+  // 종료 주체(Railway 프록시 / Node 서버 / GitHub curl 600s)가 무엇이든
+  // 그 전에 우리가 먼저 정상 종료하고 200 partial 을 반환한다.
+  // 플랫폼별 deadline 으로 슬롯을 나눠 어느 날이든 세 채널 모두 일부는 수집되게 함.
+  const startedAt = Date.now();
+  const elapsedMs = () => Date.now() - startedAt;
+  const YT_DEADLINE_MS = 120_000; // YouTube 단계는 120s 까지
+  const TK_DEADLINE_MS = 215_000; // TikTok 단계는 215s 까지
+  const HARD_BUDGET_MS = 230_000; // 전체 하드캡 (어떤 종료 주체보다도 앞서서)
 
   // Parse request options
   let manualKeyword: string | undefined;
@@ -126,6 +137,12 @@ export async function POST(request: NextRequest) {
     const MIN_ENGAGEMENT = 0.01; // 최소 1% 참여율
 
     for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
+      // budget: YouTube 슬롯 초과 시 남은 쿼리 건너뛰고 다음 플랫폼으로
+      if (elapsedMs() > YT_DEADLINE_MS) {
+        console.log(`⏱️ YouTube 단계 budget(${YT_DEADLINE_MS}ms) 초과 — 남은 쿼리 스킵`);
+        results.partial = true;
+        break;
+      }
       console.log(`\n🎬 Searching: "${query}"`);
 
       try {
@@ -139,6 +156,7 @@ export async function POST(request: NextRequest) {
         results.videosSearched += videos.length;
 
         for (const video of videos) {
+          if (elapsedMs() > YT_DEADLINE_MS) { results.partial = true; break; }
           if (processedVideoIds.has(video.id)) continue;
           processedVideoIds.add(video.id);
 
@@ -297,6 +315,11 @@ export async function POST(request: NextRequest) {
       console.log(`  Found ${trendingVideos.length} trending TikTok videos`);
 
       for (const video of trendingVideos) {
+        if (elapsedMs() > TK_DEADLINE_MS) {
+          console.log(`⏱️ TikTok 트렌딩 budget 초과 — 조기 종료`);
+          results.partial = true;
+          break;
+        }
         if (processedVideoIds.has(video.id)) continue;
         if (video.viewCount < 20000) continue;
         // 영어 텍스트 필수, 한글이 들어가면 제외
@@ -429,9 +452,16 @@ export async function POST(request: NextRequest) {
       'portable gadgets', 'mini gadgets', 'compact gadget',
     ];
     for (const kw of tiktokKeywords) {
+      // budget: TikTok 슬롯 초과 시 남은 키워드 스킵
+      if (elapsedMs() > TK_DEADLINE_MS) {
+        console.log(`⏱️ TikTok 키워드 budget 초과 — 남은 키워드 스킵`);
+        results.partial = true;
+        break;
+      }
       try {
         const videos = await searchTikTokVideos(kw, { count: 30 });
         for (const video of videos) {
+          if (elapsedMs() > TK_DEADLINE_MS) { results.partial = true; break; }
           if (processedVideoIds.has(video.id)) continue;
           if (video.viewCount < 20000) continue;
           if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
@@ -519,7 +549,10 @@ export async function POST(request: NextRequest) {
     // ===== STEP 4: 인스타그램 릴스 수집 (공개 API, 키 불필요) =====
     let instagramCollected = 0;
 
-    {
+    if (elapsedMs() > HARD_BUDGET_MS) {
+      console.log('⏱️ 전체 budget 초과 — Instagram 단계 스킵');
+      results.partial = true;
+    } else {
       console.log('\n📷 Collecting Instagram Reels (public API)...');
       try {
         const { reels, errors: igErrors, creators: igCreators } = await collectKoreanReelsPublic();
@@ -608,6 +641,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      partial: results.partial, // budget 초과로 일부 단계를 조기 종료했어도 성공 응답
+      elapsedMs: elapsedMs(),
       results: {
         ...results,
         tiktokCollected,
