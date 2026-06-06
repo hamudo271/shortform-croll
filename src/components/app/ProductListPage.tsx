@@ -238,15 +238,15 @@ export default function ProductListPage() {
           </div>
         )}
 
-        {filtered.map((p) => (
-          <ProductCard key={p.id} product={p} />
+        {filtered.map((p, i) => (
+          <ProductCard key={p.id} product={p} index={i} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, index }: { product: Product; index: number }) {
   const demandPct = Math.min(100, (product.marketDemand / 10) * 100);
   const compPct = Math.min(100, (product.competition / 10) * 100);
 
@@ -259,6 +259,7 @@ function ProductCard({ product }: { product: Product }) {
             primary={product.image}
             fallback={product.thumbnailRaw}
             alt={product.title}
+            index={index}
           />
         </div>
       </div>
@@ -350,20 +351,24 @@ function ProductCard({ product }: { product: Product }) {
  *  - 복구는 프록시를 캐시버스트 쿼리로 재요청 → 이때쯤 서버 캐시가 데워져 즉시 응답.
  *  - 두 번 재시도 후에도 실패하면 원본 폴백 → 그래도 안 되면 플레이스홀더.
  */
-// 첫 시도는 콜드 프록시(직렬 대기 ~7-8s)를 기다려 주고,
-// 재시도부터는 서버 캐시가 데워져 있으니 짧게 끊는다.
-const LOAD_TIMEOUT_BY_STAGE = [8000, 4000, 4000, 4000];
+// 프록시는 tikwm 를 1.1s 간격 직렬 호출 → 동시에 다 때리면 rate-limit(502)
+// 으로 꼬리 카드가 실패. 카드 인덱스별로 요청을 시차 발사해 cadence 에 맞춘다.
+const STAGGER_MS = 900;
+// src 가 바뀔 때마다 적용할 로드 타임아웃 (콜드 직렬 대기 + 다운로드를 넉넉히 커버).
+const LOAD_TIMEOUT_BY_STAGE = [10000, 7000, 7000, 7000];
 
 function ProductImage({
   primary,
   fallback,
   alt,
+  index,
 }: {
   primary: string;
   fallback?: string;
   alt: string;
+  index: number;
 }) {
-  const [src, setSrc] = useState(primary);
+  const [src, setSrc] = useState<string | null>(null); // 시차 발사 전에는 null
   const [loaded, setLoaded] = useState(false);
   const [dead, setDead] = useState(false);
   const stage = useRef(0); // 0=primary, 1=retry, 2=retry2, 3=fallback, 4=dead
@@ -393,10 +398,17 @@ function ProductImage({
     }
   };
 
-  // src 가 바뀔 때마다 로드 타임아웃 재설정 (행 걸린 요청을 onError 없이도 복구)
+  // 마운트 시 인덱스만큼 지연 후 첫 요청 발사 (동시 폭주 방지)
   useEffect(() => {
-    if (loaded || dead) return;
-    const ms = LOAD_TIMEOUT_BY_STAGE[stage.current] ?? 4000;
+    const t = setTimeout(() => setSrc(primary), index * STAGGER_MS);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // src 가 설정/변경될 때마다 로드 타임아웃 재설정 (행·rate-limit 을 onError 없이도 복구)
+  useEffect(() => {
+    if (src === null || loaded || dead) return;
+    const ms = LOAD_TIMEOUT_BY_STAGE[stage.current] ?? 7000;
     timer.current = setTimeout(() => advance(), ms);
     return clearTimer;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -417,18 +429,21 @@ function ProductImage({
   return (
     <>
       {!loaded && <div className="absolute inset-0 animate-pulse bg-zinc-800" />}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-        loading="lazy"
-        onLoad={() => {
-          clearTimer();
-          setLoaded(true);
-        }}
-        onError={advance}
-      />
+      {src !== null && (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => {
+              clearTimer();
+              setLoaded(true);
+            }}
+            onError={advance}
+          />
+        </>
+      )}
     </>
   );
 }
