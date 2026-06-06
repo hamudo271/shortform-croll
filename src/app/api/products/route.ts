@@ -134,6 +134,7 @@ export async function GET(request: NextRequest) {
         title: cleanedTitle || v.authorName || 'Untitled product',
         desc: descShown,
         image: resolveImageUrl(v.platform, v.thumbnailUrl, v.videoUrl),
+        thumbnailRaw: v.thumbnailUrl, // 프록시 실패 시 클라이언트 폴백용 원본 URL
         authorName: v.authorName,
         category: v.category,
         keywords: (v.tags || []).slice(0, 8),

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search } from '@/components/ui/Icon';
 
 type Product = {
@@ -10,6 +10,7 @@ type Product = {
   title: string;
   desc: string;
   image: string;
+  thumbnailRaw?: string;
   authorName: string | null;
   category: string | null;
   keywords: string[];
@@ -253,13 +254,11 @@ function ProductCard({ product }: { product: Product }) {
     <article className="flex flex-col sm:flex-row gap-4 rounded-xl border border-zinc-700 bg-zinc-900/60 p-4 sm:p-5 hover:border-zinc-600 transition-colors">
       {/* 좌: 이미지 */}
       <div className="sm:w-56 shrink-0">
-        <div className="aspect-square w-full rounded-lg overflow-hidden bg-zinc-800">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={product.image}
+        <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-zinc-800">
+          <ProductImage
+            primary={product.image}
+            fallback={product.thumbnailRaw}
             alt={product.title}
-            className="w-full h-full object-cover"
-            loading="lazy"
           />
         </div>
       </div>
@@ -335,6 +334,79 @@ function ProductCard({ product }: { product: Product }) {
         )}
       </div>
     </article>
+  );
+}
+
+/**
+ * Resilient 썸네일.
+ *  - primary = /api/thumbnail/tiktok 프록시 (콜드 캐시일 때 최대 ~8s 지연 가능)
+ *  - 1차 onError: 1.6s 뒤 프록시 재시도 (이때쯤 서버 캐시가 데워져 있음)
+ *  - 2차 onError: 원본 thumbnailRaw 로 폴백 (만료됐을 수 있으나 시도할 가치)
+ *  - 최종 실패: 플레이스홀더
+ * 로드 전까지는 펄스 스켈레톤을 보여줘 "깨진 이미지"로 보이지 않게 함.
+ */
+function ProductImage({
+  primary,
+  fallback,
+  alt,
+}: {
+  primary: string;
+  fallback?: string;
+  alt: string;
+}) {
+  const [src, setSrc] = useState(primary);
+  const [loaded, setLoaded] = useState(false);
+  const [dead, setDead] = useState(false);
+  const stage = useRef(0); // 0=primary, 1=retry, 2=fallback, 3=dead
+  const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (retryTimer.current) clearTimeout(retryTimer.current);
+    };
+  }, []);
+
+  const onError = () => {
+    if (stage.current === 0) {
+      // 콜드 캐시 지연일 가능성 → 잠시 뒤 동일 프록시 재시도
+      stage.current = 1;
+      retryTimer.current = setTimeout(() => {
+        setSrc(`${primary}${primary.includes('?') ? '&' : '?'}r=1`);
+      }, 1600);
+    } else if (stage.current === 1 && fallback && fallback !== primary) {
+      stage.current = 2;
+      setSrc(fallback);
+    } else {
+      stage.current = 3;
+      setDead(true);
+    }
+  };
+
+  if (dead) {
+    return (
+      <div className="w-full h-full flex items-center justify-center text-zinc-600">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <path d="M21 15l-5-5L5 21" />
+        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-zinc-800" />}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+        onError={onError}
+      />
+    </>
   );
 }
 
