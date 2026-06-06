@@ -339,12 +339,19 @@ function ProductCard({ product }: { product: Product }) {
 
 /**
  * Resilient 썸네일.
- *  - primary = /api/thumbnail/tiktok 프록시 (콜드 캐시일 때 최대 ~8s 지연 가능)
- *  - 1차 onError: 1.6s 뒤 프록시 재시도 (이때쯤 서버 캐시가 데워져 있음)
- *  - 2차 onError: 원본 thumbnailRaw 로 폴백 (만료됐을 수 있으나 시도할 가치)
- *  - 최종 실패: 플레이스홀더
- * 로드 전까지는 펄스 스켈레톤을 보여줘 "깨진 이미지"로 보이지 않게 함.
+ *
+ * TikTok 썸네일 프록시(/api/thumbnail/tiktok)는 tikwm 를 1.1s 간격 직렬 호출해서
+ * 콜드 캐시 + 동시 다수 로드 시 꼬리 요청이 응답을 못 받고 무한 pending 에 빠지는
+ * 케이스가 있다(에러도 아니라 onError 도 안 뜸). 저장된 원본 thumbnailRaw 는 이미
+ * 만료돼 있는 경우가 많아 폴백으로도 부적합.
+ *
+ * 해결: onError 뿐 아니라 "로드 타임아웃"으로도 복구를 발동한다.
+ *  - 4s 안에 onLoad 가 안 오면 실패로 간주.
+ *  - 복구는 프록시를 캐시버스트 쿼리로 재요청 → 이때쯤 서버 캐시가 데워져 즉시 응답.
+ *  - 두 번 재시도 후에도 실패하면 원본 폴백 → 그래도 안 되면 플레이스홀더.
  */
+const LOAD_TIMEOUT_MS = 4000;
+
 function ProductImage({
   primary,
   fallback,
@@ -357,30 +364,40 @@ function ProductImage({
   const [src, setSrc] = useState(primary);
   const [loaded, setLoaded] = useState(false);
   const [dead, setDead] = useState(false);
-  const stage = useRef(0); // 0=primary, 1=retry, 2=fallback, 3=dead
-  const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stage = useRef(0); // 0=primary, 1=retry, 2=retry2, 3=fallback, 4=dead
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (retryTimer.current) clearTimeout(retryTimer.current);
-    };
-  }, []);
+  const clearTimer = () => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+  };
 
-  const onError = () => {
+  const advance = () => {
+    clearTimer();
     if (stage.current === 0) {
-      // 콜드 캐시 지연일 가능성 → 잠시 뒤 동일 프록시 재시도
       stage.current = 1;
-      retryTimer.current = setTimeout(() => {
-        setSrc(`${primary}${primary.includes('?') ? '&' : '?'}r=1`);
-      }, 1600);
-    } else if (stage.current === 1 && fallback && fallback !== primary) {
+      setSrc(`${primary}${primary.includes('?') ? '&' : '?'}r=1`);
+    } else if (stage.current === 1) {
       stage.current = 2;
+      setSrc(`${primary}${primary.includes('?') ? '&' : '?'}r=2`);
+    } else if (stage.current === 2 && fallback && fallback !== primary) {
+      stage.current = 3;
       setSrc(fallback);
     } else {
-      stage.current = 3;
+      stage.current = 4;
       setDead(true);
     }
   };
+
+  // src 가 바뀔 때마다 로드 타임아웃 재설정 (행 걸린 요청을 onError 없이도 복구)
+  useEffect(() => {
+    if (loaded || dead) return;
+    timer.current = setTimeout(() => advance(), LOAD_TIMEOUT_MS);
+    return clearTimer;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src, loaded, dead]);
 
   if (dead) {
     return (
@@ -403,8 +420,11 @@ function ProductImage({
         alt={alt}
         className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         loading="lazy"
-        onLoad={() => setLoaded(true)}
-        onError={onError}
+        onLoad={() => {
+          clearTimer();
+          setLoaded(true);
+        }}
+        onError={advance}
       />
     </>
   );
