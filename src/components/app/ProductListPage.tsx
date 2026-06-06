@@ -350,7 +350,9 @@ function ProductCard({ product }: { product: Product }) {
  *  - 복구는 프록시를 캐시버스트 쿼리로 재요청 → 이때쯤 서버 캐시가 데워져 즉시 응답.
  *  - 두 번 재시도 후에도 실패하면 원본 폴백 → 그래도 안 되면 플레이스홀더.
  */
-const LOAD_TIMEOUT_MS = 4000;
+// 첫 시도는 콜드 프록시(직렬 대기 ~7-8s)를 기다려 주고,
+// 재시도부터는 서버 캐시가 데워져 있으니 짧게 끊는다.
+const LOAD_TIMEOUT_BY_STAGE = [8000, 4000, 4000, 4000];
 
 function ProductImage({
   primary,
@@ -394,7 +396,8 @@ function ProductImage({
   // src 가 바뀔 때마다 로드 타임아웃 재설정 (행 걸린 요청을 onError 없이도 복구)
   useEffect(() => {
     if (loaded || dead) return;
-    timer.current = setTimeout(() => advance(), LOAD_TIMEOUT_MS);
+    const ms = LOAD_TIMEOUT_BY_STAGE[stage.current] ?? 4000;
+    timer.current = setTimeout(() => advance(), ms);
     return clearTimer;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, loaded, dead]);
