@@ -34,7 +34,10 @@ import { Platform } from '@prisma/client';
 export const maxDuration = 300;
 
 // 최신성 컷오프 — 이 날짜 이전 업로드된 영상은 모두 스킵
-const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
+// 최신성 롤링 컷 — 고정일자 대신 '지금 기준 N일'. 오래된 영상이 '현재 트렌드'로
+// 섞이지 않게 (의뢰인: 너무 넓다). 기본 45일.
+const RECENCY_WINDOW_DAYS = Number(process.env.RECENCY_WINDOW_DAYS || 45);
+const MIN_PUBLISHED_AT = new Date(Date.now() - RECENCY_WINDOW_DAYS * 24 * 60 * 60 * 1000);
 
 /**
  * Smart Dropshipping Product Video Collector
@@ -383,7 +386,7 @@ export async function POST(request: NextRequest) {
               likeCount: BigInt(video.likeCount),
               commentCount: BigInt(video.commentCount),
               shareCount: BigInt(video.shareCount),
-              category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+              category: classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
               country: 'US',
@@ -408,7 +411,7 @@ export async function POST(request: NextRequest) {
               commentCount: BigInt(video.commentCount),
               shareCount: BigInt(video.shareCount),
               viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
-              category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+              category: classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
               country: 'US',
@@ -527,7 +530,7 @@ export async function POST(request: NextRequest) {
                 commentCount: BigInt(video.commentCount),
                 shareCount: BigInt(video.shareCount),
                 viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
-                category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+                category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: 'US',
@@ -649,7 +652,7 @@ export async function POST(request: NextRequest) {
                 commentCount: BigInt(reel.commentCount),
                 shareCount: BigInt(reel.shareCount),
                 viralScore: reel.viewCount > 1000000 ? 90 : reel.viewCount > 100000 ? 60 : 30,
-                category: classification.category === 'OTHER' ? 'LIFESTYLE' : classification.category,
+                category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
                 country: 'US',
