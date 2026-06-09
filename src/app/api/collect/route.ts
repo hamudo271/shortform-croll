@@ -14,6 +14,7 @@ import {
   fetchTikTokComments,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
+import { collectProductReelsViaRapidApi } from '@/lib/collectors/instagram-api';
 import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
 import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
 import {
@@ -553,9 +554,14 @@ export async function POST(request: NextRequest) {
       console.log('⏱️ 전체 budget 초과 — Instagram 단계 스킵');
       results.partial = true;
     } else {
-      console.log('\n📷 Collecting Instagram Reels (public API)...');
+      // RAPIDAPI_KEY 가 있으면 RapidAPI(자기 IP로 우회) 사용 — Railway DC IP 차단 해결.
+      // 없으면 공개 API fallback (대개 prod 에서 0건).
+      const rapidKey = process.env.RAPIDAPI_KEY;
+      console.log(`\n📷 Collecting Instagram Reels (${rapidKey ? 'RapidAPI' : 'public API'})...`);
       try {
-        const { reels, errors: igErrors, creators: igCreators } = await collectKoreanReelsPublic();
+        const { reels, errors: igErrors, creators: igCreators } = rapidKey
+          ? await collectProductReelsViaRapidApi(rapidKey)
+          : await collectKoreanReelsPublic();
         console.log(`  Found ${reels.length} reels`);
 
         // 1) 한 번에 모든 IG creator를 DB에 동기화 (추가 API 호출 0회 — payload에 이미 있음)

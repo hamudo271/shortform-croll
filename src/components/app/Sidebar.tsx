@@ -41,9 +41,7 @@ const NAV: NavGroup[] = [
     items: [
       { href: '/dashboard/products', label: '상품 목록 DB', icon: Package, badge: { label: 'NEW', tone: 'green' } },
       { href: '/dashboard/tiktok', label: '틱톡 인기 상품', icon: TrendingUp },
-      // 인스타 릴스는 임시 숨김 — IG가 데이터센터 IP에서 모던 reels 엔드포인트 차단.
-      // RapidAPI 키 등록 시 다시 노출하면 됨.
-      // { href: '/dashboard/instagram', label: '인스타 인기 상품', icon: TrendingUp },
+      { href: '/dashboard/instagram', label: '인스타 릴스', icon: TrendingUp, badge: { label: 'NEW', tone: 'green' } },
     ],
   },
   {
