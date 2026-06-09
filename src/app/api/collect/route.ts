@@ -15,6 +15,7 @@ import {
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
 import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagram-api';
+import { isListicleTitle } from '@/lib/collectors/tiktok-api';
 import { isExcludedContent } from '@/lib/exclude';
 import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
 import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
@@ -595,7 +596,9 @@ export async function POST(request: NextRequest) {
           if (reel.viewCount < 20000) continue;
           // 2) 영어권만 — 비서구/비영어 제외 (틱톡과 동일 유틸)
           if (isExcludedContent(`${reel.title} ${reel.description}`, reel.authorName)) continue;
-          // 3) 최신성 컷오프
+          // 3) 다제품 리스티클 거부 (틱톡과 동일 TALKING_HEAD_RE) — "10 things…" 등
+          if (isListicleTitle(`${reel.title} ${reel.description}`)) continue;
+          // 4) 최신성 컷오프
           const igPublished = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
           if (!igPublished || igPublished < MIN_PUBLISHED_AT) continue;
 
@@ -609,11 +612,11 @@ export async function POST(request: NextRequest) {
               });
           if (!igCreator?.hasSalesLink) continue;
 
-          // 5) 얼굴캠 제외 (의뢰인 ②) — 틱톡과 동일 비전 게이트
+          // 6) 얼굴캠 제외 (의뢰인 ②) — IG는 face-cam 인플루언서가 많아 'mixed'(얼굴+제품)도 거부
           let igVisualClass: string | null = null;
           if (process.env.GEMINI_API_KEY && reel.thumbnailUrl) {
             igVisualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, reel.thumbnailUrl);
-            if (igVisualClass === 'face') continue;
+            if (igVisualClass === 'face' || igVisualClass === 'mixed') continue;
           }
 
           processedVideoIds.add(reel.id);

@@ -15,6 +15,9 @@ const EXCLUDE_PATTERNS: RegExp[] = [
   /[฀-๿]/, // Thai
   /[؀-ۿ]/, // Arabic
   /\b(india|indian|hindi|desi|pakistan|bangladesh|tamil|telugu|indonesia|thai|pinoy|filipino|vietnam)\b/i,
+  // 스페인어/포르투갈어 (의뢰인 ⑥: 영어권만) — 강한 단독 신호만
+  /[¿¡]/,
+  /\b(comprar(?:ías|ias|lo|la)?|envío|grátis|gratis|oferta|descuento|cuál|cuánto|tienda|comprá|precio|para\s+ti|te\s+gusta|cuál\s+de|qué\s+te)\b/i,
 ];
 
 export function isExcludedContent(

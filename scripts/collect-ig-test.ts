@@ -5,6 +5,7 @@
 import { prisma } from '../src/lib/prisma';
 import { Platform } from '@prisma/client';
 import { collectReelsByHashtags, fetchUserInfo } from '../src/lib/collectors/instagram-api';
+import { isListicleTitle } from '../src/lib/collectors/tiktok-api';
 import { getOrFetchCreator } from '../src/lib/creators';
 import { classifyByKeywords } from '../src/lib/classifier';
 import { classifyThumbnail } from '../src/lib/vision';
@@ -22,12 +23,13 @@ async function main() {
   reels.sort((a, b) => b.viewCount - a.viewCount);
   console.log(`raw 릴스(중복제거): ${reels.length}, 에러: ${errors.length}`);
 
-  const stats = { lowView: 0, excluded: 0, old: 0, noLink: 0, face: 0, saved: 0 };
+  const stats = { lowView: 0, excluded: 0, listicle: 0, old: 0, noLink: 0, face: 0, saved: 0 };
   const saved: string[] = [];
 
   for (const reel of reels) {
     if (reel.viewCount < MIN_VIEWS) { stats.lowView++; continue; }
     if (isExcludedContent(`${reel.title} ${reel.description}`, reel.authorName)) { stats.excluded++; continue; }
+    if (isListicleTitle(`${reel.title} ${reel.description}`)) { stats.listicle++; continue; }
     const pub = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
     if (!pub || pub < MIN_PUBLISHED_AT) { stats.old++; continue; }
 
@@ -39,7 +41,7 @@ async function main() {
     let visualClass: string | null = null;
     if (process.env.GEMINI_API_KEY && reel.thumbnailUrl) {
       visualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, reel.thumbnailUrl);
-      if (visualClass === 'face') { stats.face++; continue; }
+      if (visualClass === 'face' || visualClass === 'mixed') { stats.face++; continue; }
     }
 
     const c = classifyByKeywords({ title: reel.title, description: reel.description });

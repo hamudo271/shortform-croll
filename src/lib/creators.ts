@@ -76,7 +76,9 @@ const SALES_HOST_RE = new RegExp(
 );
 
 // 일반 SNS — 이거만 있으면 셀러로 안 침
-const NON_SALES_HOST_RE = /^https?:\/\/(www\.)?(instagram|facebook|fb|twitter|x|youtube|youtu|linkedin|pinterest|tumblr|threads|snapchat|t)\.(com|net|me|be)\b/i;
+// tiktok 프로필(tiktok.com/@user)도 '판매 링크' 아님 — 단, tiktok.com/shop 은
+// SALES_HOST_RE 가 먼저 매치하므로 정상 통과. (의뢰인 ③: 프로필에 '구매' 링크 필수)
+const NON_SALES_HOST_RE = /^https?:\/\/(www\.)?(instagram|facebook|fb|twitter|x|youtube|youtu|linkedin|pinterest|tumblr|threads|snapchat|tiktok|t)\.(com|net|me|be)\b/i;
 
 // signature 안에 명시적으로 셀러임을 알리는 텍스트
 const SIG_COMMERCE = new RegExp(

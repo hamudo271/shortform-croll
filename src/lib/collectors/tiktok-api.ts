@@ -181,9 +181,16 @@ const TALKING_HEAD_RE = new RegExp(
     '\\bmost\\s+viral\\s+(?:gadget|product|find|item)\\s+of\\b',
     // "X favorite/picks of YEAR"
     '\\bfavou?rites?\\s+of\\s+20\\d{2}\\b',
+    // 단독 "haul" — 정의상 다제품 모음 (단일상품 시연 아님)
+    '\\bhauls?\\b',
   ].join('|'),
   'i',
 );
+
+/** 다제품 리스티클/큐레이션 멘트 여부 (단일상품 시연이 아님). 타 플랫폼에서도 재사용. */
+export function isListicleTitle(text: string): boolean {
+  return TALKING_HEAD_RE.test(text || '');
+}
 
 function isCommerceContent(title: string): boolean {
   const lower = title.toLowerCase();
