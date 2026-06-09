@@ -14,7 +14,8 @@ import {
   fetchTikTokComments,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
-import { collectProductReelsViaRapidApi } from '@/lib/collectors/instagram-api';
+import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagram-api';
+import { isExcludedContent } from '@/lib/exclude';
 import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
 import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
 import {
@@ -557,42 +558,63 @@ export async function POST(request: NextRequest) {
       // RAPIDAPI_KEY 가 있으면 RapidAPI(자기 IP로 우회) 사용 — Railway DC IP 차단 해결.
       // 없으면 공개 API fallback (대개 prod 에서 0건).
       const rapidKey = process.env.RAPIDAPI_KEY;
-      console.log(`\n📷 Collecting Instagram Reels (${rapidKey ? 'RapidAPI' : 'public API'})...`);
+      console.log(`\n📷 Collecting Instagram Reels (${rapidKey ? 'RapidAPI 해시태그 검색' : 'public API'})...`);
       try {
-        const { reels, errors: igErrors, creators: igCreators } = rapidKey
-          ? await collectProductReelsViaRapidApi(rapidKey)
-          : await collectKoreanReelsPublic();
-        console.log(`  Found ${reels.length} reels`);
-
-        // 1) 한 번에 모든 IG creator를 DB에 동기화 (추가 API 호출 0회 — payload에 이미 있음)
-        for (const [username, info] of igCreators.entries()) {
-          await getOrFetchCreator(Platform.INSTAGRAM, username, async () => ({
-            bioUrl: info.bioUrl,
-            signature: info.signature,
-            authorName: info.authorName,
-            followerCount: info.followerCount,
-          }));
+        // 틱톡 STEP 3 와 동일 구조: 해시태그 검색 → 조회수/최신성/영어권 →
+        // 셀러링크 게이트 → 얼굴 제외 → 저장.
+        let reels: import('@/lib/collectors/instagram-api').InstagramReel[] = [];
+        const igErrors: string[] = [];
+        if (rapidKey) {
+          const r = await collectReelsByHashtags(rapidKey);
+          reels = r.reels;
+          igErrors.push(...r.errors);
+        } else {
+          const r = await collectKoreanReelsPublic();
+          reels = r.reels;
+          igErrors.push(...r.errors);
+          // 공개 API 경로: creator 정보가 payload 에 동봉 → 먼저 DB 동기화
+          for (const [username, info] of r.creators.entries()) {
+            await getOrFetchCreator(Platform.INSTAGRAM, username, async () => ({
+              bioUrl: info.bioUrl,
+              signature: info.signature,
+              authorName: info.authorName,
+              followerCount: info.followerCount,
+            }));
+          }
         }
+        console.log(`  Found ${reels.length} reels (deduped)`);
+
+        // 조회수 높은 순으로 정렬 — 바이럴 우선 + userinfo 콜 budget 절약
+        reels.sort((a, b) => b.viewCount - a.viewCount);
 
         for (const reel of reels) {
+          if (elapsedMs() > HARD_BUDGET_MS) { results.partial = true; break; }
           if (processedVideoIds.has(reel.id)) continue;
-          if (reel.viewCount < 10000) continue;
-          // 한글 콘텐츠 제외 (해외 풀 전환)
-          if (/[가-힣]/.test(reel.title) || /[가-힣]/.test(reel.description)) continue;
 
-          // 최신성 컷오프
+          // 1) 값싼 필터 먼저 (틱톡과 동일): 조회수 ≥ 20000
+          if (reel.viewCount < 20000) continue;
+          // 2) 영어권만 — 비서구/비영어 제외 (틱톡과 동일 유틸)
+          if (isExcludedContent(`${reel.title} ${reel.description}`, reel.authorName)) continue;
+          // 3) 최신성 컷오프
           const igPublished = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
           if (!igPublished || igPublished < MIN_PUBLISHED_AT) continue;
 
-          // 셀러 검증 게이트 — IG는 creator-only (댓글 fetch 안 함)
-          const igCreatorInfo = igCreators.get(reel.authorId);
-          const igPass = isQualifiedSeller({
-            authorId: reel.authorId,
-            bioUrl: igCreatorInfo?.bioUrl,
-            signature: igCreatorInfo?.signature,
-            videoCount: igCreatorInfo?.videoCount,
-          });
-          if (!igPass) continue;
+          // 4) 셀러 검증 게이트 — userinfo 로 bio 링크 확인 (의뢰인 ③, 캐시됨)
+          const igCreator = rapidKey
+            ? await getOrFetchCreator(Platform.INSTAGRAM, reel.authorId, () =>
+                fetchUserInfo(reel.authorId, rapidKey),
+              )
+            : await prisma.creator.findUnique({
+                where: { platform_authorId: { platform: Platform.INSTAGRAM, authorId: reel.authorId } },
+              });
+          if (!igCreator?.hasSalesLink) continue;
+
+          // 5) 얼굴캠 제외 (의뢰인 ②) — 틱톡과 동일 비전 게이트
+          let igVisualClass: string | null = null;
+          if (process.env.GEMINI_API_KEY && reel.thumbnailUrl) {
+            igVisualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, reel.thumbnailUrl);
+            if (igVisualClass === 'face') continue;
+          }
 
           processedVideoIds.add(reel.id);
 
@@ -607,6 +629,7 @@ export async function POST(request: NextRequest) {
                 commentCount: BigInt(reel.commentCount),
                 publishedAt: igPublished,
                 passReason: 'creator_link',
+                visualClass: igVisualClass,
                 updatedAt: new Date(),
               },
               create: {
@@ -629,6 +652,7 @@ export async function POST(request: NextRequest) {
                 country: 'US',
                 publishedAt: igPublished,
                 passReason: 'creator_link',
+                visualClass: igVisualClass,
               },
             });
             instagramCollected++;
