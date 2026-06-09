@@ -1,33 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import {
-  searchYouTubeShorts,
-  getYouTubeVideoUrl,
-  getYouTubeChannelUrl,
-  fetchYouTubeChannel,
-  fetchYouTubeComments,
-} from '@/lib/collectors/youtube';
-import {
   searchTikTokVideos,
   getTikTokTrending,
   fetchTikTokUser,
   fetchTikTokComments,
+  isListicleTitle,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
 import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagram-api';
-import { isListicleTitle } from '@/lib/collectors/tiktok-api';
 import { isExcludedContent } from '@/lib/exclude';
-import { getOrFetchCreator, isQualifiedSeller } from '@/lib/creators';
+import { getOrFetchCreator } from '@/lib/creators';
 import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
-import {
-  getRisingProductTrends,
-  getDailyTrendingProducts,
-  generateSearchQueries,
-  VIRAL_PRODUCT_KEYWORDS,
-} from '@/lib/collectors/trendCollector';
 import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
 import { classifyThumbnail } from '@/lib/vision';
-import { calculateViralScore } from '@/lib/utils';
 import { Platform } from '@prisma/client';
 
 // 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
@@ -72,244 +58,12 @@ export async function POST(request: NextRequest) {
   // 플랫폼별 deadline 으로 슬롯을 나눠 어느 날이든 세 채널 모두 일부는 수집되게 함.
   const startedAt = Date.now();
   const elapsedMs = () => Date.now() - startedAt;
-  const YT_DEADLINE_MS = 120_000; // YouTube 단계는 120s 까지
-  const TK_DEADLINE_MS = 215_000; // TikTok 단계는 215s 까지
+  const TK_DEADLINE_MS = 170_000; // TikTok 단계는 170s 까지 (YouTube 제거로 슬롯 앞당김)
   const HARD_BUDGET_MS = 230_000; // 전체 하드캡 (어떤 종료 주체보다도 앞서서)
 
-  // Parse request options
-  let manualKeyword: string | undefined;
-  let targetGeo = 'US'; // 기본: 영어권 (해외 아이디어템 풀)
-
   try {
-    const body = await request.json();
-    if (body.keyword) manualKeyword = body.keyword;
-    if (body.geo) targetGeo = body.geo;
-  } catch {
-    // Empty body is OK
-  }
-
-  try {
-    if (!process.env.YOUTUBE_API_KEY) {
-      return NextResponse.json({ error: 'YOUTUBE_API_KEY required' }, { status: 500 });
-    }
-
-    // ===== STEP 1: 검색 키워드 수집 =====
-    let searchQueries: string[] = [];
-
-    if (manualKeyword) {
-      // 수동 키워드: 영어 product-discovery suffix 자동 부착
-      searchQueries = [
-        `${manualKeyword} review shorts`,
-        `${manualKeyword} unboxing`,
-        `${manualKeyword} amazon finds`,
-      ];
-    } else {
-      // Google Trends에서 급상승 상품 트렌드 가져오기
-      console.log('🔍 Fetching rising product trends from Google Trends...');
-
-      try {
-        const [risingTrends, dailyTrends] = await Promise.all([
-          getRisingProductTrends(targetGeo),
-          getDailyTrendingProducts(targetGeo),
-        ]);
-
-        results.trendsFound = risingTrends.length + dailyTrends.length;
-        console.log(`📈 Found ${risingTrends.length} rising trends, ${dailyTrends.length} daily trends`);
-
-        // 트렌드 기반 검색 쿼리 생성
-        searchQueries = generateSearchQueries(risingTrends);
-
-        // 일일 트렌드 추가
-        for (const trend of dailyTrends.slice(0, 5)) {
-          searchQueries.push(`${trend} shorts review`);
-        }
-      } catch (err) {
-        console.error('Google Trends error:', err);
-        results.errors.push('Google Trends fetch failed');
-      }
-
-      // 트렌드가 없으면 기본 해외 아이디어템 키워드 사용
-      if (searchQueries.length === 0) {
-        console.log('⚠️ No trends found, using default global product keywords');
-        searchQueries = [...VIRAL_PRODUCT_KEYWORDS.global];
-      }
-    }
-
-    console.log(`🔎 Search queries (${searchQueries.length}):`, searchQueries.slice(0, 5));
-
-    // ===== STEP 2: YouTube 검색 =====
+    // YouTube 수집 제거 (의뢰인 요청) — TikTok + Instagram 만 수집.
     const processedVideoIds = new Set<string>();
-    const MIN_VIEWS = 20000; // 해외 영상 조회수 2만 이상 (3일 윈도우 고려)
-    const MIN_ENGAGEMENT = 0.01; // 최소 1% 참여율
-
-    for (const query of searchQueries.slice(0, 15)) { // 최대 15개 쿼리
-      // budget: YouTube 슬롯 초과 시 남은 쿼리 건너뛰고 다음 플랫폼으로
-      if (elapsedMs() > YT_DEADLINE_MS) {
-        console.log(`⏱️ YouTube 단계 budget(${YT_DEADLINE_MS}ms) 초과 — 남은 쿼리 스킵`);
-        results.partial = true;
-        break;
-      }
-      console.log(`\n🎬 Searching: "${query}"`);
-
-      try {
-        // 최근 48시간 영상만, 조회수순 정렬
-        const videos = await searchYouTubeShorts(process.env.YOUTUBE_API_KEY, {
-          query,
-          maxResults: 15,
-          regionCode: targetGeo,
-        });
-
-        results.videosSearched += videos.length;
-
-        for (const video of videos) {
-          if (elapsedMs() > YT_DEADLINE_MS) { results.partial = true; break; }
-          if (processedVideoIds.has(video.id)) continue;
-          processedVideoIds.add(video.id);
-
-          // Engagement 필터
-          const engagement = video.viewCount > 0 ? video.likeCount / video.viewCount : 0;
-
-          if (video.viewCount < MIN_VIEWS) {
-            results.videosSkipped++;
-            continue;
-          }
-
-          if (engagement < MIN_ENGAGEMENT) {
-            results.videosSkipped++;
-            continue;
-          }
-
-          // 최신성 컷오프
-          const ytPublished = new Date(video.publishedAt);
-          if (ytPublished < MIN_PUBLISHED_AT) {
-            results.videosSkipped++;
-            continue;
-          }
-
-          // 셀러 검증 게이트 — creator profile + 댓글 구매 의도 둘 다 확인
-          // (이전엔 OR 게이트라 creator 통과하면 댓글 검증 스킵 → "viral but no buyers"
-          //  영상이 새는 문제. 이제는 'both' 또는 'comment_intent'만 통과)
-          const ytCreator = await getOrFetchCreator(Platform.YOUTUBE, video.channelId, () =>
-            fetchYouTubeChannel(video.channelId, process.env.YOUTUBE_API_KEY!),
-          );
-          const ytComments = await fetchYouTubeComments(video.id, process.env.YOUTUBE_API_KEY!, 20);
-          const ytIntentScore = scorePurchaseIntent(ytComments);
-          const { passReason: ytPassReason, dpm: ytDpm } = evaluatePass(
-            !!ytCreator?.hasSalesLink,
-            ytIntentScore,
-            video.commentCount,
-            video.viewCount,
-          );
-          if (!ytPassReason) {
-            results.videosSkipped++;
-            continue;
-          }
-          void ytDpm;
-
-          // 비전 게이트 — 얼굴 위주 영상 거부 (의뢰인 기준 #2)
-          let ytVisualClass: string | null = null;
-          if (process.env.GEMINI_API_KEY) {
-            ytVisualClass = await classifyThumbnail(process.env.GEMINI_API_KEY, video.thumbnailUrl);
-            if (ytVisualClass === 'face') {
-              results.videosSkipped++;
-              continue;
-            }
-          }
-
-          try {
-            // AI 분류
-            let classification;
-            if (process.env.GEMINI_API_KEY) {
-              classification = await classifyVideo(process.env.GEMINI_API_KEY, {
-                title: video.title,
-                description: video.description,
-                authorName: video.channelTitle,
-              });
-            } else {
-              classification = classifyByKeywords({
-                title: video.title,
-                description: video.description,
-              });
-            }
-
-            // 상품이 아닌 영상 스킵
-            if (classification.category === 'OTHER') {
-              console.log(`  ❌ Skip (not product): ${video.title.substring(0, 40)}...`);
-              results.videosSkipped++;
-              continue;
-            }
-
-            // DB 저장
-            const existing = await prisma.video.findUnique({
-              where: { videoId: video.id },
-            });
-
-            const history = (existing?.viewCountHistory as Array<{ date: string; count: number }>) || [];
-            history.push({ date: new Date().toISOString(), count: video.viewCount });
-            const recentHistory = history.slice(-30);
-            const viralScore = calculateViralScore(recentHistory);
-
-            await prisma.video.upsert({
-              where: { videoId: video.id },
-              update: {
-                title: video.title,
-                description: video.description,
-                thumbnailUrl: video.thumbnailUrl,
-                viewCount: BigInt(video.viewCount),
-                likeCount: BigInt(video.likeCount),
-                commentCount: BigInt(video.commentCount),
-                viewCountHistory: recentHistory,
-                viralScore,
-                category: classification.category,
-                targetAge: classification.targetAge,
-                tags: classification.tags,
-                country: video.country || targetGeo,
-                hasPurchaseIntent: ytPassReason === 'both',
-                purchaseIntentScore: ytIntentScore,
-                passReason: ytPassReason,
-                visualClass: ytVisualClass,
-                updatedAt: new Date(),
-              },
-              create: {
-                platform: Platform.YOUTUBE,
-                videoId: video.id,
-                title: video.title,
-                description: video.description,
-                thumbnailUrl: video.thumbnailUrl,
-                videoUrl: getYouTubeVideoUrl(video.id),
-                authorName: video.channelTitle,
-                authorUrl: getYouTubeChannelUrl(video.channelId),
-                viewCount: BigInt(video.viewCount),
-                likeCount: BigInt(video.likeCount),
-                commentCount: BigInt(video.commentCount),
-                viewCountHistory: recentHistory,
-                viralScore,
-                category: classification.category,
-                targetAge: classification.targetAge,
-                tags: classification.tags,
-                country: video.country || targetGeo,
-                hasPurchaseIntent: ytPassReason === 'both',
-                purchaseIntentScore: ytIntentScore,
-                passReason: ytPassReason,
-                visualClass: ytVisualClass,
-                publishedAt: new Date(video.publishedAt),
-              },
-            });
-
-            console.log(`  ✅ Saved: ${video.title.substring(0, 40)}... (${formatNumber(video.viewCount)} views, ${(engagement * 100).toFixed(1)}% eng)`);
-            results.videosCollected++;
-          } catch (err) {
-            console.error('Video save error:', err);
-            results.errors.push(`Save failed: ${video.id}`);
-          }
-        }
-      } catch (err) {
-        console.error(`Search error for "${query}":`, err);
-        results.errors.push(`Search failed: ${query}`);
-      }
-
-      await delay(500); // Rate limiting
-    }
 
     // ===== STEP 3: 틱톡 수집 =====
     console.log('\n🎵 Collecting TikTok videos...');
@@ -684,7 +438,6 @@ export async function POST(request: NextRequest) {
         tiktokCollected,
         instagramCollected,
       },
-      searchQueries: searchQueries.slice(0, 10),
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

@@ -48,7 +48,6 @@ const NAV: NavGroup[] = [
     label: '추가 채널',
     items: [
       { href: '/dashboard', label: '전체 대시보드', icon: TrendingUp, exact: true },
-      { href: '/dashboard/youtube', label: '유튜브 쇼츠' },
     ],
   },
   {

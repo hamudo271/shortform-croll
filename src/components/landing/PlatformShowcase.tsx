@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { getLandingStats } from '@/lib/landing-data';
-import { ArrowRight, YouTubeLogo, TikTokLogo, InstagramLogo } from '@/components/ui/Icon';
+import { ArrowRight, TikTokLogo, InstagramLogo } from '@/components/ui/Icon';
 import type { Platform } from '@prisma/client';
 
 interface CardConfig {
   platform: Platform;
   href: string;
   title: string;
-  Logo: typeof YouTubeLogo;
+  Logo: typeof TikTokLogo;
   iconBg: string;
   iconColor: string;
 }
@@ -29,21 +29,13 @@ const CARDS: CardConfig[] = [
     iconBg: 'bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600',
     iconColor: 'text-white',
   },
-  {
-    platform: 'YOUTUBE',
-    href: '/dashboard/youtube',
-    title: '유튜브 쇼츠',
-    Logo: YouTubeLogo,
-    iconBg: 'bg-zinc-900 ring-1 ring-zinc-700',
-    iconColor: 'text-red-500',
-  },
 ];
 
 export default async function PlatformShowcase() {
   const stats = await getLandingStats();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       {CARDS.map((c) => {
         const count = stats.platformCounts[c.platform] ?? 0;
         return (
