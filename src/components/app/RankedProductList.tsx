@@ -217,13 +217,13 @@ export default function RankedProductList({ platform }: Props) {
                       <span className="font-medium tabular-nums">{formatCount(video.likeCount)}</span>
                     </span>
                     {video.viralScore > 0 && (
-                      <span className="inline-flex items-center gap-1 h-6 px-2 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-semibold text-emerald-400">
+                      <span className="inline-flex items-center gap-1 h-6 px-2 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
                         <TrendingUp size={10} strokeWidth={2.5} />
                         {video.viralScore > 1000 ? '999+' : Math.round(video.viralScore)}
                       </span>
                     )}
                     {video.category && (
-                      <span className="inline-flex items-center h-6 px-2 rounded-md bg-blue-500/10 border border-blue-500/25 text-[11px] font-medium text-blue-300">
+                      <span className="inline-flex items-center h-6 px-2 rounded-md bg-blue-500/10 border border-blue-500/25 text-[11px] font-medium text-blue-600 dark:text-blue-300">
                         {CATEGORY_NAMES[video.category]}
                       </span>
                     )}
