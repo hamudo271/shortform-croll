@@ -99,7 +99,14 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-10 space-y-8">
-      <PageHeader title="관리자" accent="시스템" emoji="🛡️" />
+      <PageHeader title="관리자" accent="시스템" emoji="🛡️">
+        <Link
+          href="/admin/products"
+          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
+        >
+          <PlusCircle size={15} /> 상품 관리
+        </Link>
+      </PageHeader>
 
       {/* Stats */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -4,6 +4,7 @@
  */
 
 export interface ScopeProduct {
+  id?: string; // 관리자 추가 상품일 때만 존재
   name: string;
   category: string;
   description: string;

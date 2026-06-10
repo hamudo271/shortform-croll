@@ -168,6 +168,25 @@ model CommunityComment {
   @@index([authorId])
 }
 
+// 관리자가 직접 추가하는 큐레이션 상품 (정적 SCOPE_PRODUCTS 와 함께 상품목록에 노출)
+model CuratedProduct {
+  id          String   @id @default(cuid())
+  name        String
+  category    String   // Fashion | Pet | Home | Beauty | Tech | Outdoor
+  description String
+  source      String?  // 원본 링크 (선택)
+  image       String   // base64 data URI 또는 URL
+  score       Int      @default(80)
+  trend       Int      @default(80)
+  profit      Int      @default(70)
+  competition Int      @default(40)
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([createdAt(sort: Desc)])
+}
+
 model PostLike {
   id        String        @id @default(cuid())
   postId    String

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SCOPE_PRODUCTS, SCOPE_CATEGORIES, type ScopeProduct } from '@/lib/trendscope-products';
 
 type SortKey = 'score' | 'profit' | 'trend';
@@ -9,15 +9,27 @@ export default function ProductListPage() {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortKey>('score');
   const [category, setCategory] = useState('all');
+  const [curated, setCurated] = useState<ScopeProduct[]>([]); // 관리자 추가 상품
+
+  useEffect(() => {
+    fetch('/api/curated-products')
+      .then((r) => (r.ok ? r.json() : { products: [] }))
+      .then((j) => setCurated(j.products || []))
+      .catch(() => {});
+  }, []);
+
+  // 관리자 추가 상품 + 정적 큐레이션 상품 (정적 목록은 그대로 유지)
+  const allProducts = useMemo(() => [...curated, ...SCOPE_PRODUCTS], [curated]);
 
   const items = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return SCOPE_PRODUCTS.filter((p) => category === 'all' || p.category === category)
+    return allProducts
+      .filter((p) => category === 'all' || p.category === category)
       .filter((p) => !q || [p.name, p.category, p.description, ...p.tags].join(' ').toLowerCase().includes(q))
       .sort((a, b) => b[sort] - a[sort]);
-  }, [query, sort, category]);
+  }, [allProducts, query, sort, category]);
 
-  const avgScore = Math.round(SCOPE_PRODUCTS.reduce((s, p) => s + p.score, 0) / SCOPE_PRODUCTS.length);
+  const avgScore = Math.round(allProducts.reduce((s, p) => s + p.score, 0) / Math.max(1, allProducts.length));
 
   return (
     <div className="max-w-[860px] mx-auto px-4 sm:px-6 py-8">
@@ -73,7 +85,7 @@ export default function ProductListPage() {
       {/* Summary strip */}
       <div className="grid grid-cols-3 gap-px rounded-xl overflow-hidden border border-zinc-800 mb-4">
         {[
-          { n: SCOPE_PRODUCTS.length, l: 'Total Products' },
+          { n: allProducts.length, l: 'Total Products' },
           { n: 3, l: 'Verified Sources' },
           { n: avgScore, l: 'Avg. Score' },
         ].map((s) => (
@@ -98,7 +110,7 @@ export default function ProductListPage() {
           </div>
         )}
         {items.map((p, i) => (
-          <ProductCard key={p.name} product={p} rank={i + 1} />
+          <ProductCard key={p.id ?? p.name} product={p} rank={i + 1} />
         ))}
       </div>
     </div>
