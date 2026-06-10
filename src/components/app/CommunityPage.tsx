@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Heart, MessageSquare } from '@/components/ui/Icon';
+import { TIER_LABEL } from '@/lib/community';
 
 interface Comment {
   id: string;
@@ -33,11 +35,18 @@ interface Level {
 }
 
 const TIERS = [
-  { name: 'Starter', xp: '0 XP', desc: '게시물 작성과 댓글 참여 시작' },
-  { name: 'Builder', xp: '40 XP', desc: '꾸준한 댓글, 질문, 제품 소스 공유' },
-  { name: 'Operator', xp: '100 XP', desc: '좋아요를 받는 게시물과 활발한 답글' },
-  { name: 'Insider', xp: '180 XP', desc: '커뮤니티에서 검증된 고활동 멤버' },
+  { name: 'Starter', min: 0, desc: '게시물 작성과 댓글 참여 시작' },
+  { name: 'Builder', min: 40, desc: '꾸준한 댓글, 질문, 제품 소스 공유' },
+  { name: 'Operator', min: 100, desc: '좋아요를 받는 게시물과 활발한 답글' },
+  { name: 'Insider', min: 180, desc: '커뮤니티에서 검증된 고활동 멤버' },
 ];
+
+const TIER_GRADIENT: Record<string, string> = {
+  Starter: 'from-zinc-500 to-zinc-600',
+  Builder: 'from-sky-500 to-blue-600',
+  Operator: 'from-violet-500 to-purple-600',
+  Insider: 'from-amber-400 to-orange-500',
+};
 
 function timeAgo(value: string): string {
   const t = new Date(value).getTime();
@@ -55,7 +64,7 @@ function Avatar({ name, size = 36 }: { name: string; size?: number }) {
   const letter = (name || 'M').slice(0, 1).toUpperCase();
   return (
     <span
-      className="inline-flex items-center justify-center rounded-full bg-[#0b1220] text-white font-bold shrink-0"
+      className="inline-flex items-center justify-center rounded-full bg-zinc-800 text-zinc-200 font-semibold shrink-0"
       style={{ width: size, height: size, fontSize: size * 0.4 }}
     >
       {letter}
@@ -129,94 +138,69 @@ export default function CommunityPage() {
   };
 
   const totalReplies = useMemo(() => posts.reduce((n, p) => n + p.comments.length, 0), [posts]);
+  const tier = level?.tier || 'Starter';
 
   return (
-    <div className="space-y-3">
-      {/* ===== Tier card (LEVEL UP hero + 4-tier grid) ===== */}
-      <div className="rounded-lg border border-zinc-700 bg-zinc-950 p-3.5 shadow-card">
-        {/* LEVEL UP hero — 항상 다크 */}
-        <div className="rounded-md bg-[#0b1220] text-white p-4">
-          <span className="inline-flex items-center min-h-[24px] px-2.5 rounded-full bg-[#2563eb] text-[10px] font-extrabold uppercase tracking-wide">
-            {level?.tier || 'Starter'}
-          </span>
-          <strong className="block mt-2.5 text-[19px] font-bold tracking-tight">LEVEL UP</strong>
-          <p className="mt-1.5 mb-3 text-[11px] leading-relaxed text-slate-300">
-            커뮤니티 활동량에 따라 레벨이 상승됩니다.
-          </p>
-          <small className="block -mt-1 mb-2.5 text-[11px] font-extrabold text-emerald-300">
-            {level ? `${level.xp} XP` : '0 XP'}
-            {level?.nextTier ? ` · 다음 ${level.nextTier} ${level.nextXp} XP` : ''}
-          </small>
-          <div className="h-2 rounded-full bg-white/15 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-[#16a34a] transition-[width]"
-              style={{ width: `${level?.progress ?? 0}%` }}
-            />
+    <div className="space-y-4">
+      {/* ===== 레벨 카드 (히어로 + 4등급 그리드) ===== */}
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <span className={`inline-flex items-center justify-center px-3 h-8 rounded-lg bg-gradient-to-br ${TIER_GRADIENT[tier] || TIER_GRADIENT.Starter} text-white text-sm font-bold shadow-sm`}>
+              {TIER_LABEL[tier] || tier}
+            </span>
+            <div>
+              <div className="text-lg font-bold text-zinc-50 tabular-nums">{level?.xp ?? 0} XP</div>
+              <div className="text-xs text-zinc-500">
+                {level?.nextTier
+                  ? `다음 ${TIER_LABEL[level.nextTier] || level.nextTier}까지 ${Math.max(0, level.nextXp - level.xp)} XP`
+                  : '최고 등급 달성'}
+              </div>
+            </div>
           </div>
+          {level?.stats && (
+            <div className="flex items-center gap-4 text-xs text-zinc-400">
+              <span>글 <b className="text-zinc-200 tabular-nums">{level.stats.posts}</b></span>
+              <span>댓글 <b className="text-zinc-200 tabular-nums">{level.stats.comments}</b></span>
+              <span>받은 좋아요 <b className="text-zinc-200 tabular-nums">{level.stats.receivedLikes}</b></span>
+            </div>
+          )}
+        </div>
+        <div className="mt-3 h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
+          <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-[width]" style={{ width: `${level?.progress ?? 0}%` }} />
         </div>
 
-        {/* 4-tier grid */}
-        <div className="grid grid-cols-2 gap-2 mt-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
           {TIERS.map((t) => {
-            const active = level?.tier === t.name;
+            const active = tier === t.name;
             return (
-              <article
+              <div
                 key={t.name}
-                className={`p-3 rounded-md border ${
-                  active
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10'
-                    : 'border-zinc-800 bg-zinc-900'
+                className={`p-3 rounded-xl border transition-colors ${
+                  active ? 'border-blue-500/40 bg-blue-500/5' : 'border-zinc-800 bg-zinc-950/40'
                 }`}
               >
-                <span className="block mb-1.5 text-[10px] font-extrabold uppercase tracking-wide text-blue-600 dark:text-blue-400">
-                  {t.xp}
-                </span>
-                <strong className="block text-sm font-bold text-zinc-50">{t.name}</strong>
-                <p className="mt-1 text-[10px] leading-snug text-zinc-500">{t.desc}</p>
-              </article>
+                <div className="text-[11px] font-bold text-blue-500 tabular-nums">{t.min} XP</div>
+                <div className="text-sm font-bold text-zinc-50 mt-0.5">{TIER_LABEL[t.name] || t.name}</div>
+                <p className="mt-1 text-[11px] leading-snug text-zinc-500">{t.desc}</p>
+              </div>
             );
           })}
         </div>
       </div>
 
-      {/* ===== Community grid: feed (좌) + About (우) ===== */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_260px] items-start gap-4">
-        {/* Feed card */}
-        <section className="rounded-lg border border-zinc-700 bg-zinc-950 p-3 shadow-card">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-base font-bold text-zinc-50">Community</h3>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live
-            </span>
-          </div>
-
-          {/* Hot / New tabs */}
-          <div className="flex gap-1.5 mb-2.5">
-            {(['hot', 'new'] as const).map((s) => (
-              <button
-                key={s}
-                onClick={() => setSort(s)}
-                className={`min-h-[28px] px-3 rounded-full text-[11px] font-extrabold border transition-colors ${
-                  sort === s
-                    ? 'border-[#0b1220] bg-[#0b1220] text-white'
-                    : 'border-zinc-700 bg-zinc-950 text-zinc-500 hover:text-zinc-300'
-                }`}
-              >
-                {s === 'hot' ? 'Hot' : 'New'}
-              </button>
-            ))}
-          </div>
-
+      {/* ===== 피드 + About ===== */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_270px] items-start gap-4">
+        {/* Feed */}
+        <section className="space-y-4">
           {/* 작성 폼 */}
-          <form onSubmit={submitPost} className="grid gap-2 mb-3">
+          <form onSubmit={submitPost} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 space-y-3">
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={60}
-              placeholder="제목"
-              required
-              className="h-10 px-3 rounded-lg bg-zinc-900 border border-zinc-700 text-sm text-zinc-100 placeholder-zinc-500 focus:border-blue-500 focus:outline-none"
+              placeholder="제목 — 어떤 제품/소스를 공유하시나요?"
+              className="w-full h-10 px-3 rounded-lg bg-zinc-950 border border-zinc-700 text-sm text-zinc-100 placeholder-zinc-500 focus:border-blue-500 focus:outline-none"
             />
             <textarea
               value={message}
@@ -224,8 +208,7 @@ export default function CommunityPage() {
               maxLength={360}
               rows={3}
               placeholder="제품 소스, 판매 인증, 질문을 남겨보세요."
-              required
-              className="px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm text-zinc-100 placeholder-zinc-500 focus:border-blue-500 focus:outline-none resize-none"
+              className="w-full px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-sm text-zinc-100 placeholder-zinc-500 focus:border-blue-500 focus:outline-none resize-none"
             />
             {image && (
               <div className="relative inline-block w-fit">
@@ -243,20 +226,39 @@ export default function CommunityPage() {
               <button
                 type="submit"
                 disabled={posting || !title.trim() || !message.trim()}
-                className="h-9 px-5 rounded-lg bg-[#0b1220] hover:opacity-90 disabled:opacity-50 text-white text-sm font-semibold transition-opacity"
+                className="h-9 px-5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold transition-colors"
               >
-                {posting ? '게시 중…' : 'Post'}
+                {posting ? '게시 중…' : '게시하기'}
               </button>
             </div>
           </form>
 
-          {/* 피드 */}
+          {/* 정렬 */}
+          <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+            <div className="inline-flex items-center gap-1 p-1 rounded-lg bg-zinc-900 border border-zinc-800">
+              {(['hot', 'new'] as const).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSort(s)}
+                  className={`px-3 h-7 rounded-md text-xs font-semibold transition-colors ${
+                    sort === s ? 'bg-zinc-50 text-zinc-900' : 'text-zinc-400 hover:text-zinc-100'
+                  }`}
+                >
+                  {s === 'hot' ? '인기' : '최신'}
+                </button>
+              ))}
+            </div>
+            <span className="text-xs text-zinc-500">
+              글 <b className="text-zinc-300 tabular-nums">{posts.length}</b> · 댓글 <b className="text-zinc-300 tabular-nums">{totalReplies}</b>
+            </span>
+          </div>
+
           {loading ? (
             <div className="py-12 text-center text-sm text-zinc-500">불러오는 중…</div>
           ) : posts.length === 0 ? (
-            <div className="py-12 text-center text-sm text-zinc-500">아직 게시글이 없습니다. 첫 제품 소스를 공유해보세요.</div>
+            <div className="rounded-2xl border border-dashed border-zinc-700 py-12 text-center text-sm text-zinc-500">아직 게시글이 없습니다. 첫 제품 소스를 공유해보세요.</div>
           ) : (
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {posts.map((p) => (
                 <PostCard
                   key={p.id}
@@ -278,33 +280,39 @@ export default function CommunityPage() {
           )}
         </section>
 
-        {/* About sidebar */}
-        <aside className="rounded-lg border border-zinc-700 bg-zinc-950 p-3 shadow-card grid gap-2 self-start">
+        {/* About */}
+        <aside className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 grid gap-3 self-start">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-zinc-50">About</h3>
-            <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">Admin</span>
+            <h3 className="text-sm font-bold text-zinc-50">커뮤니티 안내</h3>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live
+            </span>
           </div>
           <p className="text-[11px] leading-relaxed text-zinc-500">
-            좋아요와 댓글이 많이 달린 글은 Hot 게시물로 위에 올라갑니다.
+            좋아요와 댓글이 많이 달린 글은 <b className="text-zinc-300">인기</b> 상단으로 올라갑니다.
           </p>
-          <div className="flex items-center justify-between py-1.5 border-t border-zinc-800">
-            <strong className="text-[15px] text-zinc-50 tabular-nums">{posts.length}</strong>
-            <span className="text-[10px] font-extrabold text-zinc-500">Posts</span>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/40 p-2.5">
+              <div className="text-lg font-bold text-zinc-50 tabular-nums">{posts.length}</div>
+              <div className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wide">Posts</div>
+            </div>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/40 p-2.5">
+              <div className="text-lg font-bold text-zinc-50 tabular-nums">{totalReplies}</div>
+              <div className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wide">Comments</div>
+            </div>
           </div>
-          <div className="flex items-center justify-between py-1.5 border-t border-zinc-800">
-            <strong className="text-[15px] text-zinc-50 tabular-nums">{totalReplies}</strong>
-            <span className="text-[10px] font-extrabold text-zinc-500">Comments</span>
-          </div>
-          <div className="h-px my-2 bg-zinc-800" />
+          <div className="h-px bg-zinc-800" />
           {[
-            { label: '제품 소스 공유', checked: true },
-            { label: '판매 테스트 인증', checked: true },
-            { label: '우수 글 공지 고정 예정', checked: false },
+            { label: '제품 소스 공유', on: true },
+            { label: '판매 테스트 인증', on: true },
+            { label: '우수 글 공지 고정 예정', on: false },
           ].map((m) => (
-            <label key={m.label} className="flex items-start gap-2 text-[10px] font-bold leading-snug text-zinc-400">
-              <input type="checkbox" defaultChecked={m.checked} className="mt-0.5 accent-blue-600" />
+            <div key={m.label} className="flex items-center gap-2 text-[11px] font-medium text-zinc-400">
+              <span className={`inline-flex items-center justify-center w-4 h-4 rounded ${m.on ? 'bg-blue-600 text-white' : 'border border-zinc-700 text-transparent'}`}>
+                {m.on ? '✓' : ''}
+              </span>
               {m.label}
-            </label>
+            </div>
           ))}
         </aside>
       </div>
@@ -348,15 +356,16 @@ function PostCard({
   };
 
   return (
-    <article className="rounded-lg border border-zinc-800 bg-zinc-900 p-3.5">
+    <article className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:p-5 hover:border-zinc-700 transition-colors">
       <div className="flex gap-3">
         <Avatar name={post.name} />
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 text-[11px] text-zinc-500">
+          <div className="flex items-center gap-2 text-xs text-zinc-500">
             <strong className="text-zinc-200">{post.name}</strong>
+            <span>·</span>
             <span>{timeAgo(post.createdAt)}</span>
           </div>
-          <h4 className="mt-1 text-[15px] font-bold text-zinc-50 leading-snug">{post.title}</h4>
+          <h4 className="mt-1 text-[15px] font-semibold text-zinc-50 leading-snug">{post.title}</h4>
           <p className="mt-1 text-sm text-zinc-300 leading-relaxed whitespace-pre-wrap break-words">{post.message}</p>
           {post.image && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -366,24 +375,26 @@ function PostCard({
           <div className="mt-3 flex items-center gap-2">
             <button
               onClick={onLike}
-              className={`inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border text-xs font-semibold transition-colors ${
+              className={`inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-xs font-medium transition-colors ${
                 post.likedByMe
                   ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
                   : 'bg-zinc-800/60 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800'
               }`}
             >
-              ♥ 좋아요 {post.likes}
+              <Heart size={13} strokeWidth={post.likedByMe ? 2.5 : 1.75} />
+              {post.likes}
             </button>
             <button
               onClick={onToggleComments}
-              className="inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border border-zinc-700/60 bg-zinc-800/60 text-zinc-300 hover:bg-zinc-800 text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-zinc-700/60 bg-zinc-800/60 text-zinc-300 hover:bg-zinc-800 text-xs font-medium transition-colors"
             >
-              댓글 {post.comments.length}
+              <MessageSquare size={13} />
+              {post.comments.length}
             </button>
           </div>
 
           {open && (
-            <div className="mt-3 space-y-3 border-t border-zinc-800 pt-3">
+            <div className="mt-4 space-y-3 border-t border-zinc-800 pt-3">
               {topComments.length === 0 && <p className="text-xs text-zinc-500">첫 댓글을 남겨보세요.</p>}
               {topComments.map((c) => (
                 <div key={c.id} className="space-y-2">
