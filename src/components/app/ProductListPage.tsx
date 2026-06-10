@@ -131,7 +131,7 @@ function ProductCard({ product, rank }: { product: ScopeProduct; rank: number })
       {/* thumb */}
       <div className="relative w-[100px] h-[100px] sm:w-[118px] sm:h-[118px] rounded-md overflow-hidden border border-zinc-800 bg-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-contain" />
+        <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
         <span className="absolute top-1.5 left-1.5 inline-flex items-center justify-center min-w-[26px] h-5 px-1 rounded bg-[#0b1220]/85 text-white text-[10px] font-bold">
           #{String(rank).padStart(2, '0')}
         </span>
