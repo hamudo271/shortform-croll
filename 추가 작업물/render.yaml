@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: trendscope-community
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_BYPASS
+        value: "false"
+      - key: MAX_CONNECTIONS
+        value: "500"
+      - key: MAX_STORED_POSTS
+        value: "500"
+      - key: COMMUNITY_FEED_LIMIT
+        value: "80"
+      - key: COMMUNITY_FEED_MAX_LIMIT
+        value: "150"

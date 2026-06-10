@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrendScope | 결제 성공</title>
+    <meta name="trendscope-api-base" content="https://trendscope-community.onrender.com" />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, "Noto Sans KR", sans-serif;
+        text-align: center;
+        padding: 50px 16px;
+        background: #f8fafc;
+        color: #111827;
+      }
+
+      .box {
+        display: inline-block;
+        max-width: 520px;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #fff;
+      }
+
+      #confirm-status {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      a {
+        color: #0077ff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>결제 인증이 성공했습니다.</h1>
+      <p>서버로 결제 승인 API를 요청합니다.</p>
+      <hr />
+      <p><strong>주문 번호:</strong> <span id="order-id"></span></p>
+      <p><strong>결제 금액:</strong> <span id="amount"></span>원</p>
+      <p id="confirm-status">결제 승인 확인 중...</p>
+      <a href="./#subscribe">TrendScope로 돌아가기</a>
+    </div>
+
+    <script>
+      const apiBase = document.querySelector('meta[name="trendscope-api-base"]').content.replace(/\/+$/, "");
+      const urlParams = new URLSearchParams(window.location.search);
+      const paymentKey = urlParams.get("paymentKey");
+      const orderId = urlParams.get("orderId");
+      const amount = urlParams.get("amount");
+      const isTestCheckout = urlParams.get("testCheckout") === "1" || String(orderId || "").startsWith("test_order_");
+      const status = document.getElementById("confirm-status");
+
+      document.getElementById("order-id").textContent = orderId || "-";
+      document.getElementById("amount").textContent = Number(amount || 0).toLocaleString("ko-KR");
+
+      async function confirmPayment() {
+        if (!paymentKey || !orderId || !amount) {
+          status.textContent = "결제 승인 정보가 부족합니다.";
+          return;
+        }
+
+        const localHosts = new Set(["localhost", "127.0.0.1", "::1"]);
+        const testApiBase = localHosts.has(window.location.hostname) ? window.location.origin : apiBase;
+        const confirmUrl = isTestCheckout ? `${testApiBase}/confirm` : `${apiBase}/api/payments/confirm`;
+
+        try {
+          const response = await fetch(confirmUrl, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentKey, orderId, amount: Number(amount) }),
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || data.message || "결제 승인 확인에 실패했습니다.");
+          status.textContent = isTestCheckout
+            ? "테스트 결제 승인이 완료되었습니다."
+            : "멤버십 권한이 정상적으로 활성화되었습니다.";
+        } catch (error) {
+          status.textContent = error.message || "결제 승인 확인 중 오류가 발생했습니다.";
+        }
+      }
+
+      confirmPayment();
+    </script>
+  </body>
+</html>

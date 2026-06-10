@@ -1,0 +1,13 @@
+{
+  "name": "trendscope-community",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TrendScope product dashboard and member community server.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -9,6 +9,7 @@ import {
   Layers,
   Search,
   Package,
+  MessageSquare,
   Eye,
   User,
   LogOut,
@@ -63,6 +64,12 @@ const NAV: NavGroup[] = [
     badge: { label: '구독 필요', tone: 'gray' },
     items: [
       { href: '/dashboard/top', label: 'Top 바이럴', icon: Eye },
+    ],
+  },
+  {
+    label: '커뮤니티',
+    items: [
+      { href: '/dashboard/community', label: '셀러 커뮤니티', icon: MessageSquare, badge: { label: 'NEW', tone: 'green' } },
     ],
   },
 ];

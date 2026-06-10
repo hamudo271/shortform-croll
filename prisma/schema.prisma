@@ -111,10 +111,73 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
+  // Community profile
+  bio            String?
+  profileImage   String?        // base64 data URI or URL
+
   subscriptions  Subscription[]
   activityLogs   ActivityLog[]
+  posts          CommunityPost[]
+  comments       CommunityComment[]
+  postLikes      PostLike[]
 
   @@index([email])
+}
+
+// ===== Community =====
+
+enum CommunityStatus {
+  PUBLISHED
+  HIDDEN
+  DELETED
+}
+
+model CommunityPost {
+  id         String          @id @default(cuid())
+  authorId   String
+  author     User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorName String                          // 작성 시점 이름 스냅샷
+  title      String
+  message    String
+  image      String?                         // base64 data URI or URL (선택)
+  status     CommunityStatus @default(PUBLISHED)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  comments   CommunityComment[]
+  likes      PostLike[]
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([authorId])
+}
+
+model CommunityComment {
+  id        String          @id @default(cuid())
+  postId    String
+  post      CommunityPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorName String
+  message   String
+  parentId  String?                          // 대댓글이면 부모 댓글 id
+  status    CommunityStatus @default(PUBLISHED)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([postId, createdAt])
+  @@index([authorId])
+}
+
+model PostLike {
+  id        String        @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+
+  @@unique([postId, userId])   // 유저당 1좋아요
+  @@index([userId])
 }
 
 model Subscription {
