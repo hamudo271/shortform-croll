@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { TRIAL_DAYS } from '@/lib/auth';
 
 /**
  * 구글 / 네이버 소셜 로그인.
@@ -165,7 +166,7 @@ export async function upsertOAuthUser(profile: OAuthProfile): Promise<string> {
     return existing.userId;
   }
 
-  // 2) 같은 이메일의 기존 유저가 있으면 연결, 없으면 신규 생성
+  // 2) 같은 이메일의 기존 유저가 있으면 연결(기존 구독 유지), 없으면 신규 생성
   let user = await prisma.user.findUnique({ where: { email: profile.email } });
   if (!user) {
     user = await prisma.user.create({
@@ -174,6 +175,17 @@ export async function upsertOAuthUser(profile: OAuthProfile): Promise<string> {
         name: profile.name || profile.email.split('@')[0],
         profileImage: profile.profileImage || null,
         passwordHash: null,
+      },
+    });
+    // 이메일 가입과 동일하게 신규 소셜 가입자에게도 무료체험 구독 부여
+    // (없으면 /dashboard 게이트에서 /account?expired=1 로 바운스됨)
+    await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        endAt: new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000),
+        status: 'ACTIVE',
+        amount: 0,
+        memo: `${TRIAL_DAYS}일 무료 체험 (${profile.provider} 가입)`,
       },
     });
   }
