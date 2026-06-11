@@ -147,6 +147,23 @@ export async function getSession(): Promise<{
   };
 }
 
+/**
+ * 커뮤니티 접근 게이트: 로그인 + (활성 구독 OR 관리자) 일 때만 통과.
+ * 결과를 discriminated union 으로 돌려주어 라우트가 401/403 을 구분해 응답한다.
+ */
+export type CommunityAccess =
+  | { ok: true; user: SessionUser }
+  | { ok: false; status: 401 | 403; error: string };
+
+export async function requireCommunityAccess(): Promise<CommunityAccess> {
+  const user = await getCurrentUser();
+  if (!user) return { ok: false, status: 401, error: '로그인이 필요합니다.' };
+  if (user.role !== 'ADMIN' && !user.hasActiveSubscription) {
+    return { ok: false, status: 403, error: '커뮤니티는 활성 구독 회원만 이용할 수 있습니다.' };
+  }
+  return { ok: true, user };
+}
+
 export function getSessionCookieOptions() {
   return {
     name: SESSION_COOKIE,

@@ -13,11 +13,12 @@ interface Comment {
 interface Post {
   id: string;
   authorId: string;
+  mine: boolean;
   name: string;
   profileImage: string | null;
   title: string;
   message: string;
-  image: string | null;
+  hasImage: boolean;
   createdAt: string;
   likes: number;
   likedByMe: boolean;
@@ -69,6 +70,8 @@ export default function CommunityPage() {
   const [sort, setSort] = useState<'hot' | 'new'>('hot');
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [openComments, setOpenComments] = useState<Set<string>>(new Set());
 
   const [title, setTitle] = useState('');
@@ -78,8 +81,26 @@ export default function CommunityPage() {
 
   const loadFeed = useCallback(async () => {
     const r = await fetch(`/api/community?sort=${sort}`);
-    if (r.ok) setPosts(await r.json());
+    if (r.ok) {
+      const d = await r.json();
+      setPosts(d.posts || []);
+      setCursor(d.nextCursor || null);
+    }
   }, [sort]);
+  const loadMore = useCallback(async () => {
+    if (!cursor) return;
+    setLoadingMore(true);
+    try {
+      const r = await fetch(`/api/community?sort=${sort}&cursor=${cursor}`);
+      if (r.ok) {
+        const d = await r.json();
+        setPosts((prev) => [...prev, ...(d.posts || [])]);
+        setCursor(d.nextCursor || null);
+      }
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [cursor, sort]);
   const loadLevel = useCallback(async () => {
     const r = await fetch('/api/community/level');
     if (r.ok) setLevel(await r.json());
@@ -124,7 +145,12 @@ export default function CommunityPage() {
   };
 
   const toggleLike = async (postId: string) => {
-    await fetch(`/api/community/${postId}/like`, { method: 'POST' });
+    const r = await fetch(`/api/community/${postId}/like`, { method: 'POST' });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      setErr(d.error || '좋아요에 실패했습니다.');
+      return;
+    }
     await Promise.all([loadFeed(), loadLevel()]);
   };
 
@@ -274,6 +300,15 @@ export default function CommunityPage() {
                   onCommented={() => Promise.all([loadFeed(), loadLevel()])}
                 />
               ))}
+              {cursor && (
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="w-full h-10 rounded-lg border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 text-zinc-300 text-sm font-semibold transition-colors"
+                >
+                  {loadingMore ? '불러오는 중…' : '더 보기'}
+                </button>
+              )}
             </div>
           )}
         </section>
@@ -327,6 +362,7 @@ function PostCard({
 }) {
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
+  const [cErr, setCErr] = useState('');
   const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null);
 
   const topComments = post.comments.filter((c) => !c.parentId);
@@ -336,15 +372,24 @@ function PostCard({
     e.preventDefault();
     if (!text.trim()) return;
     setSending(true);
-    await fetch(`/api/community/${post.id}/comments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, parentId: replyTo?.id || '' }),
-    });
-    setText('');
-    setReplyTo(null);
-    setSending(false);
-    await onCommented();
+    setCErr('');
+    try {
+      const r = await fetch(`/api/community/${post.id}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, parentId: replyTo?.id || '' }),
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        setCErr(d.error || '댓글 작성에 실패했습니다.');
+        return;
+      }
+      setText('');
+      setReplyTo(null);
+      await onCommented();
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -358,22 +403,28 @@ function PostCard({
           </div>
           <h4 className="mt-1 text-[15px] font-bold text-zinc-50 leading-snug">{post.title}</h4>
           <p className="mt-1 text-sm text-zinc-300 leading-relaxed whitespace-pre-wrap break-words">{post.message}</p>
-          {post.image && (
+          {post.hasImage && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.image} alt="" className="mt-3 max-h-80 rounded-lg border border-zinc-800" loading="lazy" />
+            <img src={`/api/community/${post.id}/image`} alt="" className="mt-3 max-h-80 rounded-lg border border-zinc-800" loading="lazy" />
           )}
 
           <div className="mt-3 flex items-center gap-2">
-            <button
-              onClick={onLike}
-              className={`inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border text-xs font-semibold transition-colors ${
-                post.likedByMe
-                  ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
-                  : 'bg-zinc-800/60 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800'
-              }`}
-            >
-              ♥ 좋아요 {post.likes}
-            </button>
+            {post.mine ? (
+              <span className="inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border border-zinc-700/60 bg-zinc-800/40 text-zinc-400 text-xs font-semibold">
+                ♥ {post.likes}
+              </span>
+            ) : (
+              <button
+                onClick={onLike}
+                className={`inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border text-xs font-semibold transition-colors ${
+                  post.likedByMe
+                    ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
+                    : 'bg-zinc-800/60 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800'
+                }`}
+              >
+                ♥ 좋아요 {post.likes}
+              </button>
+            )}
             <button
               onClick={onToggleComments}
               className="inline-flex items-center gap-1.5 min-h-[30px] px-3 rounded-lg border border-zinc-700/60 bg-zinc-800/60 text-zinc-300 hover:bg-zinc-800 text-xs font-semibold transition-colors"
@@ -417,6 +468,7 @@ function PostCard({
                   댓글
                 </button>
               </form>
+              {cErr && <p className="text-[11px] text-rose-500">{cErr}</p>}
             </div>
           )}
         </div>

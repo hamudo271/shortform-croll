@@ -9,9 +9,14 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    "**/.next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // 외부 작업물/워크트리/도구 폴더는 lint 대상에서 제외
+    ".claude/**",
+    "추가 작업물/**",
+    "**/추가 작업물/**",
   ]),
 ]);
 
