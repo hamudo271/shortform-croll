@@ -8,7 +8,10 @@ import { getCurrentUser } from '@/lib/auth';
  */
 export async function GET() {
   const me = await getCurrentUser();
-  if (!me) return NextResponse.json({ products: [] });
+  // 상품 목록 페이지와 동일하게 활성 구독(또는 관리자)만 — 미구독자 직접 API 호출 차단
+  if (!me || (!me.hasActiveSubscription && me.role !== 'ADMIN')) {
+    return NextResponse.json({ products: [] });
+  }
 
   const items = await prisma.curatedProduct.findMany({ orderBy: { createdAt: 'desc' } });
 
