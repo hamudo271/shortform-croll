@@ -120,8 +120,36 @@ model User {
   posts          CommunityPost[]
   comments       CommunityComment[]
   postLikes      PostLike[]
+  payments       Payment[]
 
   @@index([email])
+}
+
+// ===== 결제 (토스페이먼츠) =====
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELED
+}
+
+model Payment {
+  id         String        @id @default(cuid())
+  orderId    String        @unique          // 클라이언트 생성, 토스 승인 시 검증
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount     Int                            // 기대 금액(서버 고정) — 위변조 검증용
+  status     PaymentStatus @default(PENDING)
+  paymentKey String?                        // 토스 승인 후 발급
+  method     String?                        // 카드/간편결제 등
+  orderName  String?
+  raw        Json?                          // 토스 승인 응답 원본
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
 }
 
 // ===== Community =====

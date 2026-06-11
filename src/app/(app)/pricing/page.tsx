@@ -37,8 +37,8 @@ const FAQS = [
 
 export default async function PricingPage() {
   const user = await getCurrentUser();
-  const ctaHref = user ? '/account' : '/signup';
-  const ctaLabel = user ? '내 정보로 이동' : `${TRIAL_DAYS}일 무료 체험 시작`;
+  const ctaHref = user ? '/account/subscribe' : '/signup';
+  const ctaLabel = user ? '카드로 바로 결제하기' : `${TRIAL_DAYS}일 무료 체험 시작`;
   const discountPercent = Math.round(
     (1 - SUBSCRIPTION_PRICE_KRW / SUBSCRIPTION_ORIGINAL_PRICE_KRW) * 100,
   );
@@ -107,17 +107,17 @@ export default async function PricingPage() {
               결제 방식
             </div>
             <h2 className="text-display text-2xl sm:text-3xl font-bold text-zinc-50 tracking-[-0.02em] mb-3">
-              현재는 <span className="text-blue-500">수동 승인</span> 방식 💳
+              <span className="text-blue-500">카드 결제</span>로 즉시 시작 💳
             </h2>
             <p className="text-base text-zinc-400 max-w-2xl mx-auto">
-              카드 결제(PG)는 준비 중입니다. 그동안은 계좌 입금 후 관리자가 직접 활성화해 드립니다.
+              토스페이먼츠 카드 결제로 바로 시작하세요. 결제 즉시 멤버십이 활성화됩니다. 자동 갱신은 없습니다.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { n: '1', title: '회원가입', body: `가입 즉시 ${TRIAL_DAYS}일 무료 체험 자동 시작` },
-              { n: '2', title: '체험 후 입금', body: `만족하시면 ${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원 계좌 입금` },
-              { n: '3', title: '관리자 활성화', body: '입금 확인 후 24시간 이내 활성화' },
+              { n: '2', title: '카드 결제', body: `${SUBSCRIPTION_PRICE_KRW.toLocaleString('ko-KR')}원 토스페이먼츠 결제` },
+              { n: '3', title: '즉시 활성화', body: '결제 완료 즉시 자동 활성화' },
               { n: '4', title: `${SUBSCRIPTION_DAYS}일간 이용`, body: '모든 기능 무제한 이용' },
             ].map((step) => (
               <div key={step.n} className="bg-zinc-950 border border-zinc-700 rounded-2xl p-6 shadow-card">
