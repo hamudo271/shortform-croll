@@ -168,7 +168,17 @@ export async function upsertOAuthUser(profile: OAuthProfile): Promise<string> {
 
   // 2) 같은 이메일의 기존 유저가 있으면 연결(기존 구독 유지), 없으면 신규 생성
   let user = await prisma.user.findUnique({ where: { email: profile.email } });
-  if (!user) {
+  if (user) {
+    // 기존 이메일 계정에 소셜을 "처음" 연결 → 소셜 프로필의 이름/사진을 채택
+    // (가입 시 입력한 이름이 'Admin' 등으로 남아있는 문제 해결. 이후 재로그인엔 덮어쓰지 않음)
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        ...(profile.name ? { name: profile.name } : {}),
+        ...(profile.profileImage ? { profileImage: profile.profileImage } : {}),
+      },
+    });
+  } else {
     user = await prisma.user.create({
       data: {
         email: profile.email,
