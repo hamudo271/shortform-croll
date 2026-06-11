@@ -15,7 +15,7 @@ export default function SocialLoginButtons({ label = '간편 로그인' }: { lab
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <a
         href="/api/auth/google"
-        className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-xl bg-white hover:bg-zinc-100 text-zinc-800 text-sm font-semibold border border-zinc-300 transition-colors"
+        className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-xl bg-white hover:bg-[#f7f8f8] text-[#3c4043] text-sm font-semibold border border-[#dadce0] transition-colors"
       >
         <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
           <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z" />
