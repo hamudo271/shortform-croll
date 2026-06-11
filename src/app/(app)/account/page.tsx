@@ -69,7 +69,7 @@ export default async function AccountPage() {
               <div className="flex items-center gap-2 mb-5">
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 text-xs font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {user.subscriptionStatus === 'EXPIRED' ? '만료됨' : user.subscriptionStatus === 'CANCELED' ? '취소됨' : '미활성화'}
+                  {user.subscriptionStatus === 'EXPIRED' ? '만료됨' : user.subscriptionStatus === 'CANCELED' ? '취소됨' : '미구독'}
                 </span>
               </div>
               <div className="flex items-baseline gap-2 mb-2">
@@ -79,26 +79,22 @@ export default async function AccountPage() {
                 <span className="text-xl text-zinc-400 font-medium">원</span>
                 <span className="text-sm text-zinc-400">/ {SUBSCRIPTION_DAYS}일</span>
               </div>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                스마트렌드 데이터를 보려면 구독이 필요합니다.
-                아래 안내에 따라 입금 후 관리자가 활성화해 드립니다.
+              <p className="text-sm text-zinc-400 leading-relaxed mb-6">
+                스마트렌드 상품 DB·커뮤니티를 이용하려면 구독이 필요합니다.
+                카드로 결제하면 <b className="text-zinc-200">즉시 {SUBSCRIPTION_DAYS}일</b> 활성화됩니다. 자동 갱신 없음.
               </p>
+              <Link
+                href="/account/subscribe"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-1.5 px-6 h-12 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors shadow-sm"
+              >
+                <PlusCircle size={15} strokeWidth={2.25} />
+                {formatKRW(SUBSCRIPTION_PRICE_KRW)} 결제하고 구독하기
+              </Link>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-200 dark:border-blue-500/20 rounded-2xl p-7 sm:p-8 shadow-card">
-              <div className="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-[0.18em] mb-5">입금 안내</div>
-              <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm">
-                <div className="text-zinc-400">계좌</div>
-                <div className="text-zinc-50 font-semibold">관리자 문의</div>
-                <div className="text-zinc-400">입금자명</div>
-                <div className="text-zinc-50 font-semibold">{user.name || user.email}</div>
-                <div className="text-zinc-400">금액</div>
-                <div className="text-zinc-50 font-semibold">{formatKRW(SUBSCRIPTION_PRICE_KRW)}</div>
-              </div>
-              <p className="text-xs text-zinc-400 leading-relaxed pt-5 mt-5 border-t border-blue-200 dark:border-blue-500/20">
-                입금 확인 후 관리자가 구독을 {SUBSCRIPTION_DAYS}일간 활성화합니다.
-              </p>
-            </div>
+            <p className="text-xs text-zinc-500 text-center">
+              카드 결제가 어려우면 관리자에게 문의해 직접 활성화받을 수 있습니다.
+            </p>
           </div>
         )}
       </section>

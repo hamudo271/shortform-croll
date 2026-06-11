@@ -17,6 +17,7 @@ import {
   Sun,
   Moon,
   X,
+  PlusCircle,
 } from '@/components/ui/Icon';
 
 type Badge = { label: string; tone: 'green' | 'yellow' | 'blue' | 'gray' };
@@ -300,6 +301,17 @@ export default function Sidebar({ user }: Props) {
           >
             <Shield size={16} className="shrink-0" />
             {showLabels && <span>관리자</span>}
+          </Link>
+        )}
+
+        {user && !user.hasActiveSubscription && user.role !== 'ADMIN' && (
+          <Link
+            href="/account/subscribe"
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors ${!showLabels ? 'justify-center' : ''}`}
+            title="구독하기"
+          >
+            <PlusCircle size={16} className="shrink-0" />
+            {showLabels && <span>구독하기</span>}
           </Link>
         )}
 
