@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/prisma';
-import { TRIAL_DAYS } from '@/lib/auth';
 
 /**
  * 구글 / 네이버 소셜 로그인.
@@ -187,17 +186,7 @@ export async function upsertOAuthUser(profile: OAuthProfile): Promise<string> {
         passwordHash: null,
       },
     });
-    // 이메일 가입과 동일하게 신규 소셜 가입자에게도 무료체험 구독 부여
-    // (없으면 /dashboard 게이트에서 /account?expired=1 로 바운스됨)
-    await prisma.subscription.create({
-      data: {
-        userId: user.id,
-        endAt: new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000),
-        status: 'ACTIVE',
-        amount: 0,
-        memo: `${TRIAL_DAYS}일 무료 체험 (${profile.provider} 가입)`,
-      },
-    });
+    // 가입만으로는 구독을 부여하지 않는다(결제해야 접근). 무료체험 자동활성화 제거.
   }
 
   await prisma.oAuthAccount.create({
