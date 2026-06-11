@@ -11,6 +11,8 @@ export default function SocialLoginButtons({ label = '간편 로그인' }: { lab
         <span className="h-px flex-1 bg-zinc-700" />
       </div>
 
+      {/* API 라우트(서버 OAuth 리다이렉트)이므로 next/link 가 아닌 전체 페이지 이동이 맞음 */}
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <a
         href="/api/auth/google"
         className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-xl bg-white hover:bg-zinc-100 text-zinc-800 text-sm font-semibold border border-zinc-300 transition-colors"
@@ -24,6 +26,7 @@ export default function SocialLoginButtons({ label = '간편 로그인' }: { lab
         Google로 계속하기
       </a>
 
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <a
         href="/api/auth/naver"
         className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-xl bg-[#03C75A] hover:bg-[#02b350] text-white text-sm font-semibold transition-colors"

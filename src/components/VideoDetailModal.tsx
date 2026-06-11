@@ -65,6 +65,8 @@ export default function VideoDetailModal({ video, onClose }: VideoDetailModalPro
   }, [handleKeyDown]);
 
   useEffect(() => {
+    // 영상 변경 시 분석 데이터 페치(로딩 표시) — 의도된 setState
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAnalyzing(true);
     fetch(`/api/analyze?id=${video.id}`)
       .then(r => r.json())

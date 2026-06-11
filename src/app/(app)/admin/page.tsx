@@ -141,6 +141,8 @@ export default function AdminPage() {
             className="w-full h-11 pl-10 pr-3.5 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all"
           />
         </div>
+        {/* CSV 다운로드 API 라우트 — 전체 페이지 이동/다운로드가 맞음 */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/admin/users/export"
           className="inline-flex items-center justify-center h-11 px-4 text-sm font-semibold text-zinc-100 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-colors"

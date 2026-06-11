@@ -179,7 +179,7 @@ export async function GET() {
       remaining: allVideos.length - excludeCount,
       examples: excludeExamples,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Preview failed' }, { status: 500 });
   }
 }

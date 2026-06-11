@@ -109,14 +109,18 @@ export default function Sidebar({ user }: Props) {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // 마운트 후 localStorage 에서 초기 상태 복원(SSR 하이드레이션 안전). 의도된 setState.
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     setCollapsed(readInitialCollapsed());
     setTheme(readInitialTheme());
     setMounted(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   // 라우트 변경 시 모바일 드로어 자동 닫기
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
   }, [pathname]);
 

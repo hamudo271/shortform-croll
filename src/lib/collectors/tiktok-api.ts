@@ -22,6 +22,21 @@ export interface TikTokVideo {
 
 const TIKWM_API = 'https://www.tikwm.com/api';
 
+/** tikwm 검색/피드 응답의 원본 비디오 항목(필요 필드만, 전부 optional). */
+interface RawTikwmVideo {
+  video_id?: string | number;
+  id?: string | number;
+  title?: string;
+  origin_cover?: string;
+  cover?: string;
+  play_count?: number;
+  digg_count?: number;
+  comment_count?: number;
+  share_count?: number;
+  create_time?: number;
+  author?: { unique_id?: string; nickname?: string };
+}
+
 /**
  * TikTok 작성자 프로필 정보. bioLink.link / signature / 팔로워 수 등.
  * tikwm /api/user/info?unique_id=X
@@ -79,7 +94,7 @@ export async function fetchTikTokComments(videoUrl: string, count = 20): Promise
 }
 
 /** origin_cover가 더 안정적 (만료가 늦거나 없음), 없으면 cover 사용 */
-function getStableThumbnail(v: any): string {
+function getStableThumbnail(v: RawTikwmVideo): string {
   return v.origin_cover || v.cover || '';
 }
 
@@ -234,14 +249,14 @@ export async function searchTikTokVideos(
     const videos = data?.data?.videos || [];
 
     return videos
-      .filter((v: any) => {
+      .filter((v: RawTikwmVideo) => {
         const title = v.title || '';
         // 영어 텍스트 필수 (해외 아이디어템 풀)
         if (!/[a-zA-Z]{3,}/.test(title)) return false;
         // 상업적 콘텐츠만
         return isCommerceContent(title);
       })
-      .map((v: any) => ({
+      .map((v: RawTikwmVideo) => ({
         id: String(v.video_id || v.id),
         title: v.title || '',
         description: v.title || '',
@@ -285,12 +300,12 @@ export async function getTikTokTrending(
     const videos = data?.data || [];
 
     return videos
-      .filter((v: any) => {
+      .filter((v: RawTikwmVideo) => {
         const title = v.title || '';
         if (!/[a-zA-Z]{3,}/.test(title)) return false;
         return isCommerceContent(title);
       })
-      .map((v: any) => ({
+      .map((v: RawTikwmVideo) => ({
         id: String(v.video_id || v.id),
         title: v.title || '',
         description: v.title || '',

@@ -7,7 +7,7 @@ import {
   TRIAL_DAYS,
   getCurrentUser,
 } from '@/lib/auth';
-import { ArrowRight, Check, ChevronDown, PlusCircle } from '@/components/ui/Icon';
+import { Check, ChevronDown, PlusCircle } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: '요금제',

@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser, SUBSCRIPTION_PRICE_KRW, SUBSCRIPTION_DAYS } from '@/lib/auth';
 import PageHeader from '@/components/app/PageHeader';
-import { ArrowRight, PlusCircle } from '@/components/ui/Icon';
+import { PlusCircle } from '@/components/ui/Icon';
 
 function formatKRW(amount: number) {
   return amount.toLocaleString('ko-KR') + '원';
