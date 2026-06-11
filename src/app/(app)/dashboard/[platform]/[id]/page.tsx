@@ -74,6 +74,7 @@ export default async function ProductDetailPage({
               src={video.thumbnailUrl}
               alt={video.title}
               platform={video.platform}
+              videoUrl={video.videoUrl}
               fallbackIconSize={88}
               eager
             />

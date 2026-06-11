@@ -182,6 +182,7 @@ export default function RankedProductList({ platform }: Props) {
                     src={video.thumbnailUrl}
                     alt={video.title || ''}
                     platform={video.platform}
+                    videoUrl={video.videoUrl}
                     fallbackIconSize={22}
                     noShimmer
                   />

@@ -26,10 +26,44 @@ const PLATFORM_BG: Record<Platform, string> = {
   INSTAGRAM: 'bg-[radial-gradient(circle_at_25%_25%,rgba(217,70,239,0.45),transparent_60%),radial-gradient(circle_at_75%_75%,rgba(249,115,22,0.4),transparent_60%),linear-gradient(135deg,#1a0a1f_0%,#0a0a0a_100%)]',
 };
 
+/**
+ * 서버 바이트 프록시(/api/img)로 감쌀 CDN 호스트. TikTok/Instagram 서명 URL은
+ * 브라우저 직접 로드 시 핫링크 차단으로 403 → 프록시 경유로 우회한다.
+ */
+const PROXY_HOST_SUFFIXES = [
+  '.cdninstagram.com',
+  '.fbcdn.net',
+  '.tiktokcdn.com',
+  '.tiktokcdn-us.com',
+  '.tiktokcdn-eu.com',
+  '.tiktokcdn-in.com',
+  '.ibyteimg.com',
+  '.muscdn.com',
+  '.akamaized.net',
+];
+
+function toProxiedSrc(src: string, platform: Platform, videoUrl?: string): string {
+  if (!src || !/^https?:\/\//i.test(src)) return src; // 로컬/상대경로는 그대로
+  let host = '';
+  try {
+    host = new URL(src).host.toLowerCase();
+  } catch {
+    return src;
+  }
+  if (!PROXY_HOST_SUFFIXES.some((s) => host.endsWith(s))) return src;
+  let proxied = `/api/img?u=${encodeURIComponent(src)}`;
+  if (platform === 'TIKTOK' && videoUrl && videoUrl.includes('tiktok.com')) {
+    proxied += `&tt=${encodeURIComponent(videoUrl)}`;
+  }
+  return proxied;
+}
+
 interface Props {
   src: string;
   alt: string;
   platform: Platform;
+  /** 틱톡 영상 URL — 썸네일 만료 시 tikwm 재해결용(선택). */
+  videoUrl?: string;
   /** Logo size when the image fails. Auto-tunes per use-case. */
   fallbackIconSize?: number;
   /** Disable shimmer (useful for tiny thumbnails). */
@@ -51,6 +85,7 @@ export default function SafeThumbnail({
   src,
   alt,
   platform,
+  videoUrl,
   fallbackIconSize = 56,
   noShimmer = false,
   eager = false,
@@ -58,6 +93,7 @@ export default function SafeThumbnail({
 }: Props) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(!src);
+  const effectiveSrc = toProxiedSrc(src, platform, videoUrl);
 
   const Logo = PLATFORM_LOGO[platform];
   const bg = PLATFORM_BG[platform];
@@ -104,10 +140,10 @@ export default function SafeThumbnail({
       )}
 
       {/* Image overlay — opacity 0 until loaded so it fades in */}
-      {!failed && src && (
+      {!failed && effectiveSrc && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={src}
+          src={effectiveSrc}
           alt={alt}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
           referrerPolicy="no-referrer"

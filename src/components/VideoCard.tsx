@@ -34,7 +34,7 @@ interface VideoCardProps {
 }
 
 const VideoCard = memo(function VideoCard({
-  platform, title, thumbnailUrl, authorName, viewCount, likeCount,
+  platform, title, thumbnailUrl, videoUrl, authorName, viewCount, likeCount,
   viralScore, category, targetAge, onClick,
 }: VideoCardProps) {
   return (
@@ -45,7 +45,7 @@ const VideoCard = memo(function VideoCard({
       style={{ contain: 'layout paint' }}
     >
       <div className="relative aspect-[9/16] bg-zinc-800 overflow-hidden">
-        <SafeThumbnail src={thumbnailUrl} alt={title || 'Video thumbnail'} platform={platform} fallbackIconSize={48} />
+        <SafeThumbnail src={thumbnailUrl} alt={title || 'Video thumbnail'} platform={platform} videoUrl={videoUrl} fallbackIconSize={48} />
 
         <div className={`absolute top-2 left-2 z-10 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${PLATFORM_BADGE[platform]}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${PLATFORM_DOT[platform]}`} />
