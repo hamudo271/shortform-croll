@@ -4,15 +4,26 @@ import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, User } from '@/components/ui/Icon';
+import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
+
+const OAUTH_ERRORS: Record<string, string> = {
+  oauth_state: '보안 검증에 실패했습니다. 다시 시도해주세요.',
+  oauth_canceled: '소셜 로그인이 취소되었습니다.',
+  oauth_failed: '소셜 로그인에 실패했습니다.',
+  unknown_provider: '지원하지 않는 로그인 방식입니다.',
+};
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/dashboard';
+  const oauthErrorKey = searchParams.get('error');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(
+    oauthErrorKey ? OAUTH_ERRORS[oauthErrorKey] || '로그인 중 오류가 발생했습니다.' : '',
+  );
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,6 +81,8 @@ function LoginForm() {
       >
         {loading ? '로그인 중...' : (<>로그인 <ArrowRight size={14} /></>)}
       </button>
+
+      <SocialLoginButtons />
 
       <p className="text-center text-sm text-zinc-400 pt-2">
         계정이 없으신가요?{' '}

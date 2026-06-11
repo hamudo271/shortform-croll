@@ -30,6 +30,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 소셜 로그인 전용 계정(비밀번호 없음)은 비번 로그인 차단
+    if (!user.passwordHash) {
+      return NextResponse.json(
+        { error: '이 계정은 소셜 로그인으로 가입되었습니다. 구글/네이버로 로그인해주세요.' },
+        { status: 401 }
+      );
+    }
+
     const valid = await comparePassword(password, user.passwordHash);
     if (!valid) {
       return NextResponse.json(

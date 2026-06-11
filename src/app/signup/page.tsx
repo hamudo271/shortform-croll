@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, PlusCircle } from '@/components/ui/Icon';
+import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
@@ -161,6 +162,8 @@ export default function SignupPage() {
             >
               {loading ? '가입 중...' : (<>가입하기 <ArrowRight size={14} /></>)}
             </button>
+
+            <SocialLoginButtons label="간편 가입" />
 
             <p className="text-center text-sm text-zinc-400 pt-2">
               이미 계정이 있으신가요?{' '}

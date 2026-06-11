@@ -95,7 +95,7 @@ enum Category {
 model User {
   id             String         @id @default(cuid())
   email          String         @unique
-  passwordHash   String
+  passwordHash   String?                       // 소셜 로그인 전용 계정은 비밀번호 없음
   name           String?
   role           Role           @default(USER)
 
@@ -121,8 +121,26 @@ model User {
   comments       CommunityComment[]
   postLikes      PostLike[]
   payments       Payment[]
+  oauthAccounts  OAuthAccount[]
 
   @@index([email])
+}
+
+// ===== 소셜 로그인 (구글 / 네이버) =====
+
+model OAuthAccount {
+  id         String   @id @default(cuid())
+  provider   String   // "google" | "naver"
+  providerId String   // 공급자 측 고유 ID (google sub, naver id)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email      String?
+  name       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([provider, providerId])
+  @@index([userId])
 }
 
 // ===== 결제 (토스페이먼츠) =====
