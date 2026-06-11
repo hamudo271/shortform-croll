@@ -16,6 +16,12 @@ function SuccessInner() {
     if (once.current) return;
     once.current = true;
 
+    // 나이스페이: 승인·활성화가 returnUrl(서버)에서 이미 끝나고 ?status=ok 로 옴 → 바로 성공 표시
+    if (params.get('status') === 'ok') {
+      setState('success');
+      return;
+    }
+
     const paymentKey = params.get('paymentKey');
     const orderId = params.get('orderId');
     const amount = params.get('amount');

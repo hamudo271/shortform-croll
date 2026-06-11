@@ -1,36 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { Prisma } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
+import { activateSubscription } from '@/lib/subscription';
 
 /**
- * 나이스페이 웹훅 수신 엔드포인트.
+ * 나이스페이 웹훅 수신.
  *
- * 나이스페이 콘솔은 웹훅 등록 시 이 URL로 검증 요청을 보내 HTTP 200 을 기대한다.
- * 따라서 GET/POST 모두 200 으로 응답한다.
+ * 용도: 가상계좌 입금완료처럼 returnUrl 흐름 밖에서 발생하는 결제완료를 서버가 따로 통보받아
+ * 구독을 자동 활성화한다(누락 방지). 카드 결제는 returnUrl 에서 이미 승인·활성화됨.
  *
- * ⚠️ 보안: 웹훅 수신만으로는 절대 구독을 활성화하지 않는다. 실제 결제 처리는
- * 본 통합(승인 API + 금액 검증 + 멱등) 구현 시 이 핸들러에 추가한다. 그 전까지는
- * 단순 200 ack 로 두어, 위조 웹훅이 권한을 얻는 일이 없도록 한다.
+ * 보안: 주문(orderId)은 선등록된 PENDING 건이어야 하고 금액이 서버 기대값과 일치해야 활성화한다.
+ * orderId 는 추측 불가한 랜덤값. (서명 검증은 NICEPAY 웹훅 스펙 확정 후 강화 예정)
+ *
+ * 응답: 나이스페이는 HTTP 200 수신 시 정상 처리로 간주하므로 항상 200("OK") 반환.
  */
+
+const SUCCESS_STATUS = new Set(['paid', 'done', 'deposit', 'vbankdeposit']);
+
+function pick(obj: Record<string, unknown>, keys: string[]): string {
+  for (const k of keys) {
+    const v = obj[k];
+    if (v !== undefined && v !== null && String(v) !== '') return String(v);
+  }
+  return '';
+}
 
 export async function GET() {
   return new NextResponse('OK', { status: 200 });
 }
 
 export async function POST(req: NextRequest) {
-  // 본문은 form-encoded 또는 JSON 으로 올 수 있음 — 일단 안전하게 읽어 로깅만.
   try {
     const ct = req.headers.get('content-type') || '';
-    let payload: unknown = null;
+    let body: Record<string, unknown> = {};
     if (ct.includes('application/json')) {
-      payload = await req.json().catch(() => null);
+      body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
     } else {
-      const text = await req.text().catch(() => '');
-      payload = text;
+      const form = await req.formData().catch(() => null);
+      if (form) for (const [k, v] of form.entries()) body[k] = typeof v === 'string' ? v : '';
     }
-    console.log('[nicepay webhook] received:', payload);
+
+    const orderId = pick(body, ['orderId', 'OrderId', 'moid', 'Moid']);
+    const tid = pick(body, ['tid', 'TID', 'Tid']);
+    const amount = Number(pick(body, ['amount', 'Amount', 'goodsAmt']) || '0');
+    const statusRaw = pick(body, ['status', 'Status', 'resultCode', 'ResultCode']).toLowerCase();
+    const success = SUCCESS_STATUS.has(statusRaw) || statusRaw === '0000';
+
+    console.log('[nicepay webhook]', { orderId, tid, amount, statusRaw });
+
+    if (orderId && success) {
+      const order = await prisma.payment.findUnique({ where: { orderId } });
+      if (order && order.status !== 'PAID' && amount === order.amount) {
+        await prisma.payment.update({
+          where: { orderId },
+          data: { status: 'PAID', paymentKey: tid || order.paymentKey, raw: body as Prisma.InputJsonValue },
+        });
+        await activateSubscription(order.userId, { amount: order.amount, memo: `나이스페이(웹훅) ${orderId}` });
+      }
+    }
   } catch (e) {
-    console.error('[nicepay webhook] parse error:', e);
+    console.error('[nicepay webhook] error:', e);
   }
 
-  // 나이스페이는 200 을 받아야 정상 처리로 간주
+  // 나이스페이는 200 을 받아야 재전송하지 않음
   return new NextResponse('OK', { status: 200 });
 }
