@@ -29,7 +29,21 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: '잘못된 요청입니다' }, { status: 400 });
   }
 
+  const MAX_IMAGE_LEN = 3_500_000; // ~2MB 파일의 base64 상한
   const data: Record<string, string | null> = {};
+
+  // 프로필 사진(선택): data URI 또는 URL. 빈 값이면 제거(null).
+  if ('profileImage' in body) {
+    const img = typeof body.profileImage === 'string' ? body.profileImage.trim() : '';
+    if (img === '') {
+      data.profileImage = null;
+    } else if (img.length > MAX_IMAGE_LEN || !/^data:image\/|^https?:\/\//.test(img)) {
+      return NextResponse.json({ error: '프로필 사진은 2MB 이하 이미지만 가능합니다' }, { status: 400 });
+    } else {
+      data.profileImage = img;
+    }
+  }
+
   try {
     if ('name' in body) data.name = normalizeName(body.name);
     if ('phone' in body) data.phone = normalizePhone(body.phone);
@@ -55,7 +69,7 @@ export async function PATCH(request: NextRequest) {
     data,
     select: {
       id: true, email: true, name: true,
-      phone: true, companyName: true, businessNumber: true,
+      phone: true, companyName: true, businessNumber: true, profileImage: true,
     },
   });
 
