@@ -1,7 +1,9 @@
 import PageHeader from '@/components/app/PageHeader';
 import VideoListPage from '@/components/app/VideoListPage';
+import { requireAdminPage } from '@/lib/page-guards';
 
-export default function DashboardMainPage() {
+export default async function DashboardMainPage() {
+  await requireAdminPage();
   return (
     <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-10">
       <PageHeader

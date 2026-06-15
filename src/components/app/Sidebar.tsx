@@ -28,6 +28,7 @@ interface NavItem {
   icon?: React.ComponentType<{ size?: number; className?: string }>;
   badge?: Badge;
   exact?: boolean;
+  adminOnly?: boolean; // 원본 영상 수집 데이터 — 관리자만
 }
 
 interface NavGroup {
@@ -42,29 +43,27 @@ const NAV: NavGroup[] = [
     badge: { label: '핵심', tone: 'green' },
     items: [
       { href: '/dashboard/products', label: '상품 목록 DB', icon: Package, badge: { label: 'NEW', tone: 'green' } },
-      { href: '/dashboard/tiktok', label: '틱톡 인기 상품', icon: TrendingUp },
-      { href: '/dashboard/instagram', label: '인스타 릴스', icon: TrendingUp, badge: { label: 'NEW', tone: 'green' } },
+      { href: '/dashboard/tiktok', label: '틱톡 인기 상품', icon: TrendingUp, adminOnly: true },
+      { href: '/dashboard/instagram', label: '인스타 릴스', icon: TrendingUp, adminOnly: true },
     ],
   },
   {
     label: '추가 채널',
     items: [
-      { href: '/dashboard', label: '전체 대시보드', icon: TrendingUp, exact: true },
+      { href: '/dashboard', label: '전체 대시보드', icon: TrendingUp, exact: true, adminOnly: true },
     ],
   },
   {
     label: '탐색',
-    badge: { label: '구독 필요', tone: 'gray' },
     items: [
-      { href: '/dashboard/categories', label: '카테고리별', icon: Layers },
-      { href: '/dashboard/search', label: '키워드 검색', icon: Search },
+      { href: '/dashboard/categories', label: '카테고리별', icon: Layers, adminOnly: true },
+      { href: '/dashboard/search', label: '키워드 검색', icon: Search, adminOnly: true },
     ],
   },
   {
     label: '분석',
-    badge: { label: '구독 필요', tone: 'gray' },
     items: [
-      { href: '/dashboard/top', label: 'Top 바이럴', icon: Eye },
+      { href: '/dashboard/top', label: 'Top 바이럴', icon: Eye, adminOnly: true },
     ],
   },
   {
@@ -137,6 +136,12 @@ export default function Sidebar({ user }: Props) {
 
   // 라벨 표시 여부: 모바일 드로어가 열렸거나 데스크톱에서 collapsed가 아닐 때
   const showLabels = mobileOpen || !collapsed;
+
+  // 원본 영상 수집 메뉴는 관리자만 — 비관리자에겐 숨김(빈 그룹 제거)
+  const isAdmin = user?.role === 'ADMIN';
+  const navGroups = NAV
+    .map((group) => ({ ...group, items: group.items.filter((it) => isAdmin || !it.adminOnly) }))
+    .filter((group) => group.items.length > 0);
 
   const toggleCollapsed = () => {
     const next = !collapsed;
@@ -232,7 +237,7 @@ export default function Sidebar({ user }: Props) {
 
       {/* Nav groups */}
       <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-6">
-        {NAV.map((group) => (
+        {navGroups.map((group) => (
           <div key={group.label}>
             {showLabels && (
               <div className="flex items-center gap-2 px-3 mb-2">

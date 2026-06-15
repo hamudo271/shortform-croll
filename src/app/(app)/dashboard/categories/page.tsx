@@ -1,5 +1,6 @@
 import PageHeader from '@/components/app/PageHeader';
 import Link from 'next/link';
+import { requireAdminPage } from '@/lib/page-guards';
 import {
   ChevronRight,
   Lipstick,
@@ -21,7 +22,8 @@ const CATEGORIES = [
   { key: 'KIDS', label: '키즈/육아', Icon: Baby },
 ];
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  await requireAdminPage();
   return (
     <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-10">
       <PageHeader

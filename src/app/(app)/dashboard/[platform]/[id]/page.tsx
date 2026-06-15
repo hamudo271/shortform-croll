@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/Icon';
 import SafeThumbnail from '@/components/ui/SafeThumbnail';
 import { Platform } from '@prisma/client';
+import { requireAdminPage } from '@/lib/page-guards';
 
 const PLATFORM_FROM_PARAM: Record<string, Platform> = {
   youtube: 'YOUTUBE',
@@ -33,6 +34,7 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ platform: string; id: string }>;
 }) {
+  await requireAdminPage();
   const { platform: platformParam, id } = await params;
   const platform = PLATFORM_FROM_PARAM[platformParam];
   if (!platform) notFound();

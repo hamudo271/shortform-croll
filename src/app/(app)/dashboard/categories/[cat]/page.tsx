@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/components/app/PageHeader';
 import VideoListPage from '@/components/app/VideoListPage';
 import { Category } from '@prisma/client';
+import { requireAdminPage } from '@/lib/page-guards';
 
 const CAT_LABELS: Record<string, string> = {
   beauty: '뷰티',
@@ -14,6 +15,7 @@ const CAT_LABELS: Record<string, string> = {
 };
 
 export default async function CategoryDetailPage({ params }: { params: Promise<{ cat: string }> }) {
+  await requireAdminPage();
   const { cat } = await params;
   const label = CAT_LABELS[cat];
   if (!label) notFound();
