@@ -93,7 +93,7 @@ export default function AdminProductsPage() {
 
   return (
     <div className="max-w-[960px] mx-auto px-6 sm:px-10 py-10">
-      <PageHeader title="상품 관리" accent="관리자" description="상품 목록 DB에 직접 상품을 추가/삭제합니다. 추가한 상품은 기존 큐레이션 상품과 함께 노출됩니다.">
+      <PageHeader title="상품 관리" accent="관리자" description="상품 목록 DB에 직접 상품을 추가/수정/삭제합니다. 추가한 상품은 기존 큐레이션 상품과 함께 노출됩니다. (이미지·상품명·원본 링크 수정 가능)">
         <Link href="/admin" className="text-sm text-zinc-400 hover:text-zinc-100">← 관리자</Link>
       </PageHeader>
 
@@ -158,20 +158,7 @@ export default function AdminProductsPage() {
             <div className="rounded-2xl border border-dashed border-zinc-700 py-10 text-center text-sm text-zinc-500">아직 추가한 상품이 없습니다.</div>
           ) : (
             products.map((p) => (
-              <div key={p.id} className="flex gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
-                <div className="w-16 h-16 rounded-lg border border-zinc-800 bg-white overflow-hidden shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.image} alt={p.name} className="w-full h-full object-contain" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <h4 className="text-sm font-semibold text-zinc-50 truncate">{p.name}</h4>
-                    <button onClick={() => remove(p.id)} className="text-xs text-rose-500 hover:text-rose-400 shrink-0">삭제</button>
-                  </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">{p.category} · Score {p.score} · Trend {p.trend} · Profit {p.profit}</div>
-                  <p className="text-xs text-zinc-400 mt-1 line-clamp-2">{p.description}</p>
-                </div>
-              </div>
+              <ProductRow key={p.id} product={p} onChanged={load} onRemove={() => remove(p.id)} />
             ))
           )}
         </div>
@@ -188,6 +175,110 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
       <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide">{label}</span>
       {children}
     </label>
+  );
+}
+
+function ProductRow({
+  product,
+  onChanged,
+  onRemove,
+}: {
+  product: CuratedProduct;
+  onChanged: () => Promise<void> | void;
+  onRemove: () => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState(product.name);
+  const [source, setSource] = useState(product.source ?? '');
+  const [image, setImage] = useState(product.image);
+  const [saving, setSaving] = useState(false);
+  const [rowErr, setRowErr] = useState('');
+
+  const startEdit = () => {
+    setName(product.name);
+    setSource(product.source ?? '');
+    setImage(product.image);
+    setRowErr('');
+    setEditing(true);
+  };
+
+  const onFile = (file?: File) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) return setRowErr('이미지 파일만 가능합니다.');
+    if (file.size > 2_000_000) return setRowErr('이미지는 2MB 이하만 가능합니다.');
+    const reader = new FileReader();
+    reader.onload = () => setImage(String(reader.result || ''));
+    reader.readAsDataURL(file);
+  };
+
+  const save = async () => {
+    if (!name.trim()) return setRowErr('상품명을 입력하세요.');
+    setSaving(true);
+    setRowErr('');
+    try {
+      const r = await fetch(`/api/admin/products/${product.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim(), source: source.trim(), image }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || '수정 실패');
+      setEditing(false);
+      await onChanged();
+    } catch (e) {
+      setRowErr(e instanceof Error ? e.message : '수정 실패');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (editing) {
+    return (
+      <div className="rounded-xl border border-blue-500/40 bg-zinc-900/60 p-3 space-y-2.5">
+        <div className="flex items-center gap-3">
+          <div className="w-16 h-16 rounded-lg border border-zinc-800 bg-white overflow-hidden shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image} alt="" className="w-full h-full object-contain" />
+          </div>
+          <label className="text-xs text-blue-500 cursor-pointer hover:text-blue-400">
+            이미지 변경 (2MB↓)
+            <input type="file" accept="image/*" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
+          </label>
+        </div>
+        <input value={name} onChange={(e) => setName(e.target.value)} maxLength={120} className={inputCls} placeholder="상품명" />
+        <input value={source} onChange={(e) => setSource(e.target.value)} maxLength={500} className={inputCls} placeholder="원본 링크 (비우면 없음)" />
+        {rowErr && <p className="text-xs text-rose-500">{rowErr}</p>}
+        <div className="flex gap-2">
+          <button onClick={save} disabled={saving} className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold transition-colors">
+            {saving ? '저장 중…' : '저장'}
+          </button>
+          <button onClick={() => setEditing(false)} disabled={saving} className="h-9 px-4 rounded-lg border border-zinc-700 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold transition-colors">
+            취소
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+      <div className="w-16 h-16 rounded-lg border border-zinc-800 bg-white overflow-hidden shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-zinc-50 truncate">{product.name}</h4>
+          <div className="flex items-center gap-2 shrink-0">
+            <button onClick={startEdit} className="text-xs text-blue-500 hover:text-blue-400">수정</button>
+            <button onClick={onRemove} className="text-xs text-rose-500 hover:text-rose-400">삭제</button>
+          </div>
+        </div>
+        <div className="text-[11px] text-zinc-500 mt-0.5">{product.category} · Score {product.score} · Trend {product.trend} · Profit {product.profit}</div>
+        <p className="text-xs text-zinc-400 mt-1 line-clamp-2">{product.description}</p>
+        {product.source && <p className="text-[11px] text-blue-500/80 mt-1 truncate">{product.source}</p>}
+      </div>
+    </div>
   );
 }
 
