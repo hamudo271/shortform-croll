@@ -18,8 +18,13 @@ export default function ProductListPage() {
       .catch(() => {});
   }, []);
 
-  // 관리자 추가 상품 + 정적 큐레이션 상품 (정적 목록은 그대로 유지)
-  const allProducts = useMemo(() => [...curated, ...SCOPE_PRODUCTS], [curated]);
+  // 관리자(DB) 상품 + 정적 상품. 단, 정적 20개는 DB로 이관(seed)되었으므로
+  // 같은 이름이 DB에 있으면 정적본을 제외해 중복을 막는다(=DB본이 우선, 수정 가능).
+  // 아직 시드 전이면 정적본이 그대로 노출되어 화면이 바뀌지 않는다.
+  const allProducts = useMemo(() => {
+    const curatedNames = new Set(curated.map((c) => c.name));
+    return [...curated, ...SCOPE_PRODUCTS.filter((s) => !curatedNames.has(s.name))];
+  }, [curated]);
 
   const items = useMemo(() => {
     const q = query.trim().toLowerCase();
