@@ -6,24 +6,22 @@ import Link from 'next/link';
 import { ArrowRight, User } from '@/components/ui/Icon';
 import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
 
-const OAUTH_ERRORS: Record<string, string> = {
-  oauth_state: '보안 검증에 실패했습니다. 다시 시도해주세요.',
-  oauth_canceled: '소셜 로그인이 취소되었습니다.',
-  oauth_failed: '소셜 로그인에 실패했습니다.',
-  unknown_provider: '지원하지 않는 로그인 방식입니다.',
-};
-
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/dashboard';
+  // /login?error=... 는 소셜 로그인 콜백 실패에서만 옴 → 친절 안내 모달로 표시
   const oauthErrorKey = searchParams.get('error');
+  const [oauthNotice, setOauthNotice] = useState<string | null>(oauthErrorKey);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(
-    oauthErrorKey ? OAUTH_ERRORS[oauthErrorKey] || '로그인 중 오류가 발생했습니다.' : '',
-  );
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const isCanceled = oauthNotice === 'oauth_canceled';
+  const noticeMsg = isCanceled
+    ? '소셜 로그인이 취소되었습니다. 다시 시도하시거나 이메일로 로그인해 주세요.'
+    : '현재 구글·네이버 간편 로그인을 설정하는 중입니다.\n이메일로 가입/로그인해 주세요. 불편을 드려 죄송합니다.';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +45,43 @@ function LoginForm() {
   const inputCls = 'w-full h-11 px-4 text-sm bg-background border border-zinc-700 rounded-xl text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition-all';
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <>
+      {/* 소셜 로그인 콜백 실패 안내 모달 */}
+      {oauthNotice && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          onClick={() => setOauthNotice(null)}
+        >
+          <div
+            className="w-full max-w-sm bg-zinc-950 border border-zinc-700 rounded-2xl p-6 shadow-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-blue-500/15 text-blue-400 flex items-center justify-center text-2xl">
+              {isCanceled ? '↺' : 'ⓘ'}
+            </div>
+            <h3 className="text-center text-lg font-bold text-zinc-50">
+              {isCanceled ? '로그인 취소됨' : '소셜 로그인 안내'}
+            </h3>
+            <p className="mt-2 text-center text-sm text-zinc-400 leading-relaxed whitespace-pre-line">
+              {noticeMsg}
+            </p>
+            <button
+              onClick={() => setOauthNotice(null)}
+              className="mt-5 w-full h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors"
+            >
+              이메일로 계속하기
+            </button>
+            <Link
+              href="/signup"
+              className="mt-2 block text-center text-sm text-blue-700 dark:text-blue-400 hover:underline underline-offset-4 font-semibold"
+            >
+              이메일로 회원가입
+            </Link>
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-2">
         <label className="block text-sm font-semibold text-zinc-100" htmlFor="email">이메일</label>
         <input
@@ -90,7 +124,8 @@ function LoginForm() {
           회원가입
         </Link>
       </p>
-    </form>
+      </form>
+    </>
   );
 }
 
