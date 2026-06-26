@@ -6,6 +6,7 @@ interface Comment {
   id: string;
   authorId: string;
   name: string;
+  profileImage: string | null;
   message: string;
   parentId: string | null;
   createdAt: string;
@@ -52,7 +53,18 @@ function timeAgo(value: string): string {
   return `${Math.floor(h / 24)}일 전`;
 }
 
-function Avatar({ name, size = 36 }: { name: string; size?: number }) {
+function Avatar({ name, image, size = 36 }: { name: string; image?: string | null; size?: number }) {
+  if (image) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image}
+        alt={name}
+        className="rounded-full object-cover bg-zinc-800 shrink-0"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
   const letter = (name || 'M').slice(0, 1).toUpperCase();
   return (
     <span
@@ -395,7 +407,7 @@ function PostCard({
   return (
     <article className="rounded-lg border border-zinc-800 bg-zinc-900 p-3.5">
       <div className="flex gap-3">
-        <Avatar name={post.name} />
+        <Avatar name={post.name} image={post.profileImage} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 text-[11px] text-zinc-500">
             <strong className="text-zinc-200">{post.name}</strong>
@@ -480,7 +492,7 @@ function PostCard({
 function CommentRow({ c, onReply }: { c: Comment; onReply?: () => void }) {
   return (
     <div className="flex gap-2">
-      <Avatar name={c.name} size={26} />
+      <Avatar name={c.name} image={c.profileImage} size={26} />
       <div className="min-w-0">
         <div className="flex items-center gap-1.5 text-[11px] text-zinc-500">
           <strong className="text-zinc-300">{c.name}</strong>

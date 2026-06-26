@@ -33,7 +33,10 @@ export async function GET(request: NextRequest) {
       comments: {
         where: { status: 'PUBLISHED' },
         orderBy: { createdAt: 'asc' },
-        select: { id: true, authorId: true, authorName: true, message: true, parentId: true, createdAt: true },
+        select: {
+          id: true, authorId: true, authorName: true, message: true, parentId: true, createdAt: true,
+          author: { select: { profileImage: true } },
+        },
       },
       author: { select: { profileImage: true } },
       _count: { select: { likes: true } },
@@ -70,6 +73,7 @@ export async function GET(request: NextRequest) {
       id: c.id,
       authorId: c.authorId,
       name: c.authorName,
+      profileImage: c.author?.profileImage || null,
       message: c.message,
       parentId: c.parentId,
       createdAt: c.createdAt,
