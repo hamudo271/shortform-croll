@@ -53,13 +53,19 @@ export default function AdminPage() {
 
   const handleSubscribe = async (e: React.MouseEvent, userId: string) => {
     e.stopPropagation(); e.preventDefault();
-    const memo = window.prompt('메모 (입금자명, 비워도 됨)', '');
+    const daysStr = window.prompt('며칠 부여할까요? (예: 4, 7, 28, 365)', '28');
+    if (daysStr === null) return;
+    const days = parseInt(daysStr.trim(), 10);
+    if (!Number.isFinite(days) || days < 1 || days > 365) {
+      alert('1~365 사이의 숫자를 입력하세요'); return;
+    }
+    const memo = window.prompt('메모 (입금자명 등, 비워도 됨)', '');
     if (memo === null) return;
     setActingId(userId);
     try {
       const res = await fetch(`/api/admin/users/${userId}/subscribe`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ memo: memo || undefined }),
+        body: JSON.stringify({ days, memo: memo || undefined }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -246,7 +252,7 @@ export default function AdminPage() {
                             className="inline-flex items-center gap-1.5 px-3 h-9 text-xs font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 rounded-lg transition-all disabled:opacity-50 whitespace-nowrap shadow-sm"
                           >
                             <PlusCircle size={12} strokeWidth={2.25} />
-                            {isActive ? '+28일' : '활성화'}
+                            {isActive ? '기간 연장' : '구독 부여'}
                           </button>
                           {isActive && (
                             <button
