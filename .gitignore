@@ -42,3 +42,6 @@ next-env.d.ts
 
 /src/generated/prisma
 .claude/
+
+# understand-anything (local knowledge-graph tooling output)
+.understand-anything/
