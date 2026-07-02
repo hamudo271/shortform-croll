@@ -1,0 +1,9 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {"path": ".github/workflows/collect.yml", "language": "yaml", "sizeLines": 68, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    ".github/workflows/collect.yml": []
+  }
+}

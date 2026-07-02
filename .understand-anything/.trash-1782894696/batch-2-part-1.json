@@ -1,0 +1,954 @@
+{
+  "nodes": [
+    {
+      "type": "file",
+      "id": "file:src/app/(app)/admin/layout.tsx",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/admin/layout.tsx",
+      "summary": "관리자 영역(admin) 서버 레이아웃. getCurrentUser로 로그인/권한을 확인해 비로그인 또는 비관리자를 리다이렉트하는 admin route 가드 역할을 한다.",
+      "tags": [
+        "layout",
+        "middleware",
+        "auth-guard",
+        "admin",
+        "server-component"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Next.js App Router의 route group 레이아웃으로, 서버 컴포넌트에서 인증/인가 가드를 수행한다."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/(app)/admin/layout.tsx:AdminLayout",
+      "name": "AdminLayout",
+      "filePath": "src/app/(app)/admin/layout.tsx",
+      "lineRange": [
+        4,
+        9
+      ],
+      "summary": "children을 렌더링하기 전에 현재 사용자를 조회해 관리자가 아니면 리다이렉트하는 관리자 레이아웃 컴포넌트.",
+      "tags": [
+        "layout",
+        "auth-guard",
+        "admin"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/(app)/dashboard/layout.tsx",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/dashboard/layout.tsx",
+      "summary": "대시보드 route group의 서버 레이아웃. 로그인 여부를 확인해 비로그인 사용자를 로그인 페이지로 리다이렉트하는 인증 가드.",
+      "tags": [
+        "layout",
+        "middleware",
+        "auth-guard",
+        "server-component",
+        "dashboard"
+      ],
+      "complexity": "simple",
+      "languageNotes": "App Router route group 레이아웃에서 서버 사이드 인증 가드를 적용."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/(app)/dashboard/layout.tsx:DashboardLayout",
+      "name": "DashboardLayout",
+      "filePath": "src/app/(app)/dashboard/layout.tsx",
+      "lineRange": [
+        8,
+        19
+      ],
+      "summary": "현재 사용자를 조회해 비로그인 시 로그인 페이지로 리다이렉트하고, 인증된 경우 대시보드 children을 렌더링하는 레이아웃.",
+      "tags": [
+        "layout",
+        "auth-guard",
+        "dashboard"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/(app)/pricing/page.tsx",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/pricing/page.tsx",
+      "summary": "구독 요금제(가격) 안내 페이지. 구독 금액·할인율·무료 체험 일수 상수를 이용해 요금제, 포함 기능, 결제 단계, FAQ 섹션을 렌더링하는 서버 컴포넌트.",
+      "tags": [
+        "component",
+        "pricing",
+        "page",
+        "subscription",
+        "server-component"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "서버 컴포넌트에서 auth 상수(SUBSCRIPTION_PRICE_KRW 등)를 직접 사용해 정적 마케팅 UI를 구성."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/(app)/pricing/page.tsx:PricingPage",
+      "name": "PricingPage",
+      "filePath": "src/app/(app)/pricing/page.tsx",
+      "lineRange": [
+        38,
+        180
+      ],
+      "summary": "구독 가격, 포함 혜택, 4단계 결제 흐름, FAQ를 표시하는 요금제 페이지 컴포넌트. 로그인 상태에 따라 CTA를 분기한다.",
+      "tags": [
+        "component",
+        "pricing",
+        "subscription"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/account/profile/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/account/profile/route.ts",
+      "summary": "계정 프로필 수정 API route handler(PATCH). 로그인 사용자의 이름·연락처·회사명·사업자번호·프로필 이미지를 정규화 후 검증하고 User 테이블을 갱신하며 활동 로그를 남긴다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "account",
+        "validation",
+        "profile"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Next.js Route Handler에서 PATCH 메서드를 export하여 REST 엔드포인트를 구성."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/account/profile/route.ts:PATCH",
+      "name": "PATCH",
+      "filePath": "src/app/api/account/profile/route.ts",
+      "lineRange": [
+        19,
+        84
+      ],
+      "summary": "현재 사용자를 인증한 뒤 요청 본문의 프로필 필드를 정규화·검증하고 prisma.user.update로 저장, logActivity로 변경 이력을 기록하는 프로필 수정 핸들러.",
+      "tags": [
+        "api-handler",
+        "validation",
+        "profile",
+        "account"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/products/[id]/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/products/[id]/route.ts",
+      "summary": "관리자 상품 개별 관리 API route handler. requireAdmin 가드 후 큐레이션 상품(CuratedProduct)을 DELETE로 삭제하거나 PATCH로 이름·설명·카테고리·이미지·할인율 등을 검증해 수정한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "products",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/products/[id]/route.ts:DELETE",
+      "name": "DELETE",
+      "filePath": "src/app/api/admin/products/[id]/route.ts",
+      "lineRange": [
+        11,
+        20
+      ],
+      "summary": "관리자 권한을 확인한 뒤 지정된 id의 큐레이션 상품을 prisma.curatedProduct.deleteMany로 삭제하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "products",
+        "delete"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/products/[id]/route.ts:PATCH",
+      "name": "PATCH",
+      "filePath": "src/app/api/admin/products/[id]/route.ts",
+      "lineRange": [
+        23,
+        78
+      ],
+      "summary": "관리자 권한 확인 후 큐레이션 상품의 필드를 정규화·검증하고 clampPct로 할인율을 보정해 prisma.curatedProduct.update로 저장하는 상품 수정 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "products",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/products/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/products/route.ts",
+      "summary": "관리자 큐레이션 상품 목록/생성 API route handler. GET은 requireAdmin 후 전체 상품을 조회하고, POST는 입력을 검증·정규화해 새 큐레이션 상품을 생성한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "products",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/products/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/admin/products/route.ts",
+      "lineRange": [
+        11,
+        16
+      ],
+      "summary": "관리자 권한 확인 후 prisma.curatedProduct.findMany로 전체 큐레이션 상품 목록을 반환하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "products",
+        "read"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/products/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/admin/products/route.ts",
+      "lineRange": [
+        19,
+        60
+      ],
+      "summary": "관리자 권한 확인 후 상품 입력을 검증·정규화하고 clampPct로 할인율을 보정해 prisma.curatedProduct.create로 새 상품을 생성하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "products",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/cancel/route.ts",
+      "summary": "관리자 구독 취소 API route handler(POST). requireAdmin 후 해당 사용자의 활성 구독을 찾아 상태를 취소(canceled)로 갱신한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "subscription"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/[id]/cancel/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/admin/users/[id]/cancel/route.ts",
+      "lineRange": [
+        9,
+        34
+      ],
+      "summary": "관리자 권한 확인 후 대상 사용자의 활성 구독을 조회해 prisma.subscription.update로 취소 처리하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "subscription",
+        "cancel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/profile/route.ts",
+      "summary": "관리자용 사용자 프로필 수정 API route handler(PATCH). requireAdmin 후 대상 사용자의 이름·연락처·회사명·사업자번호를 정규화·검증하고 User 테이블을 갱신한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "profile",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "name": "PATCH",
+      "filePath": "src/app/api/admin/users/[id]/profile/route.ts",
+      "lineRange": [
+        16,
+        68
+      ],
+      "summary": "관리자 권한 확인 후 대상 사용자 프로필 필드를 정규화·검증하고 prisma.user.update로 저장하는 관리자 프로필 수정 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "profile",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/[id]/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/route.ts",
+      "summary": "관리자용 개별 사용자 상세 조회 API route handler(GET). requireAdmin 후 사용자 정보와 관련 구독 등을 prisma.user.findUnique로 조회해 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "users"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/[id]/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/admin/users/[id]/route.ts",
+      "lineRange": [
+        9,
+        53
+      ],
+      "summary": "관리자 권한 확인 후 지정된 id의 사용자 상세 정보를 조회해 반환하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "users",
+        "read"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/subscribe/route.ts",
+      "summary": "관리자 구독 부여/연장 API route handler(POST). requireAdmin 후 지정 일수만큼 구독을 새로 생성하거나 기존 활성 구독의 종료일을 연장하며 메모를 기록한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "subscription"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "기존 구독 유무에 따라 create/update로 분기하고 endAt.getTime()으로 임의 일수 연장을 계산."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/[id]/subscribe/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/admin/users/[id]/subscribe/route.ts",
+      "lineRange": [
+        13,
+        76
+      ],
+      "summary": "관리자 권한 확인 후 대상 사용자에게 임의 일수의 구독을 생성하거나 기존 구독을 연장하는 관리자 구독 부여 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "subscription",
+        "grant"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/export/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/export/route.ts",
+      "summary": "관리자 사용자 목록 CSV 내보내기 API route handler(GET). requireAdmin 후 전체 사용자와 구독 정보를 조회해 CSV 이스케이프 처리한 다운로드 파일로 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "export",
+        "serialization"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "csvEscape/fmt 헬퍼로 값 이스케이프·날짜 포맷을 처리해 CSV 문자열을 생성."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/export/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/admin/users/export/route.ts",
+      "lineRange": [
+        25,
+        83
+      ],
+      "summary": "관리자 권한 확인 후 사용자·구독 데이터를 조회하고 csvEscape/fmt로 직렬화해 CSV 파일 응답을 반환하는 내보내기 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "export",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/export/route.ts:csvEscape",
+      "name": "csvEscape",
+      "filePath": "src/app/api/admin/users/export/route.ts",
+      "lineRange": [
+        11,
+        18
+      ],
+      "summary": "CSV 특수문자(쉼표·따옴표·줄바꿈)를 포함한 값을 안전하게 이스케이프해 반환하는 헬퍼.",
+      "tags": [
+        "utility",
+        "serialization",
+        "csv"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/app/(app)/admin/layout.tsx",
+      "target": "function:src/app/(app)/admin/layout.tsx:AdminLayout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/(app)/admin/layout.tsx",
+      "target": "function:src/app/(app)/admin/layout.tsx:AdminLayout",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/(app)/admin/layout.tsx:AdminLayout",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/(app)/admin/layout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/layout.tsx",
+      "target": "function:src/app/(app)/dashboard/layout.tsx:DashboardLayout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/layout.tsx",
+      "target": "function:src/app/(app)/dashboard/layout.tsx:DashboardLayout",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/(app)/dashboard/layout.tsx:DashboardLayout",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/layout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "function:src/app/(app)/pricing/page.tsx:PricingPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "function:src/app/(app)/pricing/page.tsx:PricingPage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/(app)/pricing/page.tsx:PricingPage",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "function:src/app/api/account/profile/route.ts:PATCH",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "function:src/app/api/account/profile/route.ts:PATCH",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeName",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizePhone",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeCompanyName",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeBusinessNumber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/account/profile/route.ts:PATCH",
+      "target": "function:src/lib/activity-log.ts:logActivity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "function:src/app/api/admin/products/[id]/route.ts:DELETE",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "function:src/app/api/admin/products/[id]/route.ts:DELETE",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "function:src/app/api/admin/products/[id]/route.ts:PATCH",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "function:src/app/api/admin/products/[id]/route.ts:PATCH",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/products/[id]/route.ts:DELETE",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/products/[id]/route.ts:PATCH",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "function:src/app/api/admin/products/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "function:src/app/api/admin/products/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "function:src/app/api/admin/products/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "function:src/app/api/admin/products/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/products/route.ts:GET",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/products/route.ts:POST",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/products/route.ts:POST",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/cancel/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/cancel/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/cancel/route.ts:POST",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeName",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizePhone",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeCompanyName",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/profile/route.ts:PATCH",
+      "target": "function:src/lib/profile.ts:normalizeBusinessNumber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/route.ts:GET",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/subscribe/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "function:src/app/api/admin/users/[id]/subscribe/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/[id]/subscribe/route.ts:POST",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "function:src/app/api/admin/users/export/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "function:src/app/api/admin/users/export/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "function:src/app/api/admin/users/export/route.ts:csvEscape",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:src/app/api/admin/users/export/route.ts:GET",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/export/route.ts:GET",
+      "target": "function:src/app/api/admin/users/export/route.ts:csvEscape",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

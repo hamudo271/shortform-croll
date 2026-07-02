@@ -1,0 +1,971 @@
+{
+  "nodes": [
+    {
+      "type": "file",
+      "id": "file:src/app/api/admin/users/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/route.ts",
+      "summary": "관리자 사용자 목록 API route handler(GET). requireAdmin 후 사용자와 최근 활동 로그를 집계하고 사업자번호를 마스킹해 관리자용 사용자 목록을 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "admin",
+        "users"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "activityLog.groupBy로 사용자별 마지막 활동을 집계하고 maskBusinessNumber로 민감정보를 가림."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/admin/users/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/admin/users/route.ts",
+      "lineRange": [
+        6,
+        69
+      ],
+      "summary": "관리자 권한 확인 후 사용자 목록과 마지막 활동 시각을 조합하고 사업자번호를 마스킹해 반환하는 관리자 사용자 목록 핸들러.",
+      "tags": [
+        "api-handler",
+        "admin",
+        "users",
+        "read"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/[provider]/callback/route.ts",
+      "summary": "소셜 로그인 OAuth 콜백 API route handler(GET). state·code 검증 후 OAuth 프로필을 가져와 사용자를 upsert하고 세션 토큰을 발급해 쿠키로 설정하며, 실패 시 안내용 리다이렉트를 수행한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "auth",
+        "oauth",
+        "social-login"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "OAuth state 쿠키를 검증하고 실패 시 /login?error= 로 리다이렉트하는 콜백 처리 패턴."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/auth/[provider]/callback/route.ts",
+      "lineRange": [
+        16,
+        62
+      ],
+      "summary": "OAuth provider 콜백에서 state를 검증하고 fetchOAuthProfile·upsertOAuthUser로 사용자를 만들거나 갱신한 뒤 세션 토큰을 발급하는 소셜 로그인 콜백 핸들러.",
+      "tags": [
+        "api-handler",
+        "auth",
+        "oauth",
+        "social-login"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/auth/[provider]/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/[provider]/route.ts",
+      "summary": "소셜 로그인 시작 API route handler(GET). provider 유효성 확인 후 CSRF용 state를 생성해 쿠키에 저장하고 authorizeUrl로 OAuth 인증 페이지로 리다이렉트한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "auth",
+        "oauth",
+        "social-login"
+      ],
+      "complexity": "simple",
+      "languageNotes": "crypto.randomBytes로 state를 생성해 OAuth 인가 시작 흐름을 구성."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/auth/[provider]/route.ts",
+      "lineRange": [
+        10,
+        35
+      ],
+      "summary": "provider를 검증하고 state를 생성·쿠키 저장한 뒤 authorizeUrl로 OAuth 인증 페이지로 리다이렉트하는 소셜 로그인 시작 핸들러.",
+      "tags": [
+        "api-handler",
+        "auth",
+        "oauth",
+        "social-login"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/auth/login/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/login/route.ts",
+      "summary": "이메일/비밀번호 로그인 API route handler(POST). 사용자를 조회해 comparePassword로 검증하고 로그인 카운트·시각을 갱신한 뒤 세션 토큰을 발급해 쿠키로 설정한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "auth",
+        "login",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/auth/login/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/auth/login/route.ts",
+      "lineRange": [
+        10,
+        71
+      ],
+      "summary": "이메일로 사용자를 찾아 비밀번호를 검증하고 로그인 이력을 갱신·기록한 뒤 generateToken으로 세션 쿠키를 설정하는 로그인 핸들러.",
+      "tags": [
+        "api-handler",
+        "auth",
+        "login"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/auth/me/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/me/route.ts",
+      "summary": "현재 로그인 사용자 조회 API route handler(GET). getCurrentUser로 세션을 확인해 인증된 사용자 정보를 반환하거나 미인증 응답을 준다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "auth",
+        "session"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/auth/me/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/auth/me/route.ts",
+      "lineRange": [
+        4,
+        21
+      ],
+      "summary": "getCurrentUser로 현재 세션 사용자를 조회해 존재하면 사용자 정보를, 없으면 미인증 응답을 반환하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "auth",
+        "session"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/auth/signup/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/signup/route.ts",
+      "summary": "회원가입 API route handler(POST). 이메일·비밀번호·프로필 입력을 검증·정규화하고 중복을 확인한 뒤 비밀번호를 해시해 User를 생성하고 세션 토큰을 발급한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "auth",
+        "signup",
+        "validation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "hashPassword로 비밀번호를 저장하고 ADMIN_EMAIL 일치 시 관리자 role을 부여하는 가입 흐름."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/auth/signup/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/auth/signup/route.ts",
+      "lineRange": [
+        18,
+        87
+      ],
+      "summary": "가입 입력을 검증·정규화하고 이메일 중복을 확인한 뒤 hashPassword로 비밀번호를 해시해 User를 생성하고 세션 쿠키를 설정하는 회원가입 핸들러.",
+      "tags": [
+        "api-handler",
+        "auth",
+        "signup",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/cleanup/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/cleanup/route.ts",
+      "summary": "수집 영상 정리 API route handler(POST/GET). 비상업/밈/일상 콘텐츠 필터(shouldExclude)를 적용해 부적합한 Video 레코드를 삭제하거나(POST) 삭제 대상 미리보기를 제공한다(GET).",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "cleanup",
+        "data-quality",
+        "filtering"
+      ],
+      "complexity": "complex",
+      "languageNotes": "정규식·키워드 패턴으로 상업 세일즈 콘텐츠만 남기고 나머지를 배제하는 품질 필터 로직."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/cleanup/route.ts:shouldExclude",
+      "name": "shouldExclude",
+      "filePath": "src/app/api/cleanup/route.ts",
+      "lineRange": [
+        83,
+        94
+      ],
+      "summary": "제목·작성자를 정규식과 키워드 패턴으로 검사해 상업/세일즈 콘텐츠가 아닌 영상을 배제할지 판단하는 필터 헬퍼.",
+      "tags": [
+        "utility",
+        "filtering",
+        "data-quality",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/cleanup/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/cleanup/route.ts",
+      "lineRange": [
+        96,
+        151
+      ],
+      "summary": "인증 헤더를 확인한 뒤 shouldExclude 필터에 걸린 Video 레코드를 prisma.video.deleteMany로 삭제하는 정리 실행 핸들러.",
+      "tags": [
+        "api-handler",
+        "cleanup",
+        "data-quality"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/cleanup/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/cleanup/route.ts",
+      "lineRange": [
+        153,
+        185
+      ],
+      "summary": "삭제하지 않고 shouldExclude 기준으로 배제 대상 영상 예시와 통계를 반환하는 정리 미리보기 핸들러.",
+      "tags": [
+        "api-handler",
+        "cleanup",
+        "data-quality",
+        "read"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/community/[postId]/comments/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/comments/route.ts",
+      "summary": "커뮤니티 댓글 작성 API route handler(POST). requireCommunityAccess로 접근 권한을 확인하고 게시글·부모 댓글 존재와 중복을 검증해 CommunityComment를 생성한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "community",
+        "comments",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/community/[postId]/comments/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/community/[postId]/comments/route.ts",
+      "lineRange": [
+        8,
+        66
+      ],
+      "summary": "커뮤니티 접근 권한을 확인하고 게시글·부모 댓글 유효성과 중복을 검증해 prisma.communityComment.create로 댓글을 생성하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "community",
+        "comments"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/community/[postId]/image/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/image/route.ts",
+      "summary": "커뮤니티 게시글 이미지 서빙 API route handler(GET). requireCommunityAccess 확인 후 게시글 이미지를 외부 URL은 리다이렉트, data URL은 디코딩해 바이너리 이미지 응답으로 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "community",
+        "image",
+        "serialization"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "data:image base64를 Buffer로 디코딩해 이미지 바이너리를 직접 응답하는 패턴."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/community/[postId]/image/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/community/[postId]/image/route.ts",
+      "lineRange": [
+        10,
+        48
+      ],
+      "summary": "커뮤니티 접근 권한 확인 후 게시글 이미지를 외부 URL 리다이렉트 또는 data URL 디코딩으로 서빙하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "community",
+        "image"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/community/[postId]/like/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/like/route.ts",
+      "summary": "커뮤니티 좋아요 토글 API route handler(POST). requireCommunityAccess 확인 후 게시글 존재를 검증하고 PostLike를 토글(삭제/생성)한 뒤 최신 좋아요 수를 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "community",
+        "like"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/community/[postId]/like/route.ts:POST",
+      "name": "POST",
+      "filePath": "src/app/api/community/[postId]/like/route.ts",
+      "lineRange": [
+        6,
+        39
+      ],
+      "summary": "커뮤니티 접근 권한 확인 후 게시글 좋아요를 토글하고 갱신된 좋아요 수를 반환하는 핸들러.",
+      "tags": [
+        "api-handler",
+        "community",
+        "like",
+        "toggle"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "type": "file",
+      "id": "file:src/app/api/community/level/route.ts",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/level/route.ts",
+      "summary": "커뮤니티 레벨 조회 API route handler(GET). requireCommunityAccess 확인 후 사용자의 게시글·댓글·좋아요 활동을 집계하고 levelFromActivity로 레벨/등급을 계산해 반환한다.",
+      "tags": [
+        "api-handler",
+        "route-handler",
+        "community",
+        "level",
+        "gamification"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Promise.all로 활동 지표를 병렬 조회하고 community 라이브러리의 레벨 계산 함수를 사용."
+    },
+    {
+      "type": "function",
+      "id": "function:src/app/api/community/level/route.ts:GET",
+      "name": "GET",
+      "filePath": "src/app/api/community/level/route.ts",
+      "lineRange": [
+        7,
+        36
+      ],
+      "summary": "커뮤니티 접근 권한 확인 후 사용자 활동을 집계하고 levelFromActivity로 레벨을 산출해 반환하는 레벨 조회 핸들러.",
+      "tags": [
+        "api-handler",
+        "community",
+        "level",
+        "gamification"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "function:src/app/api/admin/users/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "function:src/app/api/admin/users/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/route.ts:GET",
+      "target": "function:src/lib/admin.ts:requireAdmin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/admin/users/route.ts:GET",
+      "target": "function:src/lib/profile.ts:maskBusinessNumber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:baseUrlFromRequest",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:isOAuthProvider",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:fetchOAuthProfile",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:upsertOAuthUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/auth.ts:generateToken",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/auth.ts:getSessionCookieOptions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/callback/route.ts:GET",
+      "target": "function:src/lib/activity-log.ts:logActivity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/oauth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/route.ts",
+      "target": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/route.ts",
+      "target": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:isOAuthProvider",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:authorizeUrl",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/[provider]/route.ts:GET",
+      "target": "function:src/lib/oauth.ts:baseUrlFromRequest",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/route.ts",
+      "target": "file:src/lib/oauth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "function:src/app/api/auth/login/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "function:src/app/api/auth/login/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/login/route.ts:POST",
+      "target": "function:src/lib/auth.ts:comparePassword",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/login/route.ts:POST",
+      "target": "function:src/lib/auth.ts:generateToken",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/login/route.ts:POST",
+      "target": "function:src/lib/auth.ts:getSessionCookieOptions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/login/route.ts:POST",
+      "target": "function:src/lib/activity-log.ts:logActivity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/me/route.ts",
+      "target": "function:src/app/api/auth/me/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/auth/me/route.ts",
+      "target": "function:src/app/api/auth/me/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/me/route.ts:GET",
+      "target": "function:src/lib/auth.ts:getCurrentUser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/auth/me/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "function:src/app/api/auth/signup/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "function:src/app/api/auth/signup/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/auth.ts:hashPassword",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/auth.ts:generateToken",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/auth.ts:getSessionCookieOptions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/profile.ts:normalizePhone",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/profile.ts:normalizeBusinessNumber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/auth/signup/route.ts:POST",
+      "target": "function:src/lib/activity-log.ts:logActivity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "function:src/app/api/cleanup/route.ts:shouldExclude",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "function:src/app/api/cleanup/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "function:src/app/api/cleanup/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "function:src/app/api/cleanup/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "function:src/app/api/cleanup/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/cleanup/route.ts:POST",
+      "target": "function:src/app/api/cleanup/route.ts:shouldExclude",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/cleanup/route.ts:GET",
+      "target": "function:src/app/api/cleanup/route.ts:shouldExclude",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "function:src/app/api/community/[postId]/comments/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "function:src/app/api/community/[postId]/comments/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/community/[postId]/comments/route.ts:POST",
+      "target": "function:src/lib/auth.ts:requireCommunityAccess",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "function:src/app/api/community/[postId]/image/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "function:src/app/api/community/[postId]/image/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/community/[postId]/image/route.ts:GET",
+      "target": "function:src/lib/auth.ts:requireCommunityAccess",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "function:src/app/api/community/[postId]/like/route.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "function:src/app/api/community/[postId]/like/route.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/community/[postId]/like/route.ts:POST",
+      "target": "function:src/lib/auth.ts:requireCommunityAccess",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "function:src/app/api/community/level/route.ts:GET",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "function:src/app/api/community/level/route.ts:GET",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/community/level/route.ts:GET",
+      "target": "function:src/lib/auth.ts:requireCommunityAccess",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/api/community/level/route.ts:GET",
+      "target": "function:src/lib/community.ts:levelFromActivity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/community.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

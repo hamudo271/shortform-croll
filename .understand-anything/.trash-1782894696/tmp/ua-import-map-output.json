@@ -1,0 +1,429 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 132,
+    "filesWithImports": 84,
+    "totalEdges": 203
+  },
+  "importMap": {
+    ".github/workflows/collect.yml": [],
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    "DEPLOY.md": [],
+    "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md": [],
+    "eslint.config.mjs": [],
+    "next.config.ts": [],
+    "package.json": [],
+    "postcss.config.mjs": [],
+    "prisma/schema.prisma": [],
+    "railway.json": [],
+    "README.md": [],
+    "scripts/collect-ig-test.ts": [
+      "src/lib/classifier.ts",
+      "src/lib/collectors/instagram-api.ts",
+      "src/lib/collectors/tiktok-api.ts",
+      "src/lib/creators.ts",
+      "src/lib/exclude.ts",
+      "src/lib/prisma.ts",
+      "src/lib/vision.ts"
+    ],
+    "scripts/migrate-yt-thumbnails.mjs": [],
+    "scripts/seed-admin.mjs": [],
+    "src/app/(app)/account/page.tsx": [
+      "src/components/app/ProfileEditor.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/lib/auth.ts",
+      "src/lib/community.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/(app)/account/payment/fail/page.tsx": [],
+    "src/app/(app)/account/payment/success/page.tsx": [],
+    "src/app/(app)/account/subscribe/page.tsx": [],
+    "src/app/(app)/admin/layout.tsx": [
+      "src/lib/auth.ts"
+    ],
+    "src/app/(app)/admin/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/app/(app)/admin/products/page.tsx": [
+      "src/components/app/PageHeader.tsx"
+    ],
+    "src/app/(app)/admin/users/[id]/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/app/(app)/dashboard/[platform]/[id]/page.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/components/ui/SafeThumbnail.tsx",
+      "src/lib/page-guards.ts",
+      "src/lib/prisma.ts",
+      "src/lib/utils.ts"
+    ],
+    "src/app/(app)/dashboard/categories/[cat]/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/VideoListPage.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/categories/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/community/page.tsx": [
+      "src/components/app/CommunityPage.tsx",
+      "src/components/app/PageHeader.tsx"
+    ],
+    "src/app/(app)/dashboard/instagram/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/RankedProductList.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/layout.tsx": [
+      "src/lib/auth.ts"
+    ],
+    "src/app/(app)/dashboard/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/VideoListPage.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/products/page.tsx": [
+      "src/components/app/ProductListPage.tsx"
+    ],
+    "src/app/(app)/dashboard/search/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/VideoListPage.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/tiktok/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/RankedProductList.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/dashboard/top/page.tsx": [
+      "src/components/app/PageHeader.tsx",
+      "src/components/app/VideoListPage.tsx",
+      "src/lib/page-guards.ts"
+    ],
+    "src/app/(app)/layout.tsx": [
+      "src/components/app/Sidebar.tsx",
+      "src/lib/auth.ts"
+    ],
+    "src/app/(app)/page.tsx": [
+      "src/components/landing/FAQTeaser.tsx",
+      "src/components/landing/HeroLivePreview.tsx",
+      "src/components/landing/HeroStats.tsx",
+      "src/components/landing/HowItWorks.tsx",
+      "src/components/landing/PlatformShowcase.tsx",
+      "src/components/landing/PricingCallout.tsx",
+      "src/components/landing/ScenarioCards.tsx",
+      "src/components/landing/TopProductsPreview.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/lib/auth.ts"
+    ],
+    "src/app/(app)/pricing/page.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/lib/auth.ts"
+    ],
+    "src/app/api/account/profile/route.ts": [
+      "src/lib/activity-log.ts",
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/profile.ts"
+    ],
+    "src/app/api/admin/products/[id]/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/products/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/users/[id]/cancel/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/users/[id]/profile/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts",
+      "src/lib/profile.ts"
+    ],
+    "src/app/api/admin/users/[id]/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/users/[id]/subscribe/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/users/export/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/admin/users/route.ts": [
+      "src/lib/admin.ts",
+      "src/lib/prisma.ts",
+      "src/lib/profile.ts"
+    ],
+    "src/app/api/analyze/route.ts": [
+      "src/lib/ai-analysis.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/auth/[provider]/callback/route.ts": [
+      "src/lib/activity-log.ts",
+      "src/lib/auth.ts",
+      "src/lib/oauth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/auth/[provider]/route.ts": [
+      "src/lib/oauth.ts"
+    ],
+    "src/app/api/auth/login/route.ts": [
+      "src/lib/activity-log.ts",
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/auth/logout/route.ts": [],
+    "src/app/api/auth/me/route.ts": [
+      "src/lib/auth.ts"
+    ],
+    "src/app/api/auth/signup/route.ts": [
+      "src/lib/activity-log.ts",
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/profile.ts"
+    ],
+    "src/app/api/cleanup/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/collect/route.ts": [
+      "src/lib/classifier.ts",
+      "src/lib/collectors/instagram-api.ts",
+      "src/lib/collectors/instagram-public.ts",
+      "src/lib/collectors/tiktok-api.ts",
+      "src/lib/comments.ts",
+      "src/lib/creators.ts",
+      "src/lib/exclude.ts",
+      "src/lib/prisma.ts",
+      "src/lib/vision.ts"
+    ],
+    "src/app/api/community/[postId]/comments/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/community/[postId]/image/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/community/[postId]/like/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/community/level/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/community.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/community/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/community.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/cron/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/curated-products/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/download/tiktok/route.ts": [],
+    "src/app/api/fix-thumbnails/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/img/route.ts": [
+      "src/lib/tikwm.ts"
+    ],
+    "src/app/api/payments/confirm/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts",
+      "src/lib/toss.ts"
+    ],
+    "src/app/api/payments/nicepay/prepare/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/nicepay.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/payments/nicepay/return/route.ts": [
+      "src/lib/nicepay.ts",
+      "src/lib/oauth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts"
+    ],
+    "src/app/api/payments/nicepay/webhook/route.ts": [
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts"
+    ],
+    "src/app/api/payments/prepare/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/toss.ts"
+    ],
+    "src/app/api/products/route.ts": [
+      "src/lib/comments.ts",
+      "src/lib/exclude.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/refresh-thumbnails/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/setup-db/route.ts": [],
+    "src/app/api/stats/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/test/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/thumbnail/tiktok/route.ts": [],
+    "src/app/api/trigger-collect/route.ts": [],
+    "src/app/api/videos/route.ts": [
+      "src/lib/exclude.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/globals.css": [],
+    "src/app/layout.tsx": [
+      "src/app/globals.css",
+      "src/lib/theme.ts"
+    ],
+    "src/app/login/page.tsx": [
+      "src/components/auth/SocialLoginButtons.tsx",
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/app/signup/page.tsx": [
+      "src/components/auth/SocialLoginButtons.tsx",
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/app/CommunityPage.tsx": [],
+    "src/components/app/PageHeader.tsx": [],
+    "src/components/app/ProductListPage.tsx": [
+      "src/lib/trendscope-products.ts"
+    ],
+    "src/components/app/ProfileEditor.tsx": [
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/app/RankedProductList.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/components/ui/SafeThumbnail.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/components/app/Sidebar.tsx": [
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/app/VideoListPage.tsx": [
+      "src/components/FilterBar.tsx",
+      "src/components/ui/Icon.tsx",
+      "src/components/VideoCard.tsx",
+      "src/components/VideoDetailModal.tsx"
+    ],
+    "src/components/auth/SocialLoginButtons.tsx": [],
+    "src/components/CategoryChart.tsx": [
+      "src/lib/utils.ts"
+    ],
+    "src/components/FilterBar.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/components/landing/FAQTeaser.tsx": [
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/landing/HeroLivePreview.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/components/ui/SafeThumbnail.tsx",
+      "src/lib/landing-data.ts",
+      "src/lib/utils.ts"
+    ],
+    "src/components/landing/HeroStats.tsx": [
+      "src/lib/landing-data.ts"
+    ],
+    "src/components/landing/HowItWorks.tsx": [
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/landing/PlatformShowcase.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/lib/landing-data.ts"
+    ],
+    "src/components/landing/PricingCallout.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/lib/auth.ts"
+    ],
+    "src/components/landing/ScenarioCards.tsx": [],
+    "src/components/landing/TopProductsPreview.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/lib/landing-data.ts",
+      "src/lib/utils.ts"
+    ],
+    "src/components/ui/Icon.tsx": [],
+    "src/components/ui/SafeThumbnail.tsx": [
+      "src/components/ui/Icon.tsx"
+    ],
+    "src/components/VideoCard.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/components/ui/SafeThumbnail.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/components/VideoDetailModal.tsx": [
+      "src/components/ui/Icon.tsx",
+      "src/components/ui/SafeThumbnail.tsx",
+      "src/lib/utils.ts"
+    ],
+    "src/lib/activity-log.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/admin.ts": [
+      "src/lib/auth.ts"
+    ],
+    "src/lib/ai-analysis.ts": [],
+    "src/lib/auth.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/classifier.ts": [],
+    "src/lib/collectors/instagram-api.ts": [],
+    "src/lib/collectors/instagram-public.ts": [],
+    "src/lib/collectors/tiktok-api.ts": [],
+    "src/lib/collectors/trendCollector.ts": [],
+    "src/lib/comments.ts": [],
+    "src/lib/community.ts": [],
+    "src/lib/creators.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/exclude.ts": [],
+    "src/lib/landing-data.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/nicepay.ts": [],
+    "src/lib/oauth.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/page-guards.ts": [
+      "src/lib/auth.ts"
+    ],
+    "src/lib/prisma.ts": [],
+    "src/lib/profile.ts": [],
+    "src/lib/subscription.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/theme.ts": [],
+    "src/lib/tikwm.ts": [],
+    "src/lib/toss.ts": [],
+    "src/lib/trendscope-products.ts": [],
+    "src/lib/utils.ts": [],
+    "src/lib/vision.ts": [],
+    "src/middleware.ts": [],
+    "tsconfig.json": []
+  }
+}

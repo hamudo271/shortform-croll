@@ -1,0 +1,9 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {"path": "src/middleware.ts", "language": "typescript", "sizeLines": 48, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/middleware.ts": []
+  }
+}

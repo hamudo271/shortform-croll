@@ -1,21 +1,16 @@
 'use client';
 
 import { memo } from 'react';
-import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES } from '@/lib/utils';
+import { formatCount, PLATFORM_NAMES, CATEGORY_NAMES, PLATFORM_BADGE } from '@/lib/utils';
 import { Platform, Category } from '@prisma/client';
 import { Eye, Heart, TrendingUp } from '@/components/ui/Icon';
 import SafeThumbnail from '@/components/ui/SafeThumbnail';
 
+// 작은 색점은 상세 모달(teal-400)과 값이 달라 공용화하지 않고 카드 로컬로 유지.
 const PLATFORM_DOT: Record<Platform, string> = {
   YOUTUBE: 'bg-red-500',
   TIKTOK: 'bg-teal-500',
   INSTAGRAM: 'bg-fuchsia-500',
-};
-
-const PLATFORM_BADGE: Record<Platform, string> = {
-  YOUTUBE: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/30',
-  TIKTOK: 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30',
-  INSTAGRAM: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:border-fuchsia-500/30',
 };
 
 interface VideoCardProps {

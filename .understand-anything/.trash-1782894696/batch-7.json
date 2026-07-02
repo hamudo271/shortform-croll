@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/collect.yml",
+      "type": "pipeline",
+      "name": "collect.yml",
+      "filePath": ".github/workflows/collect.yml",
+      "summary": "하루 4회(KST 06/12/18/00시, cron) 및 수동(workflow_dispatch)으로 실행되는 GitHub Actions 워크플로우로, APP_URL/COLLECT_API_KEY secret을 검증한 뒤 앱의 POST /api/collect 엔드포인트를 Bearer 토큰으로 호출해 숏폼 데이터 자동 수집을 트리거한다. 실패 시 HTTP 상태·curl exit code 기반으로 에러를 표시하고 알림 스텝을 실행한다.",
+      "tags": ["ci-cd", "cron", "data-pipeline", "automation", "infrastructure"],
+      "complexity": "moderate",
+      "languageNotes": "cron 4개로 KST 정각 스케줄을 UTC로 환산해 지정하고, curl --max-time 600 및 http_code 파싱으로 장시간 수집 작업(150~250s)을 안전하게 폴링하는 GitHub Actions 패턴."
+    }
+  ],
+  "edges": []
+}

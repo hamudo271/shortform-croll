@@ -1,0 +1,2969 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 22,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/app/api/community/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 141,
+      "nonEmptyLines": 124,
+      "functions": [
+        {
+          "name": "cleanText",
+          "startLine": 10,
+          "endLine": 12,
+          "params": [
+            "v",
+            "max"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 19,
+          "endLine": 94,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "POST",
+          "startLine": 97,
+          "endLine": 141,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 97,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "cleanText",
+          "callee": "String(v ?? '').trim().slice",
+          "lineNumber": 11
+        },
+        {
+          "caller": "cleanText",
+          "callee": "String(v ?? '').trim",
+          "lineNumber": 11
+        },
+        {
+          "caller": "cleanText",
+          "callee": "String",
+          "lineNumber": 11
+        },
+        {
+          "caller": "GET",
+          "callee": "requireCommunityAccess",
+          "lineNumber": 20
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 21
+        },
+        {
+          "caller": "GET",
+          "callee": "request.nextUrl.searchParams.get",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GET",
+          "callee": "request.nextUrl.searchParams.get",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.communityPost.findMany",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GET",
+          "callee": "rows.slice",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GET",
+          "callee": "(\n      await prisma.postLike.findMany({\n        where: { userId: me.id, postId: { in: pageRows.map((p) => p.id) } },\n        select: { postId: true },\n      })\n    ).map",
+          "lineNumber": 52
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.postLike.findMany",
+          "lineNumber": 53
+        },
+        {
+          "caller": "GET",
+          "callee": "pageRows.map",
+          "lineNumber": 54
+        },
+        {
+          "caller": "GET",
+          "callee": "pageRows.map",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GET",
+          "callee": "likedSet.has",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GET",
+          "callee": "p.comments.map",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GET",
+          "callee": "mapped.sort",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GET",
+          "callee": "new Date(b.createdAt).getTime",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GET",
+          "callee": "new Date(a.createdAt).getTime",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GET",
+          "callee": "mapped.sort",
+          "lineNumber": 86
+        },
+        {
+          "caller": "GET",
+          "callee": "hotScore",
+          "lineNumber": 88
+        },
+        {
+          "caller": "GET",
+          "callee": "hotScore",
+          "lineNumber": 89
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 93
+        },
+        {
+          "caller": "POST",
+          "callee": "requireCommunityAccess",
+          "lineNumber": 98
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 99
+        },
+        {
+          "caller": "POST",
+          "callee": "request.json",
+          "lineNumber": 104
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 106
+        },
+        {
+          "caller": "POST",
+          "callee": "cleanText",
+          "lineNumber": 109
+        },
+        {
+          "caller": "POST",
+          "callee": "cleanText",
+          "lineNumber": 110
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 112
+        },
+        {
+          "caller": "POST",
+          "callee": "/^data:image\\/|^https?:\\/\\//.test",
+          "lineNumber": 116
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 117
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.communityPost.findFirst",
+          "lineNumber": 122
+        },
+        {
+          "caller": "POST",
+          "callee": "Date.now",
+          "lineNumber": 123
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 127
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.communityPost.create",
+          "lineNumber": 130
+        },
+        {
+          "caller": "POST",
+          "callee": "me.email.split",
+          "lineNumber": 133
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 140
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/cron/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 99,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 13,
+          "endLine": 111,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "request.nextUrl.searchParams.get",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GET",
+          "callee": "thirtyDaysAgo.setDate",
+          "lineNumber": 31
+        },
+        {
+          "caller": "GET",
+          "callee": "thirtyDaysAgo.getDate",
+          "lineNumber": 31
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.deleteMany",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GET",
+          "callee": "allVideos\n      .filter(v => /[가-힣]/.test(v.title) || /[가-힣]/.test(v.description || ''))\n      .map",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GET",
+          "callee": "allVideos\n      .filter",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GET",
+          "callee": "/[가-힣]/.test",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GET",
+          "callee": "/[가-힣]/.test",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.deleteMany",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GET",
+          "callee": "fetch",
+          "lineNumber": 58
+        },
+        {
+          "caller": "GET",
+          "callee": "collectRes.json",
+          "lineNumber": 69
+        },
+        {
+          "caller": "GET",
+          "callee": "results.errors.push",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GET",
+          "callee": "results.errors.push",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GET",
+          "callee": "fetch",
+          "lineNumber": 82
+        },
+        {
+          "caller": "GET",
+          "callee": "thumbRes.json",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GET",
+          "callee": "results.errors.push",
+          "lineNumber": 93
+        },
+        {
+          "caller": "GET",
+          "callee": "results.errors.push",
+          "lineNumber": 96
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 96
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 99
+        },
+        {
+          "caller": "GET",
+          "callee": "new Date().toISOString",
+          "lineNumber": 102
+        },
+        {
+          "caller": "GET",
+          "callee": "console.error",
+          "lineNumber": 105
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 106
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/curated-products/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 9,
+          "endLine": 39,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "getCurrentUser",
+          "lineNumber": 10
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.curatedProduct.findMany",
+          "lineNumber": 16
+        },
+        {
+          "caller": "GET",
+          "callee": "items.map",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 36
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.set",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/fix-thumbnails/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 4,
+          "endLine": 48,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "request.headers.get",
+          "lineNumber": 5
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 9
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 14
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 20
+        },
+        {
+          "caller": "POST",
+          "callee": "brokenTikwm.map",
+          "lineNumber": 25
+        },
+        {
+          "caller": "POST",
+          "callee": "emptyThumb.map",
+          "lineNumber": 25
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.deleteMany",
+          "lineNumber": 29
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 34
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 42
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 43
+        },
+        {
+          "caller": "POST",
+          "callee": "String",
+          "lineNumber": 44
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/payments/confirm/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 83,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 17,
+          "endLine": 83,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "getCurrentUser",
+          "lineNumber": 18
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 19
+        },
+        {
+          "caller": "POST",
+          "callee": "request.json",
+          "lineNumber": 23
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 25
+        },
+        {
+          "caller": "POST",
+          "callee": "String",
+          "lineNumber": 28
+        },
+        {
+          "caller": "POST",
+          "callee": "String",
+          "lineNumber": 29
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 30
+        },
+        {
+          "caller": "POST",
+          "callee": "Number.isFinite",
+          "lineNumber": 31
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 32
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.findUnique",
+          "lineNumber": 35
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 37
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 42
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 47
+        },
+        {
+          "caller": "POST",
+          "callee": "confirmTossPayment",
+          "lineNumber": 50
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 53
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 57
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 62
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 66
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 69
+        },
+        {
+          "caller": "POST",
+          "callee": "activateSubscription",
+          "lineNumber": 80
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/payments/nicepay/prepare/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 13,
+          "endLine": 35,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "getCurrentUser",
+          "lineNumber": 14
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 15
+        },
+        {
+          "caller": "POST",
+          "callee": "isNicepayConfigured",
+          "lineNumber": 16
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 17
+        },
+        {
+          "caller": "POST",
+          "callee": "Date.now",
+          "lineNumber": 20
+        },
+        {
+          "caller": "POST",
+          "callee": "crypto.randomBytes(6).toString",
+          "lineNumber": 20
+        },
+        {
+          "caller": "POST",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 20
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.create",
+          "lineNumber": 23
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 27
+        },
+        {
+          "caller": "POST",
+          "callee": "nicepayClientKey",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/payments/nicepay/return/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 84,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 13,
+          "endLine": 84,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "baseUrlFromRequest",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ok",
+          "callee": "NextResponse.redirect",
+          "lineNumber": 15
+        },
+        {
+          "caller": "fail",
+          "callee": "NextResponse.redirect",
+          "lineNumber": 17
+        },
+        {
+          "caller": "fail",
+          "callee": "encodeURIComponent",
+          "lineNumber": 17
+        },
+        {
+          "caller": "POST",
+          "callee": "req.formData",
+          "lineNumber": 21
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 23
+        },
+        {
+          "caller": "get",
+          "callee": "String",
+          "lineNumber": 25
+        },
+        {
+          "caller": "get",
+          "callee": "form.get",
+          "lineNumber": 25
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 29
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 31
+        },
+        {
+          "caller": "POST",
+          "callee": "get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 34
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.findUnique",
+          "lineNumber": 36
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 37
+        },
+        {
+          "caller": "POST",
+          "callee": "ok",
+          "lineNumber": 40
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 44
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 45
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 49
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 50
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 51
+        },
+        {
+          "caller": "POST",
+          "callee": "verifyAuthSignature",
+          "lineNumber": 56
+        },
+        {
+          "caller": "POST",
+          "callee": "console.warn",
+          "lineNumber": 57
+        },
+        {
+          "caller": "POST",
+          "callee": "approveNicepay",
+          "lineNumber": 61
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 63
+        },
+        {
+          "caller": "POST",
+          "callee": "fail",
+          "lineNumber": 67
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 70
+        },
+        {
+          "caller": "POST",
+          "callee": "activateSubscription",
+          "lineNumber": 81
+        },
+        {
+          "caller": "POST",
+          "callee": "ok",
+          "lineNumber": 83
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/payments/nicepay/webhook/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "pick",
+          "startLine": 20,
+          "endLine": 26,
+          "params": [
+            "obj",
+            "keys"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 28,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "POST",
+          "startLine": 32,
+          "endLine": 67,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "pick",
+          "callee": "String",
+          "lineNumber": 23
+        },
+        {
+          "caller": "pick",
+          "callee": "String",
+          "lineNumber": 23
+        },
+        {
+          "caller": "POST",
+          "callee": "req.headers.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "POST",
+          "callee": "ct.includes",
+          "lineNumber": 36
+        },
+        {
+          "caller": "POST",
+          "callee": "req.json().catch",
+          "lineNumber": 37
+        },
+        {
+          "caller": "POST",
+          "callee": "req.json",
+          "lineNumber": 37
+        },
+        {
+          "caller": "POST",
+          "callee": "req.formData().catch",
+          "lineNumber": 39
+        },
+        {
+          "caller": "POST",
+          "callee": "req.formData",
+          "lineNumber": 39
+        },
+        {
+          "caller": "POST",
+          "callee": "form.entries",
+          "lineNumber": 40
+        },
+        {
+          "caller": "POST",
+          "callee": "pick",
+          "lineNumber": 43
+        },
+        {
+          "caller": "POST",
+          "callee": "pick",
+          "lineNumber": 44
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 45
+        },
+        {
+          "caller": "POST",
+          "callee": "pick",
+          "lineNumber": 45
+        },
+        {
+          "caller": "POST",
+          "callee": "pick(body, ['status', 'Status', 'resultCode', 'ResultCode']).toLowerCase",
+          "lineNumber": 46
+        },
+        {
+          "caller": "POST",
+          "callee": "pick",
+          "lineNumber": 46
+        },
+        {
+          "caller": "POST",
+          "callee": "SUCCESS_STATUS.has",
+          "lineNumber": 47
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 49
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.findUnique",
+          "lineNumber": 52
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.update",
+          "lineNumber": 54
+        },
+        {
+          "caller": "POST",
+          "callee": "activateSubscription",
+          "lineNumber": 58
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/payments/prepare/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 14,
+          "endLine": 40,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "getCurrentUser",
+          "lineNumber": 15
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 16
+        },
+        {
+          "caller": "POST",
+          "callee": "Date.now",
+          "lineNumber": 18
+        },
+        {
+          "caller": "POST",
+          "callee": "crypto.randomBytes(6).toString",
+          "lineNumber": 18
+        },
+        {
+          "caller": "POST",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 18
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.payment.create",
+          "lineNumber": 21
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 31
+        },
+        {
+          "caller": "POST",
+          "callee": "tossClientKey",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/refresh-thumbnails/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "fetchFreshCover",
+          "startLine": 19,
+          "endLine": 42,
+          "params": [
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "POST",
+          "startLine": 44,
+          "endLine": 80,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "maxDuration",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchFreshCover",
+          "callee": "fetch",
+          "lineNumber": 22
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "encodeURIComponent",
+          "lineNumber": 23
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "res.json",
+          "lineNumber": 27
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "data.msg.toLowerCase().includes",
+          "lineNumber": 32
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "data.msg.toLowerCase",
+          "lineNumber": 32
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "setTimeout",
+          "lineNumber": 33
+        },
+        {
+          "caller": "fetchFreshCover",
+          "callee": "setTimeout",
+          "lineNumber": 38
+        },
+        {
+          "caller": "POST",
+          "callee": "request.headers.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 48
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 51
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchFreshCover",
+          "lineNumber": 60
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.update",
+          "lineNumber": 62
+        },
+        {
+          "caller": "POST",
+          "callee": "setTimeout",
+          "lineNumber": 71
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 74
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/stats/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 66,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 6,
+          "endLine": 71,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "dynamic",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "GET",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "prisma.video.count",
+          "lineNumber": 8
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.groupBy",
+          "lineNumber": 9
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.groupBy",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findFirst",
+          "lineNumber": 17
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 21
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GET",
+          "callee": "topVideos.map",
+          "lineNumber": 56
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 58
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.set",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GET",
+          "callee": "console.error",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 67
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/test/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 20,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 4,
+          "endLine": 22,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "prisma.video.count",
+          "lineNumber": 7
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 9
+        },
+        {
+          "caller": "GET",
+          "callee": "new Date().toISOString",
+          "lineNumber": 12
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 17
+        },
+        {
+          "caller": "GET",
+          "callee": "new Date().toISOString",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/activity-log.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 48,
+      "functions": [
+        {
+          "name": "extractIp",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "extractUa",
+          "startLine": 33,
+          "endLine": 37,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "logActivity",
+          "startLine": 39,
+          "endLine": 53,
+          "params": [
+            "opts"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "logActivity",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "extractIp",
+          "callee": "request.headers.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "extractIp",
+          "callee": "xff.split(',')[0]?.trim",
+          "lineNumber": 29
+        },
+        {
+          "caller": "extractIp",
+          "callee": "xff.split",
+          "lineNumber": 29
+        },
+        {
+          "caller": "extractIp",
+          "callee": "request.headers.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "extractUa",
+          "callee": "request.headers.get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "extractUa",
+          "callee": "ua.slice",
+          "lineNumber": 36
+        },
+        {
+          "caller": "logActivity",
+          "callee": "prisma.activityLog.create",
+          "lineNumber": 41
+        },
+        {
+          "caller": "logActivity",
+          "callee": "extractIp",
+          "lineNumber": 46
+        },
+        {
+          "caller": "logActivity",
+          "callee": "extractUa",
+          "lineNumber": 47
+        },
+        {
+          "caller": "logActivity",
+          "callee": "console.error",
+          "lineNumber": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/admin.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "requireAdmin",
+          "startLine": 8,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "requireAdmin",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "requireAdmin",
+          "callee": "getCurrentUser",
+          "lineNumber": 9
+        },
+        {
+          "caller": "requireAdmin",
+          "callee": "NextResponse.json",
+          "lineNumber": 11
+        },
+        {
+          "caller": "requireAdmin",
+          "callee": "NextResponse.json",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/auth.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 181,
+      "nonEmptyLines": 158,
+      "functions": [
+        {
+          "name": "getSecret",
+          "startLine": 11,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "generateToken",
+          "startLine": 18,
+          "endLine": 24,
+          "params": [
+            "userId"
+          ]
+        },
+        {
+          "name": "parseAndVerifyToken",
+          "startLine": 35,
+          "endLine": 60,
+          "params": [
+            "token"
+          ]
+        },
+        {
+          "name": "verifyToken",
+          "startLine": 63,
+          "endLine": 65,
+          "params": [
+            "token"
+          ]
+        },
+        {
+          "name": "hashPassword",
+          "startLine": 67,
+          "endLine": 69,
+          "params": [
+            "plain"
+          ]
+        },
+        {
+          "name": "comparePassword",
+          "startLine": 71,
+          "endLine": 73,
+          "params": [
+            "plain",
+            "hash"
+          ]
+        },
+        {
+          "name": "getCurrentUser",
+          "startLine": 89,
+          "endLine": 122,
+          "params": []
+        },
+        {
+          "name": "getSession",
+          "startLine": 128,
+          "endLine": 148,
+          "params": []
+        },
+        {
+          "name": "requireCommunityAccess",
+          "startLine": 158,
+          "endLine": 165,
+          "params": []
+        },
+        {
+          "name": "getSessionCookieOptions",
+          "startLine": 167,
+          "endLine": 176,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "generateToken",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "parseAndVerifyToken",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "verifyToken",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "hashPassword",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "comparePassword",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "getCurrentUser",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "getSession",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "requireCommunityAccess",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "getSessionCookieOptions",
+          "line": 167,
+          "isDefault": false
+        },
+        {
+          "name": "SUBSCRIPTION_DAYS",
+          "line": 178,
+          "isDefault": false
+        },
+        {
+          "name": "SUBSCRIPTION_PRICE_KRW",
+          "line": 179,
+          "isDefault": false
+        },
+        {
+          "name": "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "TRIAL_DAYS",
+          "line": 181,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "generateToken",
+          "callee": "Date.now",
+          "lineNumber": 19
+        },
+        {
+          "caller": "generateToken",
+          "callee": "crypto.createHmac",
+          "lineNumber": 20
+        },
+        {
+          "caller": "generateToken",
+          "callee": "getSecret",
+          "lineNumber": 20
+        },
+        {
+          "caller": "generateToken",
+          "callee": "hmac.update",
+          "lineNumber": 21
+        },
+        {
+          "caller": "generateToken",
+          "callee": "hmac.digest",
+          "lineNumber": 22
+        },
+        {
+          "caller": "generateToken",
+          "callee": "Buffer.from(`${payload}:${signature}`).toString",
+          "lineNumber": 23
+        },
+        {
+          "caller": "generateToken",
+          "callee": "Buffer.from",
+          "lineNumber": 23
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "Buffer.from(token, 'base64').toString",
+          "lineNumber": 37
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "Buffer.from",
+          "lineNumber": 37
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "decoded.split",
+          "lineNumber": 38
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "parts.pop",
+          "lineNumber": 41
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "parts.join",
+          "lineNumber": 42
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "crypto.createHmac",
+          "lineNumber": 44
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "getSecret",
+          "lineNumber": 44
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "hmac.update",
+          "lineNumber": 45
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "hmac.digest",
+          "lineNumber": 46
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "Buffer.from",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "Buffer.from",
+          "lineNumber": 49
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "crypto.timingSafeEqual",
+          "lineNumber": 51
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "payload.split",
+          "lineNumber": 53
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "parseInt",
+          "lineNumber": 54
+        },
+        {
+          "caller": "parseAndVerifyToken",
+          "callee": "Number.isNaN",
+          "lineNumber": 55
+        },
+        {
+          "caller": "verifyToken",
+          "callee": "parseAndVerifyToken",
+          "lineNumber": 64
+        },
+        {
+          "caller": "hashPassword",
+          "callee": "bcrypt.hash",
+          "lineNumber": 68
+        },
+        {
+          "caller": "comparePassword",
+          "callee": "bcrypt.compare",
+          "lineNumber": 72
+        },
+        {
+          "caller": "getCurrentUser",
+          "callee": "cookies",
+          "lineNumber": 90
+        },
+        {
+          "caller": "getCurrentUser",
+          "callee": "cookieStore.get",
+          "lineNumber": 91
+        },
+        {
+          "caller": "getCurrentUser",
+          "callee": "parseAndVerifyToken",
+          "lineNumber": 94
+        },
+        {
+          "caller": "getCurrentUser",
+          "callee": "prisma.user.findUnique",
+          "lineNumber": 97
+        },
+        {
+          "caller": "getSession",
+          "callee": "getCurrentUser",
+          "lineNumber": 137
+        },
+        {
+          "caller": "requireCommunityAccess",
+          "callee": "getCurrentUser",
+          "lineNumber": 159
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 13,
+        "functionCount": 10,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/community.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "levelFromXp",
+          "startLine": 31,
+          "endLine": 45,
+          "params": [
+            "xp"
+          ]
+        },
+        {
+          "name": "xpFromActivity",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "a"
+          ]
+        },
+        {
+          "name": "levelFromActivity",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "a"
+          ]
+        },
+        {
+          "name": "hotScore",
+          "startLine": 63,
+          "endLine": 70,
+          "params": [
+            "input"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TIER_LABEL",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "levelFromXp",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "xpFromActivity",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "levelFromActivity",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "hotScore",
+          "line": 63,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "levelFromXp",
+          "callee": "[...TIERS].reverse().find",
+          "lineNumber": 32
+        },
+        {
+          "caller": "levelFromXp",
+          "callee": "[...TIERS].reverse",
+          "lineNumber": 32
+        },
+        {
+          "caller": "levelFromXp",
+          "callee": "TIERS.findIndex",
+          "lineNumber": 33
+        },
+        {
+          "caller": "levelFromXp",
+          "callee": "Math.min",
+          "lineNumber": 36
+        },
+        {
+          "caller": "levelFromXp",
+          "callee": "Math.round",
+          "lineNumber": 36
+        },
+        {
+          "caller": "levelFromActivity",
+          "callee": "levelFromXp",
+          "lineNumber": 59
+        },
+        {
+          "caller": "levelFromActivity",
+          "callee": "xpFromActivity",
+          "lineNumber": 59
+        },
+        {
+          "caller": "hotScore",
+          "callee": "Math.max",
+          "lineNumber": 68
+        },
+        {
+          "caller": "hotScore",
+          "callee": "Date.now",
+          "lineNumber": 68
+        },
+        {
+          "caller": "hotScore",
+          "callee": "new Date(input.createdAt).getTime",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/nicepay.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 114,
+      "nonEmptyLines": 107,
+      "functions": [
+        {
+          "name": "nicepayClientKey",
+          "startLine": 13,
+          "endLine": 15,
+          "params": []
+        },
+        {
+          "name": "nicepaySecretKey",
+          "startLine": 16,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "nicepayMode",
+          "startLine": 19,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "apiBase",
+          "startLine": 23,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "authHeader",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "isNicepayConfigured",
+          "startLine": 30,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "sha256hex",
+          "startLine": 34,
+          "endLine": 36,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "verifyAuthSignature",
+          "startLine": 42,
+          "endLine": 58,
+          "params": [
+            "input"
+          ]
+        },
+        {
+          "name": "approveNicepay",
+          "startLine": 74,
+          "endLine": 114,
+          "params": [
+            "tid",
+            "amount"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "nicepayClientKey",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "nicepayMode",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "isNicepayConfigured",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "verifyAuthSignature",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "approveNicepay",
+          "line": 74,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "apiBase",
+          "callee": "nicepayMode",
+          "lineNumber": 24
+        },
+        {
+          "caller": "authHeader",
+          "callee": "Buffer.from(`${nicepayClientKey()}:${nicepaySecretKey()}`).toString",
+          "lineNumber": 27
+        },
+        {
+          "caller": "authHeader",
+          "callee": "Buffer.from",
+          "lineNumber": 27
+        },
+        {
+          "caller": "authHeader",
+          "callee": "nicepayClientKey",
+          "lineNumber": 27
+        },
+        {
+          "caller": "authHeader",
+          "callee": "nicepaySecretKey",
+          "lineNumber": 27
+        },
+        {
+          "caller": "isNicepayConfigured",
+          "callee": "nicepayClientKey",
+          "lineNumber": 31
+        },
+        {
+          "caller": "isNicepayConfigured",
+          "callee": "nicepaySecretKey",
+          "lineNumber": 31
+        },
+        {
+          "caller": "sha256hex",
+          "callee": "crypto.createHash('sha256').update(s, 'utf8').digest",
+          "lineNumber": 35
+        },
+        {
+          "caller": "sha256hex",
+          "callee": "crypto.createHash('sha256').update",
+          "lineNumber": 35
+        },
+        {
+          "caller": "sha256hex",
+          "callee": "crypto.createHash",
+          "lineNumber": 35
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "sha256hex",
+          "lineNumber": 48
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "nicepayClientKey",
+          "lineNumber": 49
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "nicepaySecretKey",
+          "lineNumber": 49
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "Buffer.from",
+          "lineNumber": 52
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "Buffer.from",
+          "lineNumber": 53
+        },
+        {
+          "caller": "verifyAuthSignature",
+          "callee": "crypto.timingSafeEqual",
+          "lineNumber": 54
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "fetch",
+          "lineNumber": 76
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "apiBase",
+          "lineNumber": 76
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "encodeURIComponent",
+          "lineNumber": 76
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "authHeader",
+          "lineNumber": 80
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "JSON.stringify",
+          "lineNumber": 82
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "res.text",
+          "lineNumber": 84
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "JSON.parse",
+          "lineNumber": 87
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "String",
+          "lineNumber": 91
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "Number",
+          "lineNumber": 92
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "String",
+          "lineNumber": 93
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "String",
+          "lineNumber": 98
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "String",
+          "lineNumber": 107
+        },
+        {
+          "caller": "approveNicepay",
+          "callee": "String",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/oauth.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 203,
+      "nonEmptyLines": 183,
+      "functions": [
+        {
+          "name": "isOAuthProvider",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "v"
+          ]
+        },
+        {
+          "name": "env",
+          "startLine": 28,
+          "endLine": 32,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "credentials",
+          "startLine": 34,
+          "endLine": 39,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "baseUrlFromRequest",
+          "startLine": 46,
+          "endLine": 53,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "redirectUri",
+          "startLine": 55,
+          "endLine": 57,
+          "params": [
+            "provider",
+            "req"
+          ]
+        },
+        {
+          "name": "authorizeUrl",
+          "startLine": 60,
+          "endLine": 74,
+          "params": [
+            "provider",
+            "state",
+            "req"
+          ]
+        },
+        {
+          "name": "exchangeGoogle",
+          "startLine": 76,
+          "endLine": 104,
+          "params": [
+            "code",
+            "req"
+          ]
+        },
+        {
+          "name": "exchangeNaver",
+          "startLine": 106,
+          "endLine": 136,
+          "params": [
+            "code",
+            "state"
+          ]
+        },
+        {
+          "name": "fetchOAuthProfile",
+          "startLine": 138,
+          "endLine": 145,
+          "params": [
+            "provider",
+            "code",
+            "state",
+            "req"
+          ]
+        },
+        {
+          "name": "upsertOAuthUser",
+          "startLine": 151,
+          "endLine": 203,
+          "params": [
+            "profile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "isOAuthProvider",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "baseUrlFromRequest",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "redirectUri",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "authorizeUrl",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "fetchOAuthProfile",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "upsertOAuthUser",
+          "line": 151,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "credentials",
+          "callee": "env",
+          "lineNumber": 36
+        },
+        {
+          "caller": "credentials",
+          "callee": "env",
+          "lineNumber": 36
+        },
+        {
+          "caller": "credentials",
+          "callee": "env",
+          "lineNumber": 38
+        },
+        {
+          "caller": "credentials",
+          "callee": "env",
+          "lineNumber": 38
+        },
+        {
+          "caller": "baseUrlFromRequest",
+          "callee": "forced.replace",
+          "lineNumber": 48
+        },
+        {
+          "caller": "baseUrlFromRequest",
+          "callee": "h.get",
+          "lineNumber": 50
+        },
+        {
+          "caller": "baseUrlFromRequest",
+          "callee": "h.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "baseUrlFromRequest",
+          "callee": "h.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "redirectUri",
+          "callee": "baseUrlFromRequest",
+          "lineNumber": 56
+        },
+        {
+          "caller": "authorizeUrl",
+          "callee": "credentials",
+          "lineNumber": 61
+        },
+        {
+          "caller": "authorizeUrl",
+          "callee": "redirectUri",
+          "lineNumber": 65
+        },
+        {
+          "caller": "authorizeUrl",
+          "callee": "params.set",
+          "lineNumber": 69
+        },
+        {
+          "caller": "authorizeUrl",
+          "callee": "params.set",
+          "lineNumber": 70
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "credentials",
+          "lineNumber": 77
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "fetch",
+          "lineNumber": 78
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "redirectUri",
+          "lineNumber": 85
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "tokenRes.json",
+          "lineNumber": 89
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "fetch",
+          "lineNumber": 92
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "profRes.json",
+          "lineNumber": 95
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "String",
+          "lineNumber": 99
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "String(p.email || '').toLowerCase",
+          "lineNumber": 100
+        },
+        {
+          "caller": "exchangeGoogle",
+          "callee": "String",
+          "lineNumber": 100
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "credentials",
+          "lineNumber": 107
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "new URLSearchParams({\n    grant_type: 'authorization_code',\n    client_id: clientId,\n    client_secret: clientSecret,\n    code,\n    state,\n  }).toString",
+          "lineNumber": 109
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "fetch",
+          "lineNumber": 117
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "tokenRes.json",
+          "lineNumber": 118
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "fetch",
+          "lineNumber": 123
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "profRes.json",
+          "lineNumber": 126
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "String",
+          "lineNumber": 131
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "String(r.email || '').toLowerCase",
+          "lineNumber": 132
+        },
+        {
+          "caller": "exchangeNaver",
+          "callee": "String",
+          "lineNumber": 132
+        },
+        {
+          "caller": "fetchOAuthProfile",
+          "callee": "exchangeGoogle",
+          "lineNumber": 144
+        },
+        {
+          "caller": "fetchOAuthProfile",
+          "callee": "exchangeNaver",
+          "lineNumber": 144
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.oAuthAccount.findUnique",
+          "lineNumber": 155
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.user.update",
+          "lineNumber": 160
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.user.findUnique",
+          "lineNumber": 169
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.user.update",
+          "lineNumber": 173
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.user.create",
+          "lineNumber": 181
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "profile.email.split",
+          "lineNumber": 184
+        },
+        {
+          "caller": "upsertOAuthUser",
+          "callee": "prisma.oAuthAccount.create",
+          "lineNumber": 192
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 6,
+        "functionCount": 10,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/prisma.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 6,
+      "exports": [
+        {
+          "name": "prisma",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/profile.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 63,
+      "nonEmptyLines": 57,
+      "functions": [
+        {
+          "name": "normalizePhone",
+          "startLine": 14,
+          "endLine": 24,
+          "params": [
+            "input"
+          ]
+        },
+        {
+          "name": "normalizeBusinessNumber",
+          "startLine": 30,
+          "endLine": 39,
+          "params": [
+            "input"
+          ]
+        },
+        {
+          "name": "normalizeCompanyName",
+          "startLine": 41,
+          "endLine": 46,
+          "params": [
+            "input"
+          ]
+        },
+        {
+          "name": "normalizeName",
+          "startLine": 48,
+          "endLine": 53,
+          "params": [
+            "input"
+          ]
+        },
+        {
+          "name": "maskBusinessNumber",
+          "startLine": 58,
+          "endLine": 63,
+          "params": [
+            "value"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "normalizePhone",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "normalizeBusinessNumber",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "normalizeCompanyName",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "normalizeName",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "maskBusinessNumber",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "normalizePhone",
+          "callee": "input.trim",
+          "lineNumber": 16
+        },
+        {
+          "caller": "normalizePhone",
+          "callee": "trimmed.replace",
+          "lineNumber": 19
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "input.trim",
+          "lineNumber": 32
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "trimmed.replace",
+          "lineNumber": 34
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "BUSINESS_NUMBER_DIGITS_RE.test",
+          "lineNumber": 35
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "digits.slice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "digits.slice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "normalizeBusinessNumber",
+          "callee": "digits.slice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "normalizeCompanyName",
+          "callee": "input.trim",
+          "lineNumber": 43
+        },
+        {
+          "caller": "normalizeCompanyName",
+          "callee": "trimmed.slice",
+          "lineNumber": 45
+        },
+        {
+          "caller": "normalizeName",
+          "callee": "input.trim",
+          "lineNumber": 50
+        },
+        {
+          "caller": "normalizeName",
+          "callee": "trimmed.slice",
+          "lineNumber": 52
+        },
+        {
+          "caller": "maskBusinessNumber",
+          "callee": "value.replace",
+          "lineNumber": 60
+        },
+        {
+          "caller": "maskBusinessNumber",
+          "callee": "digits.slice",
+          "lineNumber": 62
+        },
+        {
+          "caller": "maskBusinessNumber",
+          "callee": "digits.slice",
+          "lineNumber": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/subscription.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 40,
+      "functions": [
+        {
+          "name": "activateSubscription",
+          "startLine": 9,
+          "endLine": 44,
+          "params": [
+            "userId",
+            "opts"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "activateSubscription",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "activateSubscription",
+          "callee": "prisma.subscription.findFirst",
+          "lineNumber": 18
+        },
+        {
+          "caller": "activateSubscription",
+          "callee": "prisma.subscription.update",
+          "lineNumber": 26
+        },
+        {
+          "caller": "activateSubscription",
+          "callee": "latest!.endAt.getTime",
+          "lineNumber": 29
+        },
+        {
+          "caller": "activateSubscription",
+          "callee": "prisma.subscription.create",
+          "lineNumber": 34
+        },
+        {
+          "caller": "activateSubscription",
+          "callee": "now.getTime",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/toss.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 73,
+      "functions": [
+        {
+          "name": "tossClientKey",
+          "startLine": 14,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "tossSecretKey",
+          "startLine": 18,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "isTossTestMode",
+          "startLine": 23,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "confirmTossPayment",
+          "startLine": 44,
+          "endLine": 79,
+          "params": [
+            "input"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "tossClientKey",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "isTossTestMode",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "confirmTossPayment",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "isTossTestMode",
+          "callee": "(process.env.TOSS_SECRET_KEY || TEST_SECRET_KEY).startsWith",
+          "lineNumber": 24
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "Buffer.from(`${tossSecretKey()}:`).toString",
+          "lineNumber": 49
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "Buffer.from",
+          "lineNumber": 49
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "tossSecretKey",
+          "lineNumber": 49
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "fetch",
+          "lineNumber": 51
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "JSON.stringify",
+          "lineNumber": 54
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "res.json().catch",
+          "lineNumber": 60
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "res.json",
+          "lineNumber": 60
+        },
+        {
+          "caller": "confirmTossPayment",
+          "callee": "Number",
+          "lineNumber": 70
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    }
+  ]
+}

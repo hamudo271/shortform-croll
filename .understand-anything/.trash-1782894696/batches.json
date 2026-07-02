@@ -1,0 +1,3738 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 132,
+  "totalBatches": 10,
+  "exportsByPath": {
+    ".understand-anything/.understandignore": [],
+    "eslint.config.mjs": [],
+    "next.config.ts": [],
+    "postcss.config.mjs": [],
+    "scripts/collect-ig-test.ts": [],
+    "scripts/migrate-yt-thumbnails.mjs": [],
+    "scripts/seed-admin.mjs": [],
+    "src/app/(app)/account/page.tsx": [
+      "AccountPage"
+    ],
+    "src/app/(app)/account/payment/fail/page.tsx": [
+      "PaymentFailPage"
+    ],
+    "src/app/(app)/account/payment/success/page.tsx": [
+      "PaymentSuccessPage"
+    ],
+    "src/app/(app)/account/subscribe/page.tsx": [
+      "SubscribeCheckoutPage"
+    ],
+    "src/app/(app)/admin/layout.tsx": [
+      "AdminLayout"
+    ],
+    "src/app/(app)/admin/page.tsx": [
+      "AdminPage"
+    ],
+    "src/app/(app)/admin/products/page.tsx": [
+      "AdminProductsPage"
+    ],
+    "src/app/(app)/admin/users/[id]/page.tsx": [
+      "AdminUserDetailPage"
+    ],
+    "src/app/(app)/dashboard/[platform]/[id]/page.tsx": [
+      "ProductDetailPage"
+    ],
+    "src/app/(app)/dashboard/categories/[cat]/page.tsx": [
+      "CategoryDetailPage"
+    ],
+    "src/app/(app)/dashboard/categories/page.tsx": [
+      "CategoriesPage"
+    ],
+    "src/app/(app)/dashboard/community/page.tsx": [
+      "metadata",
+      "Page"
+    ],
+    "src/app/(app)/dashboard/instagram/page.tsx": [
+      "InstagramDashboardPage"
+    ],
+    "src/app/(app)/dashboard/layout.tsx": [
+      "DashboardLayout"
+    ],
+    "src/app/(app)/dashboard/page.tsx": [
+      "DashboardMainPage"
+    ],
+    "src/app/(app)/dashboard/products/page.tsx": [
+      "metadata",
+      "ProductsPage"
+    ],
+    "src/app/(app)/dashboard/search/page.tsx": [
+      "SearchPage"
+    ],
+    "src/app/(app)/dashboard/tiktok/page.tsx": [
+      "TikTokDashboardPage"
+    ],
+    "src/app/(app)/dashboard/top/page.tsx": [
+      "TopPage"
+    ],
+    "src/app/(app)/layout.tsx": [
+      "AppShellLayout"
+    ],
+    "src/app/(app)/page.tsx": [
+      "revalidate",
+      "LandingPage"
+    ],
+    "src/app/(app)/pricing/page.tsx": [
+      "metadata",
+      "PricingPage"
+    ],
+    "src/app/api/account/profile/route.ts": [
+      "PATCH"
+    ],
+    "src/app/api/admin/products/[id]/route.ts": [
+      "DELETE",
+      "PATCH"
+    ],
+    "src/app/api/admin/products/route.ts": [
+      "GET",
+      "POST"
+    ],
+    "src/app/api/admin/users/[id]/cancel/route.ts": [
+      "POST"
+    ],
+    "src/app/api/admin/users/[id]/profile/route.ts": [
+      "PATCH"
+    ],
+    "src/app/api/admin/users/[id]/route.ts": [
+      "GET"
+    ],
+    "src/app/api/admin/users/[id]/subscribe/route.ts": [
+      "POST"
+    ],
+    "src/app/api/admin/users/export/route.ts": [
+      "GET"
+    ],
+    "src/app/api/admin/users/route.ts": [
+      "GET"
+    ],
+    "src/app/api/analyze/route.ts": [
+      "GET"
+    ],
+    "src/app/api/auth/[provider]/callback/route.ts": [
+      "GET"
+    ],
+    "src/app/api/auth/[provider]/route.ts": [
+      "GET"
+    ],
+    "src/app/api/auth/login/route.ts": [
+      "POST"
+    ],
+    "src/app/api/auth/logout/route.ts": [
+      "POST"
+    ],
+    "src/app/api/auth/me/route.ts": [
+      "GET"
+    ],
+    "src/app/api/auth/signup/route.ts": [
+      "POST"
+    ],
+    "src/app/api/cleanup/route.ts": [
+      "POST",
+      "GET"
+    ],
+    "src/app/api/collect/route.ts": [
+      "maxDuration",
+      "POST",
+      "GET"
+    ],
+    "src/app/api/community/[postId]/comments/route.ts": [
+      "POST"
+    ],
+    "src/app/api/community/[postId]/image/route.ts": [
+      "GET"
+    ],
+    "src/app/api/community/[postId]/like/route.ts": [
+      "POST"
+    ],
+    "src/app/api/community/level/route.ts": [
+      "GET"
+    ],
+    "src/app/api/community/route.ts": [
+      "GET",
+      "POST"
+    ],
+    "src/app/api/cron/route.ts": [
+      "GET"
+    ],
+    "src/app/api/curated-products/route.ts": [
+      "GET"
+    ],
+    "src/app/api/download/tiktok/route.ts": [
+      "GET"
+    ],
+    "src/app/api/fix-thumbnails/route.ts": [
+      "POST"
+    ],
+    "src/app/api/img/route.ts": [
+      "maxDuration",
+      "GET"
+    ],
+    "src/app/api/payments/confirm/route.ts": [
+      "POST"
+    ],
+    "src/app/api/payments/nicepay/prepare/route.ts": [
+      "POST"
+    ],
+    "src/app/api/payments/nicepay/return/route.ts": [
+      "POST"
+    ],
+    "src/app/api/payments/nicepay/webhook/route.ts": [
+      "GET",
+      "POST"
+    ],
+    "src/app/api/payments/prepare/route.ts": [
+      "POST"
+    ],
+    "src/app/api/products/route.ts": [
+      "GET"
+    ],
+    "src/app/api/refresh-thumbnails/route.ts": [
+      "maxDuration",
+      "POST"
+    ],
+    "src/app/api/setup-db/route.ts": [
+      "GET"
+    ],
+    "src/app/api/stats/route.ts": [
+      "dynamic",
+      "GET"
+    ],
+    "src/app/api/test/route.ts": [
+      "GET"
+    ],
+    "src/app/api/thumbnail/tiktok/route.ts": [
+      "maxDuration",
+      "GET"
+    ],
+    "src/app/api/trigger-collect/route.ts": [
+      "maxDuration",
+      "POST"
+    ],
+    "src/app/api/videos/route.ts": [
+      "GET",
+      "POST"
+    ],
+    "src/app/layout.tsx": [
+      "metadata",
+      "viewport",
+      "RootLayout"
+    ],
+    "src/app/login/page.tsx": [
+      "LoginPage"
+    ],
+    "src/app/signup/page.tsx": [
+      "SignupPage"
+    ],
+    "src/components/app/CommunityPage.tsx": [
+      "CommunityPage"
+    ],
+    "src/components/app/PageHeader.tsx": [
+      "PageHeader"
+    ],
+    "src/components/app/ProductListPage.tsx": [
+      "ProductListPage"
+    ],
+    "src/components/app/ProfileEditor.tsx": [
+      "ProfileEditor"
+    ],
+    "src/components/app/RankedProductList.tsx": [
+      "RankedProductList"
+    ],
+    "src/components/app/Sidebar.tsx": [
+      "Sidebar"
+    ],
+    "src/components/app/VideoListPage.tsx": [
+      "VideoListPage"
+    ],
+    "src/components/auth/SocialLoginButtons.tsx": [
+      "SocialLoginButtons"
+    ],
+    "src/components/CategoryChart.tsx": [
+      "CategoryChart"
+    ],
+    "src/components/FilterBar.tsx": [
+      "FilterBar"
+    ],
+    "src/components/landing/FAQTeaser.tsx": [
+      "FAQTeaser"
+    ],
+    "src/components/landing/HeroLivePreview.tsx": [
+      "HeroLivePreview"
+    ],
+    "src/components/landing/HeroStats.tsx": [
+      "HeroStats"
+    ],
+    "src/components/landing/HowItWorks.tsx": [
+      "HowItWorks"
+    ],
+    "src/components/landing/PlatformShowcase.tsx": [
+      "PlatformShowcase"
+    ],
+    "src/components/landing/PricingCallout.tsx": [
+      "PricingCallout"
+    ],
+    "src/components/landing/ScenarioCards.tsx": [
+      "ScenarioCards"
+    ],
+    "src/components/landing/TopProductsPreview.tsx": [
+      "TopProductsPreview"
+    ],
+    "src/components/ui/Icon.tsx": [
+      "ArrowRight",
+      "ArrowUpRight",
+      "ChevronDown",
+      "ChevronRight",
+      "Check",
+      "X",
+      "Pencil",
+      "Sun",
+      "Moon",
+      "Search",
+      "Filter",
+      "User",
+      "LogOut",
+      "Shield",
+      "Eye",
+      "Heart",
+      "TrendingUp",
+      "Zap",
+      "Sparkles",
+      "Layers",
+      "Clock",
+      "Mail",
+      "Lock",
+      "Refresh",
+      "MessageSquare",
+      "Package",
+      "ShoppingBag",
+      "Smartphone",
+      "ExternalLink",
+      "Play",
+      "PlusCircle",
+      "Utensils",
+      "Home",
+      "Baby",
+      "Dumbbell",
+      "Shirt",
+      "Lipstick",
+      "YouTubeLogo",
+      "TikTokLogo",
+      "InstagramLogo"
+    ],
+    "src/components/ui/SafeThumbnail.tsx": [
+      "SafeThumbnail"
+    ],
+    "src/components/VideoCard.tsx": [],
+    "src/components/VideoDetailModal.tsx": [
+      "VideoDetailModal"
+    ],
+    "src/lib/activity-log.ts": [
+      "logActivity"
+    ],
+    "src/lib/admin.ts": [
+      "requireAdmin"
+    ],
+    "src/lib/ai-analysis.ts": [
+      "calculateTrendScore",
+      "detectProducts",
+      "analyzeSentiment",
+      "calculateBuyingIntent",
+      "analyzeWithAI",
+      "quickAnalysis"
+    ],
+    "src/lib/auth.ts": [
+      "generateToken",
+      "parseAndVerifyToken",
+      "verifyToken",
+      "hashPassword",
+      "comparePassword",
+      "getCurrentUser",
+      "getSession",
+      "requireCommunityAccess",
+      "getSessionCookieOptions",
+      "SUBSCRIPTION_DAYS",
+      "SUBSCRIPTION_PRICE_KRW",
+      "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+      "TRIAL_DAYS"
+    ],
+    "src/lib/classifier.ts": [
+      "classifyVideo",
+      "classifyVideos",
+      "classifyByKeywords"
+    ],
+    "src/lib/collectors/instagram-api.ts": [
+      "IG_BUYINTENT_HASHTAGS",
+      "searchHashtagReels",
+      "fetchUserInfo",
+      "collectReelsByHashtags"
+    ],
+    "src/lib/collectors/instagram-public.ts": [
+      "collectKoreanReelsPublic"
+    ],
+    "src/lib/collectors/tiktok-api.ts": [
+      "fetchTikTokUser",
+      "fetchTikTokComments",
+      "STRONG_COMMERCE",
+      "EXCLUDE_KEYWORDS",
+      "isListicleTitle",
+      "searchTikTokVideos",
+      "getTikTokTrending"
+    ],
+    "src/lib/collectors/trendCollector.ts": [
+      "getRisingProductTrends",
+      "getDailyTrendingProducts",
+      "getInterestOverTime",
+      "generateSearchQueries",
+      "DROPSHIPPING_CHANNELS",
+      "VIRAL_PRODUCT_KEYWORDS"
+    ],
+    "src/lib/comments.ts": [
+      "MIN_INTENT_SCORE_STRONG",
+      "MIN_INTENT_SCORE",
+      "MIN_DPM_PAIRED",
+      "MIN_DPM_STRONG",
+      "scorePurchaseIntent",
+      "computeDemandPerMillion",
+      "evaluatePass"
+    ],
+    "src/lib/community.ts": [
+      "TIER_LABEL",
+      "levelFromXp",
+      "xpFromActivity",
+      "levelFromActivity",
+      "hotScore"
+    ],
+    "src/lib/creators.ts": [
+      "CREATOR_TTL_MS",
+      "computeHasSalesLink",
+      "isLikelyIndianContent",
+      "isQualifiedSeller",
+      "getOrFetchCreator"
+    ],
+    "src/lib/exclude.ts": [
+      "isExcludedContent"
+    ],
+    "src/lib/landing-data.ts": [
+      "getLandingStats",
+      "getTopProducts"
+    ],
+    "src/lib/nicepay.ts": [
+      "nicepayClientKey",
+      "nicepayMode",
+      "isNicepayConfigured",
+      "verifyAuthSignature",
+      "approveNicepay"
+    ],
+    "src/lib/oauth.ts": [
+      "isOAuthProvider",
+      "baseUrlFromRequest",
+      "redirectUri",
+      "authorizeUrl",
+      "fetchOAuthProfile",
+      "upsertOAuthUser"
+    ],
+    "src/lib/page-guards.ts": [
+      "requireAdminPage"
+    ],
+    "src/lib/prisma.ts": [
+      "prisma"
+    ],
+    "src/lib/profile.ts": [
+      "normalizePhone",
+      "normalizeBusinessNumber",
+      "normalizeCompanyName",
+      "normalizeName",
+      "maskBusinessNumber"
+    ],
+    "src/lib/subscription.ts": [
+      "activateSubscription"
+    ],
+    "src/lib/theme.ts": [
+      "THEME_COOKIE",
+      "THEME_DEFAULT",
+      "getThemeFromCookies"
+    ],
+    "src/lib/tikwm.ts": [
+      "resolveTikTokCover"
+    ],
+    "src/lib/toss.ts": [
+      "tossClientKey",
+      "isTossTestMode",
+      "confirmTossPayment"
+    ],
+    "src/lib/trendscope-products.ts": [
+      "SCOPE_PRODUCTS",
+      "SCOPE_CATEGORIES"
+    ],
+    "src/lib/utils.ts": [
+      "formatCount",
+      "calculateViralScore",
+      "formatDate",
+      "daysUntil",
+      "getRelativeTime",
+      "PLATFORM_NAMES",
+      "CATEGORY_NAMES",
+      "TARGET_AGE_OPTIONS",
+      "estimateRevenue",
+      "formatKRW",
+      "getWholesalerSearchUrl",
+      "getNaverShoppingSearchUrl",
+      "getDownloaderUrl"
+    ],
+    "src/lib/vision.ts": [
+      "classifyThumbnail"
+    ],
+    "src/middleware.ts": [
+      "middleware",
+      "config"
+    ]
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "src/app/(app)/admin/page.tsx",
+          "language": "typescript",
+          "sizeLines": 279,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/admin/products/page.tsx",
+          "language": "typescript",
+          "sizeLines": 294,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/admin/users/[id]/page.tsx",
+          "language": "typescript",
+          "sizeLines": 308,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+          "language": "typescript",
+          "sizeLines": 240,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/categories/[cat]/page.tsx",
+          "language": "typescript",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/categories/page.tsx",
+          "language": "typescript",
+          "sizeLines": 56,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/community/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/instagram/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/search/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/tiktok/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/top/page.tsx",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/CategoryChart.tsx",
+          "language": "typescript",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/FilterBar.tsx",
+          "language": "typescript",
+          "sizeLines": 171,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/VideoCard.tsx",
+          "language": "typescript",
+          "sizeLines": 105,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/VideoDetailModal.tsx",
+          "language": "typescript",
+          "sizeLines": 293,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/CommunityPage.tsx",
+          "language": "typescript",
+          "sizeLines": 508,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/PageHeader.tsx",
+          "language": "typescript",
+          "sizeLines": 27,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/RankedProductList.tsx",
+          "language": "typescript",
+          "sizeLines": 268,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/VideoListPage.tsx",
+          "language": "typescript",
+          "sizeLines": 238,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/ui/SafeThumbnail.tsx",
+          "language": "typescript",
+          "sizeLines": 158,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/page-guards.ts",
+          "language": "typescript",
+          "sizeLines": 14,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "language": "typescript",
+          "sizeLines": 188,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/app/(app)/admin/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/app/(app)/admin/products/page.tsx": [
+          "src/components/app/PageHeader.tsx"
+        ],
+        "src/app/(app)/admin/users/[id]/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/app/(app)/dashboard/[platform]/[id]/page.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/components/ui/SafeThumbnail.tsx",
+          "src/lib/page-guards.ts",
+          "src/lib/prisma.ts",
+          "src/lib/utils.ts"
+        ],
+        "src/app/(app)/dashboard/categories/[cat]/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/VideoListPage.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/categories/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/community/page.tsx": [
+          "src/components/app/CommunityPage.tsx",
+          "src/components/app/PageHeader.tsx"
+        ],
+        "src/app/(app)/dashboard/instagram/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/RankedProductList.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/VideoListPage.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/search/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/VideoListPage.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/tiktok/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/RankedProductList.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/app/(app)/dashboard/top/page.tsx": [
+          "src/components/app/PageHeader.tsx",
+          "src/components/app/VideoListPage.tsx",
+          "src/lib/page-guards.ts"
+        ],
+        "src/components/CategoryChart.tsx": [
+          "src/lib/utils.ts"
+        ],
+        "src/components/FilterBar.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/components/VideoCard.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/components/ui/SafeThumbnail.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/components/VideoDetailModal.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/components/ui/SafeThumbnail.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/components/app/CommunityPage.tsx": [],
+        "src/components/app/PageHeader.tsx": [],
+        "src/components/app/RankedProductList.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/components/ui/SafeThumbnail.tsx",
+          "src/lib/utils.ts"
+        ],
+        "src/components/app/VideoListPage.tsx": [
+          "src/components/FilterBar.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/components/VideoCard.tsx",
+          "src/components/VideoDetailModal.tsx"
+        ],
+        "src/components/ui/SafeThumbnail.tsx": [
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/lib/page-guards.ts": [
+          "src/lib/auth.ts"
+        ],
+        "src/lib/utils.ts": []
+      },
+      "neighborMap": {
+        "src/app/(app)/admin/page.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/app/(app)/admin/users/[id]/page.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/app/(app)/dashboard/[platform]/[id]/page.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/(app)/dashboard/categories/page.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/FilterBar.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/VideoCard.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/VideoDetailModal.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/app/RankedProductList.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/app/VideoListPage.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          }
+        ],
+        "src/components/ui/SafeThumbnail.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          },
+          {
+            "path": "src/components/landing/HeroLivePreview.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "HeroLivePreview"
+            ]
+          }
+        ],
+        "src/lib/page-guards.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/lib/utils.ts": [
+          {
+            "path": "src/components/landing/HeroLivePreview.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "HeroLivePreview"
+            ]
+          },
+          {
+            "path": "src/components/landing/TopProductsPreview.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "TopProductsPreview"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "src/app/(app)/admin/layout.tsx",
+          "language": "typescript",
+          "sizeLines": 9,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/dashboard/layout.tsx",
+          "language": "typescript",
+          "sizeLines": 19,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/pricing/page.tsx",
+          "language": "typescript",
+          "sizeLines": 180,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/account/profile/route.ts",
+          "language": "typescript",
+          "sizeLines": 84,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/products/[id]/route.ts",
+          "language": "typescript",
+          "sizeLines": 78,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/products/route.ts",
+          "language": "typescript",
+          "sizeLines": 60,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/[id]/cancel/route.ts",
+          "language": "typescript",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/[id]/profile/route.ts",
+          "language": "typescript",
+          "sizeLines": 68,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/[id]/route.ts",
+          "language": "typescript",
+          "sizeLines": 53,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/[id]/subscribe/route.ts",
+          "language": "typescript",
+          "sizeLines": 76,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/export/route.ts",
+          "language": "typescript",
+          "sizeLines": 83,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/admin/users/route.ts",
+          "language": "typescript",
+          "sizeLines": 69,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/[provider]/callback/route.ts",
+          "language": "typescript",
+          "sizeLines": 62,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/[provider]/route.ts",
+          "language": "typescript",
+          "sizeLines": 35,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/login/route.ts",
+          "language": "typescript",
+          "sizeLines": 71,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/me/route.ts",
+          "language": "typescript",
+          "sizeLines": 21,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/signup/route.ts",
+          "language": "typescript",
+          "sizeLines": 87,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/cleanup/route.ts",
+          "language": "typescript",
+          "sizeLines": 185,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/community/[postId]/comments/route.ts",
+          "language": "typescript",
+          "sizeLines": 66,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/community/[postId]/image/route.ts",
+          "language": "typescript",
+          "sizeLines": 48,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/community/[postId]/like/route.ts",
+          "language": "typescript",
+          "sizeLines": 39,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/community/level/route.ts",
+          "language": "typescript",
+          "sizeLines": 36,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/app/(app)/admin/layout.tsx": [
+          "src/lib/auth.ts"
+        ],
+        "src/app/(app)/dashboard/layout.tsx": [
+          "src/lib/auth.ts"
+        ],
+        "src/app/(app)/pricing/page.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/lib/auth.ts"
+        ],
+        "src/app/api/account/profile/route.ts": [
+          "src/lib/activity-log.ts",
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts",
+          "src/lib/profile.ts"
+        ],
+        "src/app/api/admin/products/[id]/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/products/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/users/[id]/cancel/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/users/[id]/profile/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts",
+          "src/lib/profile.ts"
+        ],
+        "src/app/api/admin/users/[id]/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/users/[id]/subscribe/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/users/export/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/admin/users/route.ts": [
+          "src/lib/admin.ts",
+          "src/lib/prisma.ts",
+          "src/lib/profile.ts"
+        ],
+        "src/app/api/auth/[provider]/callback/route.ts": [
+          "src/lib/activity-log.ts",
+          "src/lib/auth.ts",
+          "src/lib/oauth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/auth/[provider]/route.ts": [
+          "src/lib/oauth.ts"
+        ],
+        "src/app/api/auth/login/route.ts": [
+          "src/lib/activity-log.ts",
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/auth/me/route.ts": [
+          "src/lib/auth.ts"
+        ],
+        "src/app/api/auth/signup/route.ts": [
+          "src/lib/activity-log.ts",
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts",
+          "src/lib/profile.ts"
+        ],
+        "src/app/api/cleanup/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/community/[postId]/comments/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/community/[postId]/image/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/community/[postId]/like/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/community/level/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/community.ts",
+          "src/lib/prisma.ts"
+        ]
+      },
+      "neighborMap": {
+        "src/app/(app)/admin/layout.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/app/(app)/dashboard/layout.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/app/(app)/pricing/page.tsx": [
+          {
+            "path": "src/components/ui/Icon.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "ArrowRight",
+              "ArrowUpRight",
+              "ChevronDown",
+              "ChevronRight",
+              "Check",
+              "X",
+              "Pencil",
+              "Sun",
+              "Moon",
+              "Search",
+              "Filter",
+              "User",
+              "LogOut",
+              "Shield",
+              "Eye",
+              "Heart",
+              "TrendingUp",
+              "Zap",
+              "Sparkles",
+              "Layers",
+              "Clock",
+              "Mail",
+              "Lock",
+              "Refresh",
+              "MessageSquare",
+              "Package",
+              "ShoppingBag",
+              "Smartphone",
+              "ExternalLink",
+              "Play",
+              "PlusCircle",
+              "Utensils",
+              "Home",
+              "Baby",
+              "Dumbbell",
+              "Shirt",
+              "Lipstick",
+              "YouTubeLogo",
+              "TikTokLogo",
+              "InstagramLogo"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/app/api/account/profile/route.ts": [
+          {
+            "path": "src/lib/activity-log.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "logActivity"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          },
+          {
+            "path": "src/lib/profile.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "normalizePhone",
+              "normalizeBusinessNumber",
+              "normalizeCompanyName",
+              "normalizeName",
+              "maskBusinessNumber"
+            ]
+          }
+        ],
+        "src/app/api/admin/products/[id]/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/products/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/[id]/cancel/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/[id]/profile/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          },
+          {
+            "path": "src/lib/profile.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "normalizePhone",
+              "normalizeBusinessNumber",
+              "normalizeCompanyName",
+              "normalizeName",
+              "maskBusinessNumber"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/[id]/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/[id]/subscribe/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/export/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/admin/users/route.ts": [
+          {
+            "path": "src/lib/admin.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "requireAdmin"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          },
+          {
+            "path": "src/lib/profile.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "normalizePhone",
+              "normalizeBusinessNumber",
+              "normalizeCompanyName",
+              "normalizeName",
+              "maskBusinessNumber"
+            ]
+          }
+        ],
+        "src/app/api/auth/[provider]/callback/route.ts": [
+          {
+            "path": "src/lib/activity-log.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "logActivity"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/oauth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "isOAuthProvider",
+              "baseUrlFromRequest",
+              "redirectUri",
+              "authorizeUrl",
+              "fetchOAuthProfile",
+              "upsertOAuthUser"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/auth/[provider]/route.ts": [
+          {
+            "path": "src/lib/oauth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "isOAuthProvider",
+              "baseUrlFromRequest",
+              "redirectUri",
+              "authorizeUrl",
+              "fetchOAuthProfile",
+              "upsertOAuthUser"
+            ]
+          }
+        ],
+        "src/app/api/auth/login/route.ts": [
+          {
+            "path": "src/lib/activity-log.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "logActivity"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/auth/me/route.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/app/api/auth/signup/route.ts": [
+          {
+            "path": "src/lib/activity-log.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "logActivity"
+            ]
+          },
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          },
+          {
+            "path": "src/lib/profile.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "normalizePhone",
+              "normalizeBusinessNumber",
+              "normalizeCompanyName",
+              "normalizeName",
+              "maskBusinessNumber"
+            ]
+          }
+        ],
+        "src/app/api/cleanup/route.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/community/[postId]/comments/route.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/community/[postId]/image/route.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/community/[postId]/like/route.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/community/level/route.ts": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/community.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "TIER_LABEL",
+              "levelFromXp",
+              "xpFromActivity",
+              "levelFromActivity",
+              "hotScore"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "src/app/api/community/route.ts",
+          "language": "typescript",
+          "sizeLines": 141,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/cron/route.ts",
+          "language": "typescript",
+          "sizeLines": 111,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/curated-products/route.ts",
+          "language": "typescript",
+          "sizeLines": 39,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/fix-thumbnails/route.ts",
+          "language": "typescript",
+          "sizeLines": 47,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/payments/confirm/route.ts",
+          "language": "typescript",
+          "sizeLines": 83,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/payments/nicepay/prepare/route.ts",
+          "language": "typescript",
+          "sizeLines": 35,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/payments/nicepay/return/route.ts",
+          "language": "typescript",
+          "sizeLines": 84,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/payments/nicepay/webhook/route.ts",
+          "language": "typescript",
+          "sizeLines": 67,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/payments/prepare/route.ts",
+          "language": "typescript",
+          "sizeLines": 40,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/refresh-thumbnails/route.ts",
+          "language": "typescript",
+          "sizeLines": 80,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/stats/route.ts",
+          "language": "typescript",
+          "sizeLines": 71,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/test/route.ts",
+          "language": "typescript",
+          "sizeLines": 22,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/activity-log.ts",
+          "language": "typescript",
+          "sizeLines": 53,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/admin.ts",
+          "language": "typescript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/auth.ts",
+          "language": "typescript",
+          "sizeLines": 181,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/community.ts",
+          "language": "typescript",
+          "sizeLines": 70,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/nicepay.ts",
+          "language": "typescript",
+          "sizeLines": 114,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/oauth.ts",
+          "language": "typescript",
+          "sizeLines": 203,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/prisma.ts",
+          "language": "typescript",
+          "sizeLines": 9,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/profile.ts",
+          "language": "typescript",
+          "sizeLines": 63,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/subscription.ts",
+          "language": "typescript",
+          "sizeLines": 44,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/toss.ts",
+          "language": "typescript",
+          "sizeLines": 79,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/app/api/community/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/community.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/cron/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/curated-products/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/fix-thumbnails/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/payments/confirm/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts",
+          "src/lib/subscription.ts",
+          "src/lib/toss.ts"
+        ],
+        "src/app/api/payments/nicepay/prepare/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/nicepay.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/payments/nicepay/return/route.ts": [
+          "src/lib/nicepay.ts",
+          "src/lib/oauth.ts",
+          "src/lib/prisma.ts",
+          "src/lib/subscription.ts"
+        ],
+        "src/app/api/payments/nicepay/webhook/route.ts": [
+          "src/lib/prisma.ts",
+          "src/lib/subscription.ts"
+        ],
+        "src/app/api/payments/prepare/route.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts",
+          "src/lib/toss.ts"
+        ],
+        "src/app/api/refresh-thumbnails/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/stats/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/test/route.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/activity-log.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/admin.ts": [
+          "src/lib/auth.ts"
+        ],
+        "src/lib/auth.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/community.ts": [],
+        "src/lib/nicepay.ts": [],
+        "src/lib/oauth.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/prisma.ts": [],
+        "src/lib/profile.ts": [],
+        "src/lib/subscription.ts": [
+          "src/lib/auth.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/toss.ts": []
+      },
+      "neighborMap": {
+        "src/lib/activity-log.ts": [
+          {
+            "path": "src/app/api/account/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/[provider]/callback/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/login/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/signup/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          }
+        ],
+        "src/lib/admin.ts": [
+          {
+            "path": "src/app/api/admin/products/[id]/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "DELETE",
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/products/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET",
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/cancel/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/subscribe/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/export/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          }
+        ],
+        "src/lib/auth.ts": [
+          {
+            "path": "src/app/(app)/account/page.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "AccountPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/admin/layout.tsx",
+            "batchIndex": 2,
+            "symbols": [
+              "AdminLayout"
+            ]
+          },
+          {
+            "path": "src/app/(app)/dashboard/layout.tsx",
+            "batchIndex": 2,
+            "symbols": [
+              "DashboardLayout"
+            ]
+          },
+          {
+            "path": "src/app/(app)/layout.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "AppShellLayout"
+            ]
+          },
+          {
+            "path": "src/app/(app)/page.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "revalidate",
+              "LandingPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/pricing/page.tsx",
+            "batchIndex": 2,
+            "symbols": [
+              "metadata",
+              "PricingPage"
+            ]
+          },
+          {
+            "path": "src/app/api/account/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/products/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET",
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/subscribe/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/[provider]/callback/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/login/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/me/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/signup/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/comments/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/image/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/like/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/community/level/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/components/landing/PricingCallout.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "PricingCallout"
+            ]
+          },
+          {
+            "path": "src/lib/page-guards.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "requireAdminPage"
+            ]
+          }
+        ],
+        "src/lib/community.ts": [
+          {
+            "path": "src/app/(app)/account/page.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "AccountPage"
+            ]
+          },
+          {
+            "path": "src/app/api/community/level/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          }
+        ],
+        "src/lib/oauth.ts": [
+          {
+            "path": "src/app/api/auth/[provider]/callback/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/[provider]/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          }
+        ],
+        "src/lib/prisma.ts": [
+          {
+            "path": "scripts/collect-ig-test.ts",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/app/(app)/account/page.tsx",
+            "batchIndex": 4,
+            "symbols": [
+              "AccountPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "ProductDetailPage"
+            ]
+          },
+          {
+            "path": "src/app/api/account/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/products/[id]/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "DELETE",
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/products/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET",
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/cancel/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/subscribe/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/export/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/analyze/route.ts",
+            "batchIndex": 9,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/[provider]/callback/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/login/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/signup/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/cleanup/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST",
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/collect/route.ts",
+            "batchIndex": 5,
+            "symbols": [
+              "maxDuration",
+              "POST",
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/comments/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/image/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/community/[postId]/like/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          },
+          {
+            "path": "src/app/api/community/level/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/products/route.ts",
+            "batchIndex": 5,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/videos/route.ts",
+            "batchIndex": 5,
+            "symbols": [
+              "GET",
+              "POST"
+            ]
+          },
+          {
+            "path": "src/lib/creators.ts",
+            "batchIndex": 5,
+            "symbols": [
+              "CREATOR_TTL_MS",
+              "computeHasSalesLink",
+              "isLikelyIndianContent",
+              "isQualifiedSeller",
+              "getOrFetchCreator"
+            ]
+          },
+          {
+            "path": "src/lib/landing-data.ts",
+            "batchIndex": 4,
+            "symbols": [
+              "getLandingStats",
+              "getTopProducts"
+            ]
+          }
+        ],
+        "src/lib/profile.ts": [
+          {
+            "path": "src/app/api/account/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/[id]/profile/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "PATCH"
+            ]
+          },
+          {
+            "path": "src/app/api/admin/users/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "GET"
+            ]
+          },
+          {
+            "path": "src/app/api/auth/signup/route.ts",
+            "batchIndex": 2,
+            "symbols": [
+              "POST"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "src/app/(app)/account/page.tsx",
+          "language": "typescript",
+          "sizeLines": 138,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/layout.tsx",
+          "language": "typescript",
+          "sizeLines": 25,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/page.tsx",
+          "language": "typescript",
+          "sizeLines": 185,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/login/page.tsx",
+          "language": "typescript",
+          "sizeLines": 162,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/signup/page.tsx",
+          "language": "typescript",
+          "sizeLines": 179,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/ProfileEditor.tsx",
+          "language": "typescript",
+          "sizeLines": 189,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/Sidebar.tsx",
+          "language": "typescript",
+          "sizeLines": 384,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/auth/SocialLoginButtons.tsx",
+          "language": "typescript",
+          "sizeLines": 41,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/FAQTeaser.tsx",
+          "language": "typescript",
+          "sizeLines": 49,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/HeroLivePreview.tsx",
+          "language": "typescript",
+          "sizeLines": 142,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/HeroStats.tsx",
+          "language": "typescript",
+          "sizeLines": 32,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/HowItWorks.tsx",
+          "language": "typescript",
+          "sizeLines": 48,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/PlatformShowcase.tsx",
+          "language": "typescript",
+          "sizeLines": 68,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/PricingCallout.tsx",
+          "language": "typescript",
+          "sizeLines": 107,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/ScenarioCards.tsx",
+          "language": "typescript",
+          "sizeLines": 62,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/landing/TopProductsPreview.tsx",
+          "language": "typescript",
+          "sizeLines": 162,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/ui/Icon.tsx",
+          "language": "typescript",
+          "sizeLines": 404,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/landing-data.ts",
+          "language": "typescript",
+          "sizeLines": 124,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/app/(app)/account/page.tsx": [
+          "src/components/app/ProfileEditor.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/lib/auth.ts",
+          "src/lib/community.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/(app)/layout.tsx": [
+          "src/components/app/Sidebar.tsx",
+          "src/lib/auth.ts"
+        ],
+        "src/app/(app)/page.tsx": [
+          "src/components/landing/FAQTeaser.tsx",
+          "src/components/landing/HeroLivePreview.tsx",
+          "src/components/landing/HeroStats.tsx",
+          "src/components/landing/HowItWorks.tsx",
+          "src/components/landing/PlatformShowcase.tsx",
+          "src/components/landing/PricingCallout.tsx",
+          "src/components/landing/ScenarioCards.tsx",
+          "src/components/landing/TopProductsPreview.tsx",
+          "src/components/ui/Icon.tsx",
+          "src/lib/auth.ts"
+        ],
+        "src/app/login/page.tsx": [
+          "src/components/auth/SocialLoginButtons.tsx",
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/app/signup/page.tsx": [
+          "src/components/auth/SocialLoginButtons.tsx",
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/components/app/ProfileEditor.tsx": [
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/components/app/Sidebar.tsx": [
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/components/auth/SocialLoginButtons.tsx": [],
+        "src/components/landing/FAQTeaser.tsx": [
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/components/landing/HeroLivePreview.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/components/ui/SafeThumbnail.tsx",
+          "src/lib/landing-data.ts",
+          "src/lib/utils.ts"
+        ],
+        "src/components/landing/HeroStats.tsx": [
+          "src/lib/landing-data.ts"
+        ],
+        "src/components/landing/HowItWorks.tsx": [
+          "src/components/ui/Icon.tsx"
+        ],
+        "src/components/landing/PlatformShowcase.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/lib/landing-data.ts"
+        ],
+        "src/components/landing/PricingCallout.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/lib/auth.ts"
+        ],
+        "src/components/landing/ScenarioCards.tsx": [],
+        "src/components/landing/TopProductsPreview.tsx": [
+          "src/components/ui/Icon.tsx",
+          "src/lib/landing-data.ts",
+          "src/lib/utils.ts"
+        ],
+        "src/components/ui/Icon.tsx": [],
+        "src/lib/landing-data.ts": [
+          "src/lib/prisma.ts"
+        ]
+      },
+      "neighborMap": {
+        "src/app/(app)/account/page.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          },
+          {
+            "path": "src/lib/community.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "TIER_LABEL",
+              "levelFromXp",
+              "xpFromActivity",
+              "levelFromActivity",
+              "hotScore"
+            ]
+          },
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/(app)/layout.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/app/(app)/page.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/components/landing/HeroLivePreview.tsx": [
+          {
+            "path": "src/components/ui/SafeThumbnail.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "SafeThumbnail"
+            ]
+          },
+          {
+            "path": "src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "formatCount",
+              "calculateViralScore",
+              "formatDate",
+              "daysUntil",
+              "getRelativeTime",
+              "PLATFORM_NAMES",
+              "CATEGORY_NAMES",
+              "TARGET_AGE_OPTIONS",
+              "estimateRevenue",
+              "formatKRW",
+              "getWholesalerSearchUrl",
+              "getNaverShoppingSearchUrl",
+              "getDownloaderUrl"
+            ]
+          }
+        ],
+        "src/components/landing/PricingCallout.tsx": [
+          {
+            "path": "src/lib/auth.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "generateToken",
+              "parseAndVerifyToken",
+              "verifyToken",
+              "hashPassword",
+              "comparePassword",
+              "getCurrentUser",
+              "getSession",
+              "requireCommunityAccess",
+              "getSessionCookieOptions",
+              "SUBSCRIPTION_DAYS",
+              "SUBSCRIPTION_PRICE_KRW",
+              "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+              "TRIAL_DAYS"
+            ]
+          }
+        ],
+        "src/components/landing/TopProductsPreview.tsx": [
+          {
+            "path": "src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "formatCount",
+              "calculateViralScore",
+              "formatDate",
+              "daysUntil",
+              "getRelativeTime",
+              "PLATFORM_NAMES",
+              "CATEGORY_NAMES",
+              "TARGET_AGE_OPTIONS",
+              "estimateRevenue",
+              "formatKRW",
+              "getWholesalerSearchUrl",
+              "getNaverShoppingSearchUrl",
+              "getDownloaderUrl"
+            ]
+          }
+        ],
+        "src/components/ui/Icon.tsx": [
+          {
+            "path": "src/app/(app)/admin/page.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "AdminPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/admin/users/[id]/page.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "AdminUserDetailPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "ProductDetailPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/dashboard/categories/page.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "CategoriesPage"
+            ]
+          },
+          {
+            "path": "src/app/(app)/pricing/page.tsx",
+            "batchIndex": 2,
+            "symbols": [
+              "metadata",
+              "PricingPage"
+            ]
+          },
+          {
+            "path": "src/components/app/RankedProductList.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "RankedProductList"
+            ]
+          },
+          {
+            "path": "src/components/app/VideoListPage.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "VideoListPage"
+            ]
+          },
+          {
+            "path": "src/components/FilterBar.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "FilterBar"
+            ]
+          },
+          {
+            "path": "src/components/ui/SafeThumbnail.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "SafeThumbnail"
+            ]
+          },
+          {
+            "path": "src/components/VideoCard.tsx",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/components/VideoDetailModal.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "VideoDetailModal"
+            ]
+          }
+        ],
+        "src/lib/landing-data.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": "scripts/collect-ig-test.ts",
+          "language": "typescript",
+          "sizeLines": 79,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/collect/route.ts",
+          "language": "typescript",
+          "sizeLines": 485,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/products/route.ts",
+          "language": "typescript",
+          "sizeLines": 185,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/videos/route.ts",
+          "language": "typescript",
+          "sizeLines": 169,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/classifier.ts",
+          "language": "typescript",
+          "sizeLines": 232,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/collectors/instagram-api.ts",
+          "language": "typescript",
+          "sizeLines": 180,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/collectors/instagram-public.ts",
+          "language": "typescript",
+          "sizeLines": 180,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/collectors/tiktok-api.ts",
+          "language": "typescript",
+          "sizeLines": 327,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/comments.ts",
+          "language": "typescript",
+          "sizeLines": 78,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/creators.ts",
+          "language": "typescript",
+          "sizeLines": 349,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/exclude.ts",
+          "language": "typescript",
+          "sizeLines": 29,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/vision.ts",
+          "language": "typescript",
+          "sizeLines": 72,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "scripts/collect-ig-test.ts": [
+          "src/lib/classifier.ts",
+          "src/lib/collectors/instagram-api.ts",
+          "src/lib/collectors/tiktok-api.ts",
+          "src/lib/creators.ts",
+          "src/lib/exclude.ts",
+          "src/lib/prisma.ts",
+          "src/lib/vision.ts"
+        ],
+        "src/app/api/collect/route.ts": [
+          "src/lib/classifier.ts",
+          "src/lib/collectors/instagram-api.ts",
+          "src/lib/collectors/instagram-public.ts",
+          "src/lib/collectors/tiktok-api.ts",
+          "src/lib/comments.ts",
+          "src/lib/creators.ts",
+          "src/lib/exclude.ts",
+          "src/lib/prisma.ts",
+          "src/lib/vision.ts"
+        ],
+        "src/app/api/products/route.ts": [
+          "src/lib/comments.ts",
+          "src/lib/exclude.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/videos/route.ts": [
+          "src/lib/exclude.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/classifier.ts": [],
+        "src/lib/collectors/instagram-api.ts": [],
+        "src/lib/collectors/instagram-public.ts": [],
+        "src/lib/collectors/tiktok-api.ts": [],
+        "src/lib/comments.ts": [],
+        "src/lib/creators.ts": [
+          "src/lib/prisma.ts"
+        ],
+        "src/lib/exclude.ts": [],
+        "src/lib/vision.ts": []
+      },
+      "neighborMap": {
+        "scripts/collect-ig-test.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/collect/route.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/products/route.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/app/api/videos/route.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ],
+        "src/lib/creators.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 6,
+      "files": [
+        {
+          "path": "src/app/(app)/dashboard/products/page.tsx",
+          "language": "typescript",
+          "sizeLines": 10,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/components/app/ProductListPage.tsx",
+          "language": "typescript",
+          "sizeLines": 200,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/trendscope-products.ts",
+          "language": "typescript",
+          "sizeLines": 62,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/app/(app)/dashboard/products/page.tsx": [
+          "src/components/app/ProductListPage.tsx"
+        ],
+        "src/components/app/ProductListPage.tsx": [
+          "src/lib/trendscope-products.ts"
+        ],
+        "src/lib/trendscope-products.ts": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 7,
+      "files": [
+        {
+          "path": ".github/workflows/collect.yml",
+          "language": "yaml",
+          "sizeLines": 68,
+          "fileCategory": "infra"
+        }
+      ],
+      "batchImportData": {
+        ".github/workflows/collect.yml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 8,
+      "files": [
+        {
+          "path": "DEPLOY.md",
+          "language": "markdown",
+          "sizeLines": 186,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 148,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "package.json",
+          "language": "json",
+          "sizeLines": 36,
+          "fileCategory": "config"
+        },
+        {
+          "path": "railway.json",
+          "language": "json",
+          "sizeLines": 10,
+          "fileCategory": "config"
+        },
+        {
+          "path": "tsconfig.json",
+          "language": "json",
+          "sizeLines": 34,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "DEPLOY.md": [],
+        "README.md": [],
+        "package.json": [],
+        "railway.json": [],
+        "tsconfig.json": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 9,
+      "files": [
+        {
+          "path": ".understand-anything/.understandignore",
+          "language": "unknown",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": ".understand-anything/config.json",
+          "language": "json",
+          "sizeLines": 4,
+          "fileCategory": "config"
+        },
+        {
+          "path": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+          "language": "markdown",
+          "sizeLines": 170,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "eslint.config.mjs",
+          "language": "javascript",
+          "sizeLines": 24,
+          "fileCategory": "code"
+        },
+        {
+          "path": "next.config.ts",
+          "language": "typescript",
+          "sizeLines": 32,
+          "fileCategory": "code"
+        },
+        {
+          "path": "postcss.config.mjs",
+          "language": "javascript",
+          "sizeLines": 7,
+          "fileCategory": "code"
+        },
+        {
+          "path": "prisma/schema.prisma",
+          "language": "prisma",
+          "sizeLines": 289,
+          "fileCategory": "data"
+        },
+        {
+          "path": "scripts/migrate-yt-thumbnails.mjs",
+          "language": "javascript",
+          "sizeLines": 38,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scripts/seed-admin.mjs",
+          "language": "javascript",
+          "sizeLines": 70,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/account/payment/fail/page.tsx",
+          "language": "typescript",
+          "sizeLines": 36,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/account/payment/success/page.tsx",
+          "language": "typescript",
+          "sizeLines": 103,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/(app)/account/subscribe/page.tsx",
+          "language": "typescript",
+          "sizeLines": 132,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/analyze/route.ts",
+          "language": "typescript",
+          "sizeLines": 47,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/auth/logout/route.ts",
+          "language": "typescript",
+          "sizeLines": 7,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/download/tiktok/route.ts",
+          "language": "typescript",
+          "sizeLines": 64,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/img/route.ts",
+          "language": "typescript",
+          "sizeLines": 93,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/setup-db/route.ts",
+          "language": "typescript",
+          "sizeLines": 14,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/thumbnail/tiktok/route.ts",
+          "language": "typescript",
+          "sizeLines": 95,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/api/trigger-collect/route.ts",
+          "language": "typescript",
+          "sizeLines": 53,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/app/globals.css",
+          "language": "css",
+          "sizeLines": 180,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "src/app/layout.tsx",
+          "language": "typescript",
+          "sizeLines": 58,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/ai-analysis.ts",
+          "language": "typescript",
+          "sizeLines": 257,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/collectors/trendCollector.ts",
+          "language": "typescript",
+          "sizeLines": 252,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/theme.ts",
+          "language": "typescript",
+          "sizeLines": 16,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/tikwm.ts",
+          "language": "typescript",
+          "sizeLines": 64,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".understand-anything/.understandignore": [],
+        ".understand-anything/config.json": [],
+        "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md": [],
+        "eslint.config.mjs": [],
+        "next.config.ts": [],
+        "postcss.config.mjs": [],
+        "prisma/schema.prisma": [],
+        "scripts/migrate-yt-thumbnails.mjs": [],
+        "scripts/seed-admin.mjs": [],
+        "src/app/(app)/account/payment/fail/page.tsx": [],
+        "src/app/(app)/account/payment/success/page.tsx": [],
+        "src/app/(app)/account/subscribe/page.tsx": [],
+        "src/app/api/analyze/route.ts": [
+          "src/lib/ai-analysis.ts",
+          "src/lib/prisma.ts"
+        ],
+        "src/app/api/auth/logout/route.ts": [],
+        "src/app/api/download/tiktok/route.ts": [],
+        "src/app/api/img/route.ts": [
+          "src/lib/tikwm.ts"
+        ],
+        "src/app/api/setup-db/route.ts": [],
+        "src/app/api/thumbnail/tiktok/route.ts": [],
+        "src/app/api/trigger-collect/route.ts": [],
+        "src/app/globals.css": [],
+        "src/app/layout.tsx": [
+          "src/app/globals.css",
+          "src/lib/theme.ts"
+        ],
+        "src/lib/ai-analysis.ts": [],
+        "src/lib/collectors/trendCollector.ts": [],
+        "src/lib/theme.ts": [],
+        "src/lib/tikwm.ts": []
+      },
+      "neighborMap": {
+        "src/app/api/analyze/route.ts": [
+          {
+            "path": "src/lib/prisma.ts",
+            "batchIndex": 3,
+            "symbols": [
+              "prisma"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 10,
+      "files": [
+        {
+          "path": "src/middleware.ts",
+          "language": "typescript",
+          "sizeLines": 48,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/middleware.ts": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

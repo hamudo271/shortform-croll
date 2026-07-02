@@ -1,0 +1,20 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 11,
+  "edgesRestored": 55,
+  "crossBatchEdgesAdded": 1,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Merge script mechanical fixes look sound: post-merge graph had 0 nodes without id, 0 unknown node types, 0 unknown complexity values, 0 duplicate ids, and 0 dangling edges. The 34 'could not fix' items were all dropped dangling edges (not id/type/complexity problems).",
+    "Recovered 11 helper function nodes that the owning batches (batch-3 for src/lib/*, batch-5 for tiktok-api) never emitted but which callers referenced: requireAdmin (admin.ts); normalizePhone, normalizeCompanyName, normalizeName, maskBusinessNumber (profile.ts); isOAuthProvider (oauth.ts); hashPassword, comparePassword, getSessionCookieOptions (auth.ts); levelFromActivity (community.ts); isListicleTitle (tiktok-api.ts). All 11 were verified to exist in source (signatures + line ranges read from the actual files) before creating nodes — none fabricated. Korean summaries written.",
+    "Each recovered function got a `contains` (weight 1.0) and `exports` (weight 0.8) edge from its owning file node (22 edges), plus all previously-dropped `calls`/`exports` edges from batches were restored (33 edges), including the requireAdmin -> getCurrentUser calls edge whose source node had also been missing. Total 55 edges restored.",
+    "getCurrentUser (auth.ts) already existed in the graph; only its incoming edge from the newly-recovered requireAdmin node had been dropped and was restored — the node itself was not recreated.",
+    "Retargeted 3 schema-related edges from the nonexistent node id `file:prisma/schema.prisma` to the existing `schema:prisma/schema.prisma`: README.md documents schema, package.json configures schema, railway.json configures schema. These are counted within the 55 restored edges.",
+    "Fixed the orphan CI/CD node: added a `triggers` edge pipeline:.github/workflows/collect.yml -> file:src/app/api/collect/route.ts (weight 0.7, direction forward). Target verified to exist; the pipeline node's own summary confirms it calls POST /api/collect. Counted as the 1 crossBatchEdgesAdded.",
+    "importMap cross-batch check: all 203 project-internal import relationships in scan-result.json already have matching `imports` file->file edges in the assembled graph (0 gaps). No speculative import edges added, consistent with the merge script's 'recovered 0 imports edges'.",
+    "typesRemapped=0 and complexityRemapped=0 because no unknown node types or unknown complexity values were present in the merged output — the merge script had already normalized all of them.",
+    "Final graph: 306 nodes (was 295), 693 edges (was 637). Post-fix validation confirmed valid JSON with top-level nodes/edges arrays, 0 dangling edges, 0 duplicate node ids, 0 duplicate edge (source,target,type) keys.",
+    "Upstream data-quality observation: the recurring failure mode is batches not emitting `function:` nodes for exported helper functions in lib files (src/lib/admin.ts, profile.ts, oauth.ts, auth.ts, community.ts, collectors/tiktok-api.ts), while other batches emit `calls` edges targeting them. Consider prompting file-analyzer batches to always emit function nodes for every exported symbol so downstream cross-batch calls edges resolve without post-hoc recovery."
+  ]
+}

@@ -1,0 +1,4098 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 23,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/app/(app)/admin/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 279,
+      "nonEmptyLines": 266,
+      "functions": [
+        {
+          "name": "AdminPage",
+          "startLine": 34,
+          "endLine": 279,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AdminPage",
+          "line": 34,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AdminPage",
+          "callee": "useState",
+          "lineNumber": 35
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useState",
+          "lineNumber": 36
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useState",
+          "lineNumber": 37
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useState",
+          "lineNumber": 38
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useState",
+          "lineNumber": 39
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useCallback",
+          "lineNumber": 41
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setLoading",
+          "lineNumber": 42
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "fetch",
+          "lineNumber": 44
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "res.json",
+          "lineNumber": 46
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setUsers",
+          "lineNumber": 47
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setLoading",
+          "lineNumber": 49
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "useEffect",
+          "lineNumber": 52
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "load",
+          "lineNumber": 52
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "e.stopPropagation",
+          "lineNumber": 55
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "e.preventDefault",
+          "lineNumber": 55
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "window.prompt",
+          "lineNumber": 56
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "parseInt",
+          "lineNumber": 58
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "daysStr.trim",
+          "lineNumber": 58
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "Number.isFinite",
+          "lineNumber": 59
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "alert",
+          "lineNumber": 60
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "window.prompt",
+          "lineNumber": 62
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "setActingId",
+          "lineNumber": 64
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "fetch",
+          "lineNumber": 66
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "JSON.stringify",
+          "lineNumber": 68
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "res.json().catch",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "res.json",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "alert",
+          "lineNumber": 72
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "load",
+          "lineNumber": 74
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "setActingId",
+          "lineNumber": 75
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "e.stopPropagation",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "e.preventDefault",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "window.confirm",
+          "lineNumber": 80
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "setActingId",
+          "lineNumber": 81
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "fetch",
+          "lineNumber": 83
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "res.json().catch",
+          "lineNumber": 85
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "res.json",
+          "lineNumber": 85
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "alert",
+          "lineNumber": 86
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "load",
+          "lineNumber": 88
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "setActingId",
+          "lineNumber": 89
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "users.filter",
+          "lineNumber": 92
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "search.toLowerCase",
+          "lineNumber": 94
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "u.email.toLowerCase().includes",
+          "lineNumber": 96
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "u.email.toLowerCase",
+          "lineNumber": 96
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.name || '').toLowerCase().includes",
+          "lineNumber": 97
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.name || '').toLowerCase",
+          "lineNumber": 97
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.companyName || '').toLowerCase().includes",
+          "lineNumber": 98
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.companyName || '').toLowerCase",
+          "lineNumber": 98
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.phone || '').toLowerCase().includes",
+          "lineNumber": 99
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.phone || '').toLowerCase",
+          "lineNumber": 99
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.subscription?.memo || '').toLowerCase().includes",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(u.subscription?.memo || '').toLowerCase",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "users.filter",
+          "lineNumber": 104
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "[\n          { label: '전체 회원', value: users.length, color: 'from-sky-400 to-blue-600' },\n          { label: '활성 구독', value: activeCount, color: 'from-sky-400 to-blue-600' },\n          { label: '미구독', value: users.length - activeCount, color: 'from-zinc-500 to-zinc-700' },\n          { label: '예상 매출 (원)', value: (activeCount * 100000).toLocaleString(), color: 'from-amber-400 to-orange-600' },\n        ].map",
+          "lineNumber": 119
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "(activeCount * 100000).toLocaleString",
+          "lineNumber": 123
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "s.label.charAt",
+          "lineNumber": 127
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "s.value.toLocaleString",
+          "lineNumber": 133
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "setSearch",
+          "lineNumber": 145
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "filtered.map",
+          "lineNumber": 184
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "daysUntil",
+          "lineNumber": 186
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "formatDate",
+          "lineNumber": 226
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "getRelativeTime",
+          "lineNumber": 232
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "formatDate",
+          "lineNumber": 238
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "e.stopPropagation",
+          "lineNumber": 244
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "handleSubscribe",
+          "lineNumber": 250
+        },
+        {
+          "caller": "AdminPage",
+          "callee": "handleCancel",
+          "lineNumber": 259
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/admin/products/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 294,
+      "nonEmptyLines": 268,
+      "functions": [
+        {
+          "name": "AdminProductsPage",
+          "startLine": 23,
+          "endLine": 168,
+          "params": []
+        },
+        {
+          "name": "Field",
+          "startLine": 172,
+          "endLine": 179,
+          "params": [
+            "{ label, children }"
+          ]
+        },
+        {
+          "name": "ProductRow",
+          "startLine": 181,
+          "endLine": 283,
+          "params": [
+            "{\n  product,\n  onChanged,\n  onRemove,\n}"
+          ]
+        },
+        {
+          "name": "Slider",
+          "startLine": 285,
+          "endLine": 294,
+          "params": [
+            "{ label, value, onChange }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AdminProductsPage",
+          "line": 23,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 24
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 25
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 26
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 27
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 28
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 30
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 31
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 32
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 33
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 34
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 35
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 36
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 37
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useState",
+          "lineNumber": 38
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useCallback",
+          "lineNumber": 40
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setLoading",
+          "lineNumber": 41
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "fetch",
+          "lineNumber": 42
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setProducts",
+          "lineNumber": 43
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "r.json",
+          "lineNumber": 43
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setLoading",
+          "lineNumber": 44
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "useEffect",
+          "lineNumber": 47
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "load",
+          "lineNumber": 48
+        },
+        {
+          "caller": "onImage",
+          "callee": "file.type.startsWith",
+          "lineNumber": 53
+        },
+        {
+          "caller": "onImage",
+          "callee": "setErr",
+          "lineNumber": 53
+        },
+        {
+          "caller": "onImage",
+          "callee": "setErr",
+          "lineNumber": 54
+        },
+        {
+          "caller": "onImage",
+          "callee": "setImage",
+          "lineNumber": 56
+        },
+        {
+          "caller": "onImage",
+          "callee": "String",
+          "lineNumber": 56
+        },
+        {
+          "caller": "onImage",
+          "callee": "reader.readAsDataURL",
+          "lineNumber": 57
+        },
+        {
+          "caller": "submit",
+          "callee": "e.preventDefault",
+          "lineNumber": 61
+        },
+        {
+          "caller": "submit",
+          "callee": "setErr",
+          "lineNumber": 62
+        },
+        {
+          "caller": "submit",
+          "callee": "setOk",
+          "lineNumber": 63
+        },
+        {
+          "caller": "submit",
+          "callee": "name.trim",
+          "lineNumber": 64
+        },
+        {
+          "caller": "submit",
+          "callee": "description.trim",
+          "lineNumber": 64
+        },
+        {
+          "caller": "submit",
+          "callee": "setErr",
+          "lineNumber": 64
+        },
+        {
+          "caller": "submit",
+          "callee": "setErr",
+          "lineNumber": 65
+        },
+        {
+          "caller": "submit",
+          "callee": "setSaving",
+          "lineNumber": 66
+        },
+        {
+          "caller": "submit",
+          "callee": "fetch",
+          "lineNumber": 68
+        },
+        {
+          "caller": "submit",
+          "callee": "JSON.stringify",
+          "lineNumber": 71
+        },
+        {
+          "caller": "submit",
+          "callee": "r.json",
+          "lineNumber": 73
+        },
+        {
+          "caller": "submit",
+          "callee": "setOk",
+          "lineNumber": 75
+        },
+        {
+          "caller": "submit",
+          "callee": "setName",
+          "lineNumber": 76
+        },
+        {
+          "caller": "submit",
+          "callee": "setDescription",
+          "lineNumber": 77
+        },
+        {
+          "caller": "submit",
+          "callee": "setSource",
+          "lineNumber": 78
+        },
+        {
+          "caller": "submit",
+          "callee": "setImage",
+          "lineNumber": 79
+        },
+        {
+          "caller": "submit",
+          "callee": "load",
+          "lineNumber": 80
+        },
+        {
+          "caller": "submit",
+          "callee": "setErr",
+          "lineNumber": 82
+        },
+        {
+          "caller": "submit",
+          "callee": "setSaving",
+          "lineNumber": 84
+        },
+        {
+          "caller": "remove",
+          "callee": "confirm",
+          "lineNumber": 89
+        },
+        {
+          "caller": "remove",
+          "callee": "fetch",
+          "lineNumber": 90
+        },
+        {
+          "caller": "remove",
+          "callee": "load",
+          "lineNumber": 91
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "onImage",
+          "lineNumber": 118
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setName",
+          "lineNumber": 124
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setCategory",
+          "lineNumber": 127
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "CATEGORIES.map",
+          "lineNumber": 128
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setDescription",
+          "lineNumber": 132
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "setSource",
+          "lineNumber": 135
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "products.map",
+          "lineNumber": 160
+        },
+        {
+          "caller": "AdminProductsPage",
+          "callee": "remove",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 190
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 191
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 192
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 193
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 194
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "useState",
+          "lineNumber": 195
+        },
+        {
+          "caller": "startEdit",
+          "callee": "setName",
+          "lineNumber": 198
+        },
+        {
+          "caller": "startEdit",
+          "callee": "setSource",
+          "lineNumber": 199
+        },
+        {
+          "caller": "startEdit",
+          "callee": "setImage",
+          "lineNumber": 200
+        },
+        {
+          "caller": "startEdit",
+          "callee": "setRowErr",
+          "lineNumber": 201
+        },
+        {
+          "caller": "startEdit",
+          "callee": "setEditing",
+          "lineNumber": 202
+        },
+        {
+          "caller": "onFile",
+          "callee": "file.type.startsWith",
+          "lineNumber": 207
+        },
+        {
+          "caller": "onFile",
+          "callee": "setRowErr",
+          "lineNumber": 207
+        },
+        {
+          "caller": "onFile",
+          "callee": "setRowErr",
+          "lineNumber": 208
+        },
+        {
+          "caller": "onFile",
+          "callee": "setImage",
+          "lineNumber": 210
+        },
+        {
+          "caller": "onFile",
+          "callee": "String",
+          "lineNumber": 210
+        },
+        {
+          "caller": "onFile",
+          "callee": "reader.readAsDataURL",
+          "lineNumber": 211
+        },
+        {
+          "caller": "save",
+          "callee": "name.trim",
+          "lineNumber": 215
+        },
+        {
+          "caller": "save",
+          "callee": "setRowErr",
+          "lineNumber": 215
+        },
+        {
+          "caller": "save",
+          "callee": "setSaving",
+          "lineNumber": 216
+        },
+        {
+          "caller": "save",
+          "callee": "setRowErr",
+          "lineNumber": 217
+        },
+        {
+          "caller": "save",
+          "callee": "fetch",
+          "lineNumber": 219
+        },
+        {
+          "caller": "save",
+          "callee": "JSON.stringify",
+          "lineNumber": 222
+        },
+        {
+          "caller": "save",
+          "callee": "name.trim",
+          "lineNumber": 222
+        },
+        {
+          "caller": "save",
+          "callee": "source.trim",
+          "lineNumber": 222
+        },
+        {
+          "caller": "save",
+          "callee": "r.json",
+          "lineNumber": 224
+        },
+        {
+          "caller": "save",
+          "callee": "setEditing",
+          "lineNumber": 226
+        },
+        {
+          "caller": "save",
+          "callee": "onChanged",
+          "lineNumber": 227
+        },
+        {
+          "caller": "save",
+          "callee": "setRowErr",
+          "lineNumber": 229
+        },
+        {
+          "caller": "save",
+          "callee": "setSaving",
+          "lineNumber": 231
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "onFile",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "setName",
+          "lineNumber": 248
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "setSource",
+          "lineNumber": 249
+        },
+        {
+          "caller": "ProductRow",
+          "callee": "setEditing",
+          "lineNumber": 255
+        },
+        {
+          "caller": "Slider",
+          "callee": "onChange",
+          "lineNumber": 291
+        },
+        {
+          "caller": "Slider",
+          "callee": "Number",
+          "lineNumber": 291
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/admin/users/[id]/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 308,
+      "nonEmptyLines": 285,
+      "functions": [
+        {
+          "name": "AdminUserDetailPage",
+          "startLine": 47,
+          "endLine": 282,
+          "params": [
+            "{ params }"
+          ]
+        },
+        {
+          "name": "Field",
+          "startLine": 284,
+          "endLine": 294,
+          "params": [
+            "{ icon, label, value }"
+          ]
+        },
+        {
+          "name": "StatusPill",
+          "startLine": 296,
+          "endLine": 308,
+          "params": [
+            "{ status }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AdminUserDetailPage",
+          "line": 47,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "use",
+          "lineNumber": 48
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 50
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 51
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 52
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 53
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 56
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 57
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 58
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 59
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 60
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useState",
+          "lineNumber": 61
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useCallback",
+          "lineNumber": 63
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setLoading",
+          "lineNumber": 64
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setError",
+          "lineNumber": 64
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "fetch",
+          "lineNumber": 66
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "res.json",
+          "lineNumber": 68
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setUser",
+          "lineNumber": 69
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditName",
+          "lineNumber": 70
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditPhone",
+          "lineNumber": 71
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditCompany",
+          "lineNumber": 72
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditBizNum",
+          "lineNumber": 73
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setLoading",
+          "lineNumber": 75
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "useEffect",
+          "lineNumber": 78
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "load",
+          "lineNumber": 78
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "window.prompt",
+          "lineNumber": 81
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "setActing",
+          "lineNumber": 83
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "fetch",
+          "lineNumber": 85
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "JSON.stringify",
+          "lineNumber": 87
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "res.json().catch",
+          "lineNumber": 90
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "res.json",
+          "lineNumber": 90
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "alert",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "load",
+          "lineNumber": 93
+        },
+        {
+          "caller": "handleSubscribe",
+          "callee": "setActing",
+          "lineNumber": 94
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "window.confirm",
+          "lineNumber": 98
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "setActing",
+          "lineNumber": 99
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "fetch",
+          "lineNumber": 101
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "res.json().catch",
+          "lineNumber": 103
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "res.json",
+          "lineNumber": 103
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "alert",
+          "lineNumber": 104
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "load",
+          "lineNumber": 106
+        },
+        {
+          "caller": "handleCancel",
+          "callee": "setActing",
+          "lineNumber": 107
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "e.preventDefault",
+          "lineNumber": 111
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "setProfileSaving",
+          "lineNumber": 112
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "setProfileMsg",
+          "lineNumber": 112
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "fetch",
+          "lineNumber": 114
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "JSON.stringify",
+          "lineNumber": 116
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "res.json",
+          "lineNumber": 121
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "setProfileMsg",
+          "lineNumber": 122
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "setProfileMsg",
+          "lineNumber": 123
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "load",
+          "lineNumber": 124
+        },
+        {
+          "caller": "handleSaveProfile",
+          "callee": "setProfileSaving",
+          "lineNumber": 125
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "daysUntil",
+          "lineNumber": 135
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 157
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "getRelativeTime",
+          "lineNumber": 158
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 158
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "user.loginCount.toLocaleString",
+          "lineNumber": 159
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "user.activityLogs.length.toLocaleString",
+          "lineNumber": 160
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditName",
+          "lineNumber": 172
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditPhone",
+          "lineNumber": 176
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditCompany",
+          "lineNumber": 180
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "setEditBizNum",
+          "lineNumber": 184
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "user.subscriptions.map",
+          "lineNumber": 227
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 229
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 230
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "s.amount.toLocaleString",
+          "lineNumber": 232
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 234
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "user.activityLogs.map",
+          "lineNumber": 260
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "getRelativeTime",
+          "lineNumber": 263
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "formatDate",
+          "lineNumber": 264
+        },
+        {
+          "caller": "AdminUserDetailPage",
+          "callee": "JSON.stringify",
+          "lineNumber": 271
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 240,
+      "nonEmptyLines": 223,
+      "functions": [
+        {
+          "name": "ProductDetailPage",
+          "startLine": 32,
+          "endLine": 240,
+          "params": [
+            "{\n  params,\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProductDetailPage",
+          "line": 32,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ProductDetailPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "notFound",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "prisma.video.findUnique",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "notFound",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "Number",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "Number",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "Number",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "estimateRevenue",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "((likeCount / viewCount) * 100).toFixed",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "getDownloaderUrl",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "getWholesalerSearchUrl",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "getNaverShoppingSearchUrl",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "formatKRW",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "[\n              { label: '조회수', value: formatCount(viewCount), Icon: Eye },\n              { label: '좋아요', value: formatCount(likeCount), Icon: Heart },\n              { label: '댓글', value: formatCount(commentCount), Icon: TrendingUp },\n              { label: '참여율', value: `${engagement}%`, Icon: TrendingUp },\n            ].map",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "formatCount",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "formatCount",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ProductDetailPage",
+          "callee": "formatCount",
+          "lineNumber": 151
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "CategoryDetailPage",
+          "startLine": 17,
+          "endLine": 34,
+          "params": [
+            "{ params }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoryDetailPage",
+          "line": 17,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CategoryDetailPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 18
+        },
+        {
+          "caller": "CategoryDetailPage",
+          "callee": "notFound",
+          "lineNumber": 21
+        },
+        {
+          "caller": "CategoryDetailPage",
+          "callee": "cat.toUpperCase",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/categories/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "CategoriesPage",
+          "startLine": 25,
+          "endLine": 56,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoriesPage",
+          "line": 25,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CategoriesPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 26
+        },
+        {
+          "caller": "CategoriesPage",
+          "callee": "CATEGORIES.map",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CategoriesPage",
+          "callee": "c.key.toLowerCase",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/community/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "Page",
+          "startLine": 6,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "metadata",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "Page",
+          "line": 6,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/instagram/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "InstagramDashboardPage",
+          "startLine": 5,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "InstagramDashboardPage",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "InstagramDashboardPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "DashboardMainPage",
+          "startLine": 5,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DashboardMainPage",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DashboardMainPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/search/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "SearchPage",
+          "startLine": 5,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SearchPage",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SearchPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/tiktok/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "TikTokDashboardPage",
+          "startLine": 5,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "TikTokDashboardPage",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TikTokDashboardPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/dashboard/top/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "TopPage",
+          "startLine": 5,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "TopPage",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TopPage",
+          "callee": "requireAdminPage",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/CategoryChart.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "CategoryChart",
+          "startLine": 9,
+          "endLine": 43,
+          "params": [
+            "{ categories }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoryChart",
+          "line": 9,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CategoryChart",
+          "callee": "Object.entries(categories).filter",
+          "lineNumber": 10
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "Object.entries",
+          "lineNumber": 10
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "entries.reduce",
+          "lineNumber": 11
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "entries.sort",
+          "lineNumber": 17
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "entries.map",
+          "lineNumber": 21
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "count.toLocaleString",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CategoryChart",
+          "callee": "pct.toFixed",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/FilterBar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 171,
+      "nonEmptyLines": 157,
+      "functions": [
+        {
+          "name": "FilterBar",
+          "startLine": 27,
+          "endLine": 171,
+          "params": [
+            "{ onFilterChange, initialFilters }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FilterBar",
+          "line": 27,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "FilterBar",
+          "callee": "useState",
+          "lineNumber": 28
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "useState",
+          "lineNumber": 29
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "useRef",
+          "lineNumber": 30
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "useEffect",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "(Object.keys(initialFilters) as (keyof FilterState)[]).some",
+          "lineNumber": 34
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "Object.keys",
+          "lineNumber": 34
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "setFilters",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "setSearchInput",
+          "lineNumber": 39
+        },
+        {
+          "caller": "handleChange",
+          "callee": "setFilters",
+          "lineNumber": 46
+        },
+        {
+          "caller": "handleChange",
+          "callee": "onFilterChange",
+          "lineNumber": 47
+        },
+        {
+          "caller": "handleSearchInput",
+          "callee": "setSearchInput",
+          "lineNumber": 51
+        },
+        {
+          "caller": "handleSearchInput",
+          "callee": "clearTimeout",
+          "lineNumber": 52
+        },
+        {
+          "caller": "handleSearchInput",
+          "callee": "setTimeout",
+          "lineNumber": 53
+        },
+        {
+          "caller": "handleSearchInput",
+          "callee": "handleChange",
+          "lineNumber": 53
+        },
+        {
+          "caller": "handleKeyDown",
+          "callee": "clearTimeout",
+          "lineNumber": 58
+        },
+        {
+          "caller": "handleKeyDown",
+          "callee": "handleChange",
+          "lineNumber": 59
+        },
+        {
+          "caller": "handleReset",
+          "callee": "setFilters",
+          "lineNumber": 64
+        },
+        {
+          "caller": "handleReset",
+          "callee": "setSearchInput",
+          "lineNumber": 65
+        },
+        {
+          "caller": "handleReset",
+          "callee": "onFilterChange",
+          "lineNumber": 66
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "handleSearchInput",
+          "lineNumber": 81
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "setSearchInput",
+          "lineNumber": 87
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "clearTimeout",
+          "lineNumber": 87
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "handleChange",
+          "lineNumber": 87
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "[\n            {\n              value: filters.platform,\n              key: 'platform' as keyof FilterState,\n              options: [\n                { value: '', label: '모든 플랫폼' },\n                { value: 'YOUTUBE', label: '유튜브 쇼츠' },\n                { value: 'TIKTOK', label: '틱톡' },\n                { value: 'INSTAGRAM', label: '인스타 릴스' },\n              ]\n            },\n            {\n              value: filters.category,\n              key: 'category' as keyof FilterState,\n              options: [\n                { value: '', label: '모든 카테고리' },\n                ...Object.entries(CATEGORY_NAMES).map(([val, label]) => ({ value: val, label }))\n              ]\n            },\n            {\n              value: filters.targetAge,\n              key: 'targetAge' as keyof FilterState,\n              options: [\n                { value: '', label: '모든 연령대' },\n                ...TARGET_AGE_OPTIONS.map(opt => ({ value: opt.value, label: opt.label }))\n              ]\n            },\n            {\n              value: filters.sortBy,\n              key: 'sortBy' as keyof FilterState,\n              options: [\n                { value: 'viralScore', label: '바이럴 점수순' },\n                { value: 'viewCount', label: '조회수순' },\n                { value: 'likeCount', label: '좋아요순' },\n                { value: 'collectedAt', label: '최신순' },\n              ]\n            },\n            {\n              value: filters.days,\n              key: 'days' as keyof FilterState,\n              options: [\n                { value: 1, label: '오늘' },\n                { value: 7, label: '최근 7일' },\n                { value: 30, label: '최근 30일' },\n              ]\n            }\n          ].map",
+          "lineNumber": 97
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "Object.entries(CATEGORY_NAMES).map",
+          "lineNumber": 113
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "Object.entries",
+          "lineNumber": 113
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "TARGET_AGE_OPTIONS.map",
+          "lineNumber": 121
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "handleChange",
+          "lineNumber": 147
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "parseInt",
+          "lineNumber": 147
+        },
+        {
+          "caller": "FilterBar",
+          "callee": "filter.options.map",
+          "lineNumber": 151
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/VideoCard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 93,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/VideoDetailModal.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 293,
+      "nonEmptyLines": 269,
+      "functions": [
+        {
+          "name": "VideoDetailModal",
+          "startLine": 49,
+          "endLine": 293,
+          "params": [
+            "{ video, onClose }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "VideoDetailModal",
+          "line": 49,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useState",
+          "lineNumber": 50
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useState",
+          "lineNumber": 51
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useState",
+          "lineNumber": 52
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useCallback",
+          "lineNumber": 54
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "onClose",
+          "lineNumber": 55
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useEffect",
+          "lineNumber": 58
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "document.addEventListener",
+          "lineNumber": 59
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "document.removeEventListener",
+          "lineNumber": 62
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "useEffect",
+          "lineNumber": 67
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "setAnalyzing",
+          "lineNumber": 70
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "fetch(`/api/analyze?id=${video.id}`)\n      .then(r => r.json())\n      .then(d => setAnalysis(d.analysis))\n      .catch(() => {})\n      .finally",
+          "lineNumber": 71
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "fetch(`/api/analyze?id=${video.id}`)\n      .then(r => r.json())\n      .then(d => setAnalysis(d.analysis))\n      .catch",
+          "lineNumber": 71
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "fetch(`/api/analyze?id=${video.id}`)\n      .then(r => r.json())\n      .then",
+          "lineNumber": 71
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "fetch(`/api/analyze?id=${video.id}`)\n      .then",
+          "lineNumber": 71
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "fetch",
+          "lineNumber": 71
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "r.json",
+          "lineNumber": 72
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "setAnalysis",
+          "lineNumber": 73
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "setAnalyzing",
+          "lineNumber": 75
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "((video.likeCount / video.viewCount) * 100).toFixed",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleCopy",
+          "callee": "navigator.clipboard.writeText",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleCopy",
+          "callee": "setCopied",
+          "lineNumber": 92
+        },
+        {
+          "caller": "handleCopy",
+          "callee": "setTimeout",
+          "lineNumber": 93
+        },
+        {
+          "caller": "handleCopy",
+          "callee": "setCopied",
+          "lineNumber": 93
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "e.stopPropagation",
+          "lineNumber": 103
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "Math.round",
+          "lineNumber": 148
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "[\n              { label: '조회수', value: formatCount(video.viewCount) },\n              { label: '좋아요', value: formatCount(video.likeCount) },\n              { label: '댓글', value: formatCount(video.commentCount) },\n              { label: '참여율', value: `${engagement}%` },\n            ].map",
+          "lineNumber": 179
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "formatCount",
+          "lineNumber": 180
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "formatCount",
+          "lineNumber": 181
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "formatCount",
+          "lineNumber": 182
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "video.tags?.map",
+          "lineNumber": 205
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "[\n                  { label: '트렌드', value: analysis.trendScore },\n                  { label: '구매의도', value: analysis.buyingIntent },\n                  { label: '감성', value: analysis.sentimentScore },\n                ].map",
+          "lineNumber": 229
+        },
+        {
+          "caller": "VideoDetailModal",
+          "callee": "analysis.products.map",
+          "lineNumber": 249
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/CommunityPage.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 508,
+      "nonEmptyLines": 481,
+      "functions": [
+        {
+          "name": "timeAgo",
+          "startLine": 44,
+          "endLine": 54,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "Avatar",
+          "startLine": 56,
+          "endLine": 77,
+          "params": [
+            "{ name, image, size = 36 }"
+          ]
+        },
+        {
+          "name": "CommunityPage",
+          "startLine": 79,
+          "endLine": 360,
+          "params": []
+        },
+        {
+          "name": "PostCard",
+          "startLine": 362,
+          "endLine": 490,
+          "params": [
+            "{\n  post,\n  open,\n  onToggleComments,\n  onLike,\n  onCommented,\n}"
+          ]
+        },
+        {
+          "name": "CommentRow",
+          "startLine": 492,
+          "endLine": 508,
+          "params": [
+            "{ c, onReply }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CommunityPage",
+          "line": 79,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "timeAgo",
+          "callee": "new Date(value).getTime",
+          "lineNumber": 45
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Math.max",
+          "lineNumber": 47
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Math.floor",
+          "lineNumber": 47
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Date.now",
+          "lineNumber": 47
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Math.floor",
+          "lineNumber": 49
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Math.floor",
+          "lineNumber": 51
+        },
+        {
+          "caller": "timeAgo",
+          "callee": "Math.floor",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Avatar",
+          "callee": "(name || 'M').slice(0, 1).toUpperCase",
+          "lineNumber": 68
+        },
+        {
+          "caller": "Avatar",
+          "callee": "(name || 'M').slice",
+          "lineNumber": 68
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 80
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 82
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 83
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 84
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 86
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 87
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 89
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 90
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 91
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useState",
+          "lineNumber": 92
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useCallback",
+          "lineNumber": 94
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "fetch",
+          "lineNumber": 95
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "r.json",
+          "lineNumber": 97
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setPosts",
+          "lineNumber": 98
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setCursor",
+          "lineNumber": 99
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useCallback",
+          "lineNumber": 102
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setLoadingMore",
+          "lineNumber": 104
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "fetch",
+          "lineNumber": 106
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "r.json",
+          "lineNumber": 108
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setPosts",
+          "lineNumber": 109
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setCursor",
+          "lineNumber": 110
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setLoadingMore",
+          "lineNumber": 113
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useCallback",
+          "lineNumber": 116
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "fetch",
+          "lineNumber": 117
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setLevel",
+          "lineNumber": 118
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "r.json",
+          "lineNumber": 118
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useEffect",
+          "lineNumber": 121
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setLoading",
+          "lineNumber": 122
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "Promise.all([loadFeed(), loadLevel()]).finally",
+          "lineNumber": 123
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "Promise.all",
+          "lineNumber": 123
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "loadFeed",
+          "lineNumber": 123
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "loadLevel",
+          "lineNumber": 123
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setLoading",
+          "lineNumber": 123
+        },
+        {
+          "caller": "onImage",
+          "callee": "file.type.startsWith",
+          "lineNumber": 128
+        },
+        {
+          "caller": "onImage",
+          "callee": "setErr",
+          "lineNumber": 128
+        },
+        {
+          "caller": "onImage",
+          "callee": "setErr",
+          "lineNumber": 129
+        },
+        {
+          "caller": "onImage",
+          "callee": "setImage",
+          "lineNumber": 131
+        },
+        {
+          "caller": "onImage",
+          "callee": "String",
+          "lineNumber": 131
+        },
+        {
+          "caller": "onImage",
+          "callee": "reader.readAsDataURL",
+          "lineNumber": 132
+        },
+        {
+          "caller": "submitPost",
+          "callee": "e.preventDefault",
+          "lineNumber": 136
+        },
+        {
+          "caller": "submitPost",
+          "callee": "title.trim",
+          "lineNumber": 137
+        },
+        {
+          "caller": "submitPost",
+          "callee": "message.trim",
+          "lineNumber": 137
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setPosting",
+          "lineNumber": 138
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setErr",
+          "lineNumber": 139
+        },
+        {
+          "caller": "submitPost",
+          "callee": "fetch",
+          "lineNumber": 141
+        },
+        {
+          "caller": "submitPost",
+          "callee": "JSON.stringify",
+          "lineNumber": 144
+        },
+        {
+          "caller": "submitPost",
+          "callee": "r.json",
+          "lineNumber": 146
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setTitle",
+          "lineNumber": 148
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setMessage",
+          "lineNumber": 149
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setImage",
+          "lineNumber": 150
+        },
+        {
+          "caller": "submitPost",
+          "callee": "Promise.all",
+          "lineNumber": 151
+        },
+        {
+          "caller": "submitPost",
+          "callee": "loadFeed",
+          "lineNumber": 151
+        },
+        {
+          "caller": "submitPost",
+          "callee": "loadLevel",
+          "lineNumber": 151
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setErr",
+          "lineNumber": 153
+        },
+        {
+          "caller": "submitPost",
+          "callee": "setPosting",
+          "lineNumber": 155
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "fetch",
+          "lineNumber": 160
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "r.json().catch",
+          "lineNumber": 162
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "r.json",
+          "lineNumber": 162
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "setErr",
+          "lineNumber": 163
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "Promise.all",
+          "lineNumber": 166
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "loadFeed",
+          "lineNumber": 166
+        },
+        {
+          "caller": "toggleLike",
+          "callee": "loadLevel",
+          "lineNumber": 166
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "useMemo",
+          "lineNumber": 169
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "posts.reduce",
+          "lineNumber": 169
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "TIERS.map",
+          "lineNumber": 198
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "(['hot', 'new'] as const).map",
+          "lineNumber": 234
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setSort",
+          "lineNumber": 237
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setTitle",
+          "lineNumber": 253
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setMessage",
+          "lineNumber": 261
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setImage",
+          "lineNumber": 272
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "onImage",
+          "lineNumber": 279
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "title.trim",
+          "lineNumber": 283
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "message.trim",
+          "lineNumber": 283
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "posts.map",
+          "lineNumber": 298
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "openComments.has",
+          "lineNumber": 302
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "setOpenComments",
+          "lineNumber": 304
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "next.has",
+          "lineNumber": 306
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "next.delete",
+          "lineNumber": 306
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "next.add",
+          "lineNumber": 307
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "toggleLike",
+          "lineNumber": 311
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "Promise.all",
+          "lineNumber": 312
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "loadFeed",
+          "lineNumber": 312
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "loadLevel",
+          "lineNumber": 312
+        },
+        {
+          "caller": "CommunityPage",
+          "callee": "[\n            { label: '제품 소스 공유', checked: true },\n            { label: '판매 테스트 인증', checked: true },\n            { label: '우수 글 공지 고정 예정', checked: false },\n          ].map",
+          "lineNumber": 346
+        },
+        {
+          "caller": "PostCard",
+          "callee": "useState",
+          "lineNumber": 375
+        },
+        {
+          "caller": "PostCard",
+          "callee": "useState",
+          "lineNumber": 376
+        },
+        {
+          "caller": "PostCard",
+          "callee": "useState",
+          "lineNumber": 377
+        },
+        {
+          "caller": "PostCard",
+          "callee": "useState",
+          "lineNumber": 378
+        },
+        {
+          "caller": "PostCard",
+          "callee": "post.comments.filter",
+          "lineNumber": 380
+        },
+        {
+          "caller": "repliesOf",
+          "callee": "post.comments.filter",
+          "lineNumber": 381
+        },
+        {
+          "caller": "submit",
+          "callee": "e.preventDefault",
+          "lineNumber": 384
+        },
+        {
+          "caller": "submit",
+          "callee": "text.trim",
+          "lineNumber": 385
+        },
+        {
+          "caller": "submit",
+          "callee": "setSending",
+          "lineNumber": 386
+        },
+        {
+          "caller": "submit",
+          "callee": "setCErr",
+          "lineNumber": 387
+        },
+        {
+          "caller": "submit",
+          "callee": "fetch",
+          "lineNumber": 389
+        },
+        {
+          "caller": "submit",
+          "callee": "JSON.stringify",
+          "lineNumber": 392
+        },
+        {
+          "caller": "submit",
+          "callee": "r.json().catch",
+          "lineNumber": 395
+        },
+        {
+          "caller": "submit",
+          "callee": "r.json",
+          "lineNumber": 395
+        },
+        {
+          "caller": "submit",
+          "callee": "setCErr",
+          "lineNumber": 396
+        },
+        {
+          "caller": "submit",
+          "callee": "setText",
+          "lineNumber": 399
+        },
+        {
+          "caller": "submit",
+          "callee": "setReplyTo",
+          "lineNumber": 400
+        },
+        {
+          "caller": "submit",
+          "callee": "onCommented",
+          "lineNumber": 401
+        },
+        {
+          "caller": "submit",
+          "callee": "setSending",
+          "lineNumber": 403
+        },
+        {
+          "caller": "PostCard",
+          "callee": "timeAgo",
+          "lineNumber": 414
+        },
+        {
+          "caller": "PostCard",
+          "callee": "topComments.map",
+          "lineNumber": 451
+        },
+        {
+          "caller": "PostCard",
+          "callee": "setReplyTo",
+          "lineNumber": 453
+        },
+        {
+          "caller": "PostCard",
+          "callee": "repliesOf(c.id).map",
+          "lineNumber": 454
+        },
+        {
+          "caller": "PostCard",
+          "callee": "repliesOf",
+          "lineNumber": 454
+        },
+        {
+          "caller": "PostCard",
+          "callee": "setReplyTo",
+          "lineNumber": 464
+        },
+        {
+          "caller": "PostCard",
+          "callee": "setText",
+          "lineNumber": 470
+        },
+        {
+          "caller": "PostCard",
+          "callee": "text.trim",
+          "lineNumber": 477
+        },
+        {
+          "caller": "CommentRow",
+          "callee": "timeAgo",
+          "lineNumber": 499
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/PageHeader.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "PageHeader",
+          "startLine": 9,
+          "endLine": 27,
+          "params": [
+            "{ title, accent, emoji, description, children }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PageHeader",
+          "line": 9,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/RankedProductList.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 268,
+      "nonEmptyLines": 246,
+      "functions": [
+        {
+          "name": "rankAccent",
+          "startLine": 42,
+          "endLine": 44,
+          "params": [
+            "rank"
+          ]
+        },
+        {
+          "name": "RankedProductList",
+          "startLine": 52,
+          "endLine": 268,
+          "params": [
+            "{ platform }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RankedProductList",
+          "line": 52,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 53
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 54
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 55
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 56
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 57
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 58
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useState",
+          "lineNumber": 60
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useCallback",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setLoading",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setLoadingMore",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setError",
+          "lineNumber": 65
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.append",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.append",
+          "lineNumber": 69
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.append",
+          "lineNumber": 70
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.set",
+          "lineNumber": 71
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "String",
+          "lineNumber": 71
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.set",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "String",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "fetch",
+          "lineNumber": 73
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "params.toString",
+          "lineNumber": 73
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "res.json",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setVideos",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setOffset",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setVideos",
+          "lineNumber": 77
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setOffset",
+          "lineNumber": 77
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setTotal",
+          "lineNumber": 78
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setError",
+          "lineNumber": 80
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setLoading",
+          "lineNumber": 82
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "setLoadingMore",
+          "lineNumber": 83
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "useEffect",
+          "lineNumber": 87
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "fetchVideos",
+          "lineNumber": 87
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScraping",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScrapingStatus",
+          "lineNumber": 92
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "fetch",
+          "lineNumber": 93
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "JSON.stringify",
+          "lineNumber": 94
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "res.json",
+          "lineNumber": 97
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScrapingStatus",
+          "lineNumber": 98
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "fetchVideos",
+          "lineNumber": 99
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setTimeout",
+          "lineNumber": 100
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScrapingStatus",
+          "lineNumber": 100
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setError",
+          "lineNumber": 102
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScrapingStatus",
+          "lineNumber": 103
+        },
+        {
+          "caller": "handleRefresh",
+          "callee": "setScraping",
+          "lineNumber": 104
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "videos.map",
+          "lineNumber": 169
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "estimateRevenue",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "(video.authorName || '?').replace(/^@/, '').charAt(0).toUpperCase",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "(video.authorName || '?').replace(/^@/, '').charAt",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "(video.authorName || '?').replace",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "rankAccent",
+          "lineNumber": 190
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "formatCount",
+          "lineNumber": 214
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "formatCount",
+          "lineNumber": 218
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "Math.round",
+          "lineNumber": 223
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "formatKRW",
+          "lineNumber": 238
+        },
+        {
+          "caller": "RankedProductList",
+          "callee": "fetchVideos",
+          "lineNumber": 251
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/VideoListPage.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 238,
+      "nonEmptyLines": 219,
+      "functions": [
+        {
+          "name": "VideoListPage",
+          "startLine": 52,
+          "endLine": 238,
+          "params": [
+            "{ platform, category, initialFilters, showRefresh = true }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "VideoListPage",
+          "line": 52,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 53
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 54
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 55
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 56
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 57
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 58
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 59
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 60
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 61
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useRef",
+          "lineNumber": 62
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useState",
+          "lineNumber": 65
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useCallback",
+          "lineNumber": 72
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setLoading",
+          "lineNumber": 73
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setLoadingMore",
+          "lineNumber": 73
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 80
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 81
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 82
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 83
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 84
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 85
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "filters.days.toString",
+          "lineNumber": 85
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.append",
+          "lineNumber": 86
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.set",
+          "lineNumber": 87
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "String",
+          "lineNumber": 87
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.set",
+          "lineNumber": 88
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "String",
+          "lineNumber": 88
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "fetch",
+          "lineNumber": 89
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "params.toString",
+          "lineNumber": 89
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "response.json",
+          "lineNumber": 91
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setVideos",
+          "lineNumber": 92
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setOffset",
+          "lineNumber": 92
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setVideos",
+          "lineNumber": 93
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setOffset",
+          "lineNumber": 93
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setTotal",
+          "lineNumber": 94
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setError",
+          "lineNumber": 96
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setLoading",
+          "lineNumber": 98
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setLoadingMore",
+          "lineNumber": 99
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "useEffect",
+          "lineNumber": 103
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "fetchVideos",
+          "lineNumber": 103
+        },
+        {
+          "caller": "handleFilterChange",
+          "callee": "setFilters",
+          "lineNumber": 106
+        },
+        {
+          "caller": "handleFilterChange",
+          "callee": "setTimeout",
+          "lineNumber": 107
+        },
+        {
+          "caller": "handleFilterChange",
+          "callee": "gridRef.current?.scrollIntoView",
+          "lineNumber": 107
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScraping",
+          "lineNumber": 112
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScrapingStatus",
+          "lineNumber": 113
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setError",
+          "lineNumber": 114
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "fetch",
+          "lineNumber": 115
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "JSON.stringify",
+          "lineNumber": 117
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "res.json",
+          "lineNumber": 120
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScrapingStatus",
+          "lineNumber": 121
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "fetchVideos",
+          "lineNumber": 122
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setTimeout",
+          "lineNumber": 123
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScrapingStatus",
+          "lineNumber": 123
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "console.error",
+          "lineNumber": 125
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setError",
+          "lineNumber": 126
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScrapingStatus",
+          "lineNumber": 127
+        },
+        {
+          "caller": "handleRefreshData",
+          "callee": "setScraping",
+          "lineNumber": 128
+        },
+        {
+          "caller": "loadMore",
+          "callee": "fetchVideos",
+          "lineNumber": 131
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "total.toLocaleString",
+          "lineNumber": 141
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "videos.length.toLocaleString",
+          "lineNumber": 142
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "videos.map",
+          "lineNumber": 200
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setSelectedVideo",
+          "lineNumber": 214
+        },
+        {
+          "caller": "VideoListPage",
+          "callee": "setSelectedVideo",
+          "lineNumber": 234
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/SafeThumbnail.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 158,
+      "nonEmptyLines": 146,
+      "functions": [
+        {
+          "name": "toProxiedSrc",
+          "startLine": 45,
+          "endLine": 59,
+          "params": [
+            "src",
+            "platform",
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "SafeThumbnail",
+          "startLine": 84,
+          "endLine": 158,
+          "params": [
+            "{\n  src,\n  alt,\n  platform,\n  videoUrl,\n  fallbackIconSize = 56,\n  noShimmer = false,\n  eager = false,\n  showLabel = true,\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SafeThumbnail",
+          "line": 84,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProxiedSrc",
+          "callee": "/^https?:\\/\\//i.test",
+          "lineNumber": 46
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "new URL(src).host.toLowerCase",
+          "lineNumber": 49
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "PROXY_HOST_SUFFIXES.some",
+          "lineNumber": 53
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "host.endsWith",
+          "lineNumber": 53
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "encodeURIComponent",
+          "lineNumber": 54
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "videoUrl.includes",
+          "lineNumber": 55
+        },
+        {
+          "caller": "toProxiedSrc",
+          "callee": "encodeURIComponent",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "useState",
+          "lineNumber": 94
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "useState",
+          "lineNumber": 95
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "toProxiedSrc",
+          "lineNumber": 96
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "Math.max",
+          "lineNumber": 120
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "setLoaded",
+          "lineNumber": 152
+        },
+        {
+          "caller": "SafeThumbnail",
+          "callee": "setFailed",
+          "lineNumber": 153
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/page-guards.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "requireAdminPage",
+          "startLine": 9,
+          "endLine": 14,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "requireAdminPage",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "requireAdminPage",
+          "callee": "getCurrentUser",
+          "lineNumber": 10
+        },
+        {
+          "caller": "requireAdminPage",
+          "callee": "redirect",
+          "lineNumber": 11
+        },
+        {
+          "caller": "requireAdminPage",
+          "callee": "redirect",
+          "lineNumber": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 188,
+      "nonEmptyLines": 169,
+      "functions": [
+        {
+          "name": "formatCount",
+          "startLine": 4,
+          "endLine": 17,
+          "params": [
+            "count"
+          ]
+        },
+        {
+          "name": "calculateViralScore",
+          "startLine": 23,
+          "endLine": 39,
+          "params": [
+            "viewCountHistory"
+          ]
+        },
+        {
+          "name": "formatDate",
+          "startLine": 44,
+          "endLine": 48,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "daysUntil",
+          "startLine": 53,
+          "endLine": 57,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "getRelativeTime",
+          "startLine": 62,
+          "endLine": 76,
+          "params": [
+            "date"
+          ]
+        },
+        {
+          "name": "estimateRevenue",
+          "startLine": 127,
+          "endLine": 140,
+          "params": [
+            "viewCount",
+            "likeCount",
+            "platform"
+          ]
+        },
+        {
+          "name": "formatKRW",
+          "startLine": 145,
+          "endLine": 155,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "getWholesalerSearchUrl",
+          "startLine": 162,
+          "endLine": 165,
+          "params": [
+            "productTitle"
+          ]
+        },
+        {
+          "name": "getNaverShoppingSearchUrl",
+          "startLine": 170,
+          "endLine": 173,
+          "params": [
+            "productTitle"
+          ]
+        },
+        {
+          "name": "getDownloaderUrl",
+          "startLine": 181,
+          "endLine": 188,
+          "params": [
+            "videoUrl",
+            "platform"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "formatCount",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "calculateViralScore",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "formatDate",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "daysUntil",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "getRelativeTime",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "PLATFORM_NAMES",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "CATEGORY_NAMES",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "TARGET_AGE_OPTIONS",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "estimateRevenue",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "formatKRW",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "getWholesalerSearchUrl",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "getNaverShoppingSearchUrl",
+          "line": 170,
+          "isDefault": false
+        },
+        {
+          "name": "getDownloaderUrl",
+          "line": 181,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "formatCount",
+          "callee": "Number",
+          "lineNumber": 5
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000_000_000).toFixed(1).replace",
+          "lineNumber": 8
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000_000_000).toFixed",
+          "lineNumber": 8
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000_000).toFixed(1).replace",
+          "lineNumber": 11
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000_000).toFixed",
+          "lineNumber": 11
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000).toFixed(1).replace",
+          "lineNumber": 14
+        },
+        {
+          "caller": "formatCount",
+          "callee": "(num / 1_000).toFixed",
+          "lineNumber": 14
+        },
+        {
+          "caller": "formatCount",
+          "callee": "num.toString",
+          "lineNumber": 16
+        },
+        {
+          "caller": "calculateViralScore",
+          "callee": "[...viewCountHistory].sort",
+          "lineNumber": 28
+        },
+        {
+          "caller": "calculateViralScore",
+          "callee": "new Date(a.date).getTime",
+          "lineNumber": 29
+        },
+        {
+          "caller": "calculateViralScore",
+          "callee": "new Date(b.date).getTime",
+          "lineNumber": 29
+        },
+        {
+          "caller": "calculateViralScore",
+          "callee": "Math.round",
+          "lineNumber": 38
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getFullYear",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String(date.getMonth() + 1).padStart",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getMonth",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String(date.getDate()).padStart",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String",
+          "lineNumber": 47
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getDate",
+          "lineNumber": 47
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "(typeof d === 'string' ? new Date(d) : d).getTime",
+          "lineNumber": 55
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Date.now",
+          "lineNumber": 55
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Math.max",
+          "lineNumber": 56
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Math.ceil",
+          "lineNumber": 56
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "now.getTime",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "d.getTime",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "Math.floor",
+          "lineNumber": 67
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "Math.floor",
+          "lineNumber": 68
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "Math.floor",
+          "lineNumber": 69
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "Math.floor",
+          "lineNumber": 74
+        },
+        {
+          "caller": "getRelativeTime",
+          "callee": "Math.floor",
+          "lineNumber": 75
+        },
+        {
+          "caller": "estimateRevenue",
+          "callee": "Number",
+          "lineNumber": 132
+        },
+        {
+          "caller": "estimateRevenue",
+          "callee": "Number",
+          "lineNumber": 133
+        },
+        {
+          "caller": "estimateRevenue",
+          "callee": "Math.min",
+          "lineNumber": 137
+        },
+        {
+          "caller": "estimateRevenue",
+          "callee": "Math.max",
+          "lineNumber": 138
+        },
+        {
+          "caller": "estimateRevenue",
+          "callee": "Math.round",
+          "lineNumber": 139
+        },
+        {
+          "caller": "formatKRW",
+          "callee": "eok.toFixed(eok >= 10 ? 0 : 1).replace",
+          "lineNumber": 148
+        },
+        {
+          "caller": "formatKRW",
+          "callee": "eok.toFixed",
+          "lineNumber": 148
+        },
+        {
+          "caller": "formatKRW",
+          "callee": "man.toFixed",
+          "lineNumber": 152
+        },
+        {
+          "caller": "formatKRW",
+          "callee": "amount.toLocaleString",
+          "lineNumber": 154
+        },
+        {
+          "caller": "getWholesalerSearchUrl",
+          "callee": "productTitle.replace(/#\\S+/g, '').trim().slice",
+          "lineNumber": 163
+        },
+        {
+          "caller": "getWholesalerSearchUrl",
+          "callee": "productTitle.replace(/#\\S+/g, '').trim",
+          "lineNumber": 163
+        },
+        {
+          "caller": "getWholesalerSearchUrl",
+          "callee": "productTitle.replace",
+          "lineNumber": 163
+        },
+        {
+          "caller": "getWholesalerSearchUrl",
+          "callee": "encodeURIComponent",
+          "lineNumber": 164
+        },
+        {
+          "caller": "getNaverShoppingSearchUrl",
+          "callee": "productTitle.replace(/#\\S+/g, '').trim().slice",
+          "lineNumber": 171
+        },
+        {
+          "caller": "getNaverShoppingSearchUrl",
+          "callee": "productTitle.replace(/#\\S+/g, '').trim",
+          "lineNumber": 171
+        },
+        {
+          "caller": "getNaverShoppingSearchUrl",
+          "callee": "productTitle.replace",
+          "lineNumber": 171
+        },
+        {
+          "caller": "getNaverShoppingSearchUrl",
+          "callee": "encodeURIComponent",
+          "lineNumber": 172
+        },
+        {
+          "caller": "getDownloaderUrl",
+          "callee": "encodeURIComponent",
+          "lineNumber": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 10,
+        "classCount": 0
+      }
+    }
+  ]
+}

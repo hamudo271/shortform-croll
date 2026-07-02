@@ -1,0 +1,282 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/app/(app)/account/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/page.tsx",
+      "summary": "구독 상태·결제 이력·커뮤니티 등급을 보여주는 계정 관리 페이지(서버 컴포넌트)로, 프로필 편집 UI를 감싼다.",
+      "tags": ["api-handler", "server-component", "account", "subscription", "community"],
+      "complexity": "moderate",
+      "languageNotes": "Next.js App Router의 async 서버 컴포넌트로, prisma 조회 결과를 클라이언트 ProfileEditor에 주입한다."
+    },
+    {
+      "id": "function:src/app/(app)/account/page.tsx:AccountPage",
+      "type": "function",
+      "name": "AccountPage",
+      "filePath": "src/app/(app)/account/page.tsx",
+      "lineRange": [44, 138],
+      "summary": "현재 로그인 사용자를 확인하고 구독·결제·커뮤니티 등급 정보를 조회해 계정 화면을 렌더링하는 기본 서버 컴포넌트.",
+      "tags": ["server-component", "entry-point", "account", "data-fetching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/app/(app)/account/page.tsx:communityLevelLabel",
+      "type": "function",
+      "name": "communityLevelLabel",
+      "filePath": "src/app/(app)/account/page.tsx",
+      "lineRange": [26, 42],
+      "summary": "사용자의 게시글·댓글·좋아요 활동을 집계해 커뮤니티 등급 라벨을 계산하는 헬퍼.",
+      "tags": ["utility", "community", "data-fetching"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/layout.tsx",
+      "summary": "로그인된 앱 영역의 공통 레이아웃으로, 사용자 세션을 확인하고 Sidebar를 배치하는 셸(shell)이다.",
+      "tags": ["layout", "server-component", "entry-point", "app-shell"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/app/(app)/layout.tsx:AppShellLayout",
+      "type": "function",
+      "name": "AppShellLayout",
+      "filePath": "src/app/(app)/layout.tsx",
+      "lineRange": [4, 25],
+      "summary": "현재 사용자를 조회해 Sidebar와 자식 콘텐츠를 감싸는 (app) 세그먼트의 루트 레이아웃 컴포넌트.",
+      "tags": ["layout", "server-component", "app-shell"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/page.tsx",
+      "summary": "여러 landing 섹션(Hero, 통계, 요금, FAQ 등)을 조합해 렌더링하는 공개 랜딩 페이지(서버 컴포넌트).",
+      "tags": ["landing-page", "server-component", "entry-point", "marketing"],
+      "complexity": "moderate",
+      "languageNotes": "revalidate 상수를 export해 ISR(증분 정적 재생성) 주기를 지정한다."
+    },
+    {
+      "id": "function:src/app/(app)/page.tsx:LandingPage",
+      "type": "function",
+      "name": "LandingPage",
+      "filePath": "src/app/(app)/page.tsx",
+      "lineRange": [41, 185],
+      "summary": "현재 사용자 유무에 따라 랜딩 섹션들을 배치해 마케팅 페이지 전체를 구성하는 기본 서버 컴포넌트.",
+      "tags": ["landing-page", "server-component", "entry-point", "composition"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/app/(app)/page.tsx:SectionHeader",
+      "type": "function",
+      "name": "SectionHeader",
+      "filePath": "src/app/(app)/page.tsx",
+      "lineRange": [15, 39],
+      "summary": "eyebrow·title·부제를 받아 랜딩 섹션 상단 헤더를 렌더링하는 프리젠테이션 컴포넌트.",
+      "tags": ["component", "presentation", "landing-page"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/login/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/login/page.tsx",
+      "summary": "이메일/비밀번호 및 소셜 로그인을 처리하고 콜백 실패 시 안내 모달을 띄우는 로그인 페이지.",
+      "tags": ["auth", "client-component", "login", "form", "entry-point"],
+      "complexity": "moderate",
+      "languageNotes": "useSearchParams의 error 파라미터로 소셜 로그인 실패를 감지해 안내 모달을 표시한다."
+    },
+    {
+      "id": "function:src/app/login/page.tsx:LoginForm",
+      "type": "function",
+      "name": "LoginForm",
+      "filePath": "src/app/login/page.tsx",
+      "lineRange": [9, 130],
+      "summary": "로그인 입력 상태를 관리하고 /api 인증 요청을 보내며 실패 시 오류·OAuth 안내를 처리하는 클라이언트 폼.",
+      "tags": ["auth", "client-component", "form", "event-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/app/login/page.tsx:LoginPage",
+      "type": "function",
+      "name": "LoginPage",
+      "filePath": "src/app/login/page.tsx",
+      "lineRange": [132, 162],
+      "summary": "Suspense 경계로 LoginForm을 감싸 로그인 화면 레이아웃을 구성하는 기본 export 페이지 컴포넌트.",
+      "tags": ["auth", "client-component", "login", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/signup/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/signup/page.tsx",
+      "summary": "이메일·이름·연락처·사업자 정보 등 가입 폼을 관리하고 /api 회원가입 요청을 처리하는 회원가입 페이지.",
+      "tags": ["auth", "client-component", "signup", "form", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/app/signup/page.tsx:SignupPage",
+      "type": "function",
+      "name": "SignupPage",
+      "filePath": "src/app/signup/page.tsx",
+      "lineRange": [9, 179],
+      "summary": "다수의 입력 필드 상태와 검증을 관리하고 회원가입 API를 호출한 뒤 라우팅하는 클라이언트 폼 컴포넌트.",
+      "tags": ["auth", "client-component", "signup", "form", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/components/app/ProfileEditor.tsx",
+      "type": "file",
+      "name": "ProfileEditor.tsx",
+      "filePath": "src/components/app/ProfileEditor.tsx",
+      "summary": "프로필 사진 업로드와 이름 인라인 편집을 지원하는 클라이언트 컴포넌트로, 계정 페이지에서 사용된다.",
+      "tags": ["component", "client-component", "profile", "form", "event-handler"],
+      "complexity": "moderate",
+      "languageNotes": "FileReader로 이미지를 data URL로 변환해 PATCH 요청으로 전송한다."
+    },
+    {
+      "id": "function:src/components/app/ProfileEditor.tsx:ProfileEditor",
+      "type": "function",
+      "name": "ProfileEditor",
+      "filePath": "src/components/app/ProfileEditor.tsx",
+      "lineRange": [29, 189],
+      "summary": "이름·아바타 상태를 관리하고 이미지 선택·이름 저장 시 PATCH API를 호출해 프로필을 갱신하는 클라이언트 컴포넌트.",
+      "tags": ["component", "client-component", "profile", "event-handler", "form"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/components/app/ProfileEditor.tsx:Avatar",
+      "type": "function",
+      "name": "Avatar",
+      "filePath": "src/components/app/ProfileEditor.tsx",
+      "lineRange": [7, 27],
+      "summary": "프로필 이미지가 있으면 사진을, 없으면 이름 이니셜을 원형으로 표시하는 아바타 프리젠테이션 컴포넌트.",
+      "tags": ["component", "presentation", "avatar"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/app/Sidebar.tsx",
+      "type": "file",
+      "name": "Sidebar.tsx",
+      "filePath": "src/components/app/Sidebar.tsx",
+      "summary": "네비게이션 그룹, 다크모드 토글, 접기/펼치기, 모바일 드로어, 로그아웃을 제공하는 앱 사이드바 클라이언트 컴포넌트.",
+      "tags": ["component", "client-component", "navigation", "sidebar", "theme"],
+      "complexity": "complex",
+      "languageNotes": "쿠키와 documentElement 클래스에서 초기 접힘 상태·테마를 읽어 hydration 불일치를 피한다."
+    },
+    {
+      "id": "function:src/components/app/Sidebar.tsx:Sidebar",
+      "type": "function",
+      "name": "Sidebar",
+      "filePath": "src/components/app/Sidebar.tsx",
+      "lineRange": [105, 384],
+      "summary": "경로 기반 활성 표시, 관리자 전용 항목 필터링, 테마·접힘 상태·모바일 열림을 관리하는 사이드바 본체 컴포넌트.",
+      "tags": ["component", "client-component", "navigation", "state-management", "theme"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/components/auth/SocialLoginButtons.tsx",
+      "type": "file",
+      "name": "SocialLoginButtons.tsx",
+      "filePath": "src/components/auth/SocialLoginButtons.tsx",
+      "summary": "카카오·구글 등 소셜 로그인 진입 링크를 렌더링하는 재사용 버튼 컴포넌트.",
+      "tags": ["component", "auth", "social-login", "presentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/components/auth/SocialLoginButtons.tsx:SocialLoginButtons",
+      "type": "function",
+      "name": "SocialLoginButtons",
+      "filePath": "src/components/auth/SocialLoginButtons.tsx",
+      "lineRange": [5, 41],
+      "summary": "라벨을 받아 소셜 로그인 제공자별 진입 버튼 목록을 렌더링하는 프리젠테이션 컴포넌트.",
+      "tags": ["component", "auth", "social-login", "presentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/landing/FAQTeaser.tsx",
+      "type": "file",
+      "name": "FAQTeaser.tsx",
+      "filePath": "src/components/landing/FAQTeaser.tsx",
+      "summary": "정적 FAQ 목록을 접이식 형태로 미리보기하는 랜딩 섹션 컴포넌트.",
+      "tags": ["component", "landing-page", "faq", "presentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/components/landing/FAQTeaser.tsx:FAQTeaser",
+      "type": "function",
+      "name": "FAQTeaser",
+      "filePath": "src/components/landing/FAQTeaser.tsx",
+      "lineRange": [23, 49],
+      "summary": "모듈 내 정적 FAQS 배열을 순회해 질문/답변 카드 목록을 렌더링하는 랜딩 컴포넌트.",
+      "tags": ["component", "landing-page", "faq", "presentation"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "file:src/components/app/ProfileEditor.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "file:src/lib/auth.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "file:src/lib/community.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "file:src/lib/prisma.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "function:src/app/(app)/account/page.tsx:AccountPage", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "function:src/app/(app)/account/page.tsx:communityLevelLabel", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/(app)/account/page.tsx", "target": "function:src/app/(app)/account/page.tsx:AccountPage", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/(app)/account/page.tsx:AccountPage", "target": "function:src/app/(app)/account/page.tsx:communityLevelLabel", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/(app)/account/page.tsx:AccountPage", "target": "function:src/lib/auth.ts:getCurrentUser", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/(app)/account/page.tsx:communityLevelLabel", "target": "function:src/lib/community.ts:levelFromActivity", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/app/(app)/layout.tsx", "target": "file:src/components/app/Sidebar.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/layout.tsx", "target": "file:src/lib/auth.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/layout.tsx", "target": "function:src/app/(app)/layout.tsx:AppShellLayout", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/(app)/layout.tsx", "target": "function:src/app/(app)/layout.tsx:AppShellLayout", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/(app)/layout.tsx:AppShellLayout", "target": "function:src/lib/auth.ts:getCurrentUser", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/FAQTeaser.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/HeroLivePreview.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/HeroStats.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/HowItWorks.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/PlatformShowcase.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/PricingCallout.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/ScenarioCards.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/landing/TopProductsPreview.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "file:src/lib/auth.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/(app)/page.tsx", "target": "function:src/app/(app)/page.tsx:LandingPage", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/(app)/page.tsx", "target": "function:src/app/(app)/page.tsx:SectionHeader", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/(app)/page.tsx", "target": "function:src/app/(app)/page.tsx:LandingPage", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/(app)/page.tsx:LandingPage", "target": "function:src/lib/auth.ts:getCurrentUser", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/app/login/page.tsx", "target": "file:src/components/auth/SocialLoginButtons.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/login/page.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/login/page.tsx", "target": "function:src/app/login/page.tsx:LoginForm", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/login/page.tsx", "target": "function:src/app/login/page.tsx:LoginPage", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/login/page.tsx", "target": "function:src/app/login/page.tsx:LoginPage", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/app/login/page.tsx:LoginPage", "target": "function:src/app/login/page.tsx:LoginForm", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/app/signup/page.tsx", "target": "file:src/components/auth/SocialLoginButtons.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/signup/page.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/app/signup/page.tsx", "target": "function:src/app/signup/page.tsx:SignupPage", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/app/signup/page.tsx", "target": "function:src/app/signup/page.tsx:SignupPage", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/app/ProfileEditor.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/app/ProfileEditor.tsx", "target": "function:src/components/app/ProfileEditor.tsx:ProfileEditor", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/app/ProfileEditor.tsx", "target": "function:src/components/app/ProfileEditor.tsx:Avatar", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/app/ProfileEditor.tsx", "target": "function:src/components/app/ProfileEditor.tsx:ProfileEditor", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/app/Sidebar.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/app/Sidebar.tsx", "target": "function:src/components/app/Sidebar.tsx:Sidebar", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/app/Sidebar.tsx", "target": "function:src/components/app/Sidebar.tsx:Sidebar", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/auth/SocialLoginButtons.tsx", "target": "function:src/components/auth/SocialLoginButtons.tsx:SocialLoginButtons", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/auth/SocialLoginButtons.tsx", "target": "function:src/components/auth/SocialLoginButtons.tsx:SocialLoginButtons", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/FAQTeaser.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/FAQTeaser.tsx", "target": "function:src/components/landing/FAQTeaser.tsx:FAQTeaser", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/FAQTeaser.tsx", "target": "function:src/components/landing/FAQTeaser.tsx:FAQTeaser", "type": "exports", "direction": "forward", "weight": 0.8}
+  ]
+}

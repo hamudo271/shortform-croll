@@ -1,0 +1,253 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/components/landing/HeroLivePreview.tsx",
+      "type": "file",
+      "name": "HeroLivePreview.tsx",
+      "filePath": "src/components/landing/HeroLivePreview.tsx",
+      "summary": "실시간 상위 상품 데이터를 조회해 히어로 영역의 라이브 미리보기 카드(예상 수익·조회수 등)를 보여주는 서버 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "data-fetching", "hero"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview",
+      "type": "function",
+      "name": "HeroLivePreview",
+      "filePath": "src/components/landing/HeroLivePreview.tsx",
+      "lineRange": [32, 142],
+      "summary": "getTopProducts로 대표 상품을 가져와 예상 수익·조회수를 포맷해 히어로 미리보기 카드를 렌더링하는 async 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "data-fetching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/components/landing/HeroStats.tsx",
+      "type": "file",
+      "name": "HeroStats.tsx",
+      "filePath": "src/components/landing/HeroStats.tsx",
+      "summary": "총 수집 수·카테고리 수·오늘 수집 수 등 랜딩 통계 지표를 요약 표시하는 서버 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "stats", "data-fetching"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/components/landing/HeroStats.tsx:HeroStats",
+      "type": "function",
+      "name": "HeroStats",
+      "filePath": "src/components/landing/HeroStats.tsx",
+      "lineRange": [3, 32],
+      "summary": "getLandingStats로 통계를 조회해 총계·카테고리·오늘 지표 항목을 렌더링하는 async 통계 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "stats"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/landing/HowItWorks.tsx",
+      "type": "file",
+      "name": "HowItWorks.tsx",
+      "filePath": "src/components/landing/HowItWorks.tsx",
+      "summary": "서비스 이용 흐름을 단계별 카드로 설명하는 정적 랜딩 섹션 컴포넌트.",
+      "tags": ["component", "landing-page", "presentation", "onboarding"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/components/landing/HowItWorks.tsx:HowItWorks",
+      "type": "function",
+      "name": "HowItWorks",
+      "filePath": "src/components/landing/HowItWorks.tsx",
+      "lineRange": [24, 48],
+      "summary": "모듈 내 STEPS 배열을 순회해 이용 단계 카드 목록을 렌더링하는 랜딩 컴포넌트.",
+      "tags": ["component", "landing-page", "presentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/landing/PlatformShowcase.tsx",
+      "type": "file",
+      "name": "PlatformShowcase.tsx",
+      "filePath": "src/components/landing/PlatformShowcase.tsx",
+      "summary": "플랫폼별(YouTube·TikTok·Instagram) 수집 건수를 카드로 보여주는 랜딩 쇼케이스 서버 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "data-fetching", "platform"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/components/landing/PlatformShowcase.tsx:PlatformShowcase",
+      "type": "function",
+      "name": "PlatformShowcase",
+      "filePath": "src/components/landing/PlatformShowcase.tsx",
+      "lineRange": [34, 68],
+      "summary": "getLandingStats의 플랫폼별 카운트를 정적 카드 메타와 결합해 렌더링하는 async 쇼케이스 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "platform"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/landing/PricingCallout.tsx",
+      "type": "file",
+      "name": "PricingCallout.tsx",
+      "filePath": "src/components/landing/PricingCallout.tsx",
+      "summary": "구독 가격·할인율·포함 혜택을 강조하고 사용자 상태에 따라 CTA를 분기하는 요금 안내 랜딩 섹션.",
+      "tags": ["component", "landing-page", "pricing", "subscription", "cta"],
+      "complexity": "moderate",
+      "languageNotes": "auth 모듈의 가격 상수(SUBSCRIPTION_PRICE_KRW 등)로 할인율을 계산한다."
+    },
+    {
+      "id": "function:src/components/landing/PricingCallout.tsx:PricingCallout",
+      "type": "function",
+      "name": "PricingCallout",
+      "filePath": "src/components/landing/PricingCallout.tsx",
+      "lineRange": [24, 107],
+      "summary": "정가 대비 할인율을 계산하고 포함 혜택 목록·구독 CTA를 렌더링하는 요금 안내 컴포넌트.",
+      "tags": ["component", "landing-page", "pricing", "subscription"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/components/landing/ScenarioCards.tsx",
+      "type": "file",
+      "name": "ScenarioCards.tsx",
+      "filePath": "src/components/landing/ScenarioCards.tsx",
+      "summary": "유통업자 활용 시나리오를 흐름 단계와 함께 카드로 소개하는 정적 랜딩 섹션 컴포넌트.",
+      "tags": ["component", "landing-page", "presentation", "use-case"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/components/landing/ScenarioCards.tsx:ScenarioCards",
+      "type": "function",
+      "name": "ScenarioCards",
+      "filePath": "src/components/landing/ScenarioCards.tsx",
+      "lineRange": [34, 62],
+      "summary": "모듈 내 SCENARIOS 배열을 순회해 각 시나리오와 흐름 단계를 카드로 렌더링하는 컴포넌트.",
+      "tags": ["component", "landing-page", "presentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/landing/TopProductsPreview.tsx",
+      "type": "file",
+      "name": "TopProductsPreview.tsx",
+      "filePath": "src/components/landing/TopProductsPreview.tsx",
+      "summary": "상위 상품 상위 3개는 공개하고 이후 항목은 블러 처리해 구독을 유도하는 랜딩 미리보기 서버 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "data-fetching", "cta"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview",
+      "type": "function",
+      "name": "TopProductsPreview",
+      "filePath": "src/components/landing/TopProductsPreview.tsx",
+      "lineRange": [35, 162],
+      "summary": "getTopProducts 결과를 상위 3개와 블러 처리 목록으로 나눠 예상 수익·조회수와 함께 렌더링하는 async 컴포넌트.",
+      "tags": ["component", "landing-page", "server-component", "data-fetching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/components/landing/TopProductsPreview.tsx:PlatformPath",
+      "type": "function",
+      "name": "PlatformPath",
+      "filePath": "src/components/landing/TopProductsPreview.tsx",
+      "lineRange": [31, 33],
+      "summary": "플랫폼 값을 대시보드 경로 세그먼트로 매핑하는 소형 헬퍼.",
+      "tags": ["utility", "routing", "landing-page"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/ui/Icon.tsx",
+      "type": "file",
+      "name": "Icon.tsx",
+      "filePath": "src/components/ui/Icon.tsx",
+      "summary": "앱 전반에서 사용하는 SVG 아이콘·플랫폼 로고 컴포넌트를 모아 export하는 공용 아이콘 허브.",
+      "tags": ["ui", "icons", "barrel", "presentation", "shared"],
+      "complexity": "complex",
+      "languageNotes": "공통 baseSvg 래퍼로 stroke 아이콘들을 일관되게 생성하고, 40여 개 아이콘을 named export한다."
+    },
+    {
+      "id": "function:src/components/ui/Icon.tsx:baseSvg",
+      "type": "function",
+      "name": "baseSvg",
+      "filePath": "src/components/ui/Icon.tsx",
+      "lineRange": [15, 26],
+      "summary": "size·strokeWidth·className을 받아 모든 stroke 아이콘이 공유하는 기본 SVG 래퍼 요소를 생성하는 팩토리 헬퍼.",
+      "tags": ["utility", "factory", "icons", "svg"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/landing-data.ts",
+      "type": "file",
+      "name": "landing-data.ts",
+      "filePath": "src/lib/landing-data.ts",
+      "summary": "공개 랜딩 페이지용 서버 데이터 계층으로, unstable_cache로 1시간 캐싱한 통계·상위 상품 쿼리를 제공한다.",
+      "tags": ["service", "data-model", "caching", "landing-page", "server"],
+      "complexity": "moderate",
+      "languageNotes": "next/cache의 unstable_cache로 DB 쿼리를 1시간 TTL로 감싸 랜딩 렌더링 부하를 낮춘다."
+    },
+    {
+      "id": "function:src/lib/landing-data.ts:getLandingStats",
+      "type": "function",
+      "name": "getLandingStats",
+      "filePath": "src/lib/landing-data.ts",
+      "lineRange": [39, 85],
+      "summary": "전체·오늘 수집 수, 카테고리 수, 플랫폼별 카운트를 병렬 집계해 캐싱된 랜딩 통계를 반환하는 함수.",
+      "tags": ["service", "data-fetching", "caching", "stats"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/landing-data.ts:getTopProducts",
+      "type": "function",
+      "name": "getTopProducts",
+      "filePath": "src/lib/landing-data.ts",
+      "lineRange": [86, 124],
+      "summary": "바이럴 점수 상위 상품 목록을 조회해 랜딩 미리보기에 필요한 형태로 반환하는 캐싱된 함수.",
+      "tags": ["service", "data-fetching", "caching", "products"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "file:src/components/ui/SafeThumbnail.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "file:src/lib/landing-data.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "file:src/lib/utils.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/HeroLivePreview.tsx", "target": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "target": "function:src/lib/landing-data.ts:getTopProducts", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "target": "function:src/lib/utils.ts:estimateRevenue", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "target": "function:src/lib/utils.ts:formatKRW", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/HeroLivePreview.tsx:HeroLivePreview", "target": "function:src/lib/utils.ts:formatCount", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/HeroStats.tsx", "target": "file:src/lib/landing-data.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HeroStats.tsx", "target": "function:src/components/landing/HeroStats.tsx:HeroStats", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/HeroStats.tsx", "target": "function:src/components/landing/HeroStats.tsx:HeroStats", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/HeroStats.tsx:HeroStats", "target": "function:src/lib/landing-data.ts:getLandingStats", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/HowItWorks.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/HowItWorks.tsx", "target": "function:src/components/landing/HowItWorks.tsx:HowItWorks", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/HowItWorks.tsx", "target": "function:src/components/landing/HowItWorks.tsx:HowItWorks", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/PlatformShowcase.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/PlatformShowcase.tsx", "target": "file:src/lib/landing-data.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/PlatformShowcase.tsx", "target": "function:src/components/landing/PlatformShowcase.tsx:PlatformShowcase", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/PlatformShowcase.tsx", "target": "function:src/components/landing/PlatformShowcase.tsx:PlatformShowcase", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/PlatformShowcase.tsx:PlatformShowcase", "target": "function:src/lib/landing-data.ts:getLandingStats", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/PricingCallout.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/PricingCallout.tsx", "target": "file:src/lib/auth.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/PricingCallout.tsx", "target": "function:src/components/landing/PricingCallout.tsx:PricingCallout", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/PricingCallout.tsx", "target": "function:src/components/landing/PricingCallout.tsx:PricingCallout", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/ScenarioCards.tsx", "target": "function:src/components/landing/ScenarioCards.tsx:ScenarioCards", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/ScenarioCards.tsx", "target": "function:src/components/landing/ScenarioCards.tsx:ScenarioCards", "type": "exports", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "file:src/components/ui/Icon.tsx", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "file:src/lib/landing-data.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "file:src/lib/utils.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "function:src/components/landing/TopProductsPreview.tsx:PlatformPath", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/components/landing/TopProductsPreview.tsx", "target": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "target": "function:src/lib/landing-data.ts:getTopProducts", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "target": "function:src/lib/utils.ts:estimateRevenue", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "target": "function:src/lib/utils.ts:formatCount", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "target": "function:src/lib/utils.ts:formatKRW", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "function:src/components/landing/TopProductsPreview.tsx:TopProductsPreview", "target": "function:src/components/landing/TopProductsPreview.tsx:PlatformPath", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/components/ui/Icon.tsx", "target": "function:src/components/ui/Icon.tsx:baseSvg", "type": "contains", "direction": "forward", "weight": 1.0},
+
+    {"source": "file:src/lib/landing-data.ts", "target": "file:src/lib/prisma.ts", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/lib/landing-data.ts", "target": "function:src/lib/landing-data.ts:getLandingStats", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/lib/landing-data.ts", "target": "function:src/lib/landing-data.ts:getTopProducts", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/lib/landing-data.ts", "target": "function:src/lib/landing-data.ts:getLandingStats", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:src/lib/landing-data.ts", "target": "function:src/lib/landing-data.ts:getTopProducts", "type": "exports", "direction": "forward", "weight": 0.8}
+  ]
+}

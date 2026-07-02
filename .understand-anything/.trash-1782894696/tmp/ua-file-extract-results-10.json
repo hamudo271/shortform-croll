@@ -1,0 +1,79 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 1,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/middleware.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "middleware",
+          "startLine": 7,
+          "endLine": 35,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "middleware",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "config",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "middleware",
+          "callee": "request.cookies.get",
+          "lineNumber": 8
+        },
+        {
+          "caller": "middleware",
+          "callee": "pathname.startsWith",
+          "lineNumber": 14
+        },
+        {
+          "caller": "middleware",
+          "callee": "NextResponse.redirect",
+          "lineNumber": 18
+        },
+        {
+          "caller": "middleware",
+          "callee": "NextResponse.next",
+          "lineNumber": 24
+        },
+        {
+          "caller": "middleware",
+          "callee": "loginUrl.searchParams.set",
+          "lineNumber": 30
+        },
+        {
+          "caller": "middleware",
+          "callee": "NextResponse.redirect",
+          "lineNumber": 31
+        },
+        {
+          "caller": "middleware",
+          "callee": "NextResponse.next",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

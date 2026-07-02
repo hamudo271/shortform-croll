@@ -1,0 +1,2782 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 12,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "scripts/collect-ig-test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 17,
+          "endLine": 77,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "collectReelsByHashtags",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "reels.sort",
+          "lineNumber": 23
+        },
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 24
+        },
+        {
+          "caller": "main",
+          "callee": "isExcludedContent",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "isListicleTitle",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "getOrFetchCreator",
+          "lineNumber": 36
+        },
+        {
+          "caller": "main",
+          "callee": "fetchUserInfo",
+          "lineNumber": 37
+        },
+        {
+          "caller": "main",
+          "callee": "classifyThumbnail",
+          "lineNumber": 43
+        },
+        {
+          "caller": "main",
+          "callee": "classifyByKeywords",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "prisma.video.upsert",
+          "lineNumber": 48
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 52
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 60
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 60
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 61
+        },
+        {
+          "caller": "main",
+          "callee": "BigInt",
+          "lineNumber": 61
+        },
+        {
+          "caller": "main",
+          "callee": "saved.push",
+          "lineNumber": 69
+        },
+        {
+          "caller": "main",
+          "callee": "reel.title.slice",
+          "lineNumber": 69
+        },
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 72
+        },
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 73
+        },
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 74
+        },
+        {
+          "caller": "main",
+          "callee": "saved.forEach",
+          "lineNumber": 75
+        },
+        {
+          "caller": "main",
+          "callee": "console.log",
+          "lineNumber": 75
+        },
+        {
+          "caller": "main",
+          "callee": "prisma.$disconnect",
+          "lineNumber": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/collect/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 485,
+      "nonEmptyLines": 445,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 38,
+          "endLine": 450,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 452,
+          "endLine": 481,
+          "params": []
+        },
+        {
+          "name": "delay",
+          "startLine": 483,
+          "endLine": 485,
+          "params": [
+            "ms"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "maxDuration",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "GET",
+          "line": 452,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "request.headers.get",
+          "lineNumber": 39
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 43
+        },
+        {
+          "caller": "POST",
+          "callee": "Date.now",
+          "lineNumber": 59
+        },
+        {
+          "caller": "elapsedMs",
+          "callee": "Date.now",
+          "lineNumber": 60
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 69
+        },
+        {
+          "caller": "POST",
+          "callee": "getTikTokTrending",
+          "lineNumber": 74
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 75
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 78
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 79
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.has",
+          "lineNumber": 83
+        },
+        {
+          "caller": "POST",
+          "callee": "/[a-zA-Z]{3,}/.test",
+          "lineNumber": 86
+        },
+        {
+          "caller": "POST",
+          "callee": "/[가-힣]/.test",
+          "lineNumber": 87
+        },
+        {
+          "caller": "POST",
+          "callee": "getOrFetchCreator",
+          "lineNumber": 94
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchTikTokUser",
+          "lineNumber": 95
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchTikTokComments",
+          "lineNumber": 97
+        },
+        {
+          "caller": "POST",
+          "callee": "scorePurchaseIntent",
+          "lineNumber": 98
+        },
+        {
+          "caller": "POST",
+          "callee": "evaluatePass",
+          "lineNumber": 99
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyThumbnail",
+          "lineNumber": 113
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.add",
+          "lineNumber": 120
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyVideo",
+          "lineNumber": 125
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyByKeywords",
+          "lineNumber": 131
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.upsert",
+          "lineNumber": 134
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 139
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 140
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 141
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 142
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 163
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 164
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 165
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 166
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 181
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 185
+        },
+        {
+          "caller": "POST",
+          "callee": "results.errors.push",
+          "lineNumber": 186
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 216
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 217
+        },
+        {
+          "caller": "POST",
+          "callee": "searchTikTokVideos",
+          "lineNumber": 222
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 224
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.has",
+          "lineNumber": 225
+        },
+        {
+          "caller": "POST",
+          "callee": "/[a-zA-Z]{3,}/.test",
+          "lineNumber": 227
+        },
+        {
+          "caller": "POST",
+          "callee": "/[가-힣]/.test",
+          "lineNumber": 228
+        },
+        {
+          "caller": "POST",
+          "callee": "getOrFetchCreator",
+          "lineNumber": 235
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchTikTokUser",
+          "lineNumber": 236
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchTikTokComments",
+          "lineNumber": 238
+        },
+        {
+          "caller": "POST",
+          "callee": "scorePurchaseIntent",
+          "lineNumber": 239
+        },
+        {
+          "caller": "POST",
+          "callee": "evaluatePass",
+          "lineNumber": 240
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyThumbnail",
+          "lineNumber": 251
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.add",
+          "lineNumber": 255
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyByKeywords",
+          "lineNumber": 258
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.upsert",
+          "lineNumber": 260
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 264
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 265
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 282
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 283
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 284
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 285
+        },
+        {
+          "caller": "POST",
+          "callee": "delay",
+          "lineNumber": 301
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 303
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 307
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 312
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 313
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 319
+        },
+        {
+          "caller": "POST",
+          "callee": "import",
+          "lineNumber": 323
+        },
+        {
+          "caller": "POST",
+          "callee": "collectReelsByHashtags",
+          "lineNumber": 326
+        },
+        {
+          "caller": "POST",
+          "callee": "igErrors.push",
+          "lineNumber": 328
+        },
+        {
+          "caller": "POST",
+          "callee": "collectKoreanReelsPublic",
+          "lineNumber": 330
+        },
+        {
+          "caller": "POST",
+          "callee": "igErrors.push",
+          "lineNumber": 332
+        },
+        {
+          "caller": "POST",
+          "callee": "r.creators.entries",
+          "lineNumber": 334
+        },
+        {
+          "caller": "POST",
+          "callee": "getOrFetchCreator",
+          "lineNumber": 335
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 343
+        },
+        {
+          "caller": "POST",
+          "callee": "reels.sort",
+          "lineNumber": 346
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 349
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.has",
+          "lineNumber": 350
+        },
+        {
+          "caller": "POST",
+          "callee": "isExcludedContent",
+          "lineNumber": 355
+        },
+        {
+          "caller": "POST",
+          "callee": "isListicleTitle",
+          "lineNumber": 357
+        },
+        {
+          "caller": "POST",
+          "callee": "getOrFetchCreator",
+          "lineNumber": 364
+        },
+        {
+          "caller": "POST",
+          "callee": "fetchUserInfo",
+          "lineNumber": 365
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.creator.findUnique",
+          "lineNumber": 367
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyThumbnail",
+          "lineNumber": 375
+        },
+        {
+          "caller": "POST",
+          "callee": "processedVideoIds.add",
+          "lineNumber": 379
+        },
+        {
+          "caller": "POST",
+          "callee": "classifyByKeywords",
+          "lineNumber": 382
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.upsert",
+          "lineNumber": 384
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 387
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 388
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 389
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 404
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 405
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 406
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 407
+        },
+        {
+          "caller": "POST",
+          "callee": "results.errors.push",
+          "lineNumber": 423
+        },
+        {
+          "caller": "POST",
+          "callee": "igErrors.slice",
+          "lineNumber": 423
+        },
+        {
+          "caller": "POST",
+          "callee": "console.log",
+          "lineNumber": 425
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 427
+        },
+        {
+          "caller": "POST",
+          "callee": "results.errors.push",
+          "lineNumber": 428
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 432
+        },
+        {
+          "caller": "POST",
+          "callee": "elapsedMs",
+          "lineNumber": 435
+        },
+        {
+          "caller": "POST",
+          "callee": "new Date().toISOString",
+          "lineNumber": 441
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 444
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 445
+        },
+        {
+          "caller": "POST",
+          "callee": "String",
+          "lineNumber": 446
+        },
+        {
+          "caller": "GET",
+          "callee": "Promise.all",
+          "lineNumber": 454
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.groupBy",
+          "lineNumber": 455
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.groupBy",
+          "lineNumber": 456
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findFirst",
+          "lineNumber": 457
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 461
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 468
+        },
+        {
+          "caller": "GET",
+          "callee": "counts.reduce",
+          "lineNumber": 469
+        },
+        {
+          "caller": "GET",
+          "callee": "categoryCounts.reduce",
+          "lineNumber": 470
+        },
+        {
+          "caller": "GET",
+          "callee": "topVideos.map",
+          "lineNumber": 472
+        },
+        {
+          "caller": "GET",
+          "callee": "v.title?.substring",
+          "lineNumber": 473
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 474
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 479
+        },
+        {
+          "caller": "delay",
+          "callee": "setTimeout",
+          "lineNumber": 484
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/products/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 185,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "cleanProductTitle",
+          "startLine": 27,
+          "endLine": 45,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "resolveImageUrl",
+          "startLine": 48,
+          "endLine": 53,
+          "params": [
+            "platform",
+            "thumbnailUrl",
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 55,
+          "endLine": 185,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 55,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.replace",
+          "lineNumber": 30
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.replace",
+          "lineNumber": 32
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.replace",
+          "lineNumber": 34
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.replace(/\\s+/g, ' ').trim",
+          "lineNumber": 36
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.replace",
+          "lineNumber": 36
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.search",
+          "lineNumber": 38
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.slice(0, sentenceEnd + 1).trim",
+          "lineNumber": 40
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.slice",
+          "lineNumber": 40
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.slice(0, 80).trim",
+          "lineNumber": 42
+        },
+        {
+          "caller": "cleanProductTitle",
+          "callee": "t.slice",
+          "lineNumber": 42
+        },
+        {
+          "caller": "resolveImageUrl",
+          "callee": "encodeURIComponent",
+          "lineNumber": 50
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.max",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.min",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "parseInt",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.max",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.min",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GET",
+          "callee": "parseInt",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get('search')?.trim",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "sp.get",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "dateThreshold.setDate",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GET",
+          "callee": "dateThreshold.getDate",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GET",
+          "callee": "rawVideos.filter",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GET",
+          "callee": "isExcludedContent",
+          "lineNumber": 91
+        },
+        {
+          "caller": "GET",
+          "callee": "catCount.set",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GET",
+          "callee": "catCount.get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.max",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GET",
+          "callee": "catCount.values",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GET",
+          "callee": "filtered.slice(0, limit).map",
+          "lineNumber": 103
+        },
+        {
+          "caller": "GET",
+          "callee": "filtered.slice",
+          "lineNumber": 103
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 104
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 105
+        },
+        {
+          "caller": "GET",
+          "callee": "computeDemandPerMillion",
+          "lineNumber": 109
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.max",
+          "lineNumber": 110
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.min",
+          "lineNumber": 110
+        },
+        {
+          "caller": "GET",
+          "callee": "catCount.get",
+          "lineNumber": 117
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.log10",
+          "lineNumber": 118
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.log10",
+          "lineNumber": 118
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.max",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.min",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GET",
+          "callee": "cleanProductTitle",
+          "lineNumber": 122
+        },
+        {
+          "caller": "GET",
+          "callee": "(v.description || '').trim",
+          "lineNumber": 123
+        },
+        {
+          "caller": "GET",
+          "callee": "resolveImageUrl",
+          "lineNumber": 136
+        },
+        {
+          "caller": "GET",
+          "callee": "(v.tags || []).slice",
+          "lineNumber": 140
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.round",
+          "lineNumber": 147
+        },
+        {
+          "caller": "GET",
+          "callee": "Math.round",
+          "lineNumber": 148
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 157
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.set",
+          "lineNumber": 173
+        },
+        {
+          "caller": "GET",
+          "callee": "console.error",
+          "lineNumber": 176
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 177
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 180
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/videos/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 169,
+      "nonEmptyLines": 156,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 6,
+          "endLine": 92,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "POST",
+          "startLine": 94,
+          "endLine": 169,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 94,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 10
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 11
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 12
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GET",
+          "callee": "parseInt",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GET",
+          "callee": "parseInt",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 16
+        },
+        {
+          "caller": "GET",
+          "callee": "parseInt",
+          "lineNumber": 17
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 17
+        },
+        {
+          "caller": "GET",
+          "callee": "searchParams.get",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GET",
+          "callee": "dateThreshold.setDate",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GET",
+          "callee": "dateThreshold.getDate",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GET",
+          "callee": "Promise.all",
+          "lineNumber": 52
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findMany",
+          "lineNumber": 53
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.count",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GET",
+          "callee": "rawVideos\n      .filter((v) => !isExcludedContent(v.title, v.authorName))\n      .slice(0, limit)\n      .map",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "rawVideos\n      .filter((v) => !isExcludedContent(v.title, v.authorName))\n      .slice",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "rawVideos\n      .filter",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "isExcludedContent",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 69
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.set",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GET",
+          "callee": "console.error",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 87
+        },
+        {
+          "caller": "POST",
+          "callee": "request.json",
+          "lineNumber": 96
+        },
+        {
+          "caller": "POST",
+          "callee": "prisma.video.upsert",
+          "lineNumber": 118
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 124
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 125
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 126
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 127
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 143
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 144
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 145
+        },
+        {
+          "caller": "POST",
+          "callee": "BigInt",
+          "lineNumber": 146
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 155
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 157
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 158
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 159
+        },
+        {
+          "caller": "POST",
+          "callee": "Number",
+          "lineNumber": 160
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 163
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 164
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/classifier.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 232,
+      "nonEmptyLines": 193,
+      "functions": [
+        {
+          "name": "getGeminiClient",
+          "startLine": 37,
+          "endLine": 41,
+          "params": [
+            "apiKey"
+          ]
+        },
+        {
+          "name": "classifyVideo",
+          "startLine": 46,
+          "endLine": 115,
+          "params": [
+            "apiKey",
+            "video"
+          ]
+        },
+        {
+          "name": "classifyVideos",
+          "startLine": 120,
+          "endLine": 144,
+          "params": [
+            "apiKey",
+            "videos"
+          ]
+        },
+        {
+          "name": "validateCategory",
+          "startLine": 149,
+          "endLine": 163,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "validateTargetAge",
+          "startLine": 168,
+          "endLine": 181,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "delay",
+          "startLine": 186,
+          "endLine": 188,
+          "params": [
+            "ms"
+          ]
+        },
+        {
+          "name": "classifyByKeywords",
+          "startLine": 193,
+          "endLine": 232,
+          "params": [
+            "video"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "classifyVideo",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "classifyVideos",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "classifyByKeywords",
+          "line": 193,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getGeminiClient",
+          "callee": "genAI.getGenerativeModel",
+          "lineNumber": 40
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "getGeminiClient",
+          "lineNumber": 50
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "video.tags?.join",
+          "lineNumber": 58
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "model.generateContent",
+          "lineNumber": 91
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "response.text",
+          "lineNumber": 93
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "text.match",
+          "lineNumber": 96
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "JSON.parse",
+          "lineNumber": 101
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "validateCategory",
+          "lineNumber": 105
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "validateTargetAge",
+          "lineNumber": 106
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "Array.isArray",
+          "lineNumber": 107
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "parsed.tags.slice",
+          "lineNumber": 107
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "console.error",
+          "lineNumber": 111
+        },
+        {
+          "caller": "classifyVideo",
+          "callee": "classifyByKeywords",
+          "lineNumber": 113
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "videos.slice",
+          "lineNumber": 129
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "Promise.all",
+          "lineNumber": 131
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "batch.map",
+          "lineNumber": 132
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "classifyVideo",
+          "lineNumber": 132
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "results.push",
+          "lineNumber": 135
+        },
+        {
+          "caller": "classifyVideos",
+          "callee": "delay",
+          "lineNumber": 139
+        },
+        {
+          "caller": "validateCategory",
+          "callee": "value?.toUpperCase",
+          "lineNumber": 161
+        },
+        {
+          "caller": "validateCategory",
+          "callee": "validCategories.includes",
+          "lineNumber": 162
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "value?.toLowerCase",
+          "lineNumber": 171
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 174
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 174
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 175
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 176
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 177
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 178
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "normalized?.includes",
+          "lineNumber": 178
+        },
+        {
+          "caller": "validateTargetAge",
+          "callee": "validAges.includes",
+          "lineNumber": 180
+        },
+        {
+          "caller": "delay",
+          "callee": "setTimeout",
+          "lineNumber": 187
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "`${video.title} ${video.description || ''} ${video.tags?.join(' ') || ''}`.toLowerCase",
+          "lineNumber": 194
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "video.tags?.join",
+          "lineNumber": 194
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "Object.entries",
+          "lineNumber": 211
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "keywords.filter",
+          "lineNumber": 212
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "text.includes",
+          "lineNumber": 212
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "text.match",
+          "lineNumber": 221
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "text.match",
+          "lineNumber": 222
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "text.match",
+          "lineNumber": 223
+        },
+        {
+          "caller": "classifyByKeywords",
+          "callee": "text.match",
+          "lineNumber": 224
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/collectors/instagram-api.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 180,
+      "nonEmptyLines": 164,
+      "functions": [
+        {
+          "name": "rapidHeaders",
+          "startLine": 55,
+          "endLine": 57,
+          "params": [
+            "apiKey"
+          ]
+        },
+        {
+          "name": "mapItemToReel",
+          "startLine": 61,
+          "endLine": 94,
+          "params": [
+            "item"
+          ]
+        },
+        {
+          "name": "searchHashtagReels",
+          "startLine": 97,
+          "endLine": 117,
+          "params": [
+            "keyword",
+            "apiKey"
+          ]
+        },
+        {
+          "name": "fetchUserInfo",
+          "startLine": 120,
+          "endLine": 151,
+          "params": [
+            "username",
+            "apiKey"
+          ]
+        },
+        {
+          "name": "collectReelsByHashtags",
+          "startLine": 157,
+          "endLine": 180,
+          "params": [
+            "apiKey",
+            "hashtags"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IG_BUYINTENT_HASHTAGS",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "searchHashtagReels",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "fetchUserInfo",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "collectReelsByHashtags",
+          "line": 157,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "mapItemToReel",
+          "callee": "(item.caption?.text || '').toString",
+          "lineNumber": 67
+        },
+        {
+          "caller": "mapItemToReel",
+          "callee": "String",
+          "lineNumber": 81
+        },
+        {
+          "caller": "mapItemToReel",
+          "callee": "caption.split('\\n')[0].substring",
+          "lineNumber": 82
+        },
+        {
+          "caller": "mapItemToReel",
+          "callee": "caption.split",
+          "lineNumber": 82
+        },
+        {
+          "caller": "mapItemToReel",
+          "callee": "caption.substring",
+          "lineNumber": 83
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "fetch",
+          "lineNumber": 102
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "encodeURIComponent",
+          "lineNumber": 103
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "rapidHeaders",
+          "lineNumber": 104
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "console.error",
+          "lineNumber": 107
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "res.json",
+          "lineNumber": 110
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "items.map(mapItemToReel).filter",
+          "lineNumber": 112
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "items.map",
+          "lineNumber": 112
+        },
+        {
+          "caller": "searchHashtagReels",
+          "callee": "console.error",
+          "lineNumber": 114
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "fetch",
+          "lineNumber": 125
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "encodeURIComponent",
+          "lineNumber": 126
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "rapidHeaders",
+          "lineNumber": 127
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "res.json",
+          "lineNumber": 130
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "Array.isArray",
+          "lineNumber": 135
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "u.bio_links.find",
+          "lineNumber": 136
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "(u.biography || '').toString",
+          "lineNumber": 143
+        },
+        {
+          "caller": "fetchUserInfo",
+          "callee": "console.error",
+          "lineNumber": 148
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "searchHashtagReels",
+          "lineNumber": 167
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "seen.has",
+          "lineNumber": 169
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "seen.add",
+          "lineNumber": 170
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "reels.push",
+          "lineNumber": 171
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "errors.push",
+          "lineNumber": 174
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "String",
+          "lineNumber": 174
+        },
+        {
+          "caller": "collectReelsByHashtags",
+          "callee": "setTimeout",
+          "lineNumber": 176
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/collectors/instagram-public.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 181,
+      "nonEmptyLines": 161,
+      "functions": [
+        {
+          "name": "IG_HEADERS",
+          "startLine": 43,
+          "endLine": 55,
+          "params": [
+            "referer"
+          ]
+        },
+        {
+          "name": "fetchUserReels",
+          "startLine": 57,
+          "endLine": 149,
+          "params": [
+            "username"
+          ]
+        },
+        {
+          "name": "collectKoreanReelsPublic",
+          "startLine": 155,
+          "endLine": 181,
+          "params": [
+            "accounts"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "collectKoreanReelsPublic",
+          "line": 155,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchUserReels",
+          "callee": "fetch",
+          "lineNumber": 61
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "IG_HEADERS",
+          "lineNumber": 63
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "console.error",
+          "lineNumber": 67
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "profileRes.json",
+          "lineNumber": 71
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "fetch",
+          "lineNumber": 92
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "IG_HEADERS",
+          "lineNumber": 94
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "console.error",
+          "lineNumber": 98
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "feedRes.json",
+          "lineNumber": 102
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "(items as FeedItem[])\n      .filter((it) => it.product_type === 'clips' || it.media_type === 2)\n      .map",
+          "lineNumber": 122
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "(items as FeedItem[])\n      .filter",
+          "lineNumber": 122
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "String",
+          "lineNumber": 129
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "caption.split('\\n')[0].substring",
+          "lineNumber": 130
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "caption.split",
+          "lineNumber": 130
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "caption.substring",
+          "lineNumber": 131
+        },
+        {
+          "caller": "fetchUserReels",
+          "callee": "console.error",
+          "lineNumber": 146
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "fetchUserReels",
+          "lineNumber": 169
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "allReels.push",
+          "lineNumber": 170
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "creators.set",
+          "lineNumber": 171
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "console.log",
+          "lineNumber": 172
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "errors.push",
+          "lineNumber": 174
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "String",
+          "lineNumber": 174
+        },
+        {
+          "caller": "collectKoreanReelsPublic",
+          "callee": "setTimeout",
+          "lineNumber": 177
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/collectors/tiktok-api.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 327,
+      "nonEmptyLines": 301,
+      "functions": [
+        {
+          "name": "fetchTikTokUser",
+          "startLine": 44,
+          "endLine": 73,
+          "params": [
+            "uniqueId"
+          ]
+        },
+        {
+          "name": "fetchTikTokComments",
+          "startLine": 79,
+          "endLine": 94,
+          "params": [
+            "videoUrl",
+            "count"
+          ]
+        },
+        {
+          "name": "getStableThumbnail",
+          "startLine": 97,
+          "endLine": 99,
+          "params": [
+            "v"
+          ]
+        },
+        {
+          "name": "isListicleTitle",
+          "startLine": 206,
+          "endLine": 208,
+          "params": [
+            "text"
+          ]
+        },
+        {
+          "name": "isCommerceContent",
+          "startLine": 210,
+          "endLine": 224,
+          "params": [
+            "title"
+          ]
+        },
+        {
+          "name": "searchTikTokVideos",
+          "startLine": 229,
+          "endLine": 277,
+          "params": [
+            "keyword",
+            "options"
+          ]
+        },
+        {
+          "name": "getTikTokTrending",
+          "startLine": 282,
+          "endLine": 326,
+          "params": [
+            "options"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "fetchTikTokUser",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "fetchTikTokComments",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "STRONG_COMMERCE",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "EXCLUDE_KEYWORDS",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "isListicleTitle",
+          "line": 206,
+          "isDefault": false
+        },
+        {
+          "name": "searchTikTokVideos",
+          "line": 229,
+          "isDefault": false
+        },
+        {
+          "name": "getTikTokTrending",
+          "line": 282,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchTikTokUser",
+          "callee": "fetch",
+          "lineNumber": 52
+        },
+        {
+          "caller": "fetchTikTokUser",
+          "callee": "res.json",
+          "lineNumber": 58
+        },
+        {
+          "caller": "fetchTikTokUser",
+          "callee": "console.error",
+          "lineNumber": 70
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "fetch",
+          "lineNumber": 81
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "String",
+          "lineNumber": 84
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "res.json",
+          "lineNumber": 87
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "comments.map((c: { text?: string }) => c?.text || '').filter",
+          "lineNumber": 89
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "comments.map",
+          "lineNumber": 89
+        },
+        {
+          "caller": "fetchTikTokComments",
+          "callee": "console.error",
+          "lineNumber": 91
+        },
+        {
+          "caller": "isListicleTitle",
+          "callee": "TALKING_HEAD_RE.test",
+          "lineNumber": 207
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "title.toLowerCase",
+          "lineNumber": 211
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "/[가-힣]/.test",
+          "lineNumber": 214
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "EXCLUDE_KEYWORDS.some",
+          "lineNumber": 217
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "lower.includes",
+          "lineNumber": 217
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "TALKING_HEAD_RE.test",
+          "lineNumber": 220
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "STRONG_COMMERCE.some",
+          "lineNumber": 223
+        },
+        {
+          "caller": "isCommerceContent",
+          "callee": "lower.includes",
+          "lineNumber": 223
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "fetch",
+          "lineNumber": 236
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "String",
+          "lineNumber": 241
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "res.json",
+          "lineNumber": 248
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "videos\n      .filter((v: RawTikwmVideo) => {\n        const title = v.title || '';\n        // 영어 텍스트 필수 (해외 아이디어템 풀)\n        if (!/[a-zA-Z]{3,}/.test(title)) return false;\n        // 상업적 콘텐츠만\n        return isCommerceContent(title);\n      })\n      .map",
+          "lineNumber": 251
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "videos\n      .filter",
+          "lineNumber": 251
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "/[a-zA-Z]{3,}/.test",
+          "lineNumber": 255
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "isCommerceContent",
+          "lineNumber": 257
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "String",
+          "lineNumber": 260
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "getStableThumbnail",
+          "lineNumber": 263
+        },
+        {
+          "caller": "searchTikTokVideos",
+          "callee": "console.error",
+          "lineNumber": 274
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "fetch",
+          "lineNumber": 288
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "String",
+          "lineNumber": 293
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "res.json",
+          "lineNumber": 299
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "videos\n      .filter((v: RawTikwmVideo) => {\n        const title = v.title || '';\n        if (!/[a-zA-Z]{3,}/.test(title)) return false;\n        return isCommerceContent(title);\n      })\n      .map",
+          "lineNumber": 302
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "videos\n      .filter",
+          "lineNumber": 302
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "/[a-zA-Z]{3,}/.test",
+          "lineNumber": 305
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "isCommerceContent",
+          "lineNumber": 306
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "String",
+          "lineNumber": 309
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "getStableThumbnail",
+          "lineNumber": 312
+        },
+        {
+          "caller": "getTikTokTrending",
+          "callee": "console.error",
+          "lineNumber": 323
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/comments.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "scorePurchaseIntent",
+          "startLine": 28,
+          "endLine": 32,
+          "params": [
+            "commentTexts"
+          ]
+        },
+        {
+          "name": "computeDemandPerMillion",
+          "startLine": 40,
+          "endLine": 48,
+          "params": [
+            "intentRate",
+            "totalComments",
+            "viewCount"
+          ]
+        },
+        {
+          "name": "evaluatePass",
+          "startLine": 62,
+          "endLine": 78,
+          "params": [
+            "hasSalesLink",
+            "intentRate",
+            "totalComments",
+            "viewCount"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MIN_INTENT_SCORE_STRONG",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "MIN_INTENT_SCORE",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "MIN_DPM_PAIRED",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "MIN_DPM_STRONG",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "scorePurchaseIntent",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "computeDemandPerMillion",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "evaluatePass",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "scorePurchaseIntent",
+          "callee": "commentTexts.filter",
+          "lineNumber": 30
+        },
+        {
+          "caller": "scorePurchaseIntent",
+          "callee": "PURCHASE_INTENT_RE.test",
+          "lineNumber": 30
+        },
+        {
+          "caller": "scorePurchaseIntent",
+          "callee": "Math.round",
+          "lineNumber": 31
+        },
+        {
+          "caller": "computeDemandPerMillion",
+          "callee": "Math.round",
+          "lineNumber": 47
+        },
+        {
+          "caller": "evaluatePass",
+          "callee": "computeDemandPerMillion",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/creators.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 349,
+      "nonEmptyLines": 319,
+      "functions": [
+        {
+          "name": "computeHasSalesLink",
+          "startLine": 103,
+          "endLine": 117,
+          "params": [
+            "bioUrl",
+            "signature"
+          ]
+        },
+        {
+          "name": "isLikelyIndianContent",
+          "startLine": 177,
+          "endLine": 185,
+          "params": [
+            "authorId",
+            "signature"
+          ]
+        },
+        {
+          "name": "isQualifiedSeller",
+          "startLine": 255,
+          "endLine": 281,
+          "params": [
+            "{\n  authorId,\n  bioUrl,\n  signature,\n  videoCount,\n}"
+          ]
+        },
+        {
+          "name": "getOrFetchCreator",
+          "startLine": 296,
+          "endLine": 349,
+          "params": [
+            "platform",
+            "authorId",
+            "fetcher"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CREATOR_TTL_MS",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "computeHasSalesLink",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "isLikelyIndianContent",
+          "line": 177,
+          "isDefault": false
+        },
+        {
+          "name": "isQualifiedSeller",
+          "line": 255,
+          "isDefault": false
+        },
+        {
+          "name": "getOrFetchCreator",
+          "line": 296,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "computeHasSalesLink",
+          "callee": "SALES_HOST_RE.test",
+          "lineNumber": 109
+        },
+        {
+          "caller": "computeHasSalesLink",
+          "callee": "NON_SALES_HOST_RE.test",
+          "lineNumber": 111
+        },
+        {
+          "caller": "computeHasSalesLink",
+          "callee": "SIG_COMMERCE.test",
+          "lineNumber": 115
+        },
+        {
+          "caller": "isLikelyIndianContent",
+          "callee": "DEVANAGARI_RE.test",
+          "lineNumber": 182
+        },
+        {
+          "caller": "isLikelyIndianContent",
+          "callee": "INDIAN_CONTENT_RE.test",
+          "lineNumber": 183
+        },
+        {
+          "caller": "isQualifiedSeller",
+          "callee": "computeHasSalesLink",
+          "lineNumber": 261
+        },
+        {
+          "caller": "isQualifiedSeller",
+          "callee": "isLikelyIndianContent",
+          "lineNumber": 264
+        },
+        {
+          "caller": "isQualifiedSeller",
+          "callee": "SELLER_HANDLE_RE.test",
+          "lineNumber": 266
+        },
+        {
+          "caller": "isQualifiedSeller",
+          "callee": "PERSONAL_BIO_RE.test",
+          "lineNumber": 267
+        },
+        {
+          "caller": "isQualifiedSeller",
+          "callee": "STRONG_SELLER_SIG_RE.test",
+          "lineNumber": 277
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "prisma.creator.findUnique",
+          "lineNumber": 303
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "Date.now",
+          "lineNumber": 308
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "existing.lastCheckedAt.getTime",
+          "lineNumber": 308
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "fetcher",
+          "lineNumber": 314
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "console.error",
+          "lineNumber": 316
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "(info.signature ?? '').substring",
+          "lineNumber": 324
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "isQualifiedSeller",
+          "lineNumber": 325
+        },
+        {
+          "caller": "getOrFetchCreator",
+          "callee": "prisma.creator.upsert",
+          "lineNumber": 344
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/exclude.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 27,
+      "functions": [
+        {
+          "name": "isExcludedContent",
+          "startLine": 23,
+          "endLine": 29,
+          "params": [
+            "title",
+            "authorName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "isExcludedContent",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "isExcludedContent",
+          "callee": "EXCLUDE_PATTERNS.some",
+          "lineNumber": 28
+        },
+        {
+          "caller": "isExcludedContent",
+          "callee": "p.test",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/vision.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 72,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "fetchImageAsBase64",
+          "startLine": 24,
+          "endLine": 35,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "classifyThumbnail",
+          "startLine": 41,
+          "endLine": 72,
+          "params": [
+            "apiKey",
+            "thumbnailUrl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "classifyThumbnail",
+          "line": 41,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "fetch",
+          "lineNumber": 26
+        },
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 28
+        },
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "res.headers.get",
+          "lineNumber": 29
+        },
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "Buffer.from(buf).toString",
+          "lineNumber": 30
+        },
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "Buffer.from",
+          "lineNumber": 30
+        },
+        {
+          "caller": "fetchImageAsBase64",
+          "callee": "console.error",
+          "lineNumber": 32
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "fetchImageAsBase64",
+          "lineNumber": 47
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "genAI.getGenerativeModel",
+          "lineNumber": 52
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "model.generateContent",
+          "lineNumber": 54
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "result.response.text().trim().toLowerCase",
+          "lineNumber": 59
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "result.response.text().trim",
+          "lineNumber": 59
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "result.response.text",
+          "lineNumber": 59
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "text.split",
+          "lineNumber": 61
+        },
+        {
+          "caller": "classifyThumbnail",
+          "callee": "console.error",
+          "lineNumber": 69
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {"path": "DEPLOY.md", "language": "markdown", "sizeLines": 186, "fileCategory": "docs"},
+    {"path": "README.md", "language": "markdown", "sizeLines": 148, "fileCategory": "docs"},
+    {"path": "package.json", "language": "json", "sizeLines": 36, "fileCategory": "config"},
+    {"path": "railway.json", "language": "json", "sizeLines": 10, "fileCategory": "config"},
+    {"path": "tsconfig.json", "language": "json", "sizeLines": 34, "fileCategory": "config"}
+  ],
+  "batchImportData": {
+    "DEPLOY.md": [],
+    "README.md": [],
+    "package.json": [],
+    "railway.json": [],
+    "tsconfig.json": []
+  }
+}

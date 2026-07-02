@@ -1,0 +1,41 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'file:.understand-anything/.understandignore' has no edges (orphan)",
+    "Node 'config:.understand-anything/config.json' has no edges (orphan)",
+    "Node 'config:eslint.config.mjs' has no edges (orphan)",
+    "Node 'file:src/app/(app)/account/payment/fail/page.tsx' has no edges (orphan)",
+    "Node 'file:src/app/(app)/account/payment/success/page.tsx' has no edges (orphan)",
+    "Node 'file:src/app/api/auth/logout/route.ts' has no edges (orphan)",
+    "Node 'file:src/app/api/download/tiktok/route.ts' has no edges (orphan)",
+    "Node 'file:src/app/api/setup-db/route.ts' has no edges (orphan)",
+    "Node 'file:src/app/api/thumbnail/tiktok/route.ts' has no edges (orphan)",
+    "Node 'file:src/app/api/trigger-collect/route.ts' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 306,
+    "totalEdges": 693,
+    "totalLayers": 7,
+    "tourSteps": 13,
+    "nodeTypes": {
+      "file": 120,
+      "function": 163,
+      "pipeline": 1,
+      "document": 3,
+      "config": 7,
+      "schema": 1,
+      "table": 11
+    },
+    "edgeTypes": {
+      "imports": 203,
+      "contains": 168,
+      "exports": 142,
+      "calls": 148,
+      "depends_on": 5,
+      "documents": 8,
+      "configures": 7,
+      "defines_schema": 11,
+      "triggers": 1
+    }
+  }
+}

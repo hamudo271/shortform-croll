@@ -1,0 +1,2313 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 18,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/app/(app)/account/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 138,
+      "nonEmptyLines": 129,
+      "functions": [
+        {
+          "name": "formatKRW",
+          "startLine": 9,
+          "endLine": 11,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "formatDate",
+          "startLine": 13,
+          "endLine": 17,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "daysUntil",
+          "startLine": 19,
+          "endLine": 23,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "communityLevelLabel",
+          "startLine": 26,
+          "endLine": 42,
+          "params": [
+            "userId"
+          ]
+        },
+        {
+          "name": "AccountPage",
+          "startLine": 44,
+          "endLine": 138,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AccountPage",
+          "line": 44,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "formatKRW",
+          "callee": "amount.toLocaleString",
+          "lineNumber": 10
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getFullYear",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String(date.getMonth() + 1).padStart",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getMonth",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String(date.getDate()).padStart",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "String",
+          "lineNumber": 16
+        },
+        {
+          "caller": "formatDate",
+          "callee": "date.getDate",
+          "lineNumber": 16
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "new Date(d).getTime",
+          "lineNumber": 21
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Date.now",
+          "lineNumber": 21
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Math.max",
+          "lineNumber": 22
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Math.ceil",
+          "lineNumber": 22
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "Promise.all",
+          "lineNumber": 27
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "prisma.communityPost.findMany",
+          "lineNumber": 28
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "prisma.communityComment.count",
+          "lineNumber": 36
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "posts.reduce",
+          "lineNumber": 38
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "posts.reduce",
+          "lineNumber": 39
+        },
+        {
+          "caller": "communityLevelLabel",
+          "callee": "levelFromActivity",
+          "lineNumber": 40
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "getCurrentUser",
+          "lineNumber": 45
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "redirect",
+          "lineNumber": 46
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "prisma.user.findUnique",
+          "lineNumber": 49
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "communityLevelLabel",
+          "lineNumber": 53
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "daysUntil",
+          "lineNumber": 55
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "formatDate",
+          "lineNumber": 72
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "formatKRW",
+          "lineNumber": 77
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "SUBSCRIPTION_PRICE_KRW.toLocaleString",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AccountPage",
+          "callee": "formatKRW",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/layout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "AppShellLayout",
+          "startLine": 4,
+          "endLine": 25,
+          "params": [
+            "{\n  children,\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AppShellLayout",
+          "line": 4,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AppShellLayout",
+          "callee": "getCurrentUser",
+          "lineNumber": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 185,
+      "nonEmptyLines": 171,
+      "functions": [
+        {
+          "name": "SectionHeader",
+          "startLine": 15,
+          "endLine": 39,
+          "params": [
+            "{\n  eyebrow,\n  title,\n  sub,\n}"
+          ]
+        },
+        {
+          "name": "LandingPage",
+          "startLine": 41,
+          "endLine": 185,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "revalidate",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "LandingPage",
+          "line": 41,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "LandingPage",
+          "callee": "getCurrentUser",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/login/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 162,
+      "nonEmptyLines": 148,
+      "functions": [
+        {
+          "name": "LoginForm",
+          "startLine": 9,
+          "endLine": 130,
+          "params": []
+        },
+        {
+          "name": "LoginPage",
+          "startLine": 132,
+          "endLine": 162,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LoginPage",
+          "line": 132,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "LoginForm",
+          "callee": "useRouter",
+          "lineNumber": 10
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useSearchParams",
+          "lineNumber": 11
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "searchParams.get",
+          "lineNumber": 12
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "searchParams.get",
+          "lineNumber": 14
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useState",
+          "lineNumber": 15
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useState",
+          "lineNumber": 16
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useState",
+          "lineNumber": 17
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useState",
+          "lineNumber": 18
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "useState",
+          "lineNumber": 19
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "e.preventDefault",
+          "lineNumber": 27
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setLoading",
+          "lineNumber": 29
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "fetch",
+          "lineNumber": 31
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "JSON.stringify",
+          "lineNumber": 34
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "res.json",
+          "lineNumber": 36
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 37
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "router.push",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "router.refresh",
+          "lineNumber": 39
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setLoading",
+          "lineNumber": 42
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "setOauthNotice",
+          "lineNumber": 53
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "e.stopPropagation",
+          "lineNumber": 57
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "setOauthNotice",
+          "lineNumber": 69
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "setEmail",
+          "lineNumber": 89
+        },
+        {
+          "caller": "LoginForm",
+          "callee": "setPassword",
+          "lineNumber": 100
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/signup/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 179,
+      "nonEmptyLines": 162,
+      "functions": [
+        {
+          "name": "SignupPage",
+          "startLine": 9,
+          "endLine": 179,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SignupPage",
+          "line": 9,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 10
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 11
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 12
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 13
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 14
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 15
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 16
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 17
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useState",
+          "lineNumber": 18
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "useRouter",
+          "lineNumber": 19
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "e.preventDefault",
+          "lineNumber": 22
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 23
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 24
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 25
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setLoading",
+          "lineNumber": 26
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "fetch",
+          "lineNumber": 28
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "JSON.stringify",
+          "lineNumber": 31
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "res.json",
+          "lineNumber": 33
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 34
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "router.push",
+          "lineNumber": 35
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "router.refresh",
+          "lineNumber": 36
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleSubmit",
+          "callee": "setLoading",
+          "lineNumber": 39
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setEmail",
+          "lineNumber": 72
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setName",
+          "lineNumber": 85
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setPhone",
+          "lineNumber": 98
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setCompanyName",
+          "lineNumber": 111
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setBusinessNumber",
+          "lineNumber": 124
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setPassword",
+          "lineNumber": 137
+        },
+        {
+          "caller": "SignupPage",
+          "callee": "setPasswordConfirm",
+          "lineNumber": 147
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/ProfileEditor.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 189,
+      "nonEmptyLines": 176,
+      "functions": [
+        {
+          "name": "Avatar",
+          "startLine": 7,
+          "endLine": 27,
+          "params": [
+            "{ image, name, size }"
+          ]
+        },
+        {
+          "name": "ProfileEditor",
+          "startLine": 29,
+          "endLine": 189,
+          "params": [
+            "{\n  email,\n  initialName,\n  initialImage,\n  isAdmin,\n  levelLabel,\n  children,\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProfileEditor",
+          "line": 29,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Avatar",
+          "callee": "(name || 'M').charAt(0).toUpperCase",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Avatar",
+          "callee": "(name || 'M').charAt",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useRouter",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "useState",
+          "lineNumber": 50
+        },
+        {
+          "caller": "patch",
+          "callee": "fetch",
+          "lineNumber": 53
+        },
+        {
+          "caller": "patch",
+          "callee": "JSON.stringify",
+          "lineNumber": 56
+        },
+        {
+          "caller": "patch",
+          "callee": "r.json().catch",
+          "lineNumber": 58
+        },
+        {
+          "caller": "patch",
+          "callee": "r.json",
+          "lineNumber": 58
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "file.type.startsWith",
+          "lineNumber": 64
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setErr",
+          "lineNumber": 64
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setErr",
+          "lineNumber": 65
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setErr",
+          "lineNumber": 66
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "String",
+          "lineNumber": 69
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setBusy",
+          "lineNumber": 70
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "patch",
+          "lineNumber": 72
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setImage",
+          "lineNumber": 73
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "router.refresh",
+          "lineNumber": 74
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setErr",
+          "lineNumber": 76
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "setBusy",
+          "lineNumber": 78
+        },
+        {
+          "caller": "onPickImage",
+          "callee": "reader.readAsDataURL",
+          "lineNumber": 81
+        },
+        {
+          "caller": "saveName",
+          "callee": "draftName.trim",
+          "lineNumber": 85
+        },
+        {
+          "caller": "saveName",
+          "callee": "setErr",
+          "lineNumber": 86
+        },
+        {
+          "caller": "saveName",
+          "callee": "setBusy",
+          "lineNumber": 87
+        },
+        {
+          "caller": "saveName",
+          "callee": "setErr",
+          "lineNumber": 88
+        },
+        {
+          "caller": "saveName",
+          "callee": "patch",
+          "lineNumber": 90
+        },
+        {
+          "caller": "saveName",
+          "callee": "setName",
+          "lineNumber": 91
+        },
+        {
+          "caller": "saveName",
+          "callee": "setEditingName",
+          "lineNumber": 92
+        },
+        {
+          "caller": "saveName",
+          "callee": "router.refresh",
+          "lineNumber": 93
+        },
+        {
+          "caller": "saveName",
+          "callee": "setErr",
+          "lineNumber": 95
+        },
+        {
+          "caller": "saveName",
+          "callee": "setBusy",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "onPickImage",
+          "lineNumber": 110
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "onPickImage",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "setDraftName",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "setEditingName",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "setDraftName",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "setDraftName",
+          "lineNumber": 167
+        },
+        {
+          "caller": "ProfileEditor",
+          "callee": "setEditingName",
+          "lineNumber": 167
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/Sidebar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 384,
+      "nonEmptyLines": 356,
+      "functions": [
+        {
+          "name": "readInitialCollapsed",
+          "startLine": 95,
+          "endLine": 98,
+          "params": []
+        },
+        {
+          "name": "readInitialTheme",
+          "startLine": 100,
+          "endLine": 103,
+          "params": []
+        },
+        {
+          "name": "Sidebar",
+          "startLine": 105,
+          "endLine": 384,
+          "params": [
+            "{ user }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Sidebar",
+          "line": 105,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "readInitialCollapsed",
+          "callee": "document.cookie.split('; ').some",
+          "lineNumber": 97
+        },
+        {
+          "caller": "readInitialCollapsed",
+          "callee": "document.cookie.split",
+          "lineNumber": 97
+        },
+        {
+          "caller": "readInitialTheme",
+          "callee": "document.documentElement.classList.contains",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "usePathname",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useState",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useState",
+          "lineNumber": 108
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useState",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useState",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useEffect",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setCollapsed",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "readInitialCollapsed",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setTheme",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "readInitialTheme",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setMounted",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useEffect",
+          "lineNumber": 122
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setMobileOpen",
+          "lineNumber": 124
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "useEffect",
+          "lineNumber": 128
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "NAV\n    .map((group) => ({ ...group, items: group.items.filter((it) => isAdmin || !it.adminOnly) }))\n    .filter",
+          "lineNumber": 142
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "NAV\n    .map",
+          "lineNumber": 142
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "group.items.filter",
+          "lineNumber": 143
+        },
+        {
+          "caller": "toggleCollapsed",
+          "callee": "setCollapsed",
+          "lineNumber": 148
+        },
+        {
+          "caller": "toggleTheme",
+          "callee": "setTheme",
+          "lineNumber": 154
+        },
+        {
+          "caller": "toggleTheme",
+          "callee": "html.classList.add",
+          "lineNumber": 156
+        },
+        {
+          "caller": "toggleTheme",
+          "callee": "html.classList.remove",
+          "lineNumber": 157
+        },
+        {
+          "caller": "handleLogout",
+          "callee": "fetch",
+          "lineNumber": 162
+        },
+        {
+          "caller": "isActive",
+          "callee": "pathname?.startsWith",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setMobileOpen",
+          "lineNumber": 176
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setMobileOpen",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "setMobileOpen",
+          "lineNumber": 221
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "navGroups.map",
+          "lineNumber": 240
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "group.items.map",
+          "lineNumber": 255
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "isActive",
+          "lineNumber": 256
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "(user.name || user.email).charAt(0).toUpperCase",
+          "lineNumber": 331
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "(user.name || user.email).charAt",
+          "lineNumber": 331
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/auth/SocialLoginButtons.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 39,
+      "functions": [
+        {
+          "name": "SocialLoginButtons",
+          "startLine": 5,
+          "endLine": 41,
+          "params": [
+            "{ label = '간편 로그인' }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SocialLoginButtons",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/FAQTeaser.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 49,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "FAQTeaser",
+          "startLine": 23,
+          "endLine": 49,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "FAQTeaser",
+          "line": 23,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "FAQTeaser",
+          "callee": "FAQS.map",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/HeroLivePreview.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 142,
+      "nonEmptyLines": 127,
+      "functions": [
+        {
+          "name": "HeroLivePreview",
+          "startLine": 32,
+          "endLine": 142,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "HeroLivePreview",
+          "line": 32,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "HeroLivePreview",
+          "callee": "getTopProducts",
+          "lineNumber": 33
+        },
+        {
+          "caller": "HeroLivePreview",
+          "callee": "estimateRevenue",
+          "lineNumber": 51
+        },
+        {
+          "caller": "HeroLivePreview",
+          "callee": "PLATFORM_NAMES[top.platform].split",
+          "lineNumber": 88
+        },
+        {
+          "caller": "HeroLivePreview",
+          "callee": "formatKRW",
+          "lineNumber": 119
+        },
+        {
+          "caller": "HeroLivePreview",
+          "callee": "formatCount",
+          "lineNumber": 128
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/HeroStats.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 29,
+      "functions": [
+        {
+          "name": "HeroStats",
+          "startLine": 3,
+          "endLine": 32,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "HeroStats",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "HeroStats",
+          "callee": "getLandingStats",
+          "lineNumber": 4
+        },
+        {
+          "caller": "HeroStats",
+          "callee": "stats.total.toLocaleString",
+          "lineNumber": 7
+        },
+        {
+          "caller": "HeroStats",
+          "callee": "stats.categoryCount.toLocaleString",
+          "lineNumber": 8
+        },
+        {
+          "caller": "HeroStats",
+          "callee": "stats.todayCount.toLocaleString",
+          "lineNumber": 9
+        },
+        {
+          "caller": "HeroStats",
+          "callee": "items.map",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/HowItWorks.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "HowItWorks",
+          "startLine": 24,
+          "endLine": 48,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "HowItWorks",
+          "line": 24,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "HowItWorks",
+          "callee": "STEPS.map",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/PlatformShowcase.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 64,
+      "functions": [
+        {
+          "name": "PlatformShowcase",
+          "startLine": 34,
+          "endLine": 68,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PlatformShowcase",
+          "line": 34,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PlatformShowcase",
+          "callee": "getLandingStats",
+          "lineNumber": 35
+        },
+        {
+          "caller": "PlatformShowcase",
+          "callee": "CARDS.map",
+          "lineNumber": 39
+        },
+        {
+          "caller": "PlatformShowcase",
+          "callee": "count.toLocaleString",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/PricingCallout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 101,
+      "functions": [
+        {
+          "name": "PricingCallout",
+          "startLine": 24,
+          "endLine": 107,
+          "params": [
+            "{ user }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PricingCallout",
+          "line": 24,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PricingCallout",
+          "callee": "Math.round",
+          "lineNumber": 36
+        },
+        {
+          "caller": "PricingCallout",
+          "callee": "SUBSCRIPTION_ORIGINAL_PRICE_KRW.toLocaleString",
+          "lineNumber": 63
+        },
+        {
+          "caller": "PricingCallout",
+          "callee": "SUBSCRIPTION_PRICE_KRW.toLocaleString",
+          "lineNumber": 68
+        },
+        {
+          "caller": "PricingCallout",
+          "callee": "INCLUDED.map",
+          "lineNumber": 87
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/ScenarioCards.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "ScenarioCards",
+          "startLine": 34,
+          "endLine": 62,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ScenarioCards",
+          "line": 34,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ScenarioCards",
+          "callee": "SCENARIOS.map",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ScenarioCards",
+          "callee": "s.flow.map",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/landing/TopProductsPreview.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 162,
+      "nonEmptyLines": 149,
+      "functions": [
+        {
+          "name": "PlatformPath",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "TopProductsPreview",
+          "startLine": 35,
+          "endLine": 162,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "TopProductsPreview",
+          "line": 35,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TopProductsPreview",
+          "callee": "getTopProducts",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "products.slice",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "products.slice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "top3.map",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "estimateRevenue",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "PlatformPath",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "PLATFORM_NAMES[p.platform].split",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "formatCount",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "formatCount",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "formatKRW",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "blurred.slice(0, 3).map",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TopProductsPreview",
+          "callee": "blurred.slice",
+          "lineNumber": 119
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/Icon.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 404,
+      "nonEmptyLines": 361,
+      "functions": [
+        {
+          "name": "baseSvg",
+          "startLine": 15,
+          "endLine": 26,
+          "params": [
+            "size",
+            "strokeWidth",
+            "className"
+          ]
+        },
+        {
+          "name": "ArrowRight",
+          "startLine": 28,
+          "endLine": 35,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "ArrowUpRight",
+          "startLine": 37,
+          "endLine": 44,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "ChevronDown",
+          "startLine": 46,
+          "endLine": 52,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "ChevronRight",
+          "startLine": 54,
+          "endLine": 60,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Check",
+          "startLine": 62,
+          "endLine": 68,
+          "params": [
+            "{ className, size = 16, strokeWidth = 2 }"
+          ]
+        },
+        {
+          "name": "X",
+          "startLine": 70,
+          "endLine": 77,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Pencil",
+          "startLine": 79,
+          "endLine": 86,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Sun",
+          "startLine": 88,
+          "endLine": 95,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Moon",
+          "startLine": 97,
+          "endLine": 103,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Search",
+          "startLine": 105,
+          "endLine": 112,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Filter",
+          "startLine": 114,
+          "endLine": 120,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "User",
+          "startLine": 122,
+          "endLine": 129,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "LogOut",
+          "startLine": 131,
+          "endLine": 139,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Shield",
+          "startLine": 141,
+          "endLine": 147,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Eye",
+          "startLine": 149,
+          "endLine": 156,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Heart",
+          "startLine": 158,
+          "endLine": 164,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "TrendingUp",
+          "startLine": 166,
+          "endLine": 173,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Zap",
+          "startLine": 175,
+          "endLine": 181,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Sparkles",
+          "startLine": 183,
+          "endLine": 189,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Layers",
+          "startLine": 191,
+          "endLine": 199,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Clock",
+          "startLine": 201,
+          "endLine": 208,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Mail",
+          "startLine": 210,
+          "endLine": 217,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Lock",
+          "startLine": 219,
+          "endLine": 226,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Refresh",
+          "startLine": 228,
+          "endLine": 236,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "MessageSquare",
+          "startLine": 238,
+          "endLine": 244,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Package",
+          "startLine": 246,
+          "endLine": 255,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "ShoppingBag",
+          "startLine": 257,
+          "endLine": 265,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Smartphone",
+          "startLine": 267,
+          "endLine": 274,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "ExternalLink",
+          "startLine": 276,
+          "endLine": 284,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Play",
+          "startLine": 286,
+          "endLine": 292,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "PlusCircle",
+          "startLine": 294,
+          "endLine": 302,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Utensils",
+          "startLine": 304,
+          "endLine": 315,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Home",
+          "startLine": 317,
+          "endLine": 323,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Baby",
+          "startLine": 325,
+          "endLine": 339,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Dumbbell",
+          "startLine": 341,
+          "endLine": 354,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Shirt",
+          "startLine": 356,
+          "endLine": 362,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "Lipstick",
+          "startLine": 364,
+          "endLine": 374,
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ]
+        },
+        {
+          "name": "YouTubeLogo",
+          "startLine": 382,
+          "endLine": 388,
+          "params": [
+            "{ className, size = 24 }"
+          ]
+        },
+        {
+          "name": "TikTokLogo",
+          "startLine": 390,
+          "endLine": 396,
+          "params": [
+            "{ className, size = 24 }"
+          ]
+        },
+        {
+          "name": "InstagramLogo",
+          "startLine": 398,
+          "endLine": 404,
+          "params": [
+            "{ className, size = 24 }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ArrowRight",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "ArrowUpRight",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "ChevronDown",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "ChevronRight",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "Check",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "X",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "Pencil",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "Sun",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "Moon",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "Search",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "Filter",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "User",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "LogOut",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "Shield",
+          "line": 141,
+          "isDefault": false
+        },
+        {
+          "name": "Eye",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "Heart",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "TrendingUp",
+          "line": 166,
+          "isDefault": false
+        },
+        {
+          "name": "Zap",
+          "line": 175,
+          "isDefault": false
+        },
+        {
+          "name": "Sparkles",
+          "line": 183,
+          "isDefault": false
+        },
+        {
+          "name": "Layers",
+          "line": 191,
+          "isDefault": false
+        },
+        {
+          "name": "Clock",
+          "line": 201,
+          "isDefault": false
+        },
+        {
+          "name": "Mail",
+          "line": 210,
+          "isDefault": false
+        },
+        {
+          "name": "Lock",
+          "line": 219,
+          "isDefault": false
+        },
+        {
+          "name": "Refresh",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "MessageSquare",
+          "line": 238,
+          "isDefault": false
+        },
+        {
+          "name": "Package",
+          "line": 246,
+          "isDefault": false
+        },
+        {
+          "name": "ShoppingBag",
+          "line": 257,
+          "isDefault": false
+        },
+        {
+          "name": "Smartphone",
+          "line": 267,
+          "isDefault": false
+        },
+        {
+          "name": "ExternalLink",
+          "line": 276,
+          "isDefault": false
+        },
+        {
+          "name": "Play",
+          "line": 286,
+          "isDefault": false
+        },
+        {
+          "name": "PlusCircle",
+          "line": 294,
+          "isDefault": false
+        },
+        {
+          "name": "Utensils",
+          "line": 304,
+          "isDefault": false
+        },
+        {
+          "name": "Home",
+          "line": 317,
+          "isDefault": false
+        },
+        {
+          "name": "Baby",
+          "line": 325,
+          "isDefault": false
+        },
+        {
+          "name": "Dumbbell",
+          "line": 341,
+          "isDefault": false
+        },
+        {
+          "name": "Shirt",
+          "line": 356,
+          "isDefault": false
+        },
+        {
+          "name": "Lipstick",
+          "line": 364,
+          "isDefault": false
+        },
+        {
+          "name": "YouTubeLogo",
+          "line": 382,
+          "isDefault": false
+        },
+        {
+          "name": "TikTokLogo",
+          "line": 390,
+          "isDefault": false
+        },
+        {
+          "name": "InstagramLogo",
+          "line": 398,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ArrowRight",
+          "callee": "baseSvg",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ArrowUpRight",
+          "callee": "baseSvg",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ChevronDown",
+          "callee": "baseSvg",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ChevronRight",
+          "callee": "baseSvg",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Check",
+          "callee": "baseSvg",
+          "lineNumber": 64
+        },
+        {
+          "caller": "X",
+          "callee": "baseSvg",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Pencil",
+          "callee": "baseSvg",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Sun",
+          "callee": "baseSvg",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Moon",
+          "callee": "baseSvg",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Search",
+          "callee": "baseSvg",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Filter",
+          "callee": "baseSvg",
+          "lineNumber": 116
+        },
+        {
+          "caller": "User",
+          "callee": "baseSvg",
+          "lineNumber": 124
+        },
+        {
+          "caller": "LogOut",
+          "callee": "baseSvg",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Shield",
+          "callee": "baseSvg",
+          "lineNumber": 143
+        },
+        {
+          "caller": "Eye",
+          "callee": "baseSvg",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Heart",
+          "callee": "baseSvg",
+          "lineNumber": 160
+        },
+        {
+          "caller": "TrendingUp",
+          "callee": "baseSvg",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Zap",
+          "callee": "baseSvg",
+          "lineNumber": 177
+        },
+        {
+          "caller": "Sparkles",
+          "callee": "baseSvg",
+          "lineNumber": 185
+        },
+        {
+          "caller": "Layers",
+          "callee": "baseSvg",
+          "lineNumber": 193
+        },
+        {
+          "caller": "Clock",
+          "callee": "baseSvg",
+          "lineNumber": 203
+        },
+        {
+          "caller": "Mail",
+          "callee": "baseSvg",
+          "lineNumber": 212
+        },
+        {
+          "caller": "Lock",
+          "callee": "baseSvg",
+          "lineNumber": 221
+        },
+        {
+          "caller": "Refresh",
+          "callee": "baseSvg",
+          "lineNumber": 230
+        },
+        {
+          "caller": "MessageSquare",
+          "callee": "baseSvg",
+          "lineNumber": 240
+        },
+        {
+          "caller": "Package",
+          "callee": "baseSvg",
+          "lineNumber": 248
+        },
+        {
+          "caller": "ShoppingBag",
+          "callee": "baseSvg",
+          "lineNumber": 259
+        },
+        {
+          "caller": "Smartphone",
+          "callee": "baseSvg",
+          "lineNumber": 269
+        },
+        {
+          "caller": "ExternalLink",
+          "callee": "baseSvg",
+          "lineNumber": 278
+        },
+        {
+          "caller": "Play",
+          "callee": "baseSvg",
+          "lineNumber": 288
+        },
+        {
+          "caller": "PlusCircle",
+          "callee": "baseSvg",
+          "lineNumber": 296
+        },
+        {
+          "caller": "Utensils",
+          "callee": "baseSvg",
+          "lineNumber": 306
+        },
+        {
+          "caller": "Home",
+          "callee": "baseSvg",
+          "lineNumber": 319
+        },
+        {
+          "caller": "Baby",
+          "callee": "baseSvg",
+          "lineNumber": 327
+        },
+        {
+          "caller": "Dumbbell",
+          "callee": "baseSvg",
+          "lineNumber": 343
+        },
+        {
+          "caller": "Shirt",
+          "callee": "baseSvg",
+          "lineNumber": 358
+        },
+        {
+          "caller": "Lipstick",
+          "callee": "baseSvg",
+          "lineNumber": 366
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 40,
+        "functionCount": 41,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/landing-data.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 115,
+      "functions": [
+        {
+          "name": "startOfToday",
+          "startLine": 14,
+          "endLine": 18,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "getLandingStats",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "getTopProducts",
+          "line": 86,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "startOfToday",
+          "callee": "d.setHours",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {"path": "src/app/(app)/account/page.tsx", "language": "typescript", "sizeLines": 138, "fileCategory": "code"},
+    {"path": "src/app/(app)/layout.tsx", "language": "typescript", "sizeLines": 25, "fileCategory": "code"},
+    {"path": "src/app/(app)/page.tsx", "language": "typescript", "sizeLines": 185, "fileCategory": "code"},
+    {"path": "src/app/login/page.tsx", "language": "typescript", "sizeLines": 162, "fileCategory": "code"},
+    {"path": "src/app/signup/page.tsx", "language": "typescript", "sizeLines": 179, "fileCategory": "code"},
+    {"path": "src/components/app/ProfileEditor.tsx", "language": "typescript", "sizeLines": 189, "fileCategory": "code"},
+    {"path": "src/components/app/Sidebar.tsx", "language": "typescript", "sizeLines": 384, "fileCategory": "code"},
+    {"path": "src/components/auth/SocialLoginButtons.tsx", "language": "typescript", "sizeLines": 41, "fileCategory": "code"},
+    {"path": "src/components/landing/FAQTeaser.tsx", "language": "typescript", "sizeLines": 49, "fileCategory": "code"},
+    {"path": "src/components/landing/HeroLivePreview.tsx", "language": "typescript", "sizeLines": 142, "fileCategory": "code"},
+    {"path": "src/components/landing/HeroStats.tsx", "language": "typescript", "sizeLines": 32, "fileCategory": "code"},
+    {"path": "src/components/landing/HowItWorks.tsx", "language": "typescript", "sizeLines": 48, "fileCategory": "code"},
+    {"path": "src/components/landing/PlatformShowcase.tsx", "language": "typescript", "sizeLines": 68, "fileCategory": "code"},
+    {"path": "src/components/landing/PricingCallout.tsx", "language": "typescript", "sizeLines": 107, "fileCategory": "code"},
+    {"path": "src/components/landing/ScenarioCards.tsx", "language": "typescript", "sizeLines": 62, "fileCategory": "code"},
+    {"path": "src/components/landing/TopProductsPreview.tsx", "language": "typescript", "sizeLines": 162, "fileCategory": "code"},
+    {"path": "src/components/ui/Icon.tsx", "language": "typescript", "sizeLines": 404, "fileCategory": "code"},
+    {"path": "src/lib/landing-data.ts", "language": "typescript", "sizeLines": 124, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/app/(app)/account/page.tsx": ["src/components/app/ProfileEditor.tsx","src/components/ui/Icon.tsx","src/lib/auth.ts","src/lib/community.ts","src/lib/prisma.ts"],
+    "src/app/(app)/layout.tsx": ["src/components/app/Sidebar.tsx","src/lib/auth.ts"],
+    "src/app/(app)/page.tsx": ["src/components/landing/FAQTeaser.tsx","src/components/landing/HeroLivePreview.tsx","src/components/landing/HeroStats.tsx","src/components/landing/HowItWorks.tsx","src/components/landing/PlatformShowcase.tsx","src/components/landing/PricingCallout.tsx","src/components/landing/ScenarioCards.tsx","src/components/landing/TopProductsPreview.tsx","src/components/ui/Icon.tsx","src/lib/auth.ts"],
+    "src/app/login/page.tsx": ["src/components/auth/SocialLoginButtons.tsx","src/components/ui/Icon.tsx"],
+    "src/app/signup/page.tsx": ["src/components/auth/SocialLoginButtons.tsx","src/components/ui/Icon.tsx"],
+    "src/components/app/ProfileEditor.tsx": ["src/components/ui/Icon.tsx"],
+    "src/components/app/Sidebar.tsx": ["src/components/ui/Icon.tsx"],
+    "src/components/auth/SocialLoginButtons.tsx": [],
+    "src/components/landing/FAQTeaser.tsx": ["src/components/ui/Icon.tsx"],
+    "src/components/landing/HeroLivePreview.tsx": ["src/components/ui/Icon.tsx","src/components/ui/SafeThumbnail.tsx","src/lib/landing-data.ts","src/lib/utils.ts"],
+    "src/components/landing/HeroStats.tsx": ["src/lib/landing-data.ts"],
+    "src/components/landing/HowItWorks.tsx": ["src/components/ui/Icon.tsx"],
+    "src/components/landing/PlatformShowcase.tsx": ["src/components/ui/Icon.tsx","src/lib/landing-data.ts"],
+    "src/components/landing/PricingCallout.tsx": ["src/components/ui/Icon.tsx","src/lib/auth.ts"],
+    "src/components/landing/ScenarioCards.tsx": [],
+    "src/components/landing/TopProductsPreview.tsx": ["src/components/ui/Icon.tsx","src/lib/landing-data.ts","src/lib/utils.ts"],
+    "src/components/ui/Icon.tsx": [],
+    "src/lib/landing-data.ts": ["src/lib/prisma.ts"]
+  }
+}

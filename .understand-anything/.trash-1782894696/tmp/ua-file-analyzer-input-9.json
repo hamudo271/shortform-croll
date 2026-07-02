@@ -1,0 +1,190 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 4,
+      "fileCategory": "config"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "language": "markdown",
+      "sizeLines": 170,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "language": "javascript",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "next.config.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "postcss.config.mjs",
+      "language": "javascript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "prisma/schema.prisma",
+      "language": "prisma",
+      "sizeLines": 289,
+      "fileCategory": "data"
+    },
+    {
+      "path": "scripts/migrate-yt-thumbnails.mjs",
+      "language": "javascript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "scripts/seed-admin.mjs",
+      "language": "javascript",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/(app)/account/payment/fail/page.tsx",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/(app)/account/payment/success/page.tsx",
+      "language": "typescript",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/(app)/account/subscribe/page.tsx",
+      "language": "typescript",
+      "sizeLines": 132,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/analyze/route.ts",
+      "language": "typescript",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/auth/logout/route.ts",
+      "language": "typescript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/download/tiktok/route.ts",
+      "language": "typescript",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/img/route.ts",
+      "language": "typescript",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/setup-db/route.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/thumbnail/tiktok/route.ts",
+      "language": "typescript",
+      "sizeLines": 95,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/trigger-collect/route.ts",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/globals.css",
+      "language": "css",
+      "sizeLines": 180,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "language": "typescript",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/ai-analysis.ts",
+      "language": "typescript",
+      "sizeLines": 257,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/collectors/trendCollector.ts",
+      "language": "typescript",
+      "sizeLines": 252,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/theme.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/tikwm.ts",
+      "language": "typescript",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md": [],
+    "eslint.config.mjs": [],
+    "next.config.ts": [],
+    "postcss.config.mjs": [],
+    "prisma/schema.prisma": [],
+    "scripts/migrate-yt-thumbnails.mjs": [],
+    "scripts/seed-admin.mjs": [],
+    "src/app/(app)/account/payment/fail/page.tsx": [],
+    "src/app/(app)/account/payment/success/page.tsx": [],
+    "src/app/(app)/account/subscribe/page.tsx": [],
+    "src/app/api/analyze/route.ts": [
+      "src/lib/ai-analysis.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/auth/logout/route.ts": [],
+    "src/app/api/download/tiktok/route.ts": [],
+    "src/app/api/img/route.ts": [
+      "src/lib/tikwm.ts"
+    ],
+    "src/app/api/setup-db/route.ts": [],
+    "src/app/api/thumbnail/tiktok/route.ts": [],
+    "src/app/api/trigger-collect/route.ts": [],
+    "src/app/globals.css": [],
+    "src/app/layout.tsx": [
+      "src/app/globals.css",
+      "src/lib/theme.ts"
+    ],
+    "src/lib/ai-analysis.ts": [],
+    "src/lib/collectors/trendCollector.ts": [],
+    "src/lib/theme.ts": [],
+    "src/lib/tikwm.ts": []
+  }
+}

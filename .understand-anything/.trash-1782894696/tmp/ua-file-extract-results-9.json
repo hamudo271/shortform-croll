@@ -1,0 +1,2051 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 30,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "sections": [
+        {
+          "heading": "outputLanguage",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "autoUpdate",
+          "level": 1,
+          "line": 3
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 170,
+      "nonEmptyLines": 140,
+      "sections": [
+        {
+          "heading": "NicePay 단건결제 연동 — 설계 문서",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. 목표",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "2. 확정 결정 사항",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "3. 결제 금액 / 기간",
+          "level": 2,
+          "line": 23
+        },
+        {
+          "heading": "4. 결제 흐름 (NICEPAY 2.0 Server 승인 모델)",
+          "level": 2,
+          "line": 30
+        },
+        {
+          "heading": "5. 데이터 모델 — Payment (신규)",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "6. 컴포넌트 / 파일",
+          "level": 2,
+          "line": 103
+        },
+        {
+          "heading": "7. 환경변수",
+          "level": 2,
+          "line": 116
+        },
+        {
+          "heading": "8. 보안",
+          "level": 2,
+          "line": 128
+        },
+        {
+          "heading": "9. 리다이렉트-only(A) 트레이드오프 & 완화",
+          "level": 2,
+          "line": 138
+        },
+        {
+          "heading": "10. 범위 밖 (향후)",
+          "level": 2,
+          "line": 150
+        },
+        {
+          "heading": "11. 테스트 계획",
+          "level": 2,
+          "line": 157
+        },
+        {
+          "heading": "12. 기존 정책/문구 영향",
+          "level": 2,
+          "line": 166
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 13
+      }
+    },
+    {
+      "path": "eslint.config.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 22,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "next.config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 30,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "postcss.config.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "prisma/schema.prisma",
+      "language": "prisma",
+      "fileCategory": "data",
+      "totalLines": 289,
+      "nonEmptyLines": 245,
+      "metrics": {}
+    },
+    {
+      "path": "scripts/migrate-yt-thumbnails.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 32,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/seed-admin.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 61,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/account/payment/fail/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "FailInner",
+          "startLine": 7,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "PaymentFailPage",
+          "startLine": 30,
+          "endLine": 36,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentFailPage",
+          "line": 30,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "FailInner",
+          "callee": "useSearchParams",
+          "lineNumber": 8
+        },
+        {
+          "caller": "FailInner",
+          "callee": "params.get",
+          "lineNumber": 9
+        },
+        {
+          "caller": "FailInner",
+          "callee": "params.get",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/account/payment/success/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 103,
+      "nonEmptyLines": 92,
+      "functions": [
+        {
+          "name": "SuccessInner",
+          "startLine": 9,
+          "endLine": 95,
+          "params": []
+        },
+        {
+          "name": "PaymentSuccessPage",
+          "startLine": 97,
+          "endLine": 103,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentSuccessPage",
+          "line": 97,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SuccessInner",
+          "callee": "useSearchParams",
+          "lineNumber": 10
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "useState",
+          "lineNumber": 11
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "useState",
+          "lineNumber": 12
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "useRef",
+          "lineNumber": 13
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "useEffect",
+          "lineNumber": 15
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "params.get",
+          "lineNumber": 20
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setState",
+          "lineNumber": 21
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "params.get",
+          "lineNumber": 25
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "params.get",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "params.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setState",
+          "lineNumber": 29
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setMessage",
+          "lineNumber": 30
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "(async () => {\n      try {\n        const r = await fetch('/api/payments/confirm', {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify({ paymentKey, orderId, amount: Number(amount) }),\n        });\n        const d = await r.json();\n        if (!r.ok) throw new Error(d.error || '결제 승인 실패');\n        setState('success');\n      } catch (e) {\n        setState('error');\n        setMessage(e instanceof Error ? e.message : '결제 승인 중 오류가 발생했습니다.');\n      }\n    })",
+          "lineNumber": 34
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "fetch",
+          "lineNumber": 36
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "JSON.stringify",
+          "lineNumber": 39
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "Number",
+          "lineNumber": 39
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "r.json",
+          "lineNumber": 41
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setState",
+          "lineNumber": 43
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setState",
+          "lineNumber": 45
+        },
+        {
+          "caller": "SuccessInner",
+          "callee": "setMessage",
+          "lineNumber": 46
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/(app)/account/subscribe/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 132,
+      "nonEmptyLines": 117,
+      "functions": [
+        {
+          "name": "loadSdk",
+          "startLine": 25,
+          "endLine": 40,
+          "params": []
+        },
+        {
+          "name": "SubscribeCheckoutPage",
+          "startLine": 42,
+          "endLine": 132,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SubscribeCheckoutPage",
+          "line": 42,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "loadSdk",
+          "callee": "resolve",
+          "lineNumber": 27
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "document.querySelector",
+          "lineNumber": 28
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "existing.addEventListener",
+          "lineNumber": 30
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "resolve",
+          "lineNumber": 30
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "existing.addEventListener",
+          "lineNumber": 31
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "reject",
+          "lineNumber": 31
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "document.createElement",
+          "lineNumber": 34
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "resolve",
+          "lineNumber": 36
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "reject",
+          "lineNumber": 37
+        },
+        {
+          "caller": "loadSdk",
+          "callee": "document.head.appendChild",
+          "lineNumber": 38
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useState",
+          "lineNumber": 43
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useState",
+          "lineNumber": 44
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useState",
+          "lineNumber": 45
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useState",
+          "lineNumber": 46
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useCallback",
+          "lineNumber": 48
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "setLoading",
+          "lineNumber": 49
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "setErr",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "loadSdk",
+          "lineNumber": 52
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "fetch",
+          "lineNumber": 53
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "r.json",
+          "lineNumber": 54
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "setData",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "setErr",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "setLoading",
+          "lineNumber": 60
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "useEffect",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "init",
+          "lineNumber": 65
+        },
+        {
+          "caller": "pay",
+          "callee": "setPaying",
+          "lineNumber": 70
+        },
+        {
+          "caller": "pay",
+          "callee": "setErr",
+          "lineNumber": 71
+        },
+        {
+          "caller": "pay",
+          "callee": "window.AUTHNICE.requestPay",
+          "lineNumber": 73
+        },
+        {
+          "caller": "pay",
+          "callee": "setErr",
+          "lineNumber": 83
+        },
+        {
+          "caller": "pay",
+          "callee": "setPaying",
+          "lineNumber": 84
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "(data?.amount ?? 29800).toLocaleString",
+          "lineNumber": 103
+        },
+        {
+          "caller": "SubscribeCheckoutPage",
+          "callee": "(data?.amount ?? 29800).toLocaleString",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/analyze/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 5,
+          "endLine": 48,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "request.nextUrl.searchParams.get",
+          "lineNumber": 6
+        },
+        {
+          "caller": "GET",
+          "callee": "request.nextUrl.searchParams.get",
+          "lineNumber": 7
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 10
+        },
+        {
+          "caller": "GET",
+          "callee": "prisma.video.findUnique",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 16
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 23
+        },
+        {
+          "caller": "GET",
+          "callee": "Number",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GET",
+          "callee": "quickAnalysis",
+          "lineNumber": 29
+        },
+        {
+          "caller": "GET",
+          "callee": "analyzeWithAI",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.set",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 46
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/auth/logout/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 6,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 3,
+          "endLine": 7,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "POST",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 4
+        },
+        {
+          "caller": "POST",
+          "callee": "response.cookies.set",
+          "lineNumber": 5
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/download/tiktok/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 13,
+          "endLine": 64,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "req.nextUrl.searchParams.get",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GET",
+          "callee": "videoUrl.includes",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 16
+        },
+        {
+          "caller": "GET",
+          "callee": "videoUrl.replace(/\"/g, '&quot;').replace",
+          "lineNumber": 20
+        },
+        {
+          "caller": "GET",
+          "callee": "videoUrl.replace",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/img/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 93,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "isAllowed",
+          "startLine": 31,
+          "endLine": 40,
+          "params": [
+            "rawUrl"
+          ]
+        },
+        {
+          "name": "fetchImage",
+          "startLine": 42,
+          "endLine": 59,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 61,
+          "endLine": 93,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "maxDuration",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "GET",
+          "line": 61,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "isAllowed",
+          "callee": "u.host.toLowerCase",
+          "lineNumber": 35
+        },
+        {
+          "caller": "isAllowed",
+          "callee": "ALLOWED_HOST_SUFFIXES.some",
+          "lineNumber": 36
+        },
+        {
+          "caller": "isAllowed",
+          "callee": "host.endsWith",
+          "lineNumber": 36
+        },
+        {
+          "caller": "fetchImage",
+          "callee": "fetch",
+          "lineNumber": 45
+        },
+        {
+          "caller": "fetchImage",
+          "callee": "res.headers.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "fetchImage",
+          "callee": "ct.startsWith",
+          "lineNumber": 54
+        },
+        {
+          "caller": "GET",
+          "callee": "req.nextUrl.searchParams.get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GET",
+          "callee": "req.nextUrl.searchParams.get",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GET",
+          "callee": "isAllowed",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GET",
+          "callee": "fetchImage",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GET",
+          "callee": "tt.includes",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GET",
+          "callee": "resolveTikTokCover",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GET",
+          "callee": "isAllowed",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GET",
+          "callee": "fetchImage",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GET",
+          "callee": "res.headers.get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "GET",
+          "callee": "Buffer.from",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GET",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/setup-db/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "functions": [
+        {
+          "name": "GET",
+          "startLine": 7,
+          "endLine": 14,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GET",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GET",
+          "callee": "execAsync",
+          "lineNumber": 9
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 10
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 12
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/thumbnail/tiktok/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 84,
+      "functions": [
+        {
+          "name": "fetchCoverFromTikwm",
+          "startLine": 24,
+          "endLine": 55,
+          "params": [
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "getCover",
+          "startLine": 57,
+          "endLine": 74,
+          "params": [
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "GET",
+          "startLine": 76,
+          "endLine": 95,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "maxDuration",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "GET",
+          "line": 76,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 26
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Math.max",
+          "lineNumber": 27
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 28
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 29
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "fetch",
+          "lineNumber": 33
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "encodeURIComponent",
+          "lineNumber": 34
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "res.json",
+          "lineNumber": 38
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "data.msg.toLowerCase().includes",
+          "lineNumber": 43
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "data.msg.toLowerCase",
+          "lineNumber": 43
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 44
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 45
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 51
+        },
+        {
+          "caller": "getCover",
+          "callee": "cache.get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "getCover",
+          "callee": "Date.now",
+          "lineNumber": 59
+        },
+        {
+          "caller": "getCover",
+          "callee": "inflight.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "getCover",
+          "callee": "(async () => {\n    const cover = await fetchCoverFromTikwm(videoUrl);\n    if (cover) {\n      cache.set(videoUrl, { coverUrl: cover, expiresAt: Date.now() + TTL_MS });\n    }\n    inflight.delete(videoUrl);\n    return cover;\n  })",
+          "lineNumber": 64
+        },
+        {
+          "caller": "getCover",
+          "callee": "fetchCoverFromTikwm",
+          "lineNumber": 65
+        },
+        {
+          "caller": "getCover",
+          "callee": "cache.set",
+          "lineNumber": 67
+        },
+        {
+          "caller": "getCover",
+          "callee": "Date.now",
+          "lineNumber": 67
+        },
+        {
+          "caller": "getCover",
+          "callee": "inflight.delete",
+          "lineNumber": 69
+        },
+        {
+          "caller": "getCover",
+          "callee": "inflight.set",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GET",
+          "callee": "req.nextUrl.searchParams.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GET",
+          "callee": "videoUrl.includes",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GET",
+          "callee": "getCover",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 85
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.redirect",
+          "lineNumber": 87
+        },
+        {
+          "caller": "GET",
+          "callee": "console.error",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GET",
+          "callee": "NextResponse.json",
+          "lineNumber": 93
+        },
+        {
+          "caller": "GET",
+          "callee": "String",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/api/trigger-collect/route.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "POST",
+          "startLine": 6,
+          "endLine": 53,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "maxDuration",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "POST",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "POST",
+          "callee": "request.json",
+          "lineNumber": 12
+        },
+        {
+          "caller": "POST",
+          "callee": "fetch",
+          "lineNumber": 27
+        },
+        {
+          "caller": "POST",
+          "callee": "JSON.stringify",
+          "lineNumber": 33
+        },
+        {
+          "caller": "POST",
+          "callee": "response.text",
+          "lineNumber": 37
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 38
+        },
+        {
+          "caller": "POST",
+          "callee": "response.json",
+          "lineNumber": 44
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 45
+        },
+        {
+          "caller": "POST",
+          "callee": "console.error",
+          "lineNumber": 47
+        },
+        {
+          "caller": "POST",
+          "callee": "NextResponse.json",
+          "lineNumber": 48
+        },
+        {
+          "caller": "POST",
+          "callee": "String",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/app/globals.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 180,
+      "nonEmptyLines": 149,
+      "metrics": {}
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "RootLayout",
+          "startLine": 34,
+          "endLine": 58,
+          "params": [
+            "{\n  children,\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "metadata",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "viewport",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "RootLayout",
+          "line": 34,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RootLayout",
+          "callee": "getThemeFromCookies",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/ai-analysis.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 258,
+      "nonEmptyLines": 217,
+      "functions": [
+        {
+          "name": "calculateTrendScore",
+          "startLine": 30,
+          "endLine": 65,
+          "params": [
+            "video"
+          ]
+        },
+        {
+          "name": "detectProducts",
+          "startLine": 70,
+          "endLine": 112,
+          "params": [
+            "title"
+          ]
+        },
+        {
+          "name": "analyzeSentiment",
+          "startLine": 117,
+          "endLine": 152,
+          "params": [
+            "title",
+            "engagement"
+          ]
+        },
+        {
+          "name": "calculateBuyingIntent",
+          "startLine": 157,
+          "endLine": 182,
+          "params": [
+            "title",
+            "viewCount",
+            "engagement"
+          ]
+        },
+        {
+          "name": "analyzeWithAI",
+          "startLine": 187,
+          "endLine": 227,
+          "params": [
+            "geminiKey",
+            "video"
+          ]
+        },
+        {
+          "name": "quickAnalysis",
+          "startLine": 232,
+          "endLine": 258,
+          "params": [
+            "video"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "calculateTrendScore",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "detectProducts",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "analyzeSentiment",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "calculateBuyingIntent",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "analyzeWithAI",
+          "line": 187,
+          "isDefault": false
+        },
+        {
+          "name": "quickAnalysis",
+          "line": 232,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "calculateTrendScore",
+          "callee": "Math.min",
+          "lineNumber": 64
+        },
+        {
+          "caller": "detectProducts",
+          "callee": "title.includes",
+          "lineNumber": 86
+        },
+        {
+          "caller": "detectProducts",
+          "callee": "products.push",
+          "lineNumber": 87
+        },
+        {
+          "caller": "detectProducts",
+          "callee": "pattern.test",
+          "lineNumber": 106
+        },
+        {
+          "caller": "detectProducts",
+          "callee": "products.push",
+          "lineNumber": 107
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "title.toLowerCase",
+          "lineNumber": 134
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "lower.includes",
+          "lineNumber": 137
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "lower.includes",
+          "lineNumber": 140
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "Math.min",
+          "lineNumber": 146
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "Math.max",
+          "lineNumber": 150
+        },
+        {
+          "caller": "analyzeSentiment",
+          "callee": "Math.min",
+          "lineNumber": 150
+        },
+        {
+          "caller": "calculateBuyingIntent",
+          "callee": "title.toLowerCase",
+          "lineNumber": 168
+        },
+        {
+          "caller": "calculateBuyingIntent",
+          "callee": "lower.includes",
+          "lineNumber": 170
+        },
+        {
+          "caller": "calculateBuyingIntent",
+          "callee": "Math.min",
+          "lineNumber": 181
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "genAI.getGenerativeModel",
+          "lineNumber": 193
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "video.viewCount.toLocaleString",
+          "lineNumber": 200
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "video.likeCount.toLocaleString",
+          "lineNumber": 201
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "video.commentCount.toLocaleString",
+          "lineNumber": 202
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "model.generateContent",
+          "lineNumber": 215
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "result.response.text().trim",
+          "lineNumber": 216
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "result.response.text",
+          "lineNumber": 216
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "text.match",
+          "lineNumber": 219
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "JSON.parse",
+          "lineNumber": 222
+        },
+        {
+          "caller": "analyzeWithAI",
+          "callee": "console.error",
+          "lineNumber": 224
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "calculateTrendScore",
+          "lineNumber": 237
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "detectProducts",
+          "lineNumber": 238
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "analyzeSentiment",
+          "lineNumber": 239
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "calculateBuyingIntent",
+          "lineNumber": 240
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "products.join",
+          "lineNumber": 255
+        },
+        {
+          "caller": "quickAnalysis",
+          "callee": "engagement.toFixed",
+          "lineNumber": 256
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/collectors/trendCollector.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 252,
+      "nonEmptyLines": 221,
+      "functions": [
+        {
+          "name": "getRisingProductTrends",
+          "startLine": 93,
+          "endLine": 138,
+          "params": [
+            "geo"
+          ]
+        },
+        {
+          "name": "getDailyTrendingProducts",
+          "startLine": 143,
+          "endLine": 171,
+          "params": [
+            "geo"
+          ]
+        },
+        {
+          "name": "getInterestOverTime",
+          "startLine": 176,
+          "endLine": 198,
+          "params": [
+            "keyword"
+          ]
+        },
+        {
+          "name": "generateSearchQueries",
+          "startLine": 203,
+          "endLine": 216,
+          "params": [
+            "trends"
+          ]
+        },
+        {
+          "name": "isProductRelated",
+          "startLine": 221,
+          "endLine": 232,
+          "params": [
+            "text"
+          ]
+        },
+        {
+          "name": "removeDuplicates",
+          "startLine": 237,
+          "endLine": 245,
+          "params": [
+            "trends"
+          ]
+        },
+        {
+          "name": "delay",
+          "startLine": 247,
+          "endLine": 249,
+          "params": [
+            "ms"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "getRisingProductTrends",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "getDailyTrendingProducts",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "getInterestOverTime",
+          "line": 176,
+          "isDefault": false
+        },
+        {
+          "name": "generateSearchQueries",
+          "line": 203,
+          "isDefault": false
+        },
+        {
+          "name": "DROPSHIPPING_CHANNELS",
+          "line": 252,
+          "isDefault": false
+        },
+        {
+          "name": "VIRAL_PRODUCT_KEYWORDS",
+          "line": 252,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "googleTrends.relatedQueries",
+          "lineNumber": 108
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "JSON.parse",
+          "lineNumber": 115
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "risingQueries.slice",
+          "lineNumber": 119
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "trends.push",
+          "lineNumber": 120
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "delay",
+          "lineNumber": 129
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "console.error",
+          "lineNumber": 131
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "removeDuplicates",
+          "lineNumber": 136
+        },
+        {
+          "caller": "getRisingProductTrends",
+          "callee": "uniqueTrends.sort",
+          "lineNumber": 137
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "googleTrends.dailyTrends",
+          "lineNumber": 145
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "JSON.parse",
+          "lineNumber": 150
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "data?.default?.trendingSearchesDays?.slice",
+          "lineNumber": 154
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "isProductRelated",
+          "lineNumber": 160
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "products.push",
+          "lineNumber": 161
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "products.slice",
+          "lineNumber": 166
+        },
+        {
+          "caller": "getDailyTrendingProducts",
+          "callee": "console.error",
+          "lineNumber": 168
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "googleTrends.interestOverTime",
+          "lineNumber": 178
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "Date.now",
+          "lineNumber": 181
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "JSON.parse",
+          "lineNumber": 184
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "timeline.slice(-3).reduce",
+          "lineNumber": 190
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "timeline.slice",
+          "lineNumber": 190
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "timeline.reduce",
+          "lineNumber": 191
+        },
+        {
+          "caller": "getInterestOverTime",
+          "callee": "Math.round",
+          "lineNumber": 194
+        },
+        {
+          "caller": "generateSearchQueries",
+          "callee": "trends.slice",
+          "lineNumber": 207
+        },
+        {
+          "caller": "generateSearchQueries",
+          "callee": "queries.push",
+          "lineNumber": 208
+        },
+        {
+          "caller": "generateSearchQueries",
+          "callee": "queries.push",
+          "lineNumber": 209
+        },
+        {
+          "caller": "generateSearchQueries",
+          "callee": "queries.push",
+          "lineNumber": 213
+        },
+        {
+          "caller": "generateSearchQueries",
+          "callee": "VIRAL_PRODUCT_KEYWORDS.global.slice",
+          "lineNumber": 213
+        },
+        {
+          "caller": "isProductRelated",
+          "callee": "text.toLowerCase",
+          "lineNumber": 230
+        },
+        {
+          "caller": "isProductRelated",
+          "callee": "productIndicators.some",
+          "lineNumber": 231
+        },
+        {
+          "caller": "isProductRelated",
+          "callee": "lower.includes",
+          "lineNumber": 231
+        },
+        {
+          "caller": "removeDuplicates",
+          "callee": "trends.filter",
+          "lineNumber": 239
+        },
+        {
+          "caller": "removeDuplicates",
+          "callee": "t.keyword.toLowerCase",
+          "lineNumber": 240
+        },
+        {
+          "caller": "removeDuplicates",
+          "callee": "seen.has",
+          "lineNumber": 241
+        },
+        {
+          "caller": "removeDuplicates",
+          "callee": "seen.add",
+          "lineNumber": 242
+        },
+        {
+          "caller": "delay",
+          "callee": "setTimeout",
+          "lineNumber": 248
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/theme.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "getThemeFromCookies",
+          "startLine": 12,
+          "endLine": 16,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "THEME_COOKIE",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "THEME_DEFAULT",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "getThemeFromCookies",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getThemeFromCookies",
+          "callee": "cookies",
+          "lineNumber": 13
+        },
+        {
+          "caller": "getThemeFromCookies",
+          "callee": "cookieStore.get",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/tikwm.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 57,
+      "functions": [
+        {
+          "name": "fetchCoverFromTikwm",
+          "startLine": 19,
+          "endLine": 46,
+          "params": [
+            "videoUrl"
+          ]
+        },
+        {
+          "name": "resolveTikTokCover",
+          "startLine": 49,
+          "endLine": 64,
+          "params": [
+            "videoUrl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "resolveTikTokCover",
+          "line": 49,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 20
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Math.max",
+          "lineNumber": 21
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 22
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 23
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "fetch",
+          "lineNumber": 27
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "encodeURIComponent",
+          "lineNumber": 27
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "res.json",
+          "lineNumber": 31
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "data.msg.toLowerCase().includes",
+          "lineNumber": 35
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "data.msg.toLowerCase",
+          "lineNumber": 35
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 36
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "Date.now",
+          "lineNumber": 37
+        },
+        {
+          "caller": "fetchCoverFromTikwm",
+          "callee": "setTimeout",
+          "lineNumber": 42
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "cache.get",
+          "lineNumber": 50
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "Date.now",
+          "lineNumber": 51
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "inflight.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "(async () => {\n    const cover = await fetchCoverFromTikwm(videoUrl);\n    if (cover) cache.set(videoUrl, { coverUrl: cover, expiresAt: Date.now() + TTL_MS });\n    inflight.delete(videoUrl);\n    return cover;\n  })",
+          "lineNumber": 56
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "fetchCoverFromTikwm",
+          "lineNumber": 57
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "cache.set",
+          "lineNumber": 58
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "Date.now",
+          "lineNumber": 58
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "inflight.delete",
+          "lineNumber": 59
+        },
+        {
+          "caller": "resolveTikTokCover",
+          "callee": "inflight.set",
+          "lineNumber": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

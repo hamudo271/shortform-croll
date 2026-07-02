@@ -1,0 +1,317 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "DEPLOY.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 186,
+      "nonEmptyLines": 131,
+      "sections": [
+        {
+          "heading": "배포 가이드",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "시스템 개요",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "배포 (코드 변경 → 운영 반영)",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "브랜치 작업 후 머지하는 경우",
+          "level": 3,
+          "line": 40
+        },
+        {
+          "heading": "운영 즉시 검증 (배포 후 1~2분)",
+          "level": 2,
+          "line": 58
+        },
+        {
+          "heading": "환경변수 (Railway 대시보드 → Variables)",
+          "level": 2,
+          "line": 74
+        },
+        {
+          "heading": "GitHub Actions Secrets (cron용)",
+          "level": 2,
+          "line": 94
+        },
+        {
+          "heading": "로컬 개발",
+          "level": 2,
+          "line": 109
+        },
+        {
+          "heading": "DB 직접 쿼리 (긴급 시)",
+          "level": 2,
+          "line": 134
+        },
+        {
+          "heading": "롤백",
+          "level": 2,
+          "line": 155
+        },
+        {
+          "heading": "자주 막히는 지점",
+          "level": 2,
+          "line": 172
+        },
+        {
+          "heading": "개정 이력",
+          "level": 2,
+          "line": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 148,
+      "nonEmptyLines": 103,
+      "sections": [
+        {
+          "heading": "바이럴 숏폼 대시보드 🔥",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "주요 기능",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "기술 스택",
+          "level": 2,
+          "line": 13
+        },
+        {
+          "heading": "시작하기",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "1. 의존성 설치",
+          "level": 3,
+          "line": 23
+        },
+        {
+          "heading": "2. 환경 변수 설정",
+          "level": 3,
+          "line": 29
+        },
+        {
+          "heading": "3. 데이터베이스 마이그레이션",
+          "level": 3,
+          "line": 47
+        },
+        {
+          "heading": "4. 개발 서버 실행",
+          "level": 3,
+          "line": 54
+        },
+        {
+          "heading": "Railway 배포",
+          "level": 2,
+          "line": 62
+        },
+        {
+          "heading": "1. Railway 프로젝트 생성",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "2. PostgreSQL 추가",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "3. 환경 변수 설정",
+          "level": 3,
+          "line": 76
+        },
+        {
+          "heading": "4. 배포",
+          "level": 3,
+          "line": 85
+        },
+        {
+          "heading": "GitHub Actions 설정",
+          "level": 2,
+          "line": 89
+        },
+        {
+          "heading": "API 키 발급 가이드",
+          "level": 2,
+          "line": 98
+        },
+        {
+          "heading": "YouTube Data API",
+          "level": 3,
+          "line": 100
+        },
+        {
+          "heading": "Gemini API",
+          "level": 3,
+          "line": 107
+        },
+        {
+          "heading": "수동 데이터 수집",
+          "level": 2,
+          "line": 113
+        },
+        {
+          "heading": "폴더 구조",
+          "level": 2,
+          "line": 122
+        },
+        {
+          "heading": "주의사항",
+          "level": 2,
+          "line": 140
+        },
+        {
+          "heading": "라이선스",
+          "level": 2,
+          "line": 146
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 21
+      }
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 36,
+      "nonEmptyLines": 36,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "private",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "engines",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 14
+        },
+        {
+          "heading": "devDependencies",
+          "level": 1,
+          "line": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "railway.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 10,
+      "nonEmptyLines": 10,
+      "sections": [
+        {
+          "heading": "$schema",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "build",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "deploy",
+          "level": 1,
+          "line": 7
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "tsconfig.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 34,
+      "nonEmptyLines": 34,
+      "sections": [
+        {
+          "heading": "compilerOptions",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "include",
+          "level": 1,
+          "line": 25
+        },
+        {
+          "heading": "exclude",
+          "level": 1,
+          "line": 33
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,850 @@
+{
+  "nodes": [
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 분석 도구가 무시할 파일·디렉터리 패턴을 정의하는 ignore 목록입니다.",
+      "tags": ["configuration", "tooling", "ignore-file"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-Anything 지식 그래프 생성 도구의 출력 언어(outputLanguage)와 자동 업데이트 여부를 설정하는 구성 파일입니다.",
+      "tags": ["configuration", "tooling", "json"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "type": "document",
+      "name": "2026-06-07-nicepay-payment-design.md",
+      "filePath": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "summary": "NicePay 단건결제(NICEPAY 2.0 Server 승인 모델) 연동 설계 문서로, 결제 흐름·금액/기간·Payment 데이터 모델·환경변수·보안·테스트 계획을 13개 섹션으로 정리합니다.",
+      "tags": ["documentation", "payment", "design-spec", "nicepay"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:eslint.config.mjs",
+      "type": "config",
+      "name": "eslint.config.mjs",
+      "filePath": "eslint.config.mjs",
+      "summary": "Next.js 프로젝트의 ESLint flat config로, next/core-web-vitals·next/typescript 규칙 세트를 확장합니다.",
+      "tags": ["configuration", "eslint", "linting", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:next.config.ts",
+      "type": "config",
+      "name": "next.config.ts",
+      "filePath": "next.config.ts",
+      "summary": "Next.js 애플리케이션 빌드/런타임 동작(이미지 도메인, remotePatterns 등)을 설정하는 프레임워크 구성 파일입니다.",
+      "tags": ["configuration", "nextjs", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "TypeScript 형태의 Next.js config로, NextConfig 타입을 사용해 설정을 타입 안전하게 정의합니다."
+    },
+    {
+      "id": "config:postcss.config.mjs",
+      "type": "config",
+      "name": "postcss.config.mjs",
+      "filePath": "postcss.config.mjs",
+      "summary": "Tailwind CSS 처리를 위한 PostCSS 플러그인 구성 파일입니다.",
+      "tags": ["configuration", "postcss", "tailwind", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:prisma/schema.prisma",
+      "type": "schema",
+      "name": "schema.prisma",
+      "filePath": "prisma/schema.prisma",
+      "summary": "PostgreSQL 기반 전체 데이터 모델을 정의하는 Prisma 스키마로, 영상 수집(Video/Creator), 사용자·인증(User/OAuthAccount), 결제/구독(Payment/Subscription), 커뮤니티(CommunityPost/Comment/PostLike), 큐레이션 상품, 활동 로그 등 11개 모델을 포함합니다.",
+      "tags": ["schema-definition", "database", "prisma", "data-model"],
+      "complexity": "complex",
+      "languageNotes": "Prisma model 간 관계는 @relation과 onDelete: Cascade로 정의되며, Platform·Category·Role·PaymentStatus 등 여러 enum과 복합 @@index/@@unique로 조회 성능·무결성을 관리합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:Video",
+      "type": "table",
+      "name": "Video",
+      "summary": "수집된 숏폼 영상 1건을 저장하는 핵심 테이블로, 플랫폼·통계(조회/좋아요/공유/댓글)·바이럴 점수·분류·구매의도 신호(hasPurchaseIntent, purchaseIntentScore, visualClass)를 담습니다.",
+      "tags": ["data-model", "database", "video", "prisma-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:prisma/schema.prisma:Creator",
+      "type": "table",
+      "name": "Creator",
+      "summary": "영상 작성자(크리에이터) 프로필을 저장하는 테이블로, 판매 링크 보유 여부(hasSalesLink)·팔로워/영상 수 등 셀러 검증 신호를 캐싱합니다.",
+      "tags": ["data-model", "database", "creator", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:User",
+      "type": "table",
+      "name": "User",
+      "summary": "서비스 사용자 계정을 저장하는 테이블로, 인증정보·B2B 사업자 프로필·활동 추적 필드와 구독·결제·커뮤니티·OAuth 계정 관계를 보유합니다.",
+      "tags": ["data-model", "database", "user", "prisma-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:prisma/schema.prisma:OAuthAccount",
+      "type": "table",
+      "name": "OAuthAccount",
+      "summary": "구글·네이버 소셜 로그인 계정을 User와 연결해 저장하는 테이블로, (provider, providerId) 조합으로 고유성을 보장합니다.",
+      "tags": ["data-model", "database", "oauth", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:Payment",
+      "type": "table",
+      "name": "Payment",
+      "summary": "단건 결제 트랜잭션을 저장하는 테이블로, orderId·기대금액·상태(PaymentStatus)·paymentKey·원본 응답(raw)을 기록해 결제 승인/위변조 검증에 사용됩니다.",
+      "tags": ["data-model", "database", "payment", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:CommunityPost",
+      "type": "table",
+      "name": "CommunityPost",
+      "summary": "커뮤니티 게시글을 저장하는 테이블로, 작성자·제목·본문·이미지·상태(CommunityStatus)와 댓글·좋아요 관계를 보유합니다.",
+      "tags": ["data-model", "database", "community", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:CommunityComment",
+      "type": "table",
+      "name": "CommunityComment",
+      "summary": "커뮤니티 댓글·대댓글(parentId)을 저장하는 테이블로, 게시글·작성자와 연결되며 작성 시점 이름을 스냅샷으로 보관합니다.",
+      "tags": ["data-model", "database", "community", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:CuratedProduct",
+      "type": "table",
+      "name": "CuratedProduct",
+      "summary": "관리자가 직접 추가하는 큐레이션 상품을 저장하는 테이블로, 카테고리·점수(score/trend/profit/competition)·이미지를 담아 정적 상품목록과 함께 노출됩니다.",
+      "tags": ["data-model", "database", "product", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:PostLike",
+      "type": "table",
+      "name": "PostLike",
+      "summary": "커뮤니티 게시글 좋아요를 저장하는 테이블로, (postId, userId) 유니크 제약으로 유저당 1좋아요를 강제합니다.",
+      "tags": ["data-model", "database", "community", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:Subscription",
+      "type": "table",
+      "name": "Subscription",
+      "summary": "사용자 구독 기간·상태(SubscriptionStatus)·금액·어드민 메모를 저장하는 테이블로, 구독 활성화 및 만료 관리를 담당합니다.",
+      "tags": ["data-model", "database", "subscription", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:prisma/schema.prisma:ActivityLog",
+      "type": "table",
+      "name": "ActivityLog",
+      "summary": "로그인·가입·조회·검색 등 사용자 활동을 free-form metadata·IP·User-Agent와 함께 기록하는 감사 로그 테이블입니다.",
+      "tags": ["data-model", "database", "audit-log", "prisma-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/migrate-yt-thumbnails.mjs",
+      "type": "file",
+      "name": "migrate-yt-thumbnails.mjs",
+      "filePath": "scripts/migrate-yt-thumbnails.mjs",
+      "summary": "유튜브 썸네일 URL을 일괄 갱신·마이그레이션하는 일회성 운영 스크립트입니다.",
+      "tags": ["script", "migration", "maintenance", "database"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/seed-admin.mjs",
+      "type": "file",
+      "name": "seed-admin.mjs",
+      "filePath": "scripts/seed-admin.mjs",
+      "summary": "초기 관리자(ADMIN) 계정을 데이터베이스에 생성·시드하는 운영 스크립트입니다.",
+      "tags": ["script", "seed", "admin", "database"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/(app)/account/payment/fail/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/payment/fail/page.tsx",
+      "summary": "결제 실패 시 사용자에게 오류 코드·메시지를 안내하는 클라이언트 페이지로, useSearchParams로 실패 정보를 읽어 표시합니다.",
+      "tags": ["component", "payment", "page", "client-component"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/account/payment/success/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/payment/success/page.tsx",
+      "summary": "결제 성공 리다이렉트를 처리하는 클라이언트 페이지로, 쿼리의 paymentKey/orderId/amount로 /api/payments/confirm을 호출해 결제 승인을 확정하고 상태를 안내합니다.",
+      "tags": ["component", "payment", "page", "client-component"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/(app)/account/subscribe/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/subscribe/page.tsx",
+      "summary": "구독 결제 체크아웃 페이지로, NicePay(AUTHNICE) SDK를 동적 로드하고 결제 준비 API를 호출한 뒤 requestPay로 결제창을 띄웁니다.",
+      "tags": ["component", "payment", "checkout", "client-component"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/api/analyze/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/analyze/route.ts",
+      "summary": "영상 ID로 저장된 Video를 조회한 뒤 quickAnalysis 또는 Gemini 기반 analyzeWithAI로 트렌드/구매의도 분석 결과를 반환하는 API 라우트 핸들러입니다.",
+      "tags": ["api-handler", "route-handler", "ai-analysis", "video"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/api/auth/logout/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/logout/route.ts",
+      "summary": "세션 쿠키를 만료시켜 로그아웃을 처리하는 최소 API 라우트 핸들러입니다.",
+      "tags": ["api-handler", "route-handler", "auth", "logout"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/api/download/tiktok/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/download/tiktok/route.ts",
+      "summary": "틱톡 영상 URL을 받아 다운로드용 HTML/리다이렉트 응답을 생성하는 API 라우트 핸들러로, URL 검증과 이스케이프 처리를 수행합니다.",
+      "tags": ["api-handler", "route-handler", "tiktok", "download"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/api/img/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/img/route.ts",
+      "summary": "허용 호스트 목록으로 검증한 외부 이미지를 프록시하는 API 라우트 핸들러로, 틱톡 URL은 resolveTikTokCover로 커버 이미지를 해석해 가져옵니다.",
+      "tags": ["api-handler", "route-handler", "image-proxy", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/api/setup-db/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/setup-db/route.ts",
+      "summary": "prisma db push 등을 실행해 데이터베이스 스키마를 초기 세팅하는 운영용 API 라우트 핸들러입니다.",
+      "tags": ["api-handler", "route-handler", "database", "setup"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/api/thumbnail/tiktok/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/thumbnail/tiktok/route.ts",
+      "summary": "tikwm를 통해 틱톡 커버 이미지를 조회하고 인메모리 캐시·in-flight 병합·재시도로 최적화한 뒤 리다이렉트/JSON을 반환하는 API 라우트 핸들러입니다.",
+      "tags": ["api-handler", "route-handler", "tiktok", "thumbnail", "caching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/api/trigger-collect/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/trigger-collect/route.ts",
+      "summary": "외부 수집(collect) 엔드포인트를 원격 호출해 트렌드 영상 수집 작업을 트리거하는 API 라우트 핸들러입니다.",
+      "tags": ["api-handler", "route-handler", "collector", "trigger"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/globals.css",
+      "type": "file",
+      "name": "globals.css",
+      "filePath": "src/app/globals.css",
+      "summary": "Tailwind 지시문과 CSS 변수(테마 색상, 폰트, 다크모드)를 정의하는 전역 스타일시트로, 앱 전반의 디자인 토큰을 제공합니다.",
+      "tags": ["stylesheet", "css", "theme", "tailwind"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/layout.tsx",
+      "summary": "앱 전체를 감싸는 루트 레이아웃(root layout)으로, 메타데이터·뷰포트·폰트를 설정하고 쿠키 기반 테마를 적용하며 전역 CSS를 로드하는 진입점입니다.",
+      "tags": ["entry-point", "root-layout", "nextjs", "component"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/app/layout.tsx:RootLayout",
+      "type": "function",
+      "name": "RootLayout",
+      "filePath": "src/app/layout.tsx",
+      "lineRange": [34, 58],
+      "summary": "쿠키에서 테마를 읽어 html 클래스를 지정하고 폰트·전역 스타일을 적용해 자식 컴포넌트를 렌더링하는 비동기 루트 레이아웃 컴포넌트입니다.",
+      "tags": ["root-layout", "component", "server-component"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/ai-analysis.ts",
+      "type": "file",
+      "name": "ai-analysis.ts",
+      "filePath": "src/lib/ai-analysis.ts",
+      "summary": "영상 메타데이터에 대한 트렌드 점수·상품 감지·감성·구매의도 분석과 Gemini 기반 AI 분석을 제공하는 분석 유틸리티 모듈입니다.",
+      "tags": ["utility", "ai-analysis", "video", "scoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:calculateTrendScore",
+      "type": "function",
+      "name": "calculateTrendScore",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [30, 65],
+      "summary": "영상의 조회수·참여도 등을 종합해 0~100 범위의 트렌드/바이럴 점수를 계산합니다.",
+      "tags": ["scoring", "analysis", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:detectProducts",
+      "type": "function",
+      "name": "detectProducts",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [70, 112],
+      "summary": "제목 텍스트에서 키워드·정규식 패턴으로 상품명을 감지해 후보 목록을 반환합니다.",
+      "tags": ["detection", "analysis", "product"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:analyzeSentiment",
+      "type": "function",
+      "name": "analyzeSentiment",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [117, 152],
+      "summary": "제목과 참여도 지표를 기반으로 콘텐츠 감성 점수를 추정합니다.",
+      "tags": ["sentiment", "analysis", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:calculateBuyingIntent",
+      "type": "function",
+      "name": "calculateBuyingIntent",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [157, 182],
+      "summary": "제목·조회수·참여도를 결합해 구매 의도(buying intent) 점수를 산출합니다.",
+      "tags": ["scoring", "buying-intent", "analysis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:analyzeWithAI",
+      "type": "function",
+      "name": "analyzeWithAI",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [187, 227],
+      "summary": "Gemini 생성 모델을 호출해 영상에 대한 구조화된 JSON 분석 결과를 얻고 파싱하는 AI 분석 함수입니다.",
+      "tags": ["ai-analysis", "gemini", "integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "type": "function",
+      "name": "quickAnalysis",
+      "filePath": "src/lib/ai-analysis.ts",
+      "lineRange": [232, 258],
+      "summary": "트렌드 점수·상품 감지·감성·구매의도 함수를 조합해 AI 호출 없이 빠른 종합 분석 결과를 생성합니다.",
+      "tags": ["analysis", "aggregation", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/collectors/trendCollector.ts",
+      "type": "file",
+      "name": "trendCollector.ts",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "summary": "Google Trends API로 상승 상품 트렌드·일간 인기 상품·관심도 추이를 수집하고 검색 쿼리를 생성하는 수집기 모듈입니다.",
+      "tags": ["service", "collector", "google-trends", "data-pipeline"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/lib/collectors/trendCollector.ts:getRisingProductTrends",
+      "type": "function",
+      "name": "getRisingProductTrends",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "lineRange": [93, 138],
+      "summary": "Google Trends의 관련 쿼리에서 상승 중인 상품 키워드를 수집·중복 제거·정렬해 반환합니다.",
+      "tags": ["collector", "google-trends", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/collectors/trendCollector.ts:getDailyTrendingProducts",
+      "type": "function",
+      "name": "getDailyTrendingProducts",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "lineRange": [143, 171],
+      "summary": "Google Trends 일간 인기 검색어 중 상품 관련 항목을 필터링해 오늘의 트렌딩 상품 목록을 반환합니다.",
+      "tags": ["collector", "google-trends", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/collectors/trendCollector.ts:getInterestOverTime",
+      "type": "function",
+      "name": "getInterestOverTime",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "lineRange": [176, 198],
+      "summary": "특정 키워드의 시간대별 관심도 추이를 조회해 최근 상승/평균 지표를 계산합니다.",
+      "tags": ["collector", "google-trends", "metrics"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/collectors/trendCollector.ts:generateSearchQueries",
+      "type": "function",
+      "name": "generateSearchQueries",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "lineRange": [203, 216],
+      "summary": "수집된 트렌드와 바이럴 상품 키워드를 조합해 후속 수집에 사용할 검색 쿼리 목록을 생성합니다.",
+      "tags": ["collector", "query-generation", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/theme.ts",
+      "type": "file",
+      "name": "theme.ts",
+      "filePath": "src/lib/theme.ts",
+      "summary": "테마 쿠키 상수와 쿠키에서 현재 테마를 읽어오는 헬퍼(getThemeFromCookies)를 제공하는 유틸리티 모듈입니다.",
+      "tags": ["utility", "theme", "cookies"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/theme.ts:getThemeFromCookies",
+      "type": "function",
+      "name": "getThemeFromCookies",
+      "filePath": "src/lib/theme.ts",
+      "lineRange": [12, 16],
+      "summary": "Next.js cookies()에서 테마 쿠키 값을 읽어 현재 테마('dark'/'light')를 반환하는 서버 헬퍼입니다.",
+      "tags": ["theme", "cookies", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/tikwm.ts",
+      "type": "file",
+      "name": "tikwm.ts",
+      "filePath": "src/lib/tikwm.ts",
+      "summary": "tikwm API로 틱톡 영상 커버 이미지를 조회하고 인메모리 캐시·in-flight 병합·재시도를 적용해 해석하는 유틸리티 모듈입니다.",
+      "tags": ["utility", "tiktok", "caching", "integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/tikwm.ts:resolveTikTokCover",
+      "type": "function",
+      "name": "resolveTikTokCover",
+      "filePath": "src/lib/tikwm.ts",
+      "lineRange": [49, 64],
+      "summary": "틱톡 영상 URL의 커버 이미지를 캐시 우선으로 반환하고, 미스 시 tikwm 조회를 in-flight 병합해 처리하는 함수입니다.",
+      "tags": ["tiktok", "caching", "utility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "file:src/lib/ai-analysis.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/api/img/route.ts",
+      "target": "file:src/lib/tikwm.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "file:src/app/globals.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "file:src/lib/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "function:src/app/layout.tsx:RootLayout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "function:src/app/layout.tsx:RootLayout",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/app/layout.tsx:RootLayout",
+      "target": "function:src/lib/theme.ts:getThemeFromCookies",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:calculateTrendScore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:calculateTrendScore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:detectProducts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:detectProducts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:analyzeSentiment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:analyzeSentiment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:calculateBuyingIntent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:calculateBuyingIntent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:analyzeWithAI",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:analyzeWithAI",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/ai-analysis.ts",
+      "target": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "target": "function:src/lib/ai-analysis.ts:calculateTrendScore",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "target": "function:src/lib/ai-analysis.ts:detectProducts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "target": "function:src/lib/ai-analysis.ts:analyzeSentiment",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "target": "function:src/lib/ai-analysis.ts:calculateBuyingIntent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "function:src/lib/ai-analysis.ts:quickAnalysis",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "function:src/lib/ai-analysis.ts:analyzeWithAI",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getRisingProductTrends",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getRisingProductTrends",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getDailyTrendingProducts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getDailyTrendingProducts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getInterestOverTime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:getInterestOverTime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:generateSearchQueries",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/collectors/trendCollector.ts",
+      "target": "function:src/lib/collectors/trendCollector.ts:generateSearchQueries",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/theme.ts",
+      "target": "function:src/lib/theme.ts:getThemeFromCookies",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/theme.ts",
+      "target": "function:src/lib/theme.ts:getThemeFromCookies",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/tikwm.ts",
+      "target": "function:src/lib/tikwm.ts:resolveTikTokCover",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/lib/tikwm.ts",
+      "target": "function:src/lib/tikwm.ts:resolveTikTokCover",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/img/route.ts",
+      "target": "function:src/lib/tikwm.ts:resolveTikTokCover",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Creator",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:User",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:OAuthAccount",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Payment",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CommunityPost",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CommunityComment",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CuratedProduct",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:PostLike",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Subscription",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:ActivityLog",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scripts/seed-admin.mjs",
+      "target": "table:prisma/schema.prisma:User",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scripts/migrate-yt-thumbnails.mjs",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:next.config.ts",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:postcss.config.mjs",
+      "target": "file:src/app/globals.css",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "target": "table:prisma/schema.prisma:Payment",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "target": "file:src/app/(app)/account/subscribe/page.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

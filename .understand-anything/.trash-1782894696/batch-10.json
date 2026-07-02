@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/middleware.ts",
+      "type": "file",
+      "name": "middleware.ts",
+      "filePath": "src/middleware.ts",
+      "summary": "Next.js Edge runtime 미들웨어로, session_token cookie 유무만 확인하는 경량 auth gate 역할을 한다. 마케팅/인증 페이지(/, /pricing, /login, /signup, /api/auth/*)는 통과시키고, 보호 라우트(/dashboard, /account, /admin)에 미인증 접근 시 /login?next=... 로 redirect하며, 이미 로그인한 사용자가 /login·/signup에 오면 /dashboard로 돌려보낸다. 구독·권한 검사는 DB가 필요해 server layout에서 별도로 처리한다.",
+      "tags": ["middleware", "entry-point", "authentication", "edge-runtime", "route-guard"],
+      "complexity": "simple",
+      "languageNotes": "config.matcher 배열로 미들웨어가 실행될 라우트를 명시적으로 스코프하고, NextRequest/NextResponse의 cookie·redirect API로 인증 흐름을 제어한다."
+    },
+    {
+      "id": "function:src/middleware.ts:middleware",
+      "type": "function",
+      "name": "middleware",
+      "filePath": "src/middleware.ts",
+      "lineRange": [7, 35],
+      "summary": "요청의 session_token cookie와 pathname을 읽어 공개/인증/보호 라우트를 분기 처리하는 auth gate 함수. 미인증 보호 라우트는 next 쿼리를 붙여 /login으로 redirect하고, 그 외에는 NextResponse.next()로 통과시킨다.",
+      "tags": ["middleware", "authentication", "route-guard", "redirect", "cookie"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/middleware.ts",
+      "target": "function:src/middleware.ts:middleware",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/middleware.ts",
+      "target": "function:src/middleware.ts:middleware",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

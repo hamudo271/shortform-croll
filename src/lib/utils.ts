@@ -85,6 +85,18 @@ export const PLATFORM_NAMES = {
 } as const;
 
 /**
+ * Platform badge classes (border+bg+text, light/dark). VideoCard 와 영상 상세
+ * 페이지가 동일하게 쓰던 문자열을 한 곳으로 모은 것 — 값은 그대로.
+ * 주의: 작은 색점(PLATFORM_DOT)은 컴포넌트별로 teal-500/teal-400 로 값이 달라
+ * 여기로 합치지 않았다. 통일하려면 겉보기 변화 확인 필요.
+ */
+export const PLATFORM_BADGE: Record<'YOUTUBE' | 'TIKTOK' | 'INSTAGRAM', string> = {
+  YOUTUBE: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/30',
+  TIKTOK: 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30',
+  INSTAGRAM: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:border-fuchsia-500/30',
+};
+
+/**
  * Category display names (Korean)
  */
 export const CATEGORY_NAMES = {

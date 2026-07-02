@@ -1,0 +1,139 @@
+{
+  "nodes": [
+    {
+      "id": "document:DEPLOY.md",
+      "type": "document",
+      "name": "DEPLOY.md",
+      "filePath": "DEPLOY.md",
+      "summary": "Railway 운영 배포 가이드로, 코드 변경부터 운영 반영까지의 절차, 환경변수, GitHub Actions cron Secrets, DB 긴급 쿼리, 롤백 방법을 정리한 문서다.",
+      "tags": ["documentation", "deployment", "railway", "operations", "runbook"],
+      "complexity": "moderate",
+      "languageNotes": "코드 변경→운영 반영 워크플로우와 롤백 절차를 담은 실무 런북 형식의 배포 문서."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "프로젝트 개요 문서로 주요 기능, 기술 스택, 로컬 시작하기, Railway 배포, GitHub Actions 설정, API 키 발급 가이드, 폴더 구조를 설명하는 진입점 문서다.",
+      "tags": ["documentation", "entry-point", "overview", "getting-started", "railway"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "애플리케이션의 npm 매니페스트로 Next.js 16, React 19, Prisma, Gemini 등 의존성과 dev/build/start/lint 스크립트, Node 22+ 엔진 요구사항을 정의한다.",
+      "tags": ["configuration", "build-system", "dependencies", "npm", "scripts"],
+      "complexity": "simple",
+      "languageNotes": "build 스크립트가 prisma generate와 next build를, start가 prisma db push와 next start를 연쇄 실행한다."
+    },
+    {
+      "id": "config:railway.json",
+      "type": "config",
+      "name": "railway.json",
+      "filePath": "railway.json",
+      "summary": "Railway 배포 설정으로 NIXPACKS 빌더, npm run build 빌드 명령, prisma db push 후 next start를 실행하는 startCommand를 지정한다.",
+      "tags": ["configuration", "deployment", "railway", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "startCommand에서 prisma db push로 스키마를 반영한 뒤 Next.js 프로덕션 서버를 기동한다."
+    },
+    {
+      "id": "config:tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "tsconfig.json",
+      "summary": "TypeScript 컴파일러 설정으로 strict 모드, bundler moduleResolution, Next.js 플러그인, @/* → ./src/* 경로 별칭을 활성화한 App Router용 구성이다.",
+      "tags": ["configuration", "typescript", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "@/* 경로 별칭이 src 디렉터리를 가리키며 next 플러그인과 함께 App Router 타입을 처리한다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:README.md",
+      "target": "file:src/app/layout.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:railway.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:prisma/schema.prisma",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DEPLOY.md",
+      "target": "config:railway.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DEPLOY.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "config:next.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:prisma/schema.prisma",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:railway.json",
+      "target": "config:package.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:railway.json",
+      "target": "file:prisma/schema.prisma",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

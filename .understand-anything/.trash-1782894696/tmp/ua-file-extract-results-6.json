@@ -1,0 +1,304 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/app/(app)/dashboard/products/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "functions": [
+        {
+          "name": "ProductsPage",
+          "startLine": 8,
+          "endLine": 10,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "metadata",
+          "line": 3,
+          "isDefault": false
+        },
+        {
+          "name": "ProductsPage",
+          "line": 8,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/app/ProductListPage.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 200,
+      "nonEmptyLines": 184,
+      "functions": [
+        {
+          "name": "ProductListPage",
+          "startLine": 8,
+          "endLine": 123,
+          "params": []
+        },
+        {
+          "name": "metricColor",
+          "startLine": 125,
+          "endLine": 131,
+          "params": [
+            "kind"
+          ]
+        },
+        {
+          "name": "Metric",
+          "startLine": 133,
+          "endLine": 143,
+          "params": [
+            "{ label, value, color }"
+          ]
+        },
+        {
+          "name": "ProductCard",
+          "startLine": 145,
+          "endLine": 200,
+          "params": [
+            "{ product, rank }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProductListPage",
+          "line": 8,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ProductListPage",
+          "callee": "useState",
+          "lineNumber": 9
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useState",
+          "lineNumber": 10
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useState",
+          "lineNumber": 11
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useState",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useEffect",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "fetch('/api/curated-products')\n      .then((r) => (r.ok ? r.json() : { products: [] }))\n      .then((j) => setCurated(j.products || []))\n      .catch",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "fetch('/api/curated-products')\n      .then((r) => (r.ok ? r.json() : { products: [] }))\n      .then",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "fetch('/api/curated-products')\n      .then",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "fetch",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "r.json",
+          "lineNumber": 16
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "setCurated",
+          "lineNumber": 17
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useMemo",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "curated.map",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "SCOPE_PRODUCTS.filter",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "curatedNames.has",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "useMemo",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "query.trim().toLowerCase",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "query.trim",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "allProducts\n      .filter((p) => category === 'all' || p.category === category)\n      .filter((p) => !q || [p.name, p.category, p.description, ...p.tags].join(' ').toLowerCase().includes(q))\n      .sort",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "allProducts\n      .filter((p) => category === 'all' || p.category === category)\n      .filter",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "allProducts\n      .filter",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "[p.name, p.category, p.description, ...p.tags].join(' ').toLowerCase().includes",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "[p.name, p.category, p.description, ...p.tags].join(' ').toLowerCase",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "[p.name, p.category, p.description, ...p.tags].join",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "Math.round",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "allProducts.reduce",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "Math.max",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "setQuery",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "setSort",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "SCOPE_CATEGORIES.map",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "setCategory",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "[\n          { n: allProducts.length, l: 'Total Products' },\n          { n: 3, l: 'Verified Sources' },\n          { n: avgScore, l: 'Avg. Score' },\n        ].map",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ProductListPage",
+          "callee": "items.map",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Metric",
+          "callee": "metricColor",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ProductCard",
+          "callee": "String(rank).padStart",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ProductCard",
+          "callee": "String",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ProductCard",
+          "callee": "product.tags.map",
+          "lineNumber": 167
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/trendscope-products.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 58,
+      "exports": [
+        {
+          "name": "SCOPE_PRODUCTS",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "SCOPE_CATEGORIES",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

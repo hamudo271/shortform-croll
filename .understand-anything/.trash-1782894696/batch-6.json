@@ -1,0 +1,146 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/app/(app)/dashboard/products/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/products/page.tsx",
+      "summary": "TrendScope 상품 목록 화면의 App Router route page로, SEO metadata를 지정하고 클라이언트 컴포넌트 ProductListPage를 렌더링하는 얇은 래퍼입니다.",
+      "tags": ["route-page", "entry-point", "server-component", "products"],
+      "complexity": "simple",
+      "languageNotes": "Next.js App Router의 서버 컴포넌트 페이지로, metadata export와 default page 함수를 함께 내보냅니다."
+    },
+    {
+      "id": "function:src/app/(app)/dashboard/products/page.tsx:ProductsPage",
+      "type": "function",
+      "name": "ProductsPage",
+      "filePath": "src/app/(app)/dashboard/products/page.tsx",
+      "lineRange": [8, 10],
+      "summary": "products 라우트의 default export 페이지 컴포넌트로, 클라이언트 컴포넌트 ProductListPage를 그대로 렌더링합니다.",
+      "tags": ["route-page", "entry-point", "products"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/components/app/ProductListPage.tsx",
+      "type": "file",
+      "name": "ProductListPage.tsx",
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "summary": "바이럴 상품 리서치 보드의 핵심 클라이언트 컴포넌트로, /api/curated-products에서 관리자 큐레이션 상품을 불러와 정적 SCOPE_PRODUCTS와 병합한 뒤 검색·카테고리 필터·정렬을 적용해 랭킹 카드 목록으로 표시합니다.",
+      "tags": ["component", "client-component", "products", "data-fetching", "search"],
+      "complexity": "moderate",
+      "languageNotes": "useState/useEffect/useMemo 기반의 클라이언트 컴포넌트이며, fetch 결과를 useMemo로 필터링·정렬합니다."
+    },
+    {
+      "id": "function:src/components/app/ProductListPage.tsx:ProductListPage",
+      "type": "function",
+      "name": "ProductListPage",
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "lineRange": [8, 123],
+      "summary": "상품 리스트 페이지의 메인 컴포넌트로, 큐레이션 상품 fetch, 정적 상품과의 병합, 검색어·카테고리·정렬 상태 관리와 통계 요약(총 상품 수·평균 점수) 계산 및 카드 렌더링을 담당합니다.",
+      "tags": ["component", "client-component", "data-fetching", "search", "state-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/components/app/ProductListPage.tsx:ProductCard",
+      "type": "function",
+      "name": "ProductCard",
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "lineRange": [145, 200],
+      "summary": "개별 상품을 랭킹 번호, 이미지, 점수·트렌드·이익률·경쟁도 지표, 태그와 함께 카드 형태로 렌더링하는 프레젠테이션 컴포넌트입니다.",
+      "tags": ["component", "presentational", "products", "card"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/components/app/ProductListPage.tsx:Metric",
+      "type": "function",
+      "name": "Metric",
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "lineRange": [133, 143],
+      "summary": "라벨과 값, 색상 종류를 받아 상품 지표 하나를 색상 구분과 함께 표시하는 소형 프레젠테이션 컴포넌트입니다.",
+      "tags": ["component", "presentational", "metric"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/trendscope-products.ts",
+      "type": "file",
+      "name": "trendscope-products.ts",
+      "filePath": "src/lib/trendscope-products.ts",
+      "summary": "TrendScope 큐레이션 상품의 정적 데이터 모듈로, 원본 20개 상품을 ScopeProduct 타입으로 정의하고 인덱스 기반 공식으로 점수·트렌드·이익률·경쟁도와 태그를 계산해 SCOPE_PRODUCTS와 카테고리 목록 SCOPE_CATEGORIES를 내보냅니다.",
+      "tags": ["data-model", "seed-data", "products", "type-definition"],
+      "complexity": "simple",
+      "languageNotes": "RAW 튜플 배열을 map으로 변환해 파생 지표를 계산하며, ScopeProduct 인터페이스로 데이터 형태를 고정합니다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/app/(app)/dashboard/products/page.tsx",
+      "target": "file:src/components/app/ProductListPage.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/products/page.tsx",
+      "target": "function:src/app/(app)/dashboard/products/page.tsx:ProductsPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/products/page.tsx",
+      "target": "function:src/app/(app)/dashboard/products/page.tsx:ProductsPage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "file:src/lib/trendscope-products.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "function:src/components/app/ProductListPage.tsx:ProductListPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "function:src/components/app/ProductListPage.tsx:ProductListPage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "function:src/components/app/ProductListPage.tsx:ProductCard",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "function:src/components/app/ProductListPage.tsx:Metric",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:src/components/app/ProductListPage.tsx:ProductListPage",
+      "target": "function:src/components/app/ProductListPage.tsx:ProductCard",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:src/components/app/ProductListPage.tsx:ProductCard",
+      "target": "function:src/components/app/ProductListPage.tsx:Metric",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,2203 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/app/(app)/admin/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/admin/page.tsx",
+      "summary": "관리자 회원 목록 페이지. 회원을 검색·필터링하고, 관리자가 임의 일수로 구독을 부여하거나 취소하는 client component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/admin/products/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/admin/products/page.tsx",
+      "summary": "관리자 상품 관리 페이지. 상품을 등록·수정·삭제하고 이미지 업로드(Base64)와 카테고리 지정을 지원하는 client component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/admin/users/[id]/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/admin/users/[id]/page.tsx",
+      "summary": "관리자 회원 상세 페이지. 특정 회원의 프로필·구독 이력·활동 로그를 조회하고, 프로필 수정과 구독 부여/취소를 수행하는 client component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "summary": "플랫폼별 영상(상품) 상세 페이지. Prisma로 영상을 직접 조회하고 예상 매출·참여율과 다운로드/도매처/네이버쇼핑 검색 링크를 제공하는 server component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "summary": "특정 카테고리의 영상 목록을 보여주는 server component. 관리자 가드 후 VideoListPage에 카테고리 필터를 넘겨 렌더링합니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/categories/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/categories/page.tsx",
+      "summary": "전체 카테고리를 카드 형태로 나열하고 각 카테고리 상세로 링크하는 server component 인덱스 페이지입니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/community/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/community/page.tsx",
+      "summary": "커뮤니티 라우트의 얇은 진입 페이지. metadata를 정의하고 PageHeader와 CommunityPage 컴포넌트를 조합해 렌더링합니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/instagram/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/instagram/page.tsx",
+      "summary": "인스타그램 릴스 대시보드 라우트 페이지. 관리자 가드 후 RankedProductList에 INSTAGRAM 플랫폼을 넘겨 순위 목록을 렌더링합니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/page.tsx",
+      "summary": "대시보드 메인 라우트 페이지. 관리자 가드 후 기본 VideoListPage를 렌더링하는 얇은 server component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/search/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/search/page.tsx",
+      "summary": "영상 검색 라우트 페이지. 관리자 가드 후 검색 필터가 열린 VideoListPage를 렌더링하는 얇은 server component입니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/tiktok/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/tiktok/page.tsx",
+      "summary": "틱톡 대시보드 라우트 페이지. 관리자 가드 후 RankedProductList에 TIKTOK 플랫폼을 넘겨 순위 목록을 렌더링합니다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/top/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/top/page.tsx",
+      "summary": "인기 영상(Top) 라우트 페이지. 관리자 가드 후 바이럴 점수순으로 정렬된 VideoListPage를 렌더링하는 얇은 server component입니다."
+    },
+    {
+      "id": "file:src/components/CategoryChart.tsx",
+      "type": "file",
+      "name": "CategoryChart.tsx",
+      "filePath": "src/components/CategoryChart.tsx",
+      "summary": "카테고리별 영상 개수를 상위 항목으로 집계해 비율 막대(bar) 차트로 시각화하는 프레젠테이션 컴포넌트입니다."
+    },
+    {
+      "id": "file:src/components/FilterBar.tsx",
+      "type": "file",
+      "name": "FilterBar.tsx",
+      "filePath": "src/components/FilterBar.tsx",
+      "summary": "플랫폼·카테고리·연령대·정렬·기간 필터와 검색어 입력을 제공하는 client component. 디바운스된 검색으로 상위 컴포넌트에 필터 변경을 통지합니다."
+    },
+    {
+      "id": "file:src/components/VideoCard.tsx",
+      "type": "file",
+      "name": "VideoCard.tsx",
+      "filePath": "src/components/VideoCard.tsx",
+      "summary": "영상 한 건을 카드로 표시하는 memo 컴포넌트. 썸네일·플랫폼 배지·조회수/좋아요 지표를 렌더링하고 클릭 시 상세 모달을 여는 데 사용됩니다."
+    },
+    {
+      "id": "file:src/components/VideoDetailModal.tsx",
+      "type": "file",
+      "name": "VideoDetailModal.tsx",
+      "filePath": "src/components/VideoDetailModal.tsx",
+      "summary": "선택된 영상의 상세 정보를 오버레이 모달로 표시하는 client component. AI 분석 결과를 비동기 로드하고 링크 복사·ESC 닫기 등을 지원합니다."
+    },
+    {
+      "id": "file:src/components/app/CommunityPage.tsx",
+      "type": "file",
+      "name": "CommunityPage.tsx",
+      "filePath": "src/components/app/CommunityPage.tsx",
+      "summary": "커뮤니티 피드 화면 전체를 담당하는 대형 client component. 게시글 작성·좋아요·댓글/대댓글·무한 스크롤·회원 등급(티어)을 관리합니다."
+    },
+    {
+      "id": "file:src/components/app/PageHeader.tsx",
+      "type": "file",
+      "name": "PageHeader.tsx",
+      "filePath": "src/components/app/PageHeader.tsx",
+      "summary": "대시보드 페이지 상단의 제목·강조 텍스트·이모지·설명과 우측 액션 슬롯을 표준화하는 재사용 헤더 컴포넌트입니다."
+    },
+    {
+      "id": "file:src/components/app/RankedProductList.tsx",
+      "type": "file",
+      "name": "RankedProductList.tsx",
+      "filePath": "src/components/app/RankedProductList.tsx",
+      "summary": "플랫폼별 영상을 순위 목록으로 표시하는 client component. API로 영상을 페이지네이션 로드하고 예상 매출·순위 강조·스크래핑 새로고침을 제공합니다."
+    },
+    {
+      "id": "file:src/components/app/VideoListPage.tsx",
+      "type": "file",
+      "name": "VideoListPage.tsx",
+      "filePath": "src/components/app/VideoListPage.tsx",
+      "summary": "필터·영상 그리드·상세 모달을 결합한 재사용 영상 목록 화면. FilterBar와 VideoCard, VideoDetailModal을 조합하고 API 페이지네이션·데이터 새로고침을 관리하는 client component입니다."
+    },
+    {
+      "id": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "file",
+      "name": "SafeThumbnail.tsx",
+      "filePath": "src/components/ui/SafeThumbnail.tsx",
+      "summary": "썸네일 이미지를 안전하게 표시하는 client component. 특정 호스트는 프록시 URL로 우회하고, 로딩 시머·로드 실패 시 플랫폼 아이콘 폴백을 제공합니다."
+    },
+    {
+      "id": "file:src/lib/page-guards.ts",
+      "type": "file",
+      "name": "page-guards.ts",
+      "filePath": "src/lib/page-guards.ts",
+      "summary": "서버 컴포넌트용 인증 가드 유틸. 현재 사용자를 조회해 비로그인·비관리자를 적절한 경로로 redirect하고 관리자 사용자를 반환합니다."
+    },
+    {
+      "id": "file:src/lib/utils.ts",
+      "type": "file",
+      "name": "utils.ts",
+      "filePath": "src/lib/utils.ts",
+      "summary": "대시보드 전반에서 쓰이는 공용 유틸 모듈. 숫자·날짜 포맷, 바이럴 점수 계산, 예상 매출(원) 추정, 플랫폼/카테고리 상수, 외부 검색·다운로드 URL 생성을 제공합니다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/route.ts",
+      "summary": "관리자 사용자 목록 API route handler(GET). requireAdmin 후 사용자와 최근 활동 로그를 집계하고 사업자번호를 마스킹해 관리자용 사용자 목록을 반환한다."
+    },
+    {
+      "id": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/[provider]/callback/route.ts",
+      "summary": "소셜 로그인 OAuth 콜백 API route handler(GET). state·code 검증 후 OAuth 프로필을 가져와 사용자를 upsert하고 세션 토큰을 발급해 쿠키로 설정하며, 실패 시 안내용 리다이렉트를 수행한다."
+    },
+    {
+      "id": "file:src/app/api/auth/[provider]/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/[provider]/route.ts",
+      "summary": "소셜 로그인 시작 API route handler(GET). provider 유효성 확인 후 CSRF용 state를 생성해 쿠키에 저장하고 authorizeUrl로 OAuth 인증 페이지로 리다이렉트한다."
+    },
+    {
+      "id": "file:src/app/api/auth/login/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/login/route.ts",
+      "summary": "이메일/비밀번호 로그인 API route handler(POST). 사용자를 조회해 comparePassword로 검증하고 로그인 카운트·시각을 갱신한 뒤 세션 토큰을 발급해 쿠키로 설정한다."
+    },
+    {
+      "id": "file:src/app/api/auth/me/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/me/route.ts",
+      "summary": "현재 로그인 사용자 조회 API route handler(GET). getCurrentUser로 세션을 확인해 인증된 사용자 정보를 반환하거나 미인증 응답을 준다."
+    },
+    {
+      "id": "file:src/app/api/auth/signup/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/signup/route.ts",
+      "summary": "회원가입 API route handler(POST). 이메일·비밀번호·프로필 입력을 검증·정규화하고 중복을 확인한 뒤 비밀번호를 해시해 User를 생성하고 세션 토큰을 발급한다."
+    },
+    {
+      "id": "file:src/app/api/cleanup/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/cleanup/route.ts",
+      "summary": "수집 영상 정리 API route handler(POST/GET). 비상업/밈/일상 콘텐츠 필터(shouldExclude)를 적용해 부적합한 Video 레코드를 삭제하거나(POST) 삭제 대상 미리보기를 제공한다(GET)."
+    },
+    {
+      "id": "file:src/app/api/community/[postId]/comments/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/comments/route.ts",
+      "summary": "커뮤니티 댓글 작성 API route handler(POST). requireCommunityAccess로 접근 권한을 확인하고 게시글·부모 댓글 존재와 중복을 검증해 CommunityComment를 생성한다."
+    },
+    {
+      "id": "file:src/app/api/community/[postId]/image/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/image/route.ts",
+      "summary": "커뮤니티 게시글 이미지 서빙 API route handler(GET). requireCommunityAccess 확인 후 게시글 이미지를 외부 URL은 리다이렉트, data URL은 디코딩해 바이너리 이미지 응답으로 반환한다."
+    },
+    {
+      "id": "file:src/app/api/community/[postId]/like/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/[postId]/like/route.ts",
+      "summary": "커뮤니티 좋아요 토글 API route handler(POST). requireCommunityAccess 확인 후 게시글 존재를 검증하고 PostLike를 토글(삭제/생성)한 뒤 최신 좋아요 수를 반환한다."
+    },
+    {
+      "id": "file:src/app/api/community/level/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/level/route.ts",
+      "summary": "커뮤니티 레벨 조회 API route handler(GET). requireCommunityAccess 확인 후 사용자의 게시글·댓글·좋아요 활동을 집계하고 levelFromActivity로 레벨/등급을 계산해 반환한다."
+    },
+    {
+      "id": "file:src/app/(app)/admin/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/admin/layout.tsx",
+      "summary": "관리자 영역(admin) 서버 레이아웃. getCurrentUser로 로그인/권한을 확인해 비로그인 또는 비관리자를 리다이렉트하는 admin route 가드 역할을 한다."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/dashboard/layout.tsx",
+      "summary": "대시보드 route group의 서버 레이아웃. 로그인 여부를 확인해 비로그인 사용자를 로그인 페이지로 리다이렉트하는 인증 가드."
+    },
+    {
+      "id": "file:src/app/(app)/pricing/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/pricing/page.tsx",
+      "summary": "구독 요금제(가격) 안내 페이지. 구독 금액·할인율·무료 체험 일수 상수를 이용해 요금제, 포함 기능, 결제 단계, FAQ 섹션을 렌더링하는 서버 컴포넌트."
+    },
+    {
+      "id": "file:src/app/api/account/profile/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/account/profile/route.ts",
+      "summary": "계정 프로필 수정 API route handler(PATCH). 로그인 사용자의 이름·연락처·회사명·사업자번호·프로필 이미지를 정규화 후 검증하고 User 테이블을 갱신하며 활동 로그를 남긴다."
+    },
+    {
+      "id": "file:src/app/api/admin/products/[id]/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/products/[id]/route.ts",
+      "summary": "관리자 상품 개별 관리 API route handler. requireAdmin 가드 후 큐레이션 상품(CuratedProduct)을 DELETE로 삭제하거나 PATCH로 이름·설명·카테고리·이미지·할인율 등을 검증해 수정한다."
+    },
+    {
+      "id": "file:src/app/api/admin/products/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/products/route.ts",
+      "summary": "관리자 큐레이션 상품 목록/생성 API route handler. GET은 requireAdmin 후 전체 상품을 조회하고, POST는 입력을 검증·정규화해 새 큐레이션 상품을 생성한다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/cancel/route.ts",
+      "summary": "관리자 구독 취소 API route handler(POST). requireAdmin 후 해당 사용자의 활성 구독을 찾아 상태를 취소(canceled)로 갱신한다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/profile/route.ts",
+      "summary": "관리자용 사용자 프로필 수정 API route handler(PATCH). requireAdmin 후 대상 사용자의 이름·연락처·회사명·사업자번호를 정규화·검증하고 User 테이블을 갱신한다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/[id]/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/route.ts",
+      "summary": "관리자용 개별 사용자 상세 조회 API route handler(GET). requireAdmin 후 사용자 정보와 관련 구독 등을 prisma.user.findUnique로 조회해 반환한다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/[id]/subscribe/route.ts",
+      "summary": "관리자 구독 부여/연장 API route handler(POST). requireAdmin 후 지정 일수만큼 구독을 새로 생성하거나 기존 활성 구독의 종료일을 연장하며 메모를 기록한다."
+    },
+    {
+      "id": "file:src/app/api/admin/users/export/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/admin/users/export/route.ts",
+      "summary": "관리자 사용자 목록 CSV 내보내기 API route handler(GET). requireAdmin 후 전체 사용자와 구독 정보를 조회해 CSV 이스케이프 처리한 다운로드 파일로 반환한다."
+    },
+    {
+      "id": "file:src/app/api/community/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/community/route.ts",
+      "summary": "커뮤니티 게시글 목록 조회(GET)와 작성(POST)을 담당하는 route handler로, requireCommunityAccess로 구독 접근을 검증한 뒤 communityPost/postLike 테이블을 읽고 쓴다."
+    },
+    {
+      "id": "file:src/app/api/cron/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/cron/route.ts",
+      "summary": "CRON_SECRET으로 보호된 예약 작업 route handler로, 30일 지난·비한국어 영상을 정리한 뒤 수집(collect)과 썸네일 갱신 엔드포인트를 순차 호출한다."
+    },
+    {
+      "id": "file:src/app/api/curated-products/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/curated-products/route.ts",
+      "summary": "로그인 사용자에게 관리자가 큐레이션한 curatedProduct 목록을 반환하는 GET route handler로, 캐시 헤더를 설정한다."
+    },
+    {
+      "id": "file:src/app/api/fix-thumbnails/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/fix-thumbnails/route.ts",
+      "summary": "CRON_SECRET 인증 후 깨진 tikwm 썸네일·빈 썸네일을 가진 영상 레코드를 정리(삭제)하는 유지보수용 POST route handler."
+    },
+    {
+      "id": "file:src/app/api/payments/confirm/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/payments/confirm/route.ts",
+      "summary": "토스페이먼츠 결제 승인을 확정하는 POST route handler로, payment 레코드를 검증·업데이트하고 confirmTossPayment 성공 시 activateSubscription으로 구독을 자동 활성화한다."
+    },
+    {
+      "id": "file:src/app/api/payments/nicepay/prepare/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/payments/nicepay/prepare/route.ts",
+      "summary": "나이스페이먼츠 결제창 호출에 필요한 orderId·clientKey를 준비하고 PENDING payment 레코드를 생성하는 POST route handler."
+    },
+    {
+      "id": "file:src/app/api/payments/nicepay/return/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/payments/nicepay/return/route.ts",
+      "summary": "나이스페이 인증 결과를 폼으로 수신해 서명 검증·approveNicepay 승인 후 구독을 활성화하고 성공/실패 URL로 리다이렉트하는 POST return route handler."
+    },
+    {
+      "id": "file:src/app/api/payments/nicepay/webhook/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/payments/nicepay/webhook/route.ts",
+      "summary": "나이스페이 결제 상태 알림을 수신하는 webhook route handler로, JSON/폼 본문을 정규화해 성공 상태면 payment를 PAID로 갱신하고 구독을 활성화한다."
+    },
+    {
+      "id": "file:src/app/api/payments/prepare/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/payments/prepare/route.ts",
+      "summary": "토스페이먼츠 결제창 호출에 필요한 orderId·amount·clientKey를 준비하고 PENDING payment 레코드를 생성하는 POST route handler."
+    },
+    {
+      "id": "file:src/app/api/refresh-thumbnails/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/refresh-thumbnails/route.ts",
+      "summary": "만료된 틱톡 커버 이미지를 tikwm API로 새로 받아 video 레코드를 갱신하는 유지보수용 POST route handler로, maxDuration을 지정한다."
+    },
+    {
+      "id": "file:src/app/api/stats/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/stats/route.ts",
+      "summary": "영상 총계·플랫폼별·카테고리별 집계와 상위 영상 목록을 계산해 대시보드 통계를 반환하는 GET route handler."
+    },
+    {
+      "id": "file:src/app/api/test/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/test/route.ts",
+      "summary": "DB 연결과 영상 개수를 확인하는 간단한 헬스체크용 GET route handler."
+    },
+    {
+      "id": "file:src/lib/activity-log.ts",
+      "type": "file",
+      "name": "activity-log.ts",
+      "filePath": "src/lib/activity-log.ts",
+      "summary": "요청에서 IP·User-Agent를 추출해 activityLog 테이블에 사용자 활동을 기록하는 서비스 모듈로, 인증·프로필 route에서 재사용된다."
+    },
+    {
+      "id": "file:src/lib/admin.ts",
+      "type": "file",
+      "name": "admin.ts",
+      "filePath": "src/lib/admin.ts",
+      "summary": "현재 사용자가 관리자인지 검증하고 아니면 오류 응답을 반환하는 관리자 route용 가드 유틸리티."
+    },
+    {
+      "id": "file:src/lib/auth.ts",
+      "type": "file",
+      "name": "auth.ts",
+      "filePath": "src/lib/auth.ts",
+      "summary": "HMAC 서명 기반 세션 토큰 생성·검증, bcrypt 비밀번호 해싱, 현재 사용자·세션 조회, 커뮤니티 접근 게이트 및 구독 상수를 제공하는 핵심 인증 서비스 모듈."
+    },
+    {
+      "id": "file:src/lib/community.ts",
+      "type": "file",
+      "name": "community.ts",
+      "filePath": "src/lib/community.ts",
+      "summary": "커뮤니티 레벨·티어·XP 계산과 게시글 핫스코어 산정을 담당하는 순수 함수 유틸리티 모듈."
+    },
+    {
+      "id": "file:src/lib/nicepay.ts",
+      "type": "file",
+      "name": "nicepay.ts",
+      "filePath": "src/lib/nicepay.ts",
+      "summary": "나이스페이먼츠 연동 서비스 모듈로, 클라이언트키·모드 설정, 인증 서명 검증(verifyAuthSignature), 결제 승인 API 호출(approveNicepay)을 제공한다."
+    },
+    {
+      "id": "file:src/lib/oauth.ts",
+      "type": "file",
+      "name": "oauth.ts",
+      "filePath": "src/lib/oauth.ts",
+      "summary": "Google·Naver 소셜 로그인 OAuth 흐름을 담당하는 서비스 모듈로, authorize URL 생성, 토큰 교환·프로필 조회, oAuthAccount/user upsert를 제공한다."
+    },
+    {
+      "id": "file:src/lib/prisma.ts",
+      "type": "file",
+      "name": "prisma.ts",
+      "filePath": "src/lib/prisma.ts",
+      "summary": "전역 PrismaClient 싱글턴 인스턴스를 생성·재사용해 대부분의 API route와 서비스가 공유하는 DB 접근 허브 모듈."
+    },
+    {
+      "id": "file:src/lib/profile.ts",
+      "type": "file",
+      "name": "profile.ts",
+      "filePath": "src/lib/profile.ts",
+      "summary": "전화번호·사업자등록번호·상호·이름 정규화와 사업자번호 마스킹을 제공하는 순수 함수 유틸리티 모듈."
+    },
+    {
+      "id": "file:src/lib/subscription.ts",
+      "type": "file",
+      "name": "subscription.ts",
+      "filePath": "src/lib/subscription.ts",
+      "summary": "구독 활성화/연장 로직을 담당하는 서비스 모듈로, 관리자 수동 부여와 결제 자동 활성화가 공유하며 활성 구독이 있으면 endAt을 연장하고 없으면 신규 생성한다."
+    },
+    {
+      "id": "file:src/lib/toss.ts",
+      "type": "file",
+      "name": "toss.ts",
+      "filePath": "src/lib/toss.ts",
+      "summary": "토스페이먼츠 연동 서비스 모듈로, 클라이언트키·테스트모드 설정과 결제 승인 확정(confirmTossPayment) API 호출을 제공한다."
+    },
+    {
+      "id": "file:src/components/landing/HeroLivePreview.tsx",
+      "type": "file",
+      "name": "HeroLivePreview.tsx",
+      "filePath": "src/components/landing/HeroLivePreview.tsx",
+      "summary": "실시간 상위 상품 데이터를 조회해 히어로 영역의 라이브 미리보기 카드(예상 수익·조회수 등)를 보여주는 서버 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/HeroStats.tsx",
+      "type": "file",
+      "name": "HeroStats.tsx",
+      "filePath": "src/components/landing/HeroStats.tsx",
+      "summary": "총 수집 수·카테고리 수·오늘 수집 수 등 랜딩 통계 지표를 요약 표시하는 서버 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/HowItWorks.tsx",
+      "type": "file",
+      "name": "HowItWorks.tsx",
+      "filePath": "src/components/landing/HowItWorks.tsx",
+      "summary": "서비스 이용 흐름을 단계별 카드로 설명하는 정적 랜딩 섹션 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/PlatformShowcase.tsx",
+      "type": "file",
+      "name": "PlatformShowcase.tsx",
+      "filePath": "src/components/landing/PlatformShowcase.tsx",
+      "summary": "플랫폼별(YouTube·TikTok·Instagram) 수집 건수를 카드로 보여주는 랜딩 쇼케이스 서버 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/PricingCallout.tsx",
+      "type": "file",
+      "name": "PricingCallout.tsx",
+      "filePath": "src/components/landing/PricingCallout.tsx",
+      "summary": "구독 가격·할인율·포함 혜택을 강조하고 사용자 상태에 따라 CTA를 분기하는 요금 안내 랜딩 섹션."
+    },
+    {
+      "id": "file:src/components/landing/ScenarioCards.tsx",
+      "type": "file",
+      "name": "ScenarioCards.tsx",
+      "filePath": "src/components/landing/ScenarioCards.tsx",
+      "summary": "유통업자 활용 시나리오를 흐름 단계와 함께 카드로 소개하는 정적 랜딩 섹션 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/TopProductsPreview.tsx",
+      "type": "file",
+      "name": "TopProductsPreview.tsx",
+      "filePath": "src/components/landing/TopProductsPreview.tsx",
+      "summary": "상위 상품 상위 3개는 공개하고 이후 항목은 블러 처리해 구독을 유도하는 랜딩 미리보기 서버 컴포넌트."
+    },
+    {
+      "id": "file:src/components/ui/Icon.tsx",
+      "type": "file",
+      "name": "Icon.tsx",
+      "filePath": "src/components/ui/Icon.tsx",
+      "summary": "앱 전반에서 사용하는 SVG 아이콘·플랫폼 로고 컴포넌트를 모아 export하는 공용 아이콘 허브."
+    },
+    {
+      "id": "file:src/lib/landing-data.ts",
+      "type": "file",
+      "name": "landing-data.ts",
+      "filePath": "src/lib/landing-data.ts",
+      "summary": "공개 랜딩 페이지용 서버 데이터 계층으로, unstable_cache로 1시간 캐싱한 통계·상위 상품 쿼리를 제공한다."
+    },
+    {
+      "id": "file:src/app/(app)/account/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/page.tsx",
+      "summary": "구독 상태·결제 이력·커뮤니티 등급을 보여주는 계정 관리 페이지(서버 컴포넌트)로, 프로필 편집 UI를 감싼다."
+    },
+    {
+      "id": "file:src/app/(app)/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/layout.tsx",
+      "summary": "로그인된 앱 영역의 공통 레이아웃으로, 사용자 세션을 확인하고 Sidebar를 배치하는 셸(shell)이다."
+    },
+    {
+      "id": "file:src/app/(app)/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/page.tsx",
+      "summary": "여러 landing 섹션(Hero, 통계, 요금, FAQ 등)을 조합해 렌더링하는 공개 랜딩 페이지(서버 컴포넌트)."
+    },
+    {
+      "id": "file:src/app/login/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/login/page.tsx",
+      "summary": "이메일/비밀번호 및 소셜 로그인을 처리하고 콜백 실패 시 안내 모달을 띄우는 로그인 페이지."
+    },
+    {
+      "id": "file:src/app/signup/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/signup/page.tsx",
+      "summary": "이메일·이름·연락처·사업자 정보 등 가입 폼을 관리하고 /api 회원가입 요청을 처리하는 회원가입 페이지."
+    },
+    {
+      "id": "file:src/components/app/ProfileEditor.tsx",
+      "type": "file",
+      "name": "ProfileEditor.tsx",
+      "filePath": "src/components/app/ProfileEditor.tsx",
+      "summary": "프로필 사진 업로드와 이름 인라인 편집을 지원하는 클라이언트 컴포넌트로, 계정 페이지에서 사용된다."
+    },
+    {
+      "id": "file:src/components/app/Sidebar.tsx",
+      "type": "file",
+      "name": "Sidebar.tsx",
+      "filePath": "src/components/app/Sidebar.tsx",
+      "summary": "네비게이션 그룹, 다크모드 토글, 접기/펼치기, 모바일 드로어, 로그아웃을 제공하는 앱 사이드바 클라이언트 컴포넌트."
+    },
+    {
+      "id": "file:src/components/auth/SocialLoginButtons.tsx",
+      "type": "file",
+      "name": "SocialLoginButtons.tsx",
+      "filePath": "src/components/auth/SocialLoginButtons.tsx",
+      "summary": "카카오·구글 등 소셜 로그인 진입 링크를 렌더링하는 재사용 버튼 컴포넌트."
+    },
+    {
+      "id": "file:src/components/landing/FAQTeaser.tsx",
+      "type": "file",
+      "name": "FAQTeaser.tsx",
+      "filePath": "src/components/landing/FAQTeaser.tsx",
+      "summary": "정적 FAQ 목록을 접이식 형태로 미리보기하는 랜딩 섹션 컴포넌트."
+    },
+    {
+      "id": "file:scripts/collect-ig-test.ts",
+      "type": "file",
+      "name": "collect-ig-test.ts",
+      "filePath": "scripts/collect-ig-test.ts",
+      "summary": "Instagram Reels 수집 파이프라인을 단독 실행해 보는 개발용 테스트 스크립트로, collector·classifier·vision을 순차 호출하고 결과를 Prisma의 video 테이블에 upsert한다."
+    },
+    {
+      "id": "file:src/app/api/collect/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/collect/route.ts",
+      "summary": "전체 수집·분류 파이프라인의 대형 orchestrator API 라우트로, TikTok trending/search와 Instagram 수집기를 호출하고 comments·creators 필터와 Gemini classifier/vision을 거쳐 통과한 영상을 Prisma video 테이블에 저장한다."
+    },
+    {
+      "id": "file:src/app/api/products/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/products/route.ts",
+      "summary": "저장된 영상에서 상품 후보 리스트를 도출하는 API 라우트로, 제외 필터·제목 정제·수요(DPM) 점수 계산을 거쳐 상품 카드용 데이터를 반환한다."
+    },
+    {
+      "id": "file:src/app/api/videos/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/videos/route.ts",
+      "summary": "영상 목록 조회(GET)와 단건 영상 저장/갱신(POST)을 처리하는 API 라우트로, 제외 필터를 적용해 Prisma video 테이블을 읽고 쓴다."
+    },
+    {
+      "id": "file:src/lib/classifier.ts",
+      "type": "file",
+      "name": "classifier.ts",
+      "filePath": "src/lib/classifier.ts",
+      "summary": "Google Gemini API로 영상 메타데이터를 카테고리·타깃 연령·태그로 분류하는 classifier 모듈로, LLM 실패 시 키워드 기반 규칙(classifyByKeywords)으로 폴백한다."
+    },
+    {
+      "id": "file:src/lib/collectors/instagram-api.ts",
+      "type": "file",
+      "name": "instagram-api.ts",
+      "filePath": "src/lib/collectors/instagram-api.ts",
+      "summary": "RapidAPI 기반 Instagram collector로, 해시태그 Reels 검색과 사용자 정보 조회를 수행하고 중복 제거된 Reel 목록을 반환한다."
+    },
+    {
+      "id": "file:src/lib/collectors/instagram-public.ts",
+      "type": "file",
+      "name": "instagram-public.ts",
+      "filePath": "src/lib/collectors/instagram-public.ts",
+      "summary": "공개 Instagram 웹 엔드포인트를 직접 호출해 한국 계정의 Reels를 스크래핑하는 collector로, 프로필과 피드를 조회해 clips 미디어만 추출한다."
+    },
+    {
+      "id": "file:src/lib/collectors/tiktok-api.ts",
+      "type": "file",
+      "name": "tiktok-api.ts",
+      "filePath": "src/lib/collectors/tiktok-api.ts",
+      "summary": "Tikwm API 기반 TikTok collector로, trending·keyword 검색과 사용자·댓글 조회를 제공하고 상업성(isCommerceContent)·리스티클(isListicleTitle) 규칙으로 사전 필터링한다."
+    },
+    {
+      "id": "file:src/lib/comments.ts",
+      "type": "file",
+      "name": "comments.ts",
+      "filePath": "src/lib/comments.ts",
+      "summary": "댓글 텍스트에서 구매 의도(purchase intent)를 점수화하고 백만 조회당 수요(DPM)를 계산해 영상 통과 여부(evaluatePass)를 판정하는 스코어링 유틸리티."
+    },
+    {
+      "id": "file:src/lib/creators.ts",
+      "type": "file",
+      "name": "creators.ts",
+      "filePath": "src/lib/creators.ts",
+      "summary": "크리에이터 프로필을 조회·캐싱하는 모듈로, 판매 링크 유무·자격 있는 셀러 여부·인도권 콘텐츠 등을 정규식으로 판정하고 Prisma creator 테이블에 TTL 기반으로 upsert한다."
+    },
+    {
+      "id": "file:src/lib/exclude.ts",
+      "type": "file",
+      "name": "exclude.ts",
+      "filePath": "src/lib/exclude.ts",
+      "summary": "제목·작성자명에 대한 제외 패턴(밈·댄스·일상 등)을 정규식으로 매칭해 비상업 콘텐츠를 걸러내는 소형 필터 유틸리티."
+    },
+    {
+      "id": "file:src/lib/vision.ts",
+      "type": "file",
+      "name": "vision.ts",
+      "filePath": "src/lib/vision.ts",
+      "summary": "썸네일 이미지를 base64로 받아 Gemini 비전 모델로 상업/비상업 여부를 판정하는 vision 모듈."
+    },
+    {
+      "id": "file:src/app/(app)/dashboard/products/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/dashboard/products/page.tsx",
+      "summary": "TrendScope 상품 목록 화면의 App Router route page로, SEO metadata를 지정하고 클라이언트 컴포넌트 ProductListPage를 렌더링하는 얇은 래퍼입니다."
+    },
+    {
+      "id": "file:src/components/app/ProductListPage.tsx",
+      "type": "file",
+      "name": "ProductListPage.tsx",
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "summary": "바이럴 상품 리서치 보드의 핵심 클라이언트 컴포넌트로, /api/curated-products에서 관리자 큐레이션 상품을 불러와 정적 SCOPE_PRODUCTS와 병합한 뒤 검색·카테고리 필터·정렬을 적용해 랭킹 카드 목록으로 표시합니다."
+    },
+    {
+      "id": "file:src/lib/trendscope-products.ts",
+      "type": "file",
+      "name": "trendscope-products.ts",
+      "filePath": "src/lib/trendscope-products.ts",
+      "summary": "TrendScope 큐레이션 상품의 정적 데이터 모듈로, 원본 20개 상품을 ScopeProduct 타입으로 정의하고 인덱스 기반 공식으로 점수·트렌드·이익률·경쟁도와 태그를 계산해 SCOPE_PRODUCTS와 카테고리 목록 SCOPE_CATEGORIES를 내보냅니다."
+    },
+    {
+      "id": "pipeline:.github/workflows/collect.yml",
+      "type": "pipeline",
+      "name": "collect.yml",
+      "filePath": ".github/workflows/collect.yml",
+      "summary": "하루 4회(KST 06/12/18/00시, cron) 및 수동(workflow_dispatch)으로 실행되는 GitHub Actions 워크플로우로, APP_URL/COLLECT_API_KEY secret을 검증한 뒤 앱의 POST /api/collect 엔드포인트를 Bearer 토큰으로 호출해 숏폼 데이터 자동 수집을 트리거한다. 실패 시 HTTP 상태·curl exit code 기반으로 에러를 표시하고 알림 스텝을 실행한다."
+    },
+    {
+      "id": "document:DEPLOY.md",
+      "type": "document",
+      "name": "DEPLOY.md",
+      "filePath": "DEPLOY.md",
+      "summary": "Railway 운영 배포 가이드로, 코드 변경부터 운영 반영까지의 절차, 환경변수, GitHub Actions cron Secrets, DB 긴급 쿼리, 롤백 방법을 정리한 문서다."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "프로젝트 개요 문서로 주요 기능, 기술 스택, 로컬 시작하기, Railway 배포, GitHub Actions 설정, API 키 발급 가이드, 폴더 구조를 설명하는 진입점 문서다."
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "애플리케이션의 npm 매니페스트로 Next.js 16, React 19, Prisma, Gemini 등 의존성과 dev/build/start/lint 스크립트, Node 22+ 엔진 요구사항을 정의한다."
+    },
+    {
+      "id": "config:railway.json",
+      "type": "config",
+      "name": "railway.json",
+      "filePath": "railway.json",
+      "summary": "Railway 배포 설정으로 NIXPACKS 빌더, npm run build 빌드 명령, prisma db push 후 next start를 실행하는 startCommand를 지정한다."
+    },
+    {
+      "id": "config:tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "tsconfig.json",
+      "summary": "TypeScript 컴파일러 설정으로 strict 모드, bundler moduleResolution, Next.js 플러그인, @/* → ./src/* 경로 별칭을 활성화한 App Router용 구성이다."
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 분석 도구가 무시할 파일·디렉터리 패턴을 정의하는 ignore 목록입니다."
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-Anything 지식 그래프 생성 도구의 출력 언어(outputLanguage)와 자동 업데이트 여부를 설정하는 구성 파일입니다."
+    },
+    {
+      "id": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "type": "document",
+      "name": "2026-06-07-nicepay-payment-design.md",
+      "filePath": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "summary": "NicePay 단건결제(NICEPAY 2.0 Server 승인 모델) 연동 설계 문서로, 결제 흐름·금액/기간·Payment 데이터 모델·환경변수·보안·테스트 계획을 13개 섹션으로 정리합니다."
+    },
+    {
+      "id": "config:eslint.config.mjs",
+      "type": "config",
+      "name": "eslint.config.mjs",
+      "filePath": "eslint.config.mjs",
+      "summary": "Next.js 프로젝트의 ESLint flat config로, next/core-web-vitals·next/typescript 규칙 세트를 확장합니다."
+    },
+    {
+      "id": "config:next.config.ts",
+      "type": "config",
+      "name": "next.config.ts",
+      "filePath": "next.config.ts",
+      "summary": "Next.js 애플리케이션 빌드/런타임 동작(이미지 도메인, remotePatterns 등)을 설정하는 프레임워크 구성 파일입니다."
+    },
+    {
+      "id": "config:postcss.config.mjs",
+      "type": "config",
+      "name": "postcss.config.mjs",
+      "filePath": "postcss.config.mjs",
+      "summary": "Tailwind CSS 처리를 위한 PostCSS 플러그인 구성 파일입니다."
+    },
+    {
+      "id": "schema:prisma/schema.prisma",
+      "type": "schema",
+      "name": "schema.prisma",
+      "filePath": "prisma/schema.prisma",
+      "summary": "PostgreSQL 기반 전체 데이터 모델을 정의하는 Prisma 스키마로, 영상 수집(Video/Creator), 사용자·인증(User/OAuthAccount), 결제/구독(Payment/Subscription), 커뮤니티(CommunityPost/Comment/PostLike), 큐레이션 상품, 활동 로그 등 11개 모델을 포함합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:Video",
+      "type": "table",
+      "name": "Video",
+      "summary": "수집된 숏폼 영상 1건을 저장하는 핵심 테이블로, 플랫폼·통계(조회/좋아요/공유/댓글)·바이럴 점수·분류·구매의도 신호(hasPurchaseIntent, purchaseIntentScore, visualClass)를 담습니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:Creator",
+      "type": "table",
+      "name": "Creator",
+      "summary": "영상 작성자(크리에이터) 프로필을 저장하는 테이블로, 판매 링크 보유 여부(hasSalesLink)·팔로워/영상 수 등 셀러 검증 신호를 캐싱합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:User",
+      "type": "table",
+      "name": "User",
+      "summary": "서비스 사용자 계정을 저장하는 테이블로, 인증정보·B2B 사업자 프로필·활동 추적 필드와 구독·결제·커뮤니티·OAuth 계정 관계를 보유합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:OAuthAccount",
+      "type": "table",
+      "name": "OAuthAccount",
+      "summary": "구글·네이버 소셜 로그인 계정을 User와 연결해 저장하는 테이블로, (provider, providerId) 조합으로 고유성을 보장합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:Payment",
+      "type": "table",
+      "name": "Payment",
+      "summary": "단건 결제 트랜잭션을 저장하는 테이블로, orderId·기대금액·상태(PaymentStatus)·paymentKey·원본 응답(raw)을 기록해 결제 승인/위변조 검증에 사용됩니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:CommunityPost",
+      "type": "table",
+      "name": "CommunityPost",
+      "summary": "커뮤니티 게시글을 저장하는 테이블로, 작성자·제목·본문·이미지·상태(CommunityStatus)와 댓글·좋아요 관계를 보유합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:CommunityComment",
+      "type": "table",
+      "name": "CommunityComment",
+      "summary": "커뮤니티 댓글·대댓글(parentId)을 저장하는 테이블로, 게시글·작성자와 연결되며 작성 시점 이름을 스냅샷으로 보관합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:CuratedProduct",
+      "type": "table",
+      "name": "CuratedProduct",
+      "summary": "관리자가 직접 추가하는 큐레이션 상품을 저장하는 테이블로, 카테고리·점수(score/trend/profit/competition)·이미지를 담아 정적 상품목록과 함께 노출됩니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:PostLike",
+      "type": "table",
+      "name": "PostLike",
+      "summary": "커뮤니티 게시글 좋아요를 저장하는 테이블로, (postId, userId) 유니크 제약으로 유저당 1좋아요를 강제합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:Subscription",
+      "type": "table",
+      "name": "Subscription",
+      "summary": "사용자 구독 기간·상태(SubscriptionStatus)·금액·어드민 메모를 저장하는 테이블로, 구독 활성화 및 만료 관리를 담당합니다."
+    },
+    {
+      "id": "table:prisma/schema.prisma:ActivityLog",
+      "type": "table",
+      "name": "ActivityLog",
+      "summary": "로그인·가입·조회·검색 등 사용자 활동을 free-form metadata·IP·User-Agent와 함께 기록하는 감사 로그 테이블입니다."
+    },
+    {
+      "id": "file:scripts/migrate-yt-thumbnails.mjs",
+      "type": "file",
+      "name": "migrate-yt-thumbnails.mjs",
+      "filePath": "scripts/migrate-yt-thumbnails.mjs",
+      "summary": "유튜브 썸네일 URL을 일괄 갱신·마이그레이션하는 일회성 운영 스크립트입니다."
+    },
+    {
+      "id": "file:scripts/seed-admin.mjs",
+      "type": "file",
+      "name": "seed-admin.mjs",
+      "filePath": "scripts/seed-admin.mjs",
+      "summary": "초기 관리자(ADMIN) 계정을 데이터베이스에 생성·시드하는 운영 스크립트입니다."
+    },
+    {
+      "id": "file:src/app/(app)/account/payment/fail/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/payment/fail/page.tsx",
+      "summary": "결제 실패 시 사용자에게 오류 코드·메시지를 안내하는 클라이언트 페이지로, useSearchParams로 실패 정보를 읽어 표시합니다."
+    },
+    {
+      "id": "file:src/app/(app)/account/payment/success/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/payment/success/page.tsx",
+      "summary": "결제 성공 리다이렉트를 처리하는 클라이언트 페이지로, 쿼리의 paymentKey/orderId/amount로 /api/payments/confirm을 호출해 결제 승인을 확정하고 상태를 안내합니다."
+    },
+    {
+      "id": "file:src/app/(app)/account/subscribe/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/account/subscribe/page.tsx",
+      "summary": "구독 결제 체크아웃 페이지로, NicePay(AUTHNICE) SDK를 동적 로드하고 결제 준비 API를 호출한 뒤 requestPay로 결제창을 띄웁니다."
+    },
+    {
+      "id": "file:src/app/api/analyze/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/analyze/route.ts",
+      "summary": "영상 ID로 저장된 Video를 조회한 뒤 quickAnalysis 또는 Gemini 기반 analyzeWithAI로 트렌드/구매의도 분석 결과를 반환하는 API 라우트 핸들러입니다."
+    },
+    {
+      "id": "file:src/app/api/auth/logout/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/auth/logout/route.ts",
+      "summary": "세션 쿠키를 만료시켜 로그아웃을 처리하는 최소 API 라우트 핸들러입니다."
+    },
+    {
+      "id": "file:src/app/api/download/tiktok/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/download/tiktok/route.ts",
+      "summary": "틱톡 영상 URL을 받아 다운로드용 HTML/리다이렉트 응답을 생성하는 API 라우트 핸들러로, URL 검증과 이스케이프 처리를 수행합니다."
+    },
+    {
+      "id": "file:src/app/api/img/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/img/route.ts",
+      "summary": "허용 호스트 목록으로 검증한 외부 이미지를 프록시하는 API 라우트 핸들러로, 틱톡 URL은 resolveTikTokCover로 커버 이미지를 해석해 가져옵니다."
+    },
+    {
+      "id": "file:src/app/api/setup-db/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/setup-db/route.ts",
+      "summary": "prisma db push 등을 실행해 데이터베이스 스키마를 초기 세팅하는 운영용 API 라우트 핸들러입니다."
+    },
+    {
+      "id": "file:src/app/api/thumbnail/tiktok/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/thumbnail/tiktok/route.ts",
+      "summary": "tikwm를 통해 틱톡 커버 이미지를 조회하고 인메모리 캐시·in-flight 병합·재시도로 최적화한 뒤 리다이렉트/JSON을 반환하는 API 라우트 핸들러입니다."
+    },
+    {
+      "id": "file:src/app/api/trigger-collect/route.ts",
+      "type": "file",
+      "name": "route.ts",
+      "filePath": "src/app/api/trigger-collect/route.ts",
+      "summary": "외부 수집(collect) 엔드포인트를 원격 호출해 트렌드 영상 수집 작업을 트리거하는 API 라우트 핸들러입니다."
+    },
+    {
+      "id": "file:src/app/globals.css",
+      "type": "file",
+      "name": "globals.css",
+      "filePath": "src/app/globals.css",
+      "summary": "Tailwind 지시문과 CSS 변수(테마 색상, 폰트, 다크모드)를 정의하는 전역 스타일시트로, 앱 전반의 디자인 토큰을 제공합니다."
+    },
+    {
+      "id": "file:src/app/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/layout.tsx",
+      "summary": "앱 전체를 감싸는 루트 레이아웃(root layout)으로, 메타데이터·뷰포트·폰트를 설정하고 쿠키 기반 테마를 적용하며 전역 CSS를 로드하는 진입점입니다."
+    },
+    {
+      "id": "file:src/lib/ai-analysis.ts",
+      "type": "file",
+      "name": "ai-analysis.ts",
+      "filePath": "src/lib/ai-analysis.ts",
+      "summary": "영상 메타데이터에 대한 트렌드 점수·상품 감지·감성·구매의도 분석과 Gemini 기반 AI 분석을 제공하는 분석 유틸리티 모듈입니다."
+    },
+    {
+      "id": "file:src/lib/collectors/trendCollector.ts",
+      "type": "file",
+      "name": "trendCollector.ts",
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "summary": "Google Trends API로 상승 상품 트렌드·일간 인기 상품·관심도 추이를 수집하고 검색 쿼리를 생성하는 수집기 모듈입니다."
+    },
+    {
+      "id": "file:src/lib/theme.ts",
+      "type": "file",
+      "name": "theme.ts",
+      "filePath": "src/lib/theme.ts",
+      "summary": "테마 쿠키 상수와 쿠키에서 현재 테마를 읽어오는 헬퍼(getThemeFromCookies)를 제공하는 유틸리티 모듈입니다."
+    },
+    {
+      "id": "file:src/lib/tikwm.ts",
+      "type": "file",
+      "name": "tikwm.ts",
+      "filePath": "src/lib/tikwm.ts",
+      "summary": "tikwm API로 틱톡 영상 커버 이미지를 조회하고 인메모리 캐시·in-flight 병합·재시도를 적용해 해석하는 유틸리티 모듈입니다."
+    },
+    {
+      "id": "file:src/middleware.ts",
+      "type": "file",
+      "name": "middleware.ts",
+      "filePath": "src/middleware.ts",
+      "summary": "Next.js Edge runtime 미들웨어로, session_token cookie 유무만 확인하는 경량 auth gate 역할을 한다. 마케팅/인증 페이지(/, /pricing, /login, /signup, /api/auth/*)는 통과시키고, 보호 라우트(/dashboard, /account, /admin)에 미인증 접근 시 /login?next=... 로 redirect하며, 이미 로그인한 사용자가 /login·/signup에 오면 /dashboard로 돌려보낸다. 구독·권한 검사는 DB가 필요해 server layout에서 별도로 처리한다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/app/(app)/admin/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/page.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/products/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/users/[id]/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/users/[id]/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/users/[id]/page.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "target": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "target": "file:src/components/app/VideoListPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/categories/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/community/page.tsx",
+      "target": "file:src/components/app/CommunityPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/community/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/instagram/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/instagram/page.tsx",
+      "target": "file:src/components/app/RankedProductList.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/instagram/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/page.tsx",
+      "target": "file:src/components/app/VideoListPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/search/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/search/page.tsx",
+      "target": "file:src/components/app/VideoListPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/search/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/tiktok/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/tiktok/page.tsx",
+      "target": "file:src/components/app/RankedProductList.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/tiktok/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/top/page.tsx",
+      "target": "file:src/components/app/PageHeader.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/top/page.tsx",
+      "target": "file:src/components/app/VideoListPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/top/page.tsx",
+      "target": "file:src/lib/page-guards.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/CategoryChart.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/FilterBar.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/FilterBar.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoCard.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoCard.tsx",
+      "target": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoCard.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoDetailModal.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoDetailModal.tsx",
+      "target": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/VideoDetailModal.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/RankedProductList.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/RankedProductList.tsx",
+      "target": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/RankedProductList.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/VideoListPage.tsx",
+      "target": "file:src/components/FilterBar.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/VideoListPage.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/VideoListPage.tsx",
+      "target": "file:src/components/VideoCard.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/VideoListPage.tsx",
+      "target": "file:src/components/VideoDetailModal.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/ui/SafeThumbnail.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/page-guards.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/oauth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/callback/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/[provider]/route.ts",
+      "target": "file:src/lib/oauth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/login/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/me/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/auth/signup/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/cleanup/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/comments/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/image/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/[postId]/like/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/community.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/level/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/admin/layout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/layout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/pricing/page.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/activity-log.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/account/profile/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/products/[id]/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/products/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/cancel/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/profile/route.ts",
+      "target": "file:src/lib/profile.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/[id]/subscribe/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "file:src/lib/admin.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/admin/users/export/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/route.ts",
+      "target": "file:src/lib/community.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/community/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/cron/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/curated-products/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/curated-products/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/fix-thumbnails/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/confirm/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/confirm/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/confirm/route.ts",
+      "target": "file:src/lib/subscription.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/confirm/route.ts",
+      "target": "file:src/lib/toss.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/prepare/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/prepare/route.ts",
+      "target": "file:src/lib/nicepay.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/prepare/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/return/route.ts",
+      "target": "file:src/lib/nicepay.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/return/route.ts",
+      "target": "file:src/lib/oauth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/return/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/return/route.ts",
+      "target": "file:src/lib/subscription.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/webhook/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/nicepay/webhook/route.ts",
+      "target": "file:src/lib/subscription.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/prepare/route.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/prepare/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/payments/prepare/route.ts",
+      "target": "file:src/lib/toss.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/refresh-thumbnails/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/stats/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/test/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/activity-log.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/admin.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/auth.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/oauth.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/subscription.ts",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/subscription.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HeroLivePreview.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HeroLivePreview.tsx",
+      "target": "file:src/components/ui/SafeThumbnail.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HeroLivePreview.tsx",
+      "target": "file:src/lib/landing-data.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HeroLivePreview.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HeroStats.tsx",
+      "target": "file:src/lib/landing-data.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/HowItWorks.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/PlatformShowcase.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/PlatformShowcase.tsx",
+      "target": "file:src/lib/landing-data.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/PricingCallout.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/PricingCallout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/TopProductsPreview.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/TopProductsPreview.tsx",
+      "target": "file:src/lib/landing-data.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/TopProductsPreview.tsx",
+      "target": "file:src/lib/utils.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/landing-data.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/account/page.tsx",
+      "target": "file:src/components/app/ProfileEditor.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/account/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/account/page.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/account/page.tsx",
+      "target": "file:src/lib/community.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/account/page.tsx",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/layout.tsx",
+      "target": "file:src/components/app/Sidebar.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/layout.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/FAQTeaser.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/HeroLivePreview.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/HeroStats.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/HowItWorks.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/PlatformShowcase.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/PricingCallout.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/ScenarioCards.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/landing/TopProductsPreview.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/page.tsx",
+      "target": "file:src/lib/auth.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/login/page.tsx",
+      "target": "file:src/components/auth/SocialLoginButtons.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/login/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/signup/page.tsx",
+      "target": "file:src/components/auth/SocialLoginButtons.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/signup/page.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/ProfileEditor.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/Sidebar.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/landing/FAQTeaser.tsx",
+      "target": "file:src/components/ui/Icon.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/classifier.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/collectors/instagram-api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/collectors/tiktok-api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/creators.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/exclude.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:scripts/collect-ig-test.ts",
+      "target": "file:src/lib/vision.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/classifier.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/collectors/instagram-api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/collectors/instagram-public.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/collectors/tiktok-api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/comments.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/creators.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/exclude.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/collect/route.ts",
+      "target": "file:src/lib/vision.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/products/route.ts",
+      "target": "file:src/lib/comments.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/products/route.ts",
+      "target": "file:src/lib/exclude.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/products/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/videos/route.ts",
+      "target": "file:src/lib/exclude.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/videos/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/lib/creators.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/(app)/dashboard/products/page.tsx",
+      "target": "file:src/components/app/ProductListPage.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/components/app/ProductListPage.tsx",
+      "target": "file:src/lib/trendscope-products.ts",
+      "type": "imports"
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/app/layout.tsx",
+      "type": "documents"
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:package.json",
+      "type": "documents"
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:railway.json",
+      "type": "documents"
+    },
+    {
+      "source": "document:DEPLOY.md",
+      "target": "config:railway.json",
+      "type": "documents"
+    },
+    {
+      "source": "document:DEPLOY.md",
+      "target": "config:package.json",
+      "type": "documents"
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures"
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "config:next.config.ts",
+      "type": "configures"
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures"
+    },
+    {
+      "source": "config:railway.json",
+      "target": "config:package.json",
+      "type": "depends_on"
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "file:src/lib/ai-analysis.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "file:src/lib/prisma.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/api/img/route.ts",
+      "target": "file:src/lib/tikwm.ts",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "file:src/app/globals.css",
+      "type": "imports"
+    },
+    {
+      "source": "file:src/app/layout.tsx",
+      "target": "file:src/lib/theme.ts",
+      "type": "imports"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Creator",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:User",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:OAuthAccount",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Payment",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CommunityPost",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CommunityComment",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:CuratedProduct",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:PostLike",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:Subscription",
+      "type": "defines_schema"
+    },
+    {
+      "source": "schema:prisma/schema.prisma",
+      "target": "table:prisma/schema.prisma:ActivityLog",
+      "type": "defines_schema"
+    },
+    {
+      "source": "file:src/app/api/analyze/route.ts",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "depends_on"
+    },
+    {
+      "source": "file:scripts/seed-admin.mjs",
+      "target": "table:prisma/schema.prisma:User",
+      "type": "depends_on"
+    },
+    {
+      "source": "file:scripts/migrate-yt-thumbnails.mjs",
+      "target": "table:prisma/schema.prisma:Video",
+      "type": "depends_on"
+    },
+    {
+      "source": "config:next.config.ts",
+      "target": "file:src/app/layout.tsx",
+      "type": "configures"
+    },
+    {
+      "source": "config:postcss.config.mjs",
+      "target": "file:src/app/globals.css",
+      "type": "configures"
+    },
+    {
+      "source": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "target": "table:prisma/schema.prisma:Payment",
+      "type": "documents"
+    },
+    {
+      "source": "document:docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "target": "file:src/app/(app)/account/subscribe/page.tsx",
+      "type": "documents"
+    },
+    {
+      "source": "document:README.md",
+      "target": "schema:prisma/schema.prisma",
+      "type": "documents"
+    },
+    {
+      "source": "config:package.json",
+      "target": "schema:prisma/schema.prisma",
+      "type": "configures"
+    },
+    {
+      "source": "config:railway.json",
+      "target": "schema:prisma/schema.prisma",
+      "type": "configures"
+    },
+    {
+      "source": "pipeline:.github/workflows/collect.yml",
+      "target": "file:src/app/api/collect/route.ts",
+      "type": "triggers"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:presentation",
+      "name": "프레젠테이션/UI 레이어",
+      "description": "React 서버·클라이언트 컴포넌트, 랜딩·대시보드·관리자·인증 페이지, Tailwind globals.css로 구성된 화면 표현 계층입니다."
+    },
+    {
+      "id": "layer:api",
+      "name": "API/백엔드 레이어",
+      "description": "src/app/api 아래 약 40개의 route handler로 인증·커뮤니티·결제(NicePay/Toss)·수집·크론·영상·상품·통계·이미지 프록시 엔드포인트를 처리합니다."
+    },
+    {
+      "id": "layer:routing-middleware",
+      "name": "라우팅 & 미들웨어 레이어",
+      "description": "Edge middleware와 page-guard로 인증·구독 상태에 따른 라우트 접근 제어를 담당합니다."
+    },
+    {
+      "id": "layer:domain-service",
+      "name": "도메인/서비스 레이어",
+      "description": "src/lib의 비즈니스 로직(auth·oauth·구독·결제·Gemini 분류·수집기·커뮤니티·프로필 등)과 시드·마이그레이션 스크립트를 포함합니다."
+    },
+    {
+      "id": "layer:data",
+      "name": "데이터/영속성 레이어",
+      "description": "Prisma schema와 11개 모델(User·Video·Creator·Subscription·Payment·Community 등) 정의로 PostgreSQL 데이터 구조를 관리합니다."
+    },
+    {
+      "id": "layer:infrastructure",
+      "name": "인프라/설정/CI 레이어",
+      "description": "Railway 배포 설정, Next.js·TS·ESLint·PostCSS 빌드 설정, GitHub Actions 일일 수집 파이프라인 등 프로젝트 운영 환경을 구성합니다."
+    },
+    {
+      "id": "layer:documentation",
+      "name": "문서 레이어",
+      "description": "README, 배포 가이드(DEPLOY.md), NicePay 결제 설계 문서 등 프로젝트 문서를 담습니다."
+    }
+  ]
+}

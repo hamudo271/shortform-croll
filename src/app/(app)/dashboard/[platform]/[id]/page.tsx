@@ -9,6 +9,7 @@ import {
   getWholesalerSearchUrl,
   getNaverShoppingSearchUrl,
   PLATFORM_NAMES,
+  PLATFORM_BADGE,
   CATEGORY_NAMES,
 } from '@/lib/utils';
 import {
@@ -112,11 +113,7 @@ export default async function ProductDetailPage({
           {/* Title block */}
           <div>
             <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-400">
-              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border ${
-                video.platform === 'TIKTOK' ? 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30'
-                : video.platform === 'INSTAGRAM' ? 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:border-fuchsia-500/30'
-                : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/30'
-              }`}>
+              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border ${PLATFORM_BADGE[video.platform]}`}>
                 {platformName}
               </span>
               {video.category && (

@@ -1,0 +1,6500 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "92a6d418d5ba9c5bad9c7d08cb62075d8e844bb2",
+  "generatedAt": "2026-07-01T08:31:11.203Z",
+  "files": {
+    ".github/workflows/collect.yml": {
+      "filePath": ".github/workflows/collect.yml",
+      "contentHash": "85c15812c2a0aab1f1eabeb0764d5f874f44e5a33b6dea36db03582696c114c8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "b159cc1096aae365eaa5af99027a3ff24cf5b6022471b4bc35c9b36d481b14ab",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/config.json": {
+      "filePath": ".understand-anything/config.json",
+      "contentHash": "5bda5ebd34d22eca29da4dede43f9631db688ae7f347ccf2debb794e9f9830ca",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 5,
+      "hasStructuralAnalysis": true
+    },
+    "DEPLOY.md": {
+      "filePath": "DEPLOY.md",
+      "contentHash": "69474f225bc7c047bf93148abac23e9f728fe0d2e9e2e6475f09982fb7e0ecbf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 187,
+      "hasStructuralAnalysis": true
+    },
+    "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md": {
+      "filePath": "docs/superpowers/specs/2026-06-07-nicepay-payment-design.md",
+      "contentHash": "f3c6566f52e2f4d9baf779380674913f9faec1f4ad608ae874e8ed7ad2d87ac6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 171,
+      "hasStructuralAnalysis": true
+    },
+    "eslint.config.mjs": {
+      "filePath": "eslint.config.mjs",
+      "contentHash": "b5d00d8e772606bdc6ec7e379c2078bdbfba1ae4a1a0602a0775079daf6bbe42",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "eslint/config",
+          "specifiers": [
+            "defineConfig"
+          ]
+        },
+        {
+          "source": "eslint-config-next/core-web-vitals",
+          "specifiers": [
+            "nextVitals"
+          ]
+        },
+        {
+          "source": "eslint-config-next/typescript",
+          "specifiers": [
+            "nextTs"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "next.config.ts": {
+      "filePath": "next.config.ts",
+      "contentHash": "cdbd1a3cc2a5cbeaa989bec41173dd69e5488a6314264d19c4d3feeec889605e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next",
+          "specifiers": [
+            "NextConfig"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "233e058a6bd941e2d95164c2dc91a49fd2febeb5214381db5a675371792acf5e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "postcss.config.mjs": {
+      "filePath": "postcss.config.mjs",
+      "contentHash": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "prisma/schema.prisma": {
+      "filePath": "prisma/schema.prisma",
+      "contentHash": "78bcdde5535d1fef62daed9fa276b6c34b8d24131b09410a56c51b973aaccfb8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 290,
+      "hasStructuralAnalysis": false
+    },
+    "railway.json": {
+      "filePath": "railway.json",
+      "contentHash": "ff36b770fd1b19bb0c730b9a5b76dd8cf35f2cea02e3e177591e2ac43debd458",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "27e05e00e1a5169463291beeda5859b32f9fc62d2b3bfb0869c11f82b200236b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 149,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/collect-ig-test.ts": {
+      "filePath": "scripts/collect-ig-test.ts",
+      "contentHash": "64cbad60f883a350cf13bf612c16e4278d45f1ea7d8d52e293b5d7ff997fd698",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 61
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../src/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        },
+        {
+          "source": "../src/lib/collectors/instagram-api",
+          "specifiers": [
+            "collectReelsByHashtags",
+            "fetchUserInfo"
+          ]
+        },
+        {
+          "source": "../src/lib/collectors/tiktok-api",
+          "specifiers": [
+            "isListicleTitle"
+          ]
+        },
+        {
+          "source": "../src/lib/creators",
+          "specifiers": [
+            "getOrFetchCreator"
+          ]
+        },
+        {
+          "source": "../src/lib/classifier",
+          "specifiers": [
+            "classifyByKeywords"
+          ]
+        },
+        {
+          "source": "../src/lib/vision",
+          "specifiers": [
+            "classifyThumbnail"
+          ]
+        },
+        {
+          "source": "../src/lib/exclude",
+          "specifiers": [
+            "isExcludedContent"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/migrate-yt-thumbnails.mjs": {
+      "filePath": "scripts/migrate-yt-thumbnails.mjs",
+      "contentHash": "fb96d6d6ea0222fb1d4872dc294041de4358cffa21a665202c58b3f675dcb9f1",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "PrismaClient"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/seed-admin.mjs": {
+      "filePath": "scripts/seed-admin.mjs",
+      "contentHash": "fec0c737eec2de87c0371b1ebc0e9be81f3a49756adf7b66ee08775677518402",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "PrismaClient"
+          ]
+        },
+        {
+          "source": "bcryptjs",
+          "specifiers": [
+            "bcrypt"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/account/page.tsx": {
+      "filePath": "src/app/(app)/account/page.tsx",
+      "contentHash": "d8889c4a2cb67abb723705a814e520f9aec51b4a1aef856b0072b8326f437aca",
+      "functions": [
+        {
+          "name": "formatKRW",
+          "params": [
+            "amount"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "formatDate",
+          "params": [
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "daysUntil",
+          "params": [
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "communityLevelLabel",
+          "params": [
+            "userId"
+          ],
+          "returnType": "Promise<string>",
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "AccountPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 95
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser",
+            "SUBSCRIPTION_PRICE_KRW",
+            "SUBSCRIPTION_DAYS"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/community",
+          "specifiers": [
+            "levelFromActivity",
+            "TIER_LABEL"
+          ]
+        },
+        {
+          "source": "@/components/app/ProfileEditor",
+          "specifiers": [
+            "ProfileEditor"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "PlusCircle"
+          ]
+        }
+      ],
+      "exports": [
+        "AccountPage"
+      ],
+      "totalLines": 139,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/account/payment/fail/page.tsx": {
+      "filePath": "src/app/(app)/account/payment/fail/page.tsx",
+      "contentHash": "4e812d8741829243c9ed5d7efc23d9783c90a319cf9c296aaf088cb5057e735c",
+      "functions": [
+        {
+          "name": "FailInner",
+          "params": [],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "PaymentFailPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "Suspense"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useSearchParams"
+          ]
+        }
+      ],
+      "exports": [
+        "PaymentFailPage"
+      ],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/account/payment/success/page.tsx": {
+      "filePath": "src/app/(app)/account/payment/success/page.tsx",
+      "contentHash": "de13036b90890f68a5a6b00aa10697805651f145e51bf4ef4b68346361b24b27",
+      "functions": [
+        {
+          "name": "SuccessInner",
+          "params": [],
+          "exported": false,
+          "lineCount": 87
+        },
+        {
+          "name": "PaymentSuccessPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "Suspense",
+            "useEffect",
+            "useRef",
+            "useState"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useSearchParams"
+          ]
+        }
+      ],
+      "exports": [
+        "PaymentSuccessPage"
+      ],
+      "totalLines": 104,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/account/subscribe/page.tsx": {
+      "filePath": "src/app/(app)/account/subscribe/page.tsx",
+      "contentHash": "160b7a0c15210e13ce790c4e1423a94834be9b21e7f1c7ed0220c42d98720c2c",
+      "functions": [
+        {
+          "name": "loadSdk",
+          "params": [],
+          "returnType": "Promise<void>",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "SubscribeCheckoutPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 91
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useState"
+          ]
+        }
+      ],
+      "exports": [
+        "SubscribeCheckoutPage"
+      ],
+      "totalLines": 133,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/admin/layout.tsx": {
+      "filePath": "src/app/(app)/admin/layout.tsx",
+      "contentHash": "5e66ab51eaca7956e0fd463b8532853a88ff0addf99a3f30aa5bd49244ae7662",
+      "functions": [
+        {
+          "name": "AdminLayout",
+          "params": [
+            "{ children }"
+          ],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "AdminLayout"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/admin/page.tsx": {
+      "filePath": "src/app/(app)/admin/page.tsx",
+      "contentHash": "72da4d7e709fa17507e48fc6d859fa463adce90e9fa25ef065a0b6c217769b59",
+      "functions": [
+        {
+          "name": "AdminPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 246
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState",
+            "useCallback"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Search",
+            "PlusCircle",
+            "X"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatDate",
+            "daysUntil",
+            "getRelativeTime"
+          ]
+        }
+      ],
+      "exports": [
+        "AdminPage"
+      ],
+      "totalLines": 280,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/admin/products/page.tsx": {
+      "filePath": "src/app/(app)/admin/products/page.tsx",
+      "contentHash": "2972a6410fc8b94334639b7a1a9cd5e60a5939d6050f1c9fe1d2cfb2ed793aa9",
+      "functions": [
+        {
+          "name": "AdminProductsPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 146
+        },
+        {
+          "name": "Field",
+          "params": [
+            "{ label, children }"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "ProductRow",
+          "params": [
+            "{\n  product,\n  onChanged,\n  onRemove,\n}"
+          ],
+          "exported": false,
+          "lineCount": 103
+        },
+        {
+          "name": "Slider",
+          "params": [
+            "{ label, value, onChange }"
+          ],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        }
+      ],
+      "exports": [
+        "AdminProductsPage"
+      ],
+      "totalLines": 295,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/admin/users/[id]/page.tsx": {
+      "filePath": "src/app/(app)/admin/users/[id]/page.tsx",
+      "contentHash": "4dba0f6db2c2eac2dc74be81931e28861722ecc71b06325fe5fd8dba293aab20",
+      "functions": [
+        {
+          "name": "AdminUserDetailPage",
+          "params": [
+            "{ params }"
+          ],
+          "exported": true,
+          "lineCount": 236
+        },
+        {
+          "name": "Field",
+          "params": [
+            "{ icon, label, value }"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "StatusPill",
+          "params": [
+            "{ status }"
+          ],
+          "exported": false,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState",
+            "useCallback",
+            "use"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronRight",
+            "PlusCircle",
+            "X",
+            "UserIcon",
+            "Mail",
+            "Shield",
+            "Clock",
+            "Smartphone"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatDate",
+            "getRelativeTime",
+            "daysUntil"
+          ]
+        }
+      ],
+      "exports": [
+        "AdminUserDetailPage"
+      ],
+      "totalLines": 309,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/[platform]/[id]/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/[platform]/[id]/page.tsx",
+      "contentHash": "7f46d751cd3e5c291eca969cd0bf0ecc7f852b238d76ffddbd94f6f823555159",
+      "functions": [
+        {
+          "name": "ProductDetailPage",
+          "params": [
+            "{\n  params,\n}"
+          ],
+          "exported": true,
+          "lineCount": 209
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "notFound"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "formatKRW",
+            "estimateRevenue",
+            "getDownloaderUrl",
+            "getWholesalerSearchUrl",
+            "getNaverShoppingSearchUrl",
+            "PLATFORM_NAMES",
+            "CATEGORY_NAMES"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronRight",
+            "ExternalLink",
+            "Eye",
+            "Heart",
+            "Play",
+            "TrendingUp"
+          ]
+        },
+        {
+          "source": "@/components/ui/SafeThumbnail",
+          "specifiers": [
+            "SafeThumbnail"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "ProductDetailPage"
+      ],
+      "totalLines": 241,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/categories/[cat]/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/categories/[cat]/page.tsx",
+      "contentHash": "d9e36d8bc9b52157f9b40696216ea36b54fac02acd7c02883135fea170c559ce",
+      "functions": [
+        {
+          "name": "CategoryDetailPage",
+          "params": [
+            "{ params }"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "notFound"
+          ]
+        },
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/VideoListPage",
+          "specifiers": [
+            "VideoListPage"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Category"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "CategoryDetailPage"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/categories/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/categories/page.tsx",
+      "contentHash": "fcacb3c2933eebf6dfdba41e96fe6b45f6d457f1d830b392a28df929d6441426",
+      "functions": [
+        {
+          "name": "CategoriesPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronRight",
+            "Lipstick",
+            "Utensils",
+            "Shirt",
+            "Smartphone",
+            "Home",
+            "Dumbbell",
+            "Baby"
+          ]
+        }
+      ],
+      "exports": [
+        "CategoriesPage"
+      ],
+      "totalLines": 57,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/community/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/community/page.tsx",
+      "contentHash": "87780c03af7bed465bbc72f07eaf2d2f06316fd0cfd20784275ea4ad3dec9a7c",
+      "functions": [
+        {
+          "name": "Page",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/CommunityPage",
+          "specifiers": [
+            "CommunityPage"
+          ]
+        }
+      ],
+      "exports": [
+        "metadata",
+        "Page"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/instagram/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/instagram/page.tsx",
+      "contentHash": "7e4080ab1bcf458679ae08ba9b3a9682e820ec8441600e3e4258a6594139bb3c",
+      "functions": [
+        {
+          "name": "InstagramDashboardPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/RankedProductList",
+          "specifiers": [
+            "RankedProductList"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "InstagramDashboardPage"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/layout.tsx": {
+      "filePath": "src/app/(app)/dashboard/layout.tsx",
+      "contentHash": "65bb127102d03abc08789d14a4e3226fb33ab524777e37f43a5c13dc9f20a470",
+      "functions": [
+        {
+          "name": "DashboardLayout",
+          "params": [
+            "{\n  children,\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "DashboardLayout"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/page.tsx",
+      "contentHash": "6f7a47598498c992025c4e41e29ae0c673b355ef4667e726c6ee5ae9b0cbb1c9",
+      "functions": [
+        {
+          "name": "DashboardMainPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/VideoListPage",
+          "specifiers": [
+            "VideoListPage"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "DashboardMainPage"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/products/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/products/page.tsx",
+      "contentHash": "a18879f55c34a58b8c8e385feae3cd888344f149ca62172c34837cb0e2f39b3a",
+      "functions": [
+        {
+          "name": "ProductsPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/ProductListPage",
+          "specifiers": [
+            "ProductListPage"
+          ]
+        }
+      ],
+      "exports": [
+        "metadata",
+        "ProductsPage"
+      ],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/search/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/search/page.tsx",
+      "contentHash": "5e6983ef568656faf2cb0d599fcc7db67452d22b1da6695c1c5ef2cee2e3c76d",
+      "functions": [
+        {
+          "name": "SearchPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/VideoListPage",
+          "specifiers": [
+            "VideoListPage"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "SearchPage"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/tiktok/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/tiktok/page.tsx",
+      "contentHash": "62f798b235c6706c0bae29b0190e773a7cbed33bb4153bed4a31c0843045629f",
+      "functions": [
+        {
+          "name": "TikTokDashboardPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/RankedProductList",
+          "specifiers": [
+            "RankedProductList"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "TikTokDashboardPage"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/dashboard/top/page.tsx": {
+      "filePath": "src/app/(app)/dashboard/top/page.tsx",
+      "contentHash": "92102641fa6b0628da16948114df5e779fc33f09ed1e01a70f2f88b3bc4018bc",
+      "functions": [
+        {
+          "name": "TopPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/app/PageHeader",
+          "specifiers": [
+            "PageHeader"
+          ]
+        },
+        {
+          "source": "@/components/app/VideoListPage",
+          "specifiers": [
+            "VideoListPage"
+          ]
+        },
+        {
+          "source": "@/lib/page-guards",
+          "specifiers": [
+            "requireAdminPage"
+          ]
+        }
+      ],
+      "exports": [
+        "TopPage"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/layout.tsx": {
+      "filePath": "src/app/(app)/layout.tsx",
+      "contentHash": "9fee02bb85ede2ef0ce24bbff7c042b8f143f6db5ccb622171a9c2440553f741",
+      "functions": [
+        {
+          "name": "AppShellLayout",
+          "params": [
+            "{\n  children,\n}"
+          ],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        },
+        {
+          "source": "@/components/app/Sidebar",
+          "specifiers": [
+            "Sidebar"
+          ]
+        }
+      ],
+      "exports": [
+        "AppShellLayout"
+      ],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/page.tsx": {
+      "filePath": "src/app/(app)/page.tsx",
+      "contentHash": "eb30e4744ab8f450d2506e98e942572ff61fcec8b1ee13b8403df17b8e72f9a5",
+      "functions": [
+        {
+          "name": "SectionHeader",
+          "params": [
+            "{\n  eyebrow,\n  title,\n  sub,\n}"
+          ],
+          "exported": false,
+          "lineCount": 25
+        },
+        {
+          "name": "LandingPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 145
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "PlusCircle"
+          ]
+        },
+        {
+          "source": "@/components/landing/HeroStats",
+          "specifiers": [
+            "HeroStats"
+          ]
+        },
+        {
+          "source": "@/components/landing/HeroLivePreview",
+          "specifiers": [
+            "HeroLivePreview"
+          ]
+        },
+        {
+          "source": "@/components/landing/TopProductsPreview",
+          "specifiers": [
+            "TopProductsPreview"
+          ]
+        },
+        {
+          "source": "@/components/landing/HowItWorks",
+          "specifiers": [
+            "HowItWorks"
+          ]
+        },
+        {
+          "source": "@/components/landing/PlatformShowcase",
+          "specifiers": [
+            "PlatformShowcase"
+          ]
+        },
+        {
+          "source": "@/components/landing/ScenarioCards",
+          "specifiers": [
+            "ScenarioCards"
+          ]
+        },
+        {
+          "source": "@/components/landing/PricingCallout",
+          "specifiers": [
+            "PricingCallout"
+          ]
+        },
+        {
+          "source": "@/components/landing/FAQTeaser",
+          "specifiers": [
+            "FAQTeaser"
+          ]
+        }
+      ],
+      "exports": [
+        "revalidate",
+        "LandingPage"
+      ],
+      "totalLines": 186,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/pricing/page.tsx": {
+      "filePath": "src/app/(app)/pricing/page.tsx",
+      "contentHash": "32b447f3f96a58b36861e718511d58e44574672e9b097d45ba37912d60ab74d3",
+      "functions": [
+        {
+          "name": "PricingPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 143
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "next",
+          "specifiers": [
+            "Metadata"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "SUBSCRIPTION_DAYS",
+            "SUBSCRIPTION_PRICE_KRW",
+            "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+            "TRIAL_DAYS",
+            "getCurrentUser"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Check",
+            "ChevronDown",
+            "PlusCircle"
+          ]
+        }
+      ],
+      "exports": [
+        "metadata",
+        "PricingPage"
+      ],
+      "totalLines": 181,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/account/profile/route.ts": {
+      "filePath": "src/app/api/account/profile/route.ts",
+      "contentHash": "6e1428e459a5110e9bb04a4480ed2649463e8cf30ac723368a52c04df1541cd7",
+      "functions": [
+        {
+          "name": "PATCH",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 66
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        },
+        {
+          "source": "@/lib/activity-log",
+          "specifiers": [
+            "logActivity"
+          ]
+        },
+        {
+          "source": "@/lib/profile",
+          "specifiers": [
+            "normalizeBusinessNumber",
+            "normalizeCompanyName",
+            "normalizeName",
+            "normalizePhone"
+          ]
+        }
+      ],
+      "exports": [
+        "PATCH"
+      ],
+      "totalLines": 85,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/products/[id]/route.ts": {
+      "filePath": "src/app/api/admin/products/[id]/route.ts",
+      "contentHash": "e46ec03c5c76562ebb087f7e0464524573481778274da787b98f359f6cd64e7a",
+      "functions": [
+        {
+          "name": "clampPct",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "DELETE",
+          "params": [
+            "_request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "PATCH",
+          "params": [
+            "request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 56
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Prisma"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        }
+      ],
+      "exports": [
+        "DELETE",
+        "PATCH"
+      ],
+      "totalLines": 79,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/products/route.ts": {
+      "filePath": "src/app/api/admin/products/route.ts",
+      "contentHash": "94d200696dded94163f7ffe7e47aaf94bb011df32c95c5e3444cd14f5be1f7f5",
+      "functions": [
+        {
+          "name": "clampPct",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 42
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "GET",
+        "POST"
+      ],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/[id]/cancel/route.ts": {
+      "filePath": "src/app/api/admin/users/[id]/cancel/route.ts",
+      "contentHash": "41622935f364575d355e425c36c83ee468e4b964c8f46d496af0f31414dd66ac",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "_request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/[id]/profile/route.ts": {
+      "filePath": "src/app/api/admin/users/[id]/profile/route.ts",
+      "contentHash": "d81750efc40827e30b8930ff30dc37c0552c966e991fc20c62b4b55f29a2537d",
+      "functions": [
+        {
+          "name": "PATCH",
+          "params": [
+            "request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 53
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        },
+        {
+          "source": "@/lib/profile",
+          "specifiers": [
+            "normalizeBusinessNumber",
+            "normalizeCompanyName",
+            "normalizeName",
+            "normalizePhone"
+          ]
+        }
+      ],
+      "exports": [
+        "PATCH"
+      ],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/[id]/route.ts": {
+      "filePath": "src/app/api/admin/users/[id]/route.ts",
+      "contentHash": "1669e52f2af13ddf37994875aed157e9e2ffe1bee7016d4729795d455e101f5d",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "_req",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 45
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/[id]/subscribe/route.ts": {
+      "filePath": "src/app/api/admin/users/[id]/subscribe/route.ts",
+      "contentHash": "fdadf7b65fb5903ecbdcb84f65092a37c07934a8a66a4d4925c1dbb16fa69c7d",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 64
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "SUBSCRIPTION_DAYS",
+            "SUBSCRIPTION_PRICE_KRW"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/export/route.ts": {
+      "filePath": "src/app/api/admin/users/export/route.ts",
+      "contentHash": "54321a54bf8007cfd95f281a1d1049a24e99998449e98796c2212d42fe31b060",
+      "functions": [
+        {
+          "name": "csvEscape",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "fmt",
+          "params": [
+            "d"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 59
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 84,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/admin/users/route.ts": {
+      "filePath": "src/app/api/admin/users/route.ts",
+      "contentHash": "7fa1021b24e1602a5d744475211c43d7799e74efa24755fedbab76815775288a",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 64
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/admin",
+          "specifiers": [
+            "requireAdmin"
+          ]
+        },
+        {
+          "source": "@/lib/profile",
+          "specifiers": [
+            "maskBusinessNumber"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 70,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/analyze/route.ts": {
+      "filePath": "src/app/api/analyze/route.ts",
+      "contentHash": "37eb856609573b7273146a42089afbc3428e52c6d20b4eab3157859e68732d90",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/ai-analysis",
+          "specifiers": [
+            "quickAnalysis",
+            "analyzeWithAI"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/[provider]/callback/route.ts": {
+      "filePath": "src/app/api/auth/[provider]/callback/route.ts",
+      "contentHash": "a2f54f109f1018d2317532b3cf65664864d8c2c6847f87340d4a45bf992560d0",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "req",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 47
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "generateToken",
+            "getSessionCookieOptions"
+          ]
+        },
+        {
+          "source": "@/lib/activity-log",
+          "specifiers": [
+            "logActivity"
+          ]
+        },
+        {
+          "source": "@/lib/oauth",
+          "specifiers": [
+            "isOAuthProvider",
+            "fetchOAuthProfile",
+            "upsertOAuthUser",
+            "baseUrlFromRequest"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/[provider]/route.ts": {
+      "filePath": "src/app/api/auth/[provider]/route.ts",
+      "contentHash": "c7f7430f22e8d86842ba5a67fc9bed344554c4086f7930742c245f4ec2f73c8d",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "req",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "@/lib/oauth",
+          "specifiers": [
+            "authorizeUrl",
+            "isOAuthProvider",
+            "baseUrlFromRequest"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/login/route.ts": {
+      "filePath": "src/app/api/auth/login/route.ts",
+      "contentHash": "dd886b0312f24e5a609003e6b12ddc882d389c277c702038128fc84262d94d04",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 62
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "generateToken",
+            "getSessionCookieOptions",
+            "comparePassword"
+          ]
+        },
+        {
+          "source": "@/lib/activity-log",
+          "specifiers": [
+            "logActivity"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/logout/route.ts": {
+      "filePath": "src/app/api/auth/logout/route.ts",
+      "contentHash": "885b62cbe25f960e2abf4f49dc203db00191f100a5c2395d5eec8a61dc884a95",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/me/route.ts": {
+      "filePath": "src/app/api/auth/me/route.ts",
+      "contentHash": "695e8fbfad471c0f73e3b4d1e9a73486c3be34d09f83eaea0acd12237215e302",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/auth/signup/route.ts": {
+      "filePath": "src/app/api/auth/signup/route.ts",
+      "contentHash": "a6de66a6822982cb90908057e6c93fb6291bd898d8202ad1a0867ba5f038c3bf",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 70
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "generateToken",
+            "getSessionCookieOptions",
+            "hashPassword"
+          ]
+        },
+        {
+          "source": "@/lib/activity-log",
+          "specifiers": [
+            "logActivity"
+          ]
+        },
+        {
+          "source": "@/lib/profile",
+          "specifiers": [
+            "normalizeBusinessNumber",
+            "normalizeCompanyName",
+            "normalizeName",
+            "normalizePhone"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/cleanup/route.ts": {
+      "filePath": "src/app/api/cleanup/route.ts",
+      "contentHash": "3476dd5981d01851b4f9846c4ad85607961ddda2d8a5fb9745ff545655ae258b",
+      "functions": [
+        {
+          "name": "shouldExclude",
+          "params": [
+            "title",
+            "authorName"
+          ],
+          "returnType": "boolean",
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 56
+        },
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "POST",
+        "GET"
+      ],
+      "totalLines": 186,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/collect/route.ts": {
+      "filePath": "src/app/api/collect/route.ts",
+      "contentHash": "47766f29fb067e4f96417c6cd4aefeb05798ba8281a54f650facac9b62d3772f",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 413
+        },
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "delay",
+          "params": [
+            "ms"
+          ],
+          "returnType": "Promise<void>",
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/collectors/tiktok-api",
+          "specifiers": [
+            "searchTikTokVideos",
+            "getTikTokTrending",
+            "fetchTikTokUser",
+            "fetchTikTokComments",
+            "isListicleTitle"
+          ]
+        },
+        {
+          "source": "@/lib/collectors/instagram-public",
+          "specifiers": [
+            "collectKoreanReelsPublic"
+          ]
+        },
+        {
+          "source": "@/lib/collectors/instagram-api",
+          "specifiers": [
+            "collectReelsByHashtags",
+            "fetchUserInfo"
+          ]
+        },
+        {
+          "source": "@/lib/exclude",
+          "specifiers": [
+            "isExcludedContent"
+          ]
+        },
+        {
+          "source": "@/lib/creators",
+          "specifiers": [
+            "getOrFetchCreator"
+          ]
+        },
+        {
+          "source": "@/lib/comments",
+          "specifiers": [
+            "scorePurchaseIntent",
+            "evaluatePass"
+          ]
+        },
+        {
+          "source": "@/lib/classifier",
+          "specifiers": [
+            "classifyVideo",
+            "classifyByKeywords"
+          ]
+        },
+        {
+          "source": "@/lib/vision",
+          "specifiers": [
+            "classifyThumbnail"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        }
+      ],
+      "exports": [
+        "maxDuration",
+        "POST",
+        "GET"
+      ],
+      "totalLines": 486,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/community/[postId]/comments/route.ts": {
+      "filePath": "src/app/api/community/[postId]/comments/route.ts",
+      "contentHash": "062b33e848c9e570837479c951cbc4dcb231a93d14299f07b6f14d421ee4234b",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 59
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "requireCommunityAccess"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/community/[postId]/image/route.ts": {
+      "filePath": "src/app/api/community/[postId]/image/route.ts",
+      "contentHash": "1b9ccf54764943a8b09ef1a4d3e4751f94dd95b02b624d9e0b43d18eeb04b994",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "_request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 39
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "requireCommunityAccess"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/community/[postId]/like/route.ts": {
+      "filePath": "src/app/api/community/[postId]/like/route.ts",
+      "contentHash": "fa7348c368626b0f7b6064c423d83cdf960c67b3ea74a6ec4502571d0422c46c",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "_request",
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "requireCommunityAccess"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/community/level/route.ts": {
+      "filePath": "src/app/api/community/level/route.ts",
+      "contentHash": "6faaa4f78614456a51d0a0493befe41f66a0ae0c8ccd02d97fd3bff43be7983f",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 30
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "requireCommunityAccess"
+          ]
+        },
+        {
+          "source": "@/lib/community",
+          "specifiers": [
+            "levelFromActivity"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/community/route.ts": {
+      "filePath": "src/app/api/community/route.ts",
+      "contentHash": "973d267e4fe4e0b2fb872530ed193f103f024cabdcd64833ff514a4274886227",
+      "functions": [
+        {
+          "name": "cleanText",
+          "params": [
+            "v",
+            "max"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 76
+        },
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 45
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "requireCommunityAccess"
+          ]
+        },
+        {
+          "source": "@/lib/community",
+          "specifiers": [
+            "hotScore"
+          ]
+        }
+      ],
+      "exports": [
+        "GET",
+        "POST"
+      ],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/cron/route.ts": {
+      "filePath": "src/app/api/cron/route.ts",
+      "contentHash": "e341e7702e0d23da0bba8a2e4cbfbeb6284c54a0f234f783f80449bfda5ded02",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 99
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 112,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/curated-products/route.ts": {
+      "filePath": "src/app/api/curated-products/route.ts",
+      "contentHash": "9060bc91fafbf4dc2d68154e4cb1615a5a917243a76c2a81155bb3ff4c469092",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/download/tiktok/route.ts": {
+      "filePath": "src/app/api/download/tiktok/route.ts",
+      "contentHash": "b00d647521e6c8c8dbf539d7c56ba201f766bcf2d740d62e632b3ab82d05ce8e",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 52
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/fix-thumbnails/route.ts": {
+      "filePath": "src/app/api/fix-thumbnails/route.ts",
+      "contentHash": "b720f23837ee11d6a5516ffd7cbe570c8f6582c2b548f488272adc103cc872f3",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 45
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/img/route.ts": {
+      "filePath": "src/app/api/img/route.ts",
+      "contentHash": "ffc46b6b52218bab5597ea85ab01e23ce19b0944014b559149d7dbe3f68bc3c2",
+      "functions": [
+        {
+          "name": "isAllowed",
+          "params": [
+            "rawUrl"
+          ],
+          "returnType": "boolean",
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "fetchImage",
+          "params": [
+            "url"
+          ],
+          "returnType": "Promise<Response | null>",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "GET",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/tikwm",
+          "specifiers": [
+            "resolveTikTokCover"
+          ]
+        }
+      ],
+      "exports": [
+        "maxDuration",
+        "GET"
+      ],
+      "totalLines": 94,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/payments/confirm/route.ts": {
+      "filePath": "src/app/api/payments/confirm/route.ts",
+      "contentHash": "aeea051fd84f0b8807e833bc15c57c25893dc31133c08e103e25cb544ec34f66",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 67
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        },
+        {
+          "source": "@/lib/toss",
+          "specifiers": [
+            "confirmTossPayment"
+          ]
+        },
+        {
+          "source": "@/lib/subscription",
+          "specifiers": [
+            "activateSubscription"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 84,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/payments/nicepay/prepare/route.ts": {
+      "filePath": "src/app/api/payments/nicepay/prepare/route.ts",
+      "contentHash": "5a71b9d3a0a590e7f198f733e12f1163214afa02fdab0c9d448e1cd659db089e",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser",
+            "SUBSCRIPTION_PRICE_KRW",
+            "SUBSCRIPTION_DAYS"
+          ]
+        },
+        {
+          "source": "@/lib/nicepay",
+          "specifiers": [
+            "nicepayClientKey",
+            "isNicepayConfigured"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/payments/nicepay/return/route.ts": {
+      "filePath": "src/app/api/payments/nicepay/return/route.ts",
+      "contentHash": "a09c9217006f7bebddd97fece4b0d204e241be5fe0593b09699f02f06821dd8a",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 72
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Prisma"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/oauth",
+          "specifiers": [
+            "baseUrlFromRequest"
+          ]
+        },
+        {
+          "source": "@/lib/nicepay",
+          "specifiers": [
+            "approveNicepay",
+            "verifyAuthSignature"
+          ]
+        },
+        {
+          "source": "@/lib/subscription",
+          "specifiers": [
+            "activateSubscription"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 85,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/payments/nicepay/webhook/route.ts": {
+      "filePath": "src/app/api/payments/nicepay/webhook/route.ts",
+      "contentHash": "dea12bb26c997e67f1935b9887d205876c34440d44fa57ccaa50363ae8d99095",
+      "functions": [
+        {
+          "name": "pick",
+          "params": [
+            "obj",
+            "keys"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "POST",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Prisma"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/subscription",
+          "specifiers": [
+            "activateSubscription"
+          ]
+        }
+      ],
+      "exports": [
+        "GET",
+        "POST"
+      ],
+      "totalLines": 68,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/payments/prepare/route.ts": {
+      "filePath": "src/app/api/payments/prepare/route.ts",
+      "contentHash": "e5da92c4737a3d657376c79e25d6ee736b54b8a4f7a716806df1721f82b722e6",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser",
+            "SUBSCRIPTION_PRICE_KRW",
+            "SUBSCRIPTION_DAYS"
+          ]
+        },
+        {
+          "source": "@/lib/toss",
+          "specifiers": [
+            "tossClientKey"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/products/route.ts": {
+      "filePath": "src/app/api/products/route.ts",
+      "contentHash": "37993ad817e69502d28d79c2f358be674fc51112b6cf3be3c2f27b2ee59f69a8",
+      "functions": [
+        {
+          "name": "cleanProductTitle",
+          "params": [
+            "raw"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "resolveImageUrl",
+          "params": [
+            "platform",
+            "thumbnailUrl",
+            "videoUrl"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 131
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Category"
+          ]
+        },
+        {
+          "source": "@/lib/exclude",
+          "specifiers": [
+            "isExcludedContent"
+          ]
+        },
+        {
+          "source": "@/lib/comments",
+          "specifiers": [
+            "computeDemandPerMillion"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 186,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/refresh-thumbnails/route.ts": {
+      "filePath": "src/app/api/refresh-thumbnails/route.ts",
+      "contentHash": "774ed77a57fdc095cc0c9ac262f2e7c4898ef21482d123bc9dda12d52a5bd5e8",
+      "functions": [
+        {
+          "name": "fetchFreshCover",
+          "params": [
+            "videoUrl"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "maxDuration",
+        "POST"
+      ],
+      "totalLines": 81,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/setup-db/route.ts": {
+      "filePath": "src/app/api/setup-db/route.ts",
+      "contentHash": "304f82935b165401aa45550d32d42568a2b290d1439fb1692142bd699b534d24",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "child_process",
+          "specifiers": [
+            "exec"
+          ]
+        },
+        {
+          "source": "util",
+          "specifiers": [
+            "promisify"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/stats/route.ts": {
+      "filePath": "src/app/api/stats/route.ts",
+      "contentHash": "8773546a47f8d6979eabb4f7f8459fce6805b2d54a75636e02024806a69229e3",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 66
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/test/route.ts": {
+      "filePath": "src/app/api/test/route.ts",
+      "contentHash": "a45d05e317f26b8f77e926d9bb465307c6a50a355b8ed7744485d9ab90e0bfd4",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "GET"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/thumbnail/tiktok/route.ts": {
+      "filePath": "src/app/api/thumbnail/tiktok/route.ts",
+      "contentHash": "bc4499e416e4d5f5740f2a732ab3ab83038b08ffc61f3535ac2d8cf2938ae3bc",
+      "functions": [
+        {
+          "name": "fetchCoverFromTikwm",
+          "params": [
+            "videoUrl"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "getCover",
+          "params": [
+            "videoUrl"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "GET",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "maxDuration",
+        "GET"
+      ],
+      "totalLines": 96,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/trigger-collect/route.ts": {
+      "filePath": "src/app/api/trigger-collect/route.ts",
+      "contentHash": "f2a35b05031dbbca048892f4d6bb917d5352f3afd26eb0038531c2359946f000",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 48
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "maxDuration",
+        "POST"
+      ],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/videos/route.ts": {
+      "filePath": "src/app/api/videos/route.ts",
+      "contentHash": "969a07b79d56be5a5f7adb8b400be46309fdfe4762853971c5d3ce5a706f90e3",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 87
+        },
+        {
+          "name": "POST",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 76
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        },
+        {
+          "source": "@/lib/exclude",
+          "specifiers": [
+            "isExcludedContent"
+          ]
+        }
+      ],
+      "exports": [
+        "GET",
+        "POST"
+      ],
+      "totalLines": 170,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/globals.css": {
+      "filePath": "src/app/globals.css",
+      "contentHash": "3771e80c6174583ed1df00d22011b94a7b0eb1c337b4917e97980dd32dd7b542",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 181,
+      "hasStructuralAnalysis": false
+    },
+    "src/app/layout.tsx": {
+      "filePath": "src/app/layout.tsx",
+      "contentHash": "f236e4112884025e59384181081f8b48b79f02b94c2093be889969f64a3c76ae",
+      "functions": [
+        {
+          "name": "RootLayout",
+          "params": [
+            "{\n  children,\n}"
+          ],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next",
+          "specifiers": [
+            "Metadata",
+            "Viewport"
+          ]
+        },
+        {
+          "source": "next/font/google",
+          "specifiers": [
+            "Geist_Mono"
+          ]
+        },
+        {
+          "source": "./globals.css",
+          "specifiers": []
+        },
+        {
+          "source": "@/lib/theme",
+          "specifiers": [
+            "getThemeFromCookies"
+          ]
+        }
+      ],
+      "exports": [
+        "metadata",
+        "viewport",
+        "RootLayout"
+      ],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/login/page.tsx": {
+      "filePath": "src/app/login/page.tsx",
+      "contentHash": "2c80fdd0a842a864abb2cddf213c19eabf4531d0e4a765d2bc1fd94ed34718bc",
+      "functions": [
+        {
+          "name": "LoginForm",
+          "params": [],
+          "exported": false,
+          "lineCount": 122
+        },
+        {
+          "name": "LoginPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "Suspense",
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useRouter",
+            "useSearchParams"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "User"
+          ]
+        },
+        {
+          "source": "@/components/auth/SocialLoginButtons",
+          "specifiers": [
+            "SocialLoginButtons"
+          ]
+        }
+      ],
+      "exports": [
+        "LoginPage"
+      ],
+      "totalLines": 163,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/signup/page.tsx": {
+      "filePath": "src/app/signup/page.tsx",
+      "contentHash": "c67a73b9655beb58a47a8a249560b8dd1f408cc6d610c774ec5d834404e83c51",
+      "functions": [
+        {
+          "name": "SignupPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 171
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "PlusCircle"
+          ]
+        },
+        {
+          "source": "@/components/auth/SocialLoginButtons",
+          "specifiers": [
+            "SocialLoginButtons"
+          ]
+        }
+      ],
+      "exports": [
+        "SignupPage"
+      ],
+      "totalLines": 180,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/CommunityPage.tsx": {
+      "filePath": "src/components/app/CommunityPage.tsx",
+      "contentHash": "13f8996985644a5a66c58c15e5bf0c056c8f128e1a9db983f806526117df5939",
+      "functions": [
+        {
+          "name": "timeAgo",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "Avatar",
+          "params": [
+            "{ name, image, size = 36 }"
+          ],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "CommunityPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 282
+        },
+        {
+          "name": "PostCard",
+          "params": [
+            "{\n  post,\n  open,\n  onToggleComments,\n  onLike,\n  onCommented,\n}"
+          ],
+          "exported": false,
+          "lineCount": 129
+        },
+        {
+          "name": "CommentRow",
+          "params": [
+            "{ c, onReply }"
+          ],
+          "exported": false,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        }
+      ],
+      "exports": [
+        "CommunityPage"
+      ],
+      "totalLines": 509,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/PageHeader.tsx": {
+      "filePath": "src/components/app/PageHeader.tsx",
+      "contentHash": "b0ff5f014e293dceba1c701dcd9624a2c45eaf8bd8804ebac0c323845716179d",
+      "functions": [
+        {
+          "name": "PageHeader",
+          "params": [
+            "{ title, accent, emoji, description, children }"
+          ],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "PageHeader"
+      ],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/ProductListPage.tsx": {
+      "filePath": "src/components/app/ProductListPage.tsx",
+      "contentHash": "e79cbe18182e75f3afd5a35e0974e18c4005ca9311b396e803bfdadabe12f3ef",
+      "functions": [
+        {
+          "name": "ProductListPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 116
+        },
+        {
+          "name": "metricColor",
+          "params": [
+            "kind"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "Metric",
+          "params": [
+            "{ label, value, color }"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "ProductCard",
+          "params": [
+            "{ product, rank }"
+          ],
+          "exported": false,
+          "lineCount": 56
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/lib/trendscope-products",
+          "specifiers": [
+            "SCOPE_PRODUCTS",
+            "SCOPE_CATEGORIES",
+            "ScopeProduct"
+          ]
+        }
+      ],
+      "exports": [
+        "ProductListPage"
+      ],
+      "totalLines": 201,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/ProfileEditor.tsx": {
+      "filePath": "src/components/app/ProfileEditor.tsx",
+      "contentHash": "fc24e20664622aad4b8614abc2b0f64749d011dd37bf8845a114f25718e882cf",
+      "functions": [
+        {
+          "name": "Avatar",
+          "params": [
+            "{ image, name, size }"
+          ],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "ProfileEditor",
+          "params": [
+            "{\n  email,\n  initialName,\n  initialImage,\n  isAdmin,\n  levelLabel,\n  children,\n}"
+          ],
+          "exported": true,
+          "lineCount": 161
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Pencil",
+            "Check",
+            "X"
+          ]
+        }
+      ],
+      "exports": [
+        "ProfileEditor"
+      ],
+      "totalLines": 190,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/RankedProductList.tsx": {
+      "filePath": "src/components/app/RankedProductList.tsx",
+      "contentHash": "98d98be2ebea70356468431f5869d48d63665dbf1aaa4a456d819a37aae09ae7",
+      "functions": [
+        {
+          "name": "rankAccent",
+          "params": [
+            "rank"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "RankedProductList",
+          "params": [
+            "{ platform }"
+          ],
+          "exported": true,
+          "lineCount": 217
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useEffect",
+            "useCallback"
+          ]
+        },
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "formatKRW",
+            "estimateRevenue",
+            "CATEGORY_NAMES",
+            "PLATFORM_NAMES"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronDown",
+            "ChevronRight",
+            "Refresh",
+            "TrendingUp",
+            "Eye",
+            "Heart"
+          ]
+        },
+        {
+          "source": "@/components/ui/SafeThumbnail",
+          "specifiers": [
+            "SafeThumbnail"
+          ]
+        }
+      ],
+      "exports": [
+        "RankedProductList"
+      ],
+      "totalLines": 269,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/Sidebar.tsx": {
+      "filePath": "src/components/app/Sidebar.tsx",
+      "contentHash": "a2005fe4ba534ea50421eae6ffcca2f70801b5836e2f64f139f1b97a4dae06f1",
+      "functions": [
+        {
+          "name": "readInitialCollapsed",
+          "params": [],
+          "returnType": "boolean",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "readInitialTheme",
+          "params": [],
+          "returnType": "'light' | 'dark'",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "Sidebar",
+          "params": [
+            "{ user }"
+          ],
+          "exported": true,
+          "lineCount": 280
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "usePathname"
+          ]
+        },
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronRight",
+            "TrendingUp",
+            "Layers",
+            "Search",
+            "Package",
+            "MessageSquare",
+            "Eye",
+            "User",
+            "LogOut",
+            "Shield",
+            "Sun",
+            "Moon",
+            "X",
+            "PlusCircle"
+          ]
+        }
+      ],
+      "exports": [
+        "Sidebar"
+      ],
+      "totalLines": 385,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/app/VideoListPage.tsx": {
+      "filePath": "src/components/app/VideoListPage.tsx",
+      "contentHash": "0703e3ee813a7ae3e0077e088a8abac735ba053b00be343686c3d590ded57a58",
+      "functions": [
+        {
+          "name": "VideoListPage",
+          "params": [
+            "{ platform, category, initialFilters, showRefresh = true }"
+          ],
+          "exported": true,
+          "lineCount": 187
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useEffect",
+            "useCallback",
+            "useRef"
+          ]
+        },
+        {
+          "source": "@/components/VideoCard",
+          "specifiers": [
+            "VideoCard"
+          ]
+        },
+        {
+          "source": "@/components/VideoDetailModal",
+          "specifiers": [
+            "VideoDetailModal"
+          ]
+        },
+        {
+          "source": "@/components/FilterBar",
+          "specifiers": [
+            "FilterBar",
+            "FilterState"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ChevronDown",
+            "Refresh"
+          ]
+        }
+      ],
+      "exports": [
+        "VideoListPage"
+      ],
+      "totalLines": 239,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/auth/SocialLoginButtons.tsx": {
+      "filePath": "src/components/auth/SocialLoginButtons.tsx",
+      "contentHash": "6f4a6e4ba1f498a53d22a80f8478228c47abaabb20e97edbf201f690dab04d7f",
+      "functions": [
+        {
+          "name": "SocialLoginButtons",
+          "params": [
+            "{ label = '간편 로그인' }"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "SocialLoginButtons"
+      ],
+      "totalLines": 42,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/CategoryChart.tsx": {
+      "filePath": "src/components/CategoryChart.tsx",
+      "contentHash": "5dc1c367e45f684932151050ee8038ef3f8b2798ee308cc5383432089ea583ac",
+      "functions": [
+        {
+          "name": "CategoryChart",
+          "params": [
+            "{ categories }"
+          ],
+          "exported": true,
+          "lineCount": 35
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "CATEGORY_NAMES"
+          ]
+        }
+      ],
+      "exports": [
+        "CategoryChart"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/FilterBar.tsx": {
+      "filePath": "src/components/FilterBar.tsx",
+      "contentHash": "6589dddaec9fc0c96df1e809dfe5fe57c42019a949ea219d47587a5405ff6bec",
+      "functions": [
+        {
+          "name": "FilterBar",
+          "params": [
+            "{ onFilterChange, initialFilters }"
+          ],
+          "exported": true,
+          "lineCount": 145
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useEffect",
+            "useRef"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "CATEGORY_NAMES",
+            "TARGET_AGE_OPTIONS"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Search",
+            "X",
+            "ChevronDown",
+            "Refresh"
+          ]
+        }
+      ],
+      "exports": [
+        "FilterBar"
+      ],
+      "totalLines": 172,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/FAQTeaser.tsx": {
+      "filePath": "src/components/landing/FAQTeaser.tsx",
+      "contentHash": "9ce2330de08deca57676aee1ff2e8fca6d5612548b74d2e100c1e21727624d73",
+      "functions": [
+        {
+          "name": "FAQTeaser",
+          "params": [],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "ChevronDown"
+          ]
+        }
+      ],
+      "exports": [
+        "FAQTeaser"
+      ],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/HeroLivePreview.tsx": {
+      "filePath": "src/components/landing/HeroLivePreview.tsx",
+      "contentHash": "6cf588bb55b54bad414794ba34f487c982a5cb3c393a9ed8fa211cd89062f634",
+      "functions": [
+        {
+          "name": "HeroLivePreview",
+          "params": [],
+          "exported": true,
+          "lineCount": 111
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/landing-data",
+          "specifiers": [
+            "getTopProducts"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "formatKRW",
+            "estimateRevenue",
+            "PLATFORM_NAMES"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "TrendingUp",
+            "ArrowRight",
+            "Eye"
+          ]
+        },
+        {
+          "source": "@/components/ui/SafeThumbnail",
+          "specifiers": [
+            "SafeThumbnail"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        }
+      ],
+      "exports": [
+        "HeroLivePreview"
+      ],
+      "totalLines": 143,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/HeroStats.tsx": {
+      "filePath": "src/components/landing/HeroStats.tsx",
+      "contentHash": "94c068335022ad543a01b51394773f9abda67952540c7f6effc5dcb2416d354f",
+      "functions": [
+        {
+          "name": "HeroStats",
+          "params": [],
+          "exported": true,
+          "lineCount": 30
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/landing-data",
+          "specifiers": [
+            "getLandingStats"
+          ]
+        }
+      ],
+      "exports": [
+        "HeroStats"
+      ],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/HowItWorks.tsx": {
+      "filePath": "src/components/landing/HowItWorks.tsx",
+      "contentHash": "5261a3911a16ba20a3e2186f30f71630467b06a9ac67fe46d4babcc3630ae3ca",
+      "functions": [
+        {
+          "name": "HowItWorks",
+          "params": [],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Refresh",
+            "Sparkles",
+            "TrendingUp"
+          ]
+        }
+      ],
+      "exports": [
+        "HowItWorks"
+      ],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/PlatformShowcase.tsx": {
+      "filePath": "src/components/landing/PlatformShowcase.tsx",
+      "contentHash": "c257315e8221debbfd7ca2af5a8204eb89989e644fa0b73538f466cefddb8243",
+      "functions": [
+        {
+          "name": "PlatformShowcase",
+          "params": [],
+          "exported": true,
+          "lineCount": 35
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/landing-data",
+          "specifiers": [
+            "getLandingStats"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "TikTokLogo",
+            "InstagramLogo"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        }
+      ],
+      "exports": [
+        "PlatformShowcase"
+      ],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/PricingCallout.tsx": {
+      "filePath": "src/components/landing/PricingCallout.tsx",
+      "contentHash": "3755d38a01f71151296af26e433212bae88bd545b4f6b5913cdf79ef9148aa90",
+      "functions": [
+        {
+          "name": "PricingCallout",
+          "params": [
+            "{ user }"
+          ],
+          "exported": true,
+          "lineCount": 84
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "SUBSCRIPTION_PRICE_KRW",
+            "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+            "SUBSCRIPTION_DAYS",
+            "TRIAL_DAYS",
+            "SessionUser"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "Check",
+            "PlusCircle"
+          ]
+        }
+      ],
+      "exports": [
+        "PricingCallout"
+      ],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/ScenarioCards.tsx": {
+      "filePath": "src/components/landing/ScenarioCards.tsx",
+      "contentHash": "40e858ef1c9645882e093d496582b553499e3e0639a68efde05fce7c060e7695",
+      "functions": [
+        {
+          "name": "ScenarioCards",
+          "params": [],
+          "exported": true,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "ScenarioCards"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/landing/TopProductsPreview.tsx": {
+      "filePath": "src/components/landing/TopProductsPreview.tsx",
+      "contentHash": "c02db8dd8f13b8cf7fa12ba6b5235072d3052970c8b843c92cbcfa9751f52dc3",
+      "functions": [
+        {
+          "name": "PlatformPath",
+          "params": [
+            "p"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "TopProductsPreview",
+          "params": [],
+          "exported": true,
+          "lineCount": 128
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "@/lib/landing-data",
+          "specifiers": [
+            "getTopProducts"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "formatKRW",
+            "estimateRevenue",
+            "CATEGORY_NAMES",
+            "PLATFORM_NAMES"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "ArrowRight",
+            "Eye",
+            "Heart",
+            "Lock",
+            "TrendingUp"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        }
+      ],
+      "exports": [
+        "TopProductsPreview"
+      ],
+      "totalLines": 163,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/ui/Icon.tsx": {
+      "filePath": "src/components/ui/Icon.tsx",
+      "contentHash": "75b225d6050ac999c8bce28bb34629c1c56f9539abdfb3f369d69a5116303038",
+      "functions": [
+        {
+          "name": "baseSvg",
+          "params": [
+            "size",
+            "strokeWidth",
+            "className"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "ArrowRight",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "ArrowUpRight",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "ChevronDown",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "ChevronRight",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Check",
+          "params": [
+            "{ className, size = 16, strokeWidth = 2 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "X",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Pencil",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Sun",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Moon",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Search",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Filter",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "User",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "LogOut",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Shield",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Eye",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Heart",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "TrendingUp",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Zap",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Sparkles",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Layers",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Clock",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Mail",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Lock",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "Refresh",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "MessageSquare",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Package",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "ShoppingBag",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Smartphone",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "ExternalLink",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Play",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "PlusCircle",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Utensils",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "Home",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Baby",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "Dumbbell",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "Shirt",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Lipstick",
+          "params": [
+            "{ className, size = 16, strokeWidth = 1.75 }"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "YouTubeLogo",
+          "params": [
+            "{ className, size = 24 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "TikTokLogo",
+          "params": [
+            "{ className, size = 24 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "InstagramLogo",
+          "params": [
+            "{ className, size = 24 }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "ArrowRight",
+        "ArrowUpRight",
+        "ChevronDown",
+        "ChevronRight",
+        "Check",
+        "X",
+        "Pencil",
+        "Sun",
+        "Moon",
+        "Search",
+        "Filter",
+        "User",
+        "LogOut",
+        "Shield",
+        "Eye",
+        "Heart",
+        "TrendingUp",
+        "Zap",
+        "Sparkles",
+        "Layers",
+        "Clock",
+        "Mail",
+        "Lock",
+        "Refresh",
+        "MessageSquare",
+        "Package",
+        "ShoppingBag",
+        "Smartphone",
+        "ExternalLink",
+        "Play",
+        "PlusCircle",
+        "Utensils",
+        "Home",
+        "Baby",
+        "Dumbbell",
+        "Shirt",
+        "Lipstick",
+        "YouTubeLogo",
+        "TikTokLogo",
+        "InstagramLogo"
+      ],
+      "totalLines": 405,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/ui/SafeThumbnail.tsx": {
+      "filePath": "src/components/ui/SafeThumbnail.tsx",
+      "contentHash": "06d1e2eb040aa58e1c641833dfc7132b3496a419c0172d32d5398a9289482470",
+      "functions": [
+        {
+          "name": "toProxiedSrc",
+          "params": [
+            "src",
+            "platform",
+            "videoUrl"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "SafeThumbnail",
+          "params": [
+            "{\n  src,\n  alt,\n  platform,\n  videoUrl,\n  fallbackIconSize = 56,\n  noShimmer = false,\n  eager = false,\n  showLabel = true,\n}"
+          ],
+          "exported": true,
+          "lineCount": 75
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "YouTubeLogo",
+            "TikTokLogo",
+            "InstagramLogo"
+          ]
+        }
+      ],
+      "exports": [
+        "SafeThumbnail"
+      ],
+      "totalLines": 159,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/VideoCard.tsx": {
+      "filePath": "src/components/VideoCard.tsx",
+      "contentHash": "444ca0fa04a3873492512db97b907284e9dcfedc8aace598cc3358ed6dc8f2f2",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "memo"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "PLATFORM_NAMES",
+            "CATEGORY_NAMES"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "Eye",
+            "Heart",
+            "TrendingUp"
+          ]
+        },
+        {
+          "source": "@/components/ui/SafeThumbnail",
+          "specifiers": [
+            "SafeThumbnail"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/VideoDetailModal.tsx": {
+      "filePath": "src/components/VideoDetailModal.tsx",
+      "contentHash": "2b57bbb84e89288066d1241abf0b329cd686349b5ea76be51b0649744ff3d994",
+      "functions": [
+        {
+          "name": "VideoDetailModal",
+          "params": [
+            "{ video, onClose }"
+          ],
+          "exported": true,
+          "lineCount": 245
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useCallback",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "formatCount",
+            "PLATFORM_NAMES",
+            "CATEGORY_NAMES"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        },
+        {
+          "source": "@/components/ui/Icon",
+          "specifiers": [
+            "X",
+            "Play",
+            "ExternalLink",
+            "TrendingUp",
+            "Sparkles"
+          ]
+        },
+        {
+          "source": "@/components/ui/SafeThumbnail",
+          "specifiers": [
+            "SafeThumbnail"
+          ]
+        }
+      ],
+      "exports": [
+        "VideoDetailModal"
+      ],
+      "totalLines": 294,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/activity-log.ts": {
+      "filePath": "src/lib/activity-log.ts",
+      "contentHash": "b254fe7078e8e70013706ead33e62d29ec386d2292738459b27ad0667a3e14e1",
+      "functions": [
+        {
+          "name": "extractIp",
+          "params": [
+            "request"
+          ],
+          "returnType": "string | null",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "extractUa",
+          "params": [
+            "request"
+          ],
+          "returnType": "string | null",
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "logActivity",
+          "params": [
+            "opts"
+          ],
+          "returnType": "Promise<void>",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest"
+          ]
+        }
+      ],
+      "exports": [
+        "logActivity"
+      ],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/admin.ts": {
+      "filePath": "src/lib/admin.ts",
+      "contentHash": "c67cfcb049b5685bc4afc23161139addd61e3c44b20294d2b559a6ca95afd596",
+      "functions": [
+        {
+          "name": "requireAdmin",
+          "params": [],
+          "returnType": "Promise<NextResponse | null>",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "requireAdmin"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/ai-analysis.ts": {
+      "filePath": "src/lib/ai-analysis.ts",
+      "contentHash": "1abb54579a198b80f944ef9d3cd0e6bb135c15f32d92e7bbc9aa5686db00882d",
+      "functions": [
+        {
+          "name": "calculateTrendScore",
+          "params": [
+            "video"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "detectProducts",
+          "params": [
+            "title"
+          ],
+          "returnType": "string[]",
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "analyzeSentiment",
+          "params": [
+            "title",
+            "engagement"
+          ],
+          "returnType": "{\n  sentiment: 'positive' | 'neutral' | 'negative';\n  score: number;\n}",
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "calculateBuyingIntent",
+          "params": [
+            "title",
+            "viewCount",
+            "engagement"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "analyzeWithAI",
+          "params": [
+            "geminiKey",
+            "video"
+          ],
+          "returnType": "Promise<AIAnalysis | null>",
+          "exported": true,
+          "lineCount": 41
+        },
+        {
+          "name": "quickAnalysis",
+          "params": [
+            "video"
+          ],
+          "returnType": "AIAnalysis",
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@google/generative-ai",
+          "specifiers": [
+            "GoogleGenerativeAI"
+          ]
+        }
+      ],
+      "exports": [
+        "calculateTrendScore",
+        "detectProducts",
+        "analyzeSentiment",
+        "calculateBuyingIntent",
+        "analyzeWithAI",
+        "quickAnalysis"
+      ],
+      "totalLines": 258,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth.ts": {
+      "filePath": "src/lib/auth.ts",
+      "contentHash": "5c663067060a64649aeea1ee776bc9814da94ef20e3ae0fbb25f61e90dcc3884",
+      "functions": [
+        {
+          "name": "getSecret",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "generateToken",
+          "params": [
+            "userId"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "parseAndVerifyToken",
+          "params": [
+            "token"
+          ],
+          "returnType": "ParsedToken | null",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "verifyToken",
+          "params": [
+            "token"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "hashPassword",
+          "params": [
+            "plain"
+          ],
+          "returnType": "Promise<string>",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "comparePassword",
+          "params": [
+            "plain",
+            "hash"
+          ],
+          "returnType": "Promise<boolean>",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getCurrentUser",
+          "params": [],
+          "returnType": "Promise<SessionUser | null>",
+          "exported": true,
+          "lineCount": 34
+        },
+        {
+          "name": "getSession",
+          "params": [],
+          "returnType": "Promise<{\n  authenticated: boolean;\n  userId?: string;\n  email?: string;\n  name?: string | null;\n  role?: Role;\n  hasActiveSubscription?: boolean;\n  subscriptionEndAt?: Date | null;\n}>",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "requireCommunityAccess",
+          "params": [],
+          "returnType": "Promise<CommunityAccess>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "getSessionCookieOptions",
+          "params": [],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/headers",
+          "specifiers": [
+            "cookies"
+          ]
+        },
+        {
+          "source": "crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "bcryptjs",
+          "specifiers": [
+            "bcrypt"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Role",
+            "SubscriptionStatus"
+          ]
+        }
+      ],
+      "exports": [
+        "generateToken",
+        "parseAndVerifyToken",
+        "verifyToken",
+        "hashPassword",
+        "comparePassword",
+        "getCurrentUser",
+        "getSession",
+        "requireCommunityAccess",
+        "getSessionCookieOptions",
+        "SUBSCRIPTION_DAYS",
+        "SUBSCRIPTION_PRICE_KRW",
+        "SUBSCRIPTION_ORIGINAL_PRICE_KRW",
+        "TRIAL_DAYS"
+      ],
+      "totalLines": 182,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/classifier.ts": {
+      "filePath": "src/lib/classifier.ts",
+      "contentHash": "e5c22ee667f76c740d1d21dc726a5d6f522e281b216a72ce2f754812a6d5ce54",
+      "functions": [
+        {
+          "name": "getGeminiClient",
+          "params": [
+            "apiKey"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "classifyVideo",
+          "params": [
+            "apiKey",
+            "video"
+          ],
+          "returnType": "Promise<ClassificationResult>",
+          "exported": true,
+          "lineCount": 70
+        },
+        {
+          "name": "classifyVideos",
+          "params": [
+            "apiKey",
+            "videos"
+          ],
+          "returnType": "Promise<ClassificationResult[]>",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "validateCategory",
+          "params": [
+            "value"
+          ],
+          "returnType": "Category",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "validateTargetAge",
+          "params": [
+            "value"
+          ],
+          "returnType": "TargetAge",
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "delay",
+          "params": [
+            "ms"
+          ],
+          "returnType": "Promise<void>",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "classifyByKeywords",
+          "params": [
+            "video"
+          ],
+          "returnType": "ClassificationResult",
+          "exported": true,
+          "lineCount": 40
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@google/generative-ai",
+          "specifiers": [
+            "GoogleGenerativeAI"
+          ]
+        }
+      ],
+      "exports": [
+        "classifyVideo",
+        "classifyVideos",
+        "classifyByKeywords"
+      ],
+      "totalLines": 233,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/collectors/instagram-api.ts": {
+      "filePath": "src/lib/collectors/instagram-api.ts",
+      "contentHash": "68e057697c931efad14f8875ce6ed0174b7d7f927282417cfec80bc80282435a",
+      "functions": [
+        {
+          "name": "rapidHeaders",
+          "params": [
+            "apiKey"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "mapItemToReel",
+          "params": [
+            "item"
+          ],
+          "returnType": "InstagramReel | null",
+          "exported": false,
+          "lineCount": 34
+        },
+        {
+          "name": "searchHashtagReels",
+          "params": [
+            "keyword",
+            "apiKey"
+          ],
+          "returnType": "Promise<InstagramReel[]>",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "fetchUserInfo",
+          "params": [
+            "username",
+            "apiKey"
+          ],
+          "returnType": "Promise<InstagramCreatorInfo | null>",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "collectReelsByHashtags",
+          "params": [
+            "apiKey",
+            "hashtags"
+          ],
+          "returnType": "Promise<{ reels: InstagramReel[]; errors: string[] }>",
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "IG_BUYINTENT_HASHTAGS",
+        "searchHashtagReels",
+        "fetchUserInfo",
+        "collectReelsByHashtags"
+      ],
+      "totalLines": 181,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/collectors/instagram-public.ts": {
+      "filePath": "src/lib/collectors/instagram-public.ts",
+      "contentHash": "77cdd1e55bef6260960aa6e529742569c166cc14045edf4f48327218fd385aad",
+      "functions": [
+        {
+          "name": "IG_HEADERS",
+          "params": [
+            "referer"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "fetchUserReels",
+          "params": [
+            "username"
+          ],
+          "returnType": "Promise<{ reels: InstagramReel[]; creator: InstagramCreatorInfo | null }>",
+          "exported": false,
+          "lineCount": 93
+        },
+        {
+          "name": "collectKoreanReelsPublic",
+          "params": [
+            "accounts"
+          ],
+          "returnType": "Promise<{\n  reels: InstagramReel[];\n  errors: string[];\n  creators: Map<string, InstagramCreatorInfo>;\n}>",
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "collectKoreanReelsPublic"
+      ],
+      "totalLines": 181,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/collectors/tiktok-api.ts": {
+      "filePath": "src/lib/collectors/tiktok-api.ts",
+      "contentHash": "6491154beba90584fd79beac502bd32f740ab76f34cf2e6ff099b1f5276616cf",
+      "functions": [
+        {
+          "name": "fetchTikTokUser",
+          "params": [
+            "uniqueId"
+          ],
+          "returnType": "Promise<{\n  bioUrl: string | null;\n  signature: string;\n  followerCount: number | null;\n  videoCount: number | null;\n  authorName: string;\n} | null>",
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "fetchTikTokComments",
+          "params": [
+            "videoUrl",
+            "count"
+          ],
+          "returnType": "Promise<string[]>",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "getStableThumbnail",
+          "params": [
+            "v"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "isListicleTitle",
+          "params": [
+            "text"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isCommerceContent",
+          "params": [
+            "title"
+          ],
+          "returnType": "boolean",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "searchTikTokVideos",
+          "params": [
+            "keyword",
+            "options"
+          ],
+          "returnType": "Promise<TikTokVideo[]>",
+          "exported": true,
+          "lineCount": 49
+        },
+        {
+          "name": "getTikTokTrending",
+          "params": [
+            "options"
+          ],
+          "returnType": "Promise<TikTokVideo[]>",
+          "exported": true,
+          "lineCount": 45
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "fetchTikTokUser",
+        "fetchTikTokComments",
+        "STRONG_COMMERCE",
+        "EXCLUDE_KEYWORDS",
+        "isListicleTitle",
+        "searchTikTokVideos",
+        "getTikTokTrending"
+      ],
+      "totalLines": 328,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/collectors/trendCollector.ts": {
+      "filePath": "src/lib/collectors/trendCollector.ts",
+      "contentHash": "bd38765fe698bef5589ac0453e52a8de6419bd8c082f44933a0869492c59f4aa",
+      "functions": [
+        {
+          "name": "getRisingProductTrends",
+          "params": [
+            "geo"
+          ],
+          "returnType": "Promise<TrendingProduct[]>",
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "getDailyTrendingProducts",
+          "params": [
+            "geo"
+          ],
+          "returnType": "Promise<string[]>",
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "getInterestOverTime",
+          "params": [
+            "keyword"
+          ],
+          "returnType": "Promise<number>",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "generateSearchQueries",
+          "params": [
+            "trends"
+          ],
+          "returnType": "string[]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "isProductRelated",
+          "params": [
+            "text"
+          ],
+          "returnType": "boolean",
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "removeDuplicates",
+          "params": [
+            "trends"
+          ],
+          "returnType": "TrendingProduct[]",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "delay",
+          "params": [
+            "ms"
+          ],
+          "returnType": "Promise<void>",
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "google-trends-api",
+          "specifiers": [
+            "googleTrends"
+          ]
+        }
+      ],
+      "exports": [
+        "getRisingProductTrends",
+        "getDailyTrendingProducts",
+        "getInterestOverTime",
+        "generateSearchQueries",
+        "DROPSHIPPING_CHANNELS",
+        "VIRAL_PRODUCT_KEYWORDS"
+      ],
+      "totalLines": 253,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/comments.ts": {
+      "filePath": "src/lib/comments.ts",
+      "contentHash": "f90004850e1899cd50e5467ae9da99e13d354aa23f3a3d1d312eb6a25adfa497",
+      "functions": [
+        {
+          "name": "scorePurchaseIntent",
+          "params": [
+            "commentTexts"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "computeDemandPerMillion",
+          "params": [
+            "intentRate",
+            "totalComments",
+            "viewCount"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "evaluatePass",
+          "params": [
+            "hasSalesLink",
+            "intentRate",
+            "totalComments",
+            "viewCount"
+          ],
+          "returnType": "{ passReason: 'both' | null; dpm: number }",
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "MIN_INTENT_SCORE_STRONG",
+        "MIN_INTENT_SCORE",
+        "MIN_DPM_PAIRED",
+        "MIN_DPM_STRONG",
+        "scorePurchaseIntent",
+        "computeDemandPerMillion",
+        "evaluatePass"
+      ],
+      "totalLines": 79,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/community.ts": {
+      "filePath": "src/lib/community.ts",
+      "contentHash": "bff96474a8b5b4488da73353bc3ae2361a657f7982fd51d37a8c0d56deb44291",
+      "functions": [
+        {
+          "name": "levelFromXp",
+          "params": [
+            "xp"
+          ],
+          "returnType": "LevelInfo",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "xpFromActivity",
+          "params": [
+            "a"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "levelFromActivity",
+          "params": [
+            "a"
+          ],
+          "returnType": "LevelInfo & { stats: ActivityCounts }",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "hotScore",
+          "params": [
+            "input"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "TIER_LABEL",
+        "levelFromXp",
+        "xpFromActivity",
+        "levelFromActivity",
+        "hotScore"
+      ],
+      "totalLines": 71,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/creators.ts": {
+      "filePath": "src/lib/creators.ts",
+      "contentHash": "4ce2477740eda4bd30bdee61aa25422bc903393343069ea71e14056a9e3fddcf",
+      "functions": [
+        {
+          "name": "computeHasSalesLink",
+          "params": [
+            "bioUrl",
+            "signature"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "isLikelyIndianContent",
+          "params": [
+            "authorId",
+            "signature"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "isQualifiedSeller",
+          "params": [
+            "{\n  authorId,\n  bioUrl,\n  signature,\n  videoCount,\n}"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "getOrFetchCreator",
+          "params": [
+            "platform",
+            "authorId",
+            "fetcher"
+          ],
+          "returnType": "Promise<Creator | null>",
+          "exported": true,
+          "lineCount": 54
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Creator",
+            "Platform"
+          ]
+        }
+      ],
+      "exports": [
+        "CREATOR_TTL_MS",
+        "computeHasSalesLink",
+        "isLikelyIndianContent",
+        "isQualifiedSeller",
+        "getOrFetchCreator"
+      ],
+      "totalLines": 350,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/exclude.ts": {
+      "filePath": "src/lib/exclude.ts",
+      "contentHash": "f9aadb61a78b18d5603264b4319339ce2fe560db979ce3b88e74b8efcfa4bc2d",
+      "functions": [
+        {
+          "name": "isExcludedContent",
+          "params": [
+            "title",
+            "authorName"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "isExcludedContent"
+      ],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/landing-data.ts": {
+      "filePath": "src/lib/landing-data.ts",
+      "contentHash": "3b3eff1e901e777d58d3ce8025748da10d8cfbcb79afb71aec6d4fbfcb3d71c3",
+      "functions": [
+        {
+          "name": "startOfToday",
+          "params": [],
+          "returnType": "Date",
+          "exported": false,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/cache",
+          "specifiers": [
+            "unstable_cache"
+          ]
+        },
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "Platform",
+            "Category"
+          ]
+        }
+      ],
+      "exports": [
+        "getLandingStats",
+        "getTopProducts"
+      ],
+      "totalLines": 125,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/nicepay.ts": {
+      "filePath": "src/lib/nicepay.ts",
+      "contentHash": "ee2e9c36ca91992f4fee430d10e4a5f3bdc5ed63af506b9f9cf62d476732fab7",
+      "functions": [
+        {
+          "name": "nicepayClientKey",
+          "params": [],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "nicepaySecretKey",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "nicepayMode",
+          "params": [],
+          "returnType": "'live' | 'sandbox'",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "apiBase",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "authHeader",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "isNicepayConfigured",
+          "params": [],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "sha256hex",
+          "params": [
+            "s"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "verifyAuthSignature",
+          "params": [
+            "input"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "approveNicepay",
+          "params": [
+            "tid",
+            "amount"
+          ],
+          "returnType": "Promise<NicepayApproveResult>",
+          "exported": true,
+          "lineCount": 41
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        }
+      ],
+      "exports": [
+        "nicepayClientKey",
+        "nicepayMode",
+        "isNicepayConfigured",
+        "verifyAuthSignature",
+        "approveNicepay"
+      ],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/oauth.ts": {
+      "filePath": "src/lib/oauth.ts",
+      "contentHash": "b617a194dd82c32b5f300905c9dc2cdf46b7ed3fada8a750c887b681c4e55679",
+      "functions": [
+        {
+          "name": "isOAuthProvider",
+          "params": [
+            "v"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "env",
+          "params": [
+            "name"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "credentials",
+          "params": [
+            "provider"
+          ],
+          "returnType": "{ clientId: string; clientSecret: string }",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "baseUrlFromRequest",
+          "params": [
+            "req"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "redirectUri",
+          "params": [
+            "provider",
+            "req"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "authorizeUrl",
+          "params": [
+            "provider",
+            "state",
+            "req"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "exchangeGoogle",
+          "params": [
+            "code",
+            "req"
+          ],
+          "returnType": "Promise<OAuthProfile>",
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "exchangeNaver",
+          "params": [
+            "code",
+            "state"
+          ],
+          "returnType": "Promise<OAuthProfile>",
+          "exported": false,
+          "lineCount": 31
+        },
+        {
+          "name": "fetchOAuthProfile",
+          "params": [
+            "provider",
+            "code",
+            "state",
+            "req"
+          ],
+          "returnType": "Promise<OAuthProfile>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "upsertOAuthUser",
+          "params": [
+            "profile"
+          ],
+          "returnType": "Promise<string>",
+          "exported": true,
+          "lineCount": 53
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        }
+      ],
+      "exports": [
+        "isOAuthProvider",
+        "baseUrlFromRequest",
+        "redirectUri",
+        "authorizeUrl",
+        "fetchOAuthProfile",
+        "upsertOAuthUser"
+      ],
+      "totalLines": 204,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/page-guards.ts": {
+      "filePath": "src/lib/page-guards.ts",
+      "contentHash": "0548145d1b78cfce89ce65d68e3bf8aa1e73e36abc52c69d7b6d85d0bf9a6eb2",
+      "functions": [
+        {
+          "name": "requireAdminPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "getCurrentUser"
+          ]
+        }
+      ],
+      "exports": [
+        "requireAdminPage"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/prisma.ts": {
+      "filePath": "src/lib/prisma.ts",
+      "contentHash": "cfbf200b587d57d1921580a2ec0cfd53454baac51383e7506c44219f3a39bcae",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@prisma/client",
+          "specifiers": [
+            "PrismaClient"
+          ]
+        }
+      ],
+      "exports": [
+        "prisma"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/profile.ts": {
+      "filePath": "src/lib/profile.ts",
+      "contentHash": "53edd8cd0d00dca95aa694b1d0702fb90c4666aed632a0ad11a3e8d48917e498",
+      "functions": [
+        {
+          "name": "normalizePhone",
+          "params": [
+            "input"
+          ],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "normalizeBusinessNumber",
+          "params": [
+            "input"
+          ],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "normalizeCompanyName",
+          "params": [
+            "input"
+          ],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "normalizeName",
+          "params": [
+            "input"
+          ],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "maskBusinessNumber",
+          "params": [
+            "value"
+          ],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "normalizePhone",
+        "normalizeBusinessNumber",
+        "normalizeCompanyName",
+        "normalizeName",
+        "maskBusinessNumber"
+      ],
+      "totalLines": 64,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/subscription.ts": {
+      "filePath": "src/lib/subscription.ts",
+      "contentHash": "f43634f508f58ddf5982d1f78bd0252b427bed10e5ac20abcf956f88f6b40141",
+      "functions": [
+        {
+          "name": "activateSubscription",
+          "params": [
+            "userId",
+            "opts"
+          ],
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/prisma",
+          "specifiers": [
+            "prisma"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "specifiers": [
+            "SUBSCRIPTION_DAYS",
+            "SUBSCRIPTION_PRICE_KRW"
+          ]
+        }
+      ],
+      "exports": [
+        "activateSubscription"
+      ],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/theme.ts": {
+      "filePath": "src/lib/theme.ts",
+      "contentHash": "8b7044fa45822c7112e85754ab21263b3ad8ddd8ab3e246ad2286318e9b6b2de",
+      "functions": [
+        {
+          "name": "getThemeFromCookies",
+          "params": [],
+          "returnType": "Promise<Theme>",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/headers",
+          "specifiers": [
+            "cookies"
+          ]
+        }
+      ],
+      "exports": [
+        "THEME_COOKIE",
+        "THEME_DEFAULT",
+        "getThemeFromCookies"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/tikwm.ts": {
+      "filePath": "src/lib/tikwm.ts",
+      "contentHash": "5bf2d4020db069c370f1fec300f5cf46d69789d326470c23aa3609c1ab66da9a",
+      "functions": [
+        {
+          "name": "fetchCoverFromTikwm",
+          "params": [
+            "videoUrl"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "resolveTikTokCover",
+          "params": [
+            "videoUrl"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "resolveTikTokCover"
+      ],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/toss.ts": {
+      "filePath": "src/lib/toss.ts",
+      "contentHash": "6056db7e97127c9608210ea04d7fa8cf7bb614738884b232c3376569f429c83f",
+      "functions": [
+        {
+          "name": "tossClientKey",
+          "params": [],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "tossSecretKey",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "isTossTestMode",
+          "params": [],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "confirmTossPayment",
+          "params": [
+            "input"
+          ],
+          "returnType": "Promise<TossConfirmResult>",
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "tossClientKey",
+        "isTossTestMode",
+        "confirmTossPayment"
+      ],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/trendscope-products.ts": {
+      "filePath": "src/lib/trendscope-products.ts",
+      "contentHash": "bb8a77048719574933f33e566b4abe758845fea662a904295458bf8d6b28ef47",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "SCOPE_PRODUCTS",
+        "SCOPE_CATEGORIES"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/utils.ts": {
+      "filePath": "src/lib/utils.ts",
+      "contentHash": "17ef31dd913289877f0dd6ab9ac30f68fad5363648cede708cb00f92c6f3e0fe",
+      "functions": [
+        {
+          "name": "formatCount",
+          "params": [
+            "count"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "calculateViralScore",
+          "params": [
+            "viewCountHistory"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "formatDate",
+          "params": [
+            "d"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "daysUntil",
+          "params": [
+            "d"
+          ],
+          "returnType": "number | null",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "getRelativeTime",
+          "params": [
+            "date"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "estimateRevenue",
+          "params": [
+            "viewCount",
+            "likeCount",
+            "platform"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "formatKRW",
+          "params": [
+            "amount"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "getWholesalerSearchUrl",
+          "params": [
+            "productTitle"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getNaverShoppingSearchUrl",
+          "params": [
+            "productTitle"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getDownloaderUrl",
+          "params": [
+            "videoUrl",
+            "platform"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "formatCount",
+        "calculateViralScore",
+        "formatDate",
+        "daysUntil",
+        "getRelativeTime",
+        "PLATFORM_NAMES",
+        "CATEGORY_NAMES",
+        "TARGET_AGE_OPTIONS",
+        "estimateRevenue",
+        "formatKRW",
+        "getWholesalerSearchUrl",
+        "getNaverShoppingSearchUrl",
+        "getDownloaderUrl"
+      ],
+      "totalLines": 189,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/vision.ts": {
+      "filePath": "src/lib/vision.ts",
+      "contentHash": "6cf0f9bc950cec75477753e5deaa09521ff73d93fee3b6eddc68160d6b8dd8dc",
+      "functions": [
+        {
+          "name": "fetchImageAsBase64",
+          "params": [
+            "url"
+          ],
+          "returnType": "Promise<{ data: string; mimeType: string } | null>",
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "classifyThumbnail",
+          "params": [
+            "apiKey",
+            "thumbnailUrl"
+          ],
+          "returnType": "Promise<VisualClass | null>",
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@google/generative-ai",
+          "specifiers": [
+            "GoogleGenerativeAI"
+          ]
+        }
+      ],
+      "exports": [
+        "classifyThumbnail"
+      ],
+      "totalLines": 73,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware.ts": {
+      "filePath": "src/middleware.ts",
+      "contentHash": "e0172ea5579c6d08bf8788b54a505b0ab2bc68ad356509287a69688b31ce0308",
+      "functions": [
+        {
+          "name": "middleware",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "middleware",
+        "config"
+      ],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "tsconfig.json": {
+      "filePath": "tsconfig.json",
+      "contentHash": "5c51df4c59f4510d8c7dadf07a5c32132228826a3b331da5e286207b4df7ef9c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

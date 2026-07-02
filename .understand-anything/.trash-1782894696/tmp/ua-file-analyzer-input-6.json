@@ -1,0 +1,17 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {"path": "src/app/(app)/dashboard/products/page.tsx", "language": "typescript", "sizeLines": 10, "fileCategory": "code"},
+    {"path": "src/components/app/ProductListPage.tsx", "language": "typescript", "sizeLines": 200, "fileCategory": "code"},
+    {"path": "src/lib/trendscope-products.ts", "language": "typescript", "sizeLines": 62, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/app/(app)/dashboard/products/page.tsx": [
+      "src/components/app/ProductListPage.tsx"
+    ],
+    "src/components/app/ProductListPage.tsx": [
+      "src/lib/trendscope-products.ts"
+    ],
+    "src/lib/trendscope-products.ts": []
+  }
+}

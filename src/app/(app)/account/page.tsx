@@ -5,21 +5,12 @@ import { prisma } from '@/lib/prisma';
 import { levelFromActivity, TIER_LABEL } from '@/lib/community';
 import ProfileEditor from '@/components/app/ProfileEditor';
 import { PlusCircle } from '@/components/ui/Icon';
+import { formatDate, daysUntil } from '@/lib/utils';
 
+// utils.formatKRW 는 억/만 단위로 축약("3만원")하지만 이 화면은 "29,800원" 처럼
+// 전체 금액을 그대로 보여줘야 해서 로컬 포맷을 유지한다.
 function formatKRW(amount: number) {
   return amount.toLocaleString('ko-KR') + '원';
-}
-
-function formatDate(d: Date | null | undefined) {
-  if (!d) return '-';
-  const date = new Date(d);
-  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function daysUntil(d: Date | null | undefined) {
-  if (!d) return null;
-  const ms = new Date(d).getTime() - Date.now();
-  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
 }
 
 /** 비관리자: 커뮤니티 활동 레벨 라벨 계산. */

@@ -1,0 +1,210 @@
+{
+  "projectRoot": "/Users/mcthemax/Desktop/viral-shorts-dashboard",
+  "batchFiles": [
+    {
+      "path": "src/app/api/community/route.ts",
+      "language": "typescript",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/cron/route.ts",
+      "language": "typescript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/curated-products/route.ts",
+      "language": "typescript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/fix-thumbnails/route.ts",
+      "language": "typescript",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/payments/confirm/route.ts",
+      "language": "typescript",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/payments/nicepay/prepare/route.ts",
+      "language": "typescript",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/payments/nicepay/return/route.ts",
+      "language": "typescript",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/payments/nicepay/webhook/route.ts",
+      "language": "typescript",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/payments/prepare/route.ts",
+      "language": "typescript",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/refresh-thumbnails/route.ts",
+      "language": "typescript",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/stats/route.ts",
+      "language": "typescript",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app/api/test/route.ts",
+      "language": "typescript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/activity-log.ts",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/admin.ts",
+      "language": "typescript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/auth.ts",
+      "language": "typescript",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/community.ts",
+      "language": "typescript",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/nicepay.ts",
+      "language": "typescript",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/oauth.ts",
+      "language": "typescript",
+      "sizeLines": 203,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/prisma.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/profile.ts",
+      "language": "typescript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/subscription.ts",
+      "language": "typescript",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/toss.ts",
+      "language": "typescript",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/app/api/community/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/community.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/cron/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/curated-products/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/fix-thumbnails/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/payments/confirm/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts",
+      "src/lib/toss.ts"
+    ],
+    "src/app/api/payments/nicepay/prepare/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/nicepay.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/payments/nicepay/return/route.ts": [
+      "src/lib/nicepay.ts",
+      "src/lib/oauth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts"
+    ],
+    "src/app/api/payments/nicepay/webhook/route.ts": [
+      "src/lib/prisma.ts",
+      "src/lib/subscription.ts"
+    ],
+    "src/app/api/payments/prepare/route.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts",
+      "src/lib/toss.ts"
+    ],
+    "src/app/api/refresh-thumbnails/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/stats/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/app/api/test/route.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/activity-log.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/admin.ts": [
+      "src/lib/auth.ts"
+    ],
+    "src/lib/auth.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/community.ts": [],
+    "src/lib/nicepay.ts": [],
+    "src/lib/oauth.ts": [
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/prisma.ts": [],
+    "src/lib/profile.ts": [],
+    "src/lib/subscription.ts": [
+      "src/lib/auth.ts",
+      "src/lib/prisma.ts"
+    ],
+    "src/lib/toss.ts": []
+  }
+}
