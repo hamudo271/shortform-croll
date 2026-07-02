@@ -17,7 +17,7 @@ import { classifyThumbnail } from '@/lib/vision';
 import { Platform } from '@prisma/client';
 
 // 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
-export const maxDuration = 300;
+export const maxDuration = 600;
 
 // 최신성 컷오프 — 이 날짜 이전 업로드된 영상은 모두 스킵
 // 최신성 롤링 컷 — 고정일자 대신 '지금 기준 N일'. 오래된 영상이 '현재 트렌드'로
@@ -59,7 +59,10 @@ export async function POST(request: NextRequest) {
   const startedAt = Date.now();
   const elapsedMs = () => Date.now() - startedAt;
   const TK_DEADLINE_MS = 170_000; // TikTok 단계는 170s 까지 (YouTube 제거로 슬롯 앞당김)
-  const HARD_BUDGET_MS = 230_000; // 전체 하드캡 (어떤 종료 주체보다도 앞서서)
+  // 하드캡 520s — GitHub Actions curl --max-time 600 보다 앞서 종료.
+  // 230s 였을 때 TikTok(170s) + IG 해시태그 fetch(~120s)만으로 초과되어
+  // IG 릴스 처리 루프가 한 건도 못 돌고 0건 수집되는 문제가 있었음.
+  const HARD_BUDGET_MS = 520_000;
 
   try {
     // YouTube 수집 제거 (의뢰인 요청) — TikTok + Instagram 만 수집.
