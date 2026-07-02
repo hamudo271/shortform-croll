@@ -14,15 +14,24 @@ import { getOrFetchCreator } from '@/lib/creators';
 import { scorePurchaseIntent, evaluatePass } from '@/lib/comments';
 import { classifyVideo, classifyByKeywords } from '@/lib/classifier';
 import { classifyThumbnail } from '@/lib/vision';
+import {
+  RECENCY_WINDOW_DAYS,
+  TK_DEADLINE_MS,
+  HARD_BUDGET_MS,
+  MIN_VIEW_COUNT,
+  TIKTOK_TRENDING_COUNT,
+  TIKTOK_SEARCH_COUNT,
+  TIKTOK_COMMENT_SAMPLE,
+  KEYWORD_DELAY_MS,
+  TIKTOK_KEYWORDS,
+  computeViralScore,
+} from '@/lib/collect-config';
 import { Platform } from '@prisma/client';
 
 // 수집은 ~60초 걸림 — Vercel/Railway 기본 타임아웃 회피
 export const maxDuration = 600;
 
-// 최신성 컷오프 — 이 날짜 이전 업로드된 영상은 모두 스킵
-// 최신성 롤링 컷 — 고정일자 대신 '지금 기준 N일'. 오래된 영상이 '현재 트렌드'로
-// 섞이지 않게 (의뢰인: 너무 넓다). 기본 45일.
-const RECENCY_WINDOW_DAYS = Number(process.env.RECENCY_WINDOW_DAYS || 45);
+// 최신성 컷오프 — 이 날짜 이전 업로드된 영상은 모두 스킵 (기준값은 collect-config.ts).
 const MIN_PUBLISHED_AT = new Date(Date.now() - RECENCY_WINDOW_DAYS * 24 * 60 * 60 * 1000);
 
 /**
@@ -58,11 +67,6 @@ export async function POST(request: NextRequest) {
   // 플랫폼별 deadline 으로 슬롯을 나눠 어느 날이든 세 채널 모두 일부는 수집되게 함.
   const startedAt = Date.now();
   const elapsedMs = () => Date.now() - startedAt;
-  const TK_DEADLINE_MS = 170_000; // TikTok 단계는 170s 까지 (YouTube 제거로 슬롯 앞당김)
-  // 하드캡 520s — GitHub Actions curl --max-time 600 보다 앞서 종료.
-  // 230s 였을 때 TikTok(170s) + IG 해시태그 fetch(~120s)만으로 초과되어
-  // IG 릴스 처리 루프가 한 건도 못 돌고 0건 수집되는 문제가 있었음.
-  const HARD_BUDGET_MS = 520_000;
 
   try {
     // YouTube 수집 제거 (의뢰인 요청) — TikTok + Instagram 만 수집.
@@ -74,7 +78,7 @@ export async function POST(request: NextRequest) {
 
     try {
       // 틱톡 트렌딩 (US)
-      const trendingVideos = await getTikTokTrending({ count: 30 });
+      const trendingVideos = await getTikTokTrending({ count: TIKTOK_TRENDING_COUNT });
       console.log(`  Found ${trendingVideos.length} trending TikTok videos`);
 
       for (const video of trendingVideos) {
@@ -84,7 +88,7 @@ export async function POST(request: NextRequest) {
           break;
         }
         if (processedVideoIds.has(video.id)) continue;
-        if (video.viewCount < 20000) continue;
+        if (video.viewCount < MIN_VIEW_COUNT) continue;
         // 영어 텍스트 필수, 한글이 들어가면 제외
         if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
         if (/[가-힣]/.test(video.title)) continue;
@@ -97,7 +101,7 @@ export async function POST(request: NextRequest) {
         const tkCreator = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
           fetchTikTokUser(video.authorId),
         );
-        const tkComments = await fetchTikTokComments(video.videoUrl, 20);
+        const tkComments = await fetchTikTokComments(video.videoUrl, TIKTOK_COMMENT_SAMPLE);
         const tkIntentScore = scorePurchaseIntent(tkComments);
         const { passReason: tkPassReason } = evaluatePass(
           !!tkCreator?.hasSalesLink,
@@ -167,7 +171,7 @@ export async function POST(request: NextRequest) {
               likeCount: BigInt(video.likeCount),
               commentCount: BigInt(video.commentCount),
               shareCount: BigInt(video.shareCount),
-              viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
+              viralScore: computeViralScore(video.viewCount),
               category: classification.category,
               targetAge: classification.targetAge,
               tags: classification.tags,
@@ -189,32 +193,8 @@ export async function POST(request: NextRequest) {
       results.errors.push('TikTok trending failed');
     }
 
-    // 틱톡 키워드 검색 — 의뢰인 골든 (Daily Sunbeam 도시락, Good Stuff Diary 모션조명,
-    // CozyPrime 충전기 류)을 잡는 다양한 angle. amazon-중심에서 확장:
-    // 단일 제품 시연 / 스마트홈 / 실생활 해결 / 가성비 / 신박한 아이디어
-    const tiktokKeywords = [
-      // 메가 해시태그
-      'tiktokmademebuyit', 'amazonfinds', 'amazonmusthaves',
-      'amazonhaul', 'temufinds', 'sheinfinds', 'aliexpressfinds',
-      'tiktokshop', 'tiktokshopfinds',
-      // 가젯 카테고리 (Daily Sunbeam 도시락 → kitchen, AlexFinds 키보드 → tech)
-      'cool gadgets', 'kitchen gadgets', 'home gadgets',
-      'office gadgets', 'car gadgets', 'travel gadgets',
-      'tech gadgets', 'smart home gadgets',
-      // 컨셉 (Good Stuff Diary 조명/펜 → 작은 발명)
-      'must have products', 'satisfying products', 'genius inventions',
-      'cool inventions', 'lifehack products', 'organization gadgets',
-      'useful gadgets', 'clever inventions', 'smart products',
-      // 진성 셀러 표현
-      'i bought this', 'this changed my life', 'best purchase',
-      'product review', 'unboxing', 'amazon best sellers',
-      // 트렌드형
-      'viral products', 'viral gadgets 2026', 'must have gadgets',
-      'amazon must haves', 'tiktok shop finds', 'small business products',
-      // 의뢰인 골든 톤 (Daily Sunbeam 도시락 같은 단일 시연)
-      'portable gadgets', 'mini gadgets', 'compact gadget',
-    ];
-    for (const kw of tiktokKeywords) {
+    // 틱톡 키워드 검색 — 키워드 풀은 collect-config.ts (TIKTOK_KEYWORDS).
+    for (const kw of TIKTOK_KEYWORDS) {
       // budget: TikTok 슬롯 초과 시 남은 키워드 스킵
       if (elapsedMs() > TK_DEADLINE_MS) {
         console.log(`⏱️ TikTok 키워드 budget 초과 — 남은 키워드 스킵`);
@@ -222,11 +202,11 @@ export async function POST(request: NextRequest) {
         break;
       }
       try {
-        const videos = await searchTikTokVideos(kw, { count: 30 });
+        const videos = await searchTikTokVideos(kw, { count: TIKTOK_SEARCH_COUNT });
         for (const video of videos) {
           if (elapsedMs() > TK_DEADLINE_MS) { results.partial = true; break; }
           if (processedVideoIds.has(video.id)) continue;
-          if (video.viewCount < 20000) continue;
+          if (video.viewCount < MIN_VIEW_COUNT) continue;
           if (!/[a-zA-Z]{3,}/.test(video.title)) continue;
           if (/[가-힣]/.test(video.title)) continue;
 
@@ -238,7 +218,7 @@ export async function POST(request: NextRequest) {
           const tkCreator2 = await getOrFetchCreator(Platform.TIKTOK, video.authorId, () =>
             fetchTikTokUser(video.authorId),
           );
-          const tkComments2 = await fetchTikTokComments(video.videoUrl, 20);
+          const tkComments2 = await fetchTikTokComments(video.videoUrl, TIKTOK_COMMENT_SAMPLE);
           const tkIntentScore2 = scorePurchaseIntent(tkComments2);
           const { passReason: tkPassReason2 } = evaluatePass(
             !!tkCreator2?.hasSalesLink,
@@ -286,7 +266,7 @@ export async function POST(request: NextRequest) {
                 likeCount: BigInt(video.likeCount),
                 commentCount: BigInt(video.commentCount),
                 shareCount: BigInt(video.shareCount),
-                viralScore: video.viewCount > 1000000 ? 90 : video.viewCount > 100000 ? 60 : 30,
+                viralScore: computeViralScore(video.viewCount),
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
@@ -301,7 +281,7 @@ export async function POST(request: NextRequest) {
             tiktokCollected++;
           } catch {}
         }
-        await delay(300);
+        await delay(KEYWORD_DELAY_MS);
       } catch (err) {
         console.error(`TikTok search error for "${kw}":`, err);
       }
@@ -352,8 +332,8 @@ export async function POST(request: NextRequest) {
           if (elapsedMs() > HARD_BUDGET_MS) { results.partial = true; break; }
           if (processedVideoIds.has(reel.id)) continue;
 
-          // 1) 값싼 필터 먼저 (틱톡과 동일): 조회수 ≥ 20000
-          if (reel.viewCount < 20000) continue;
+          // 1) 값싼 필터 먼저 (틱톡과 동일): 조회수 하한
+          if (reel.viewCount < MIN_VIEW_COUNT) continue;
           // 2) 영어권만 — 비서구/비영어 제외 (틱톡과 동일 유틸)
           if (isExcludedContent(`${reel.title} ${reel.description}`, reel.authorName)) continue;
           // 3) 다제품 리스티클 거부 (틱톡과 동일 TALKING_HEAD_RE) — "10 things…" 등
@@ -408,7 +388,7 @@ export async function POST(request: NextRequest) {
                 likeCount: BigInt(reel.likeCount),
                 commentCount: BigInt(reel.commentCount),
                 shareCount: BigInt(reel.shareCount),
-                viralScore: reel.viewCount > 1000000 ? 90 : reel.viewCount > 100000 ? 60 : 30,
+                viralScore: computeViralScore(reel.viewCount),
                 category: classification.category,
                 targetAge: classification.targetAge,
                 tags: classification.tags,
