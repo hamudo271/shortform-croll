@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
       passReason: passReasonFilter,
+      hidden: false, // 관리자 숨김 영상 제외
       collectedAt: { gte: dateThreshold },
       publishedAt: { gte: MIN_PUBLISHED_AT },
       ...(category && { category }),

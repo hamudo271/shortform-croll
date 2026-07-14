@@ -38,6 +38,7 @@ model Video {
 
   // Metadata
   publishedAt   DateTime?
+  hidden        Boolean   @default(false)  // 관리자 숨김 — 게이트를 뚫은 부적합 영상 표시 제외
   collectedAt   DateTime  @default(now())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -187,6 +188,7 @@ model CommunityPost {
   message    String
   image      String?                         // base64 data URI or URL (선택)
   status     CommunityStatus @default(PUBLISHED)
+  pinned     Boolean         @default(false) // 관리자 공지 고정 — 피드 최상단 노출
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
 

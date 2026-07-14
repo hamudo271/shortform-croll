@@ -23,9 +23,11 @@ export async function GET(request: NextRequest) {
 
   const sort = request.nextUrl.searchParams.get('sort') === 'new' ? 'new' : 'hot';
   const cursor = request.nextUrl.searchParams.get('cursor') || undefined;
+  const isAdmin = me.role === 'ADMIN';
 
   const rows = await prisma.communityPost.findMany({
-    where: { status: 'PUBLISHED' },
+    // 관리자는 임시숨김(HIDDEN) 글도 보임 — 숨김 해제 UI 를 위해
+    where: { status: isAdmin ? { in: ['PUBLISHED', 'HIDDEN'] } : 'PUBLISHED' },
     orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     take: PAGE_SIZE + 1, // 다음 페이지 존재 여부 확인용 +1
     ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
@@ -67,6 +69,8 @@ export async function GET(request: NextRequest) {
     message: p.message,
     hasImage: !!p.image,
     createdAt: p.createdAt,
+    pinned: p.pinned,
+    hidden: p.status === 'HIDDEN', // 관리자 전용 표시(일반 유저 응답엔 항상 false)
     likes: p._count.likes,
     likedByMe: likedSet.has(p.id),
     comments: p.comments.map((c) => ({
@@ -90,9 +94,11 @@ export async function GET(request: NextRequest) {
         hotScore({ likes: a.likes, commentCount: a.comments.length, createdAt: a.createdAt }),
     );
   }
+  // 고정 글은 정렬과 무관하게 최상단 (sort 는 stable — 고정 글끼리는 기존 순서 유지)
+  mapped.sort((a, b) => Number(b.pinned) - Number(a.pinned));
 
   // isAdmin — 프론트가 수정/삭제(모더레이션) 버튼 노출 여부를 결정하는 데 사용.
-  return NextResponse.json({ posts: mapped, nextCursor, isAdmin: me.role === 'ADMIN' });
+  return NextResponse.json({ posts: mapped, nextCursor, isAdmin });
 }
 
 /** POST /api/community — 게시글 작성 (구독 회원/관리자). */

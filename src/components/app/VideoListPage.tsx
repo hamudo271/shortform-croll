@@ -26,6 +26,7 @@ interface Video {
   targetAge: string | null;
   tags: string[];
   collectedAt: string;
+  hidden?: boolean; // 관리자 응답에만 의미 있음 (일반 유저에겐 숨김 영상 자체가 안 옴)
 }
 
 interface Props {
@@ -59,6 +60,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const LIMIT = 24;
 
@@ -92,6 +94,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
       if (reset) { setVideos(data.videos); setOffset(LIMIT); }
       else { setVideos(prev => [...prev, ...data.videos]); setOffset(prev => prev + LIMIT); }
       setTotal(data.total);
+      setIsAdmin(!!data.isAdmin);
     } catch (err) {
       setError(err instanceof Error ? err.message : '오류가 발생했습니다');
     } finally {
@@ -129,6 +132,32 @@ export default function VideoListPage({ platform, category, initialFilters, show
   };
 
   const loadMore = () => fetchVideos(offset, false);
+
+  // ===== 관리자: 게이트를 뚫은 부적합 영상 숨김/삭제 =====
+  const toggleHideVideo = async (video: Video) => {
+    const res = await fetch(`/api/admin/videos/${video.id}`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hidden: !video.hidden }),
+    });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      setError(d.error || '숨김 처리에 실패했습니다');
+      return;
+    }
+    setVideos(prev => prev.map(v => v.id === video.id ? { ...v, hidden: !video.hidden } : v));
+  };
+
+  const deleteVideo = async (video: Video) => {
+    if (!window.confirm('이 영상을 완전 삭제할까요? 재수집되면 다시 들어올 수 있어 보통은 숨김을 권장합니다.')) return;
+    const res = await fetch(`/api/admin/videos/${video.id}`, { method: 'DELETE' });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      setError(d.error || '삭제에 실패했습니다');
+      return;
+    }
+    setVideos(prev => prev.filter(v => v.id !== video.id));
+    setTotal(t => Math.max(0, t - 1));
+  };
 
   return (
     <>
@@ -198,21 +227,40 @@ export default function VideoListPage({ platform, category, initialFilters, show
           <div className="space-y-8">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {videos.map((video) => (
-                <VideoCard
-                  key={video.id + video.videoId}
-                  id={video.id}
-                  platform={video.platform}
-                  title={video.title}
-                  thumbnailUrl={video.thumbnailUrl}
-                  videoUrl={video.videoUrl}
-                  authorName={video.authorName || undefined}
-                  viewCount={video.viewCount}
-                  likeCount={video.likeCount}
-                  viralScore={video.viralScore}
-                  category={video.category}
-                  targetAge={video.targetAge}
-                  onClick={() => setSelectedVideo(video)}
-                />
+                <div key={video.id + video.videoId} className={`relative ${video.hidden ? 'opacity-40' : ''}`}>
+                  <VideoCard
+                    id={video.id}
+                    platform={video.platform}
+                    title={video.title}
+                    thumbnailUrl={video.thumbnailUrl}
+                    videoUrl={video.videoUrl}
+                    authorName={video.authorName || undefined}
+                    viewCount={video.viewCount}
+                    likeCount={video.likeCount}
+                    viralScore={video.viralScore}
+                    category={video.category}
+                    targetAge={video.targetAge}
+                    onClick={() => setSelectedVideo(video)}
+                  />
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); toggleHideVideo(video); }}
+                        title={video.hidden ? '숨김 해제' : '회원에게 숨김'}
+                        className="px-2 h-7 rounded-md bg-black/70 hover:bg-black/90 text-white text-[11px] font-semibold backdrop-blur-sm"
+                      >
+                        {video.hidden ? '해제' : '숨김'}
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); deleteVideo(video); }}
+                        title="완전 삭제"
+                        className="px-2 h-7 rounded-md bg-rose-600/80 hover:bg-rose-600 text-white text-[11px] font-semibold backdrop-blur-sm"
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
             {videos.length < total && (

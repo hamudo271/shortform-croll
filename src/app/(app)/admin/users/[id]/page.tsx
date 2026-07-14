@@ -107,6 +107,27 @@ export default function AdminUserDetailPage({ params }: { params: Promise<{ id: 
     } finally { setActing(false); }
   };
 
+  const handleToggleRole = async () => {
+    if (!user) return;
+    const toAdmin = user.role !== 'ADMIN';
+    const msg = toAdmin
+      ? `${user.name || user.email} 님을 관리자로 임명할까요? (회원관리·상품·모더레이션 전체 권한)`
+      : `${user.name || user.email} 님의 관리자 권한을 해제할까요?`;
+    if (!window.confirm(msg)) return;
+    setActing(true);
+    try {
+      const res = await fetch(`/api/admin/users/${id}/role`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: toAdmin ? 'ADMIN' : 'USER' }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || '권한 변경 실패'); return;
+      }
+      await load();
+    } finally { setActing(false); }
+  };
+
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setProfileSaving(true); setProfileMsg(null);
@@ -148,9 +169,23 @@ export default function AdminUserDetailPage({ params }: { params: Promise<{ id: 
 
       {/* Section 1: 기본 정보 */}
       <section className="bg-zinc-950 border border-zinc-700 rounded-2xl p-6 sm:p-8 shadow-card">
-        <h2 className="text-sm font-semibold text-zinc-50 tracking-tight mb-5 flex items-center gap-2">
-          <UserIcon size={16} className="text-blue-400" /> 기본 정보
-        </h2>
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-sm font-semibold text-zinc-50 tracking-tight flex items-center gap-2">
+            <UserIcon size={16} className="text-blue-400" /> 기본 정보
+          </h2>
+          <button
+            onClick={handleToggleRole}
+            disabled={acting}
+            className={`inline-flex items-center gap-1.5 px-3 h-9 text-xs font-semibold rounded-lg disabled:opacity-50 transition-colors ${
+              user.role === 'ADMIN'
+                ? 'text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800'
+                : 'text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-sm'
+            }`}
+          >
+            <Shield size={12} />
+            {user.role === 'ADMIN' ? '관리자 해제' : '관리자 임명'}
+          </button>
+        </div>
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
           <Field icon={<Mail size={13} />} label="이메일" value={user.email} />
           <Field icon={<Shield size={13} />} label="권한" value={user.role === 'ADMIN' ? '관리자' : '회원'} />

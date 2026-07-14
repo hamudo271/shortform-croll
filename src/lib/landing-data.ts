@@ -94,6 +94,8 @@ export const getTopProducts = unstable_cache(
           thumbnailUrl: { not: '' },
           // Skip too-low-engagement videos (likely failed collections)
           viewCount: { gt: BigInt(1000) },
+          // 관리자 숨김 영상 제외
+          hidden: false,
         },
         select: {
           id: true,

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { Platform, Category } from '@prisma/client';
 import { isExcludedContent } from '@/lib/exclude';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,7 +25,11 @@ export async function GET(request: NextRequest) {
     // 최신성 컷오프 — 2025-12-01 이전 업로드 영상은 표시 안 함
     const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
 
-    // Build where clause
+    // 관리자 여부 — 숨김 영상 노출 + 프론트 관리 버튼 표시에 사용
+    const me = await getCurrentUser();
+    const isAdmin = me?.role === 'ADMIN';
+
+    // Build where clause — 관리자는 숨김 영상도 보임(숨김 해제 UI 필요)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
       ...(platform && { platform }),
@@ -32,6 +37,7 @@ export async function GET(request: NextRequest) {
       ...(targetAge && { targetAge }),
       ...(country && { country }),
       ...(search && { title: { contains: search, mode: 'insensitive' } }),
+      ...(isAdmin ? {} : { hidden: false }),
       collectedAt: { gte: dateThreshold },
       publishedAt: { gte: MIN_PUBLISHED_AT },
     };
@@ -76,8 +82,13 @@ export async function GET(request: NextRequest) {
       total: rawTotal,
       limit,
       offset,
+      isAdmin,
     });
-    res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+    // 관리자 응답(숨김 포함)은 공유 캐시에 저장하지 않음 — 일반 유저에게 새어나가면 안 됨
+    res.headers.set(
+      'Cache-Control',
+      isAdmin ? 'private, no-store' : 's-maxage=60, stale-while-revalidate=300',
+    );
     return res;
   } catch (error) {
     console.error('Error fetching videos:', error);

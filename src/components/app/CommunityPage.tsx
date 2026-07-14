@@ -22,6 +22,8 @@ interface Post {
   message: string;
   hasImage: boolean;
   createdAt: string;
+  pinned: boolean;
+  hidden: boolean; // 관리자에게만 true 로 내려옴 (임시숨김 글)
   likes: number;
   likedByMe: boolean;
   comments: Comment[];
@@ -180,6 +182,21 @@ export default function CommunityPage() {
     await loadFeed();
   };
 
+  // 관리자 모더레이션: 고정/고정해제/숨김/숨김해제
+  const moderatePost = async (postId: string, action: 'pin' | 'unpin' | 'hide' | 'unhide') => {
+    const r = await fetch(`/api/community/${postId}/moderate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action }),
+    });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      setErr(d.error || '처리에 실패했습니다.');
+      return;
+    }
+    await loadFeed();
+  };
+
   const totalReplies = useMemo(() => posts.reduce((n, p) => n + p.comments.length, 0), [posts]);
 
   return (
@@ -325,6 +342,7 @@ export default function CommunityPage() {
                   }
                   onLike={() => toggleLike(p.id)}
                   onDelete={() => deletePost(p.id)}
+                  onModerate={(action) => moderatePost(p.id, action)}
                   onCommented={() => Promise.all([loadFeed(), loadLevel()])}
                   onChanged={loadFeed}
                 />
@@ -363,7 +381,7 @@ export default function CommunityPage() {
           {[
             { label: '제품 소스 공유', checked: true },
             { label: '판매 테스트 인증', checked: true },
-            { label: '우수 글 공지 고정 예정', checked: false },
+            { label: '우수 글 공지 고정', checked: true },
           ].map((m) => (
             <label key={m.label} className="flex items-start gap-2 text-[10px] font-bold leading-snug text-zinc-400">
               <input type="checkbox" defaultChecked={m.checked} className="mt-0.5 accent-blue-600" />
@@ -383,6 +401,7 @@ function PostCard({
   onToggleComments,
   onLike,
   onDelete,
+  onModerate,
   onCommented,
   onChanged,
 }: {
@@ -392,6 +411,7 @@ function PostCard({
   onToggleComments: () => void;
   onLike: () => void;
   onDelete: () => void;
+  onModerate: (action: 'pin' | 'unpin' | 'hide' | 'unhide') => void;
   onCommented: () => Promise<unknown>;
   onChanged: () => Promise<unknown>;
 }) {
@@ -475,10 +495,32 @@ function PostCard({
           <div className="flex items-center gap-2 text-[11px] text-zinc-500">
             <strong className="text-zinc-200">{post.name}</strong>
             <span>{timeAgo(post.createdAt)}</span>
+            {post.pinned && (
+              <span className="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold">📌 고정</span>
+            )}
+            {post.hidden && (
+              <span className="px-1.5 py-0.5 rounded bg-zinc-500/10 text-zinc-400 text-[10px] font-bold">숨김됨</span>
+            )}
             {canModerate && !editing && (
               <span className="ml-auto flex items-center gap-2">
                 {isAdmin && !post.mine && (
                   <span className="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold">관리자</span>
+                )}
+                {isAdmin && (
+                  <>
+                    <button
+                      onClick={() => onModerate(post.pinned ? 'unpin' : 'pin')}
+                      className="hover:text-amber-400"
+                    >
+                      {post.pinned ? '고정해제' : '고정'}
+                    </button>
+                    <button
+                      onClick={() => onModerate(post.hidden ? 'unhide' : 'hide')}
+                      className="hover:text-zinc-300"
+                    >
+                      {post.hidden ? '숨김해제' : '숨김'}
+                    </button>
+                  </>
                 )}
                 <button
                   onClick={() => { setEditTitle(post.title); setEditMessage(post.message); setEditing(true); }}
