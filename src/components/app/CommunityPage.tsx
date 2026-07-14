@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 interface Comment {
   id: string;
   authorId: string;
+  mine: boolean;
   name: string;
   profileImage: string | null;
   message: string;
@@ -78,6 +79,7 @@ function Avatar({ name, image, size = 36 }: { name: string; image?: string | nul
 
 export default function CommunityPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [level, setLevel] = useState<Level | null>(null);
   const [sort, setSort] = useState<'hot' | 'new'>('hot');
   const [loading, setLoading] = useState(true);
@@ -97,6 +99,7 @@ export default function CommunityPage() {
       const d = await r.json();
       setPosts(d.posts || []);
       setCursor(d.nextCursor || null);
+      setIsAdmin(!!d.isAdmin);
     }
   }, [sort]);
   const loadMore = useCallback(async () => {
@@ -164,6 +167,17 @@ export default function CommunityPage() {
       return;
     }
     await Promise.all([loadFeed(), loadLevel()]);
+  };
+
+  const deletePost = async (postId: string) => {
+    if (!confirm('이 게시글을 삭제할까요?')) return;
+    const r = await fetch(`/api/community/${postId}`, { method: 'DELETE' });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      setErr(d.error || '삭제에 실패했습니다.');
+      return;
+    }
+    await loadFeed();
   };
 
   const totalReplies = useMemo(() => posts.reduce((n, p) => n + p.comments.length, 0), [posts]);
@@ -299,6 +313,7 @@ export default function CommunityPage() {
                 <PostCard
                   key={p.id}
                   post={p}
+                  isAdmin={isAdmin}
                   open={openComments.has(p.id)}
                   onToggleComments={() =>
                     setOpenComments((prev) => {
@@ -309,7 +324,9 @@ export default function CommunityPage() {
                     })
                   }
                   onLike={() => toggleLike(p.id)}
+                  onDelete={() => deletePost(p.id)}
                   onCommented={() => Promise.all([loadFeed(), loadLevel()])}
+                  onChanged={loadFeed}
                 />
               ))}
               {cursor && (
@@ -361,24 +378,70 @@ export default function CommunityPage() {
 
 function PostCard({
   post,
+  isAdmin,
   open,
   onToggleComments,
   onLike,
+  onDelete,
   onCommented,
+  onChanged,
 }: {
   post: Post;
+  isAdmin: boolean;
   open: boolean;
   onToggleComments: () => void;
   onLike: () => void;
+  onDelete: () => void;
   onCommented: () => Promise<unknown>;
+  onChanged: () => Promise<unknown>;
 }) {
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
   const [cErr, setCErr] = useState('');
   const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null);
 
+  // 수정 모드 (작성자 본인 or 관리자)
+  const canModerate = post.mine || isAdmin;
+  const [editing, setEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(post.title);
+  const [editMessage, setEditMessage] = useState(post.message);
+  const [saving, setSaving] = useState(false);
+
   const topComments = post.comments.filter((c) => !c.parentId);
   const repliesOf = (id: string) => post.comments.filter((c) => c.parentId === id);
+
+  const saveEdit = async () => {
+    if (!editTitle.trim() || !editMessage.trim()) return;
+    setSaving(true);
+    setCErr('');
+    try {
+      const r = await fetch(`/api/community/${post.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: editTitle, message: editMessage }),
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        setCErr(d.error || '수정에 실패했습니다.');
+        return;
+      }
+      setEditing(false);
+      await onChanged();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const deleteComment = async (commentId: string) => {
+    if (!confirm('이 댓글을 삭제할까요?')) return;
+    const r = await fetch(`/api/community/${post.id}/comments/${commentId}`, { method: 'DELETE' });
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      setCErr(d.error || '댓글 삭제에 실패했습니다.');
+      return;
+    }
+    await onChanged();
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -412,9 +475,58 @@ function PostCard({
           <div className="flex items-center gap-2 text-[11px] text-zinc-500">
             <strong className="text-zinc-200">{post.name}</strong>
             <span>{timeAgo(post.createdAt)}</span>
+            {canModerate && !editing && (
+              <span className="ml-auto flex items-center gap-2">
+                {isAdmin && !post.mine && (
+                  <span className="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold">관리자</span>
+                )}
+                <button
+                  onClick={() => { setEditTitle(post.title); setEditMessage(post.message); setEditing(true); }}
+                  className="hover:text-zinc-300"
+                >
+                  수정
+                </button>
+                <button onClick={onDelete} className="hover:text-rose-400">삭제</button>
+              </span>
+            )}
           </div>
-          <h4 className="mt-1 text-[15px] font-bold text-zinc-50 leading-snug">{post.title}</h4>
-          <p className="mt-1 text-sm text-zinc-300 leading-relaxed whitespace-pre-wrap break-words">{post.message}</p>
+          {editing ? (
+            <div className="mt-2 grid gap-2">
+              <input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                maxLength={60}
+                className="h-9 px-3 rounded-lg bg-zinc-950 border border-zinc-700 text-sm text-zinc-100 focus:border-blue-500 focus:outline-none"
+              />
+              <textarea
+                value={editMessage}
+                onChange={(e) => setEditMessage(e.target.value)}
+                maxLength={360}
+                rows={3}
+                className="px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-sm text-zinc-100 focus:border-blue-500 focus:outline-none resize-none"
+              />
+              <div className="flex gap-2">
+                <button
+                  onClick={saveEdit}
+                  disabled={saving || !editTitle.trim() || !editMessage.trim()}
+                  className="h-8 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-semibold"
+                >
+                  {saving ? '저장 중…' : '저장'}
+                </button>
+                <button
+                  onClick={() => setEditing(false)}
+                  className="h-8 px-4 rounded-lg border border-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-semibold"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h4 className="mt-1 text-[15px] font-bold text-zinc-50 leading-snug">{post.title}</h4>
+              <p className="mt-1 text-sm text-zinc-300 leading-relaxed whitespace-pre-wrap break-words">{post.message}</p>
+            </>
+          )}
           {post.hasImage && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={`/api/community/${post.id}/image`} alt="" className="mt-3 max-h-80 rounded-lg border border-zinc-800" loading="lazy" />
@@ -450,10 +562,14 @@ function PostCard({
               {topComments.length === 0 && <p className="text-xs text-zinc-500">첫 댓글을 남겨보세요.</p>}
               {topComments.map((c) => (
                 <div key={c.id} className="space-y-2">
-                  <CommentRow c={c} onReply={() => setReplyTo({ id: c.id, name: c.name })} />
+                  <CommentRow
+                    c={c}
+                    onReply={() => setReplyTo({ id: c.id, name: c.name })}
+                    onDelete={c.mine || isAdmin ? () => deleteComment(c.id) : undefined}
+                  />
                   {repliesOf(c.id).map((r) => (
                     <div key={r.id} className="ml-9">
-                      <CommentRow c={r} />
+                      <CommentRow c={r} onDelete={r.mine || isAdmin ? () => deleteComment(r.id) : undefined} />
                     </div>
                   ))}
                 </div>
@@ -489,7 +605,7 @@ function PostCard({
   );
 }
 
-function CommentRow({ c, onReply }: { c: Comment; onReply?: () => void }) {
+function CommentRow({ c, onReply, onDelete }: { c: Comment; onReply?: () => void; onDelete?: () => void }) {
   return (
     <div className="flex gap-2">
       <Avatar name={c.name} image={c.profileImage} size={26} />
@@ -499,9 +615,14 @@ function CommentRow({ c, onReply }: { c: Comment; onReply?: () => void }) {
           <span>{timeAgo(c.createdAt)}</span>
         </div>
         <p className="text-sm text-zinc-300 break-words">{c.message}</p>
-        {onReply && (
-          <button onClick={onReply} className="mt-0.5 text-[11px] text-zinc-500 hover:text-blue-500">답글</button>
-        )}
+        <div className="mt-0.5 flex items-center gap-2 text-[11px]">
+          {onReply && (
+            <button onClick={onReply} className="text-zinc-500 hover:text-blue-500">답글</button>
+          )}
+          {onDelete && (
+            <button onClick={onDelete} className="text-zinc-500 hover:text-rose-400">삭제</button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -72,6 +72,7 @@ export async function GET(request: NextRequest) {
     comments: p.comments.map((c) => ({
       id: c.id,
       authorId: c.authorId,
+      mine: c.authorId === me.id,
       name: c.authorName,
       profileImage: c.author?.profileImage || null,
       message: c.message,
@@ -90,7 +91,8 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  return NextResponse.json({ posts: mapped, nextCursor });
+  // isAdmin — 프론트가 수정/삭제(모더레이션) 버튼 노출 여부를 결정하는 데 사용.
+  return NextResponse.json({ posts: mapped, nextCursor, isAdmin: me.role === 'ADMIN' });
 }
 
 /** POST /api/community — 게시글 작성 (구독 회원/관리자). */
