@@ -1,7 +1,9 @@
 /**
  * 위닝 프로덕트 스코어링 v2 — 기준서 docs/COLLECTION_CRITERIA_V2.md §4 구현.
  *
- * 하드 필터를 통과한 후보에 100점을 매겨 S/A/B 티어로 줄 세운다.
+ * 하드 필터를 통과한 후보에 **10점 만점**(소수 1자리)을 매겨 S/A/B 티어로 줄 세운다.
+ * 항목별 배점은 100점 기준으로 두고 마지막에 10점으로 환산한다 —
+ * 배점 비율을 손볼 때 정수로 다루는 편이 읽고 고치기 쉽기 때문.
  *   A 수요 35 (댓글) + B 속도 25 + C 제품성 25 + D 시장검증 15
  *
  * 설계 의도: v1은 "판매 링크 있음"을 관문으로 썼지만, 그건 이미 셀러가 붙었다는
@@ -77,7 +79,7 @@ export interface ScoreBreakdown {
 }
 
 export interface ScoreResult {
-  /** 0-100 정규화 점수 */
+  /** 0-10 정규화 점수 (소수 1자리) */
   total: number;
   breakdown: ScoreBreakdown;
   tier: Tier;
@@ -97,11 +99,14 @@ const MAX_MARKET = 15;
 const MAX_DEMAND_PROXY = 12;
 
 /**
- * 측정된 항목의 합이 이 미만이면 티어를 붙이지 않는다.
+ * 측정된 항목의 합(내부 100점 기준)이 이 미만이면 티어를 붙이지 않는다.
  * 속도와 시장검증(40점)만 보고 "S급"이라고 부르면 그 라벨이 거짓말이 된다 —
  * 제품을 본 적도 없이 위닝 프로덕트라고 말할 수는 없다.
  */
 const MIN_TIER_COVERAGE = 60;
+
+/** 최종 표기 척도. 내부 배점(100)을 이 값으로 환산해 내보낸다. */
+const SCORE_SCALE = 10;
 
 /** A. 수요 신호 — 35점 */
 function scoreDemand(i: ScoreInput): number {
@@ -164,7 +169,8 @@ export function scoreCandidate(input: ScoreInput): ScoreResult {
   if (input.visionAvailable) measurableMax += MAX_PRODUCT;
 
   const raw = demand + velocity + product + market;
-  const total = measurableMax > 0 ? Math.round((raw / measurableMax) * 100) : 0;
+  const total =
+    measurableMax > 0 ? Math.round((raw / measurableMax) * SCORE_SCALE * 10) / 10 : 0;
 
   const flags: string[] = [];
   if (!input.commentsAvailable) flags.push(FLAG_NO_COMMENTS);

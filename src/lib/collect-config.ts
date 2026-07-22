@@ -89,10 +89,10 @@ export const PRICE_BAND_USD: [number, number] = [10, 60];
 export const MIN_DUPLICATE_ACCOUNTS = 2; // 이상 → 8점 (팔리는 물건이라는 증거)
 export const SATURATION_ACCOUNT_COUNT = 10; // 이상 → 포화. D점수 0 + SATURATED 플래그
 
-/** 티어 컷. */
-export const TIER_S = 75;
-export const TIER_A = 60;
-export const TIER_B = 45;
+/** 티어 컷 — 10점 만점 기준. */
+export const TIER_S = 7.5;
+export const TIER_A = 6.0;
+export const TIER_B = 4.5;
 
 /**
  * 저장 최소 점수. 캘리브레이션 중에는 0 — 점수는 계산해서 저장하되 게이트로는

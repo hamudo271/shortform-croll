@@ -50,7 +50,7 @@ model Video {
   visualClass          String?              // "product" | "face" | "mixed" — Gemini Vision 분석 결과
 
   // 위닝 프로덕트 스코어링 v2 — docs/COLLECTION_CRITERIA_V2.md
-  productScore    Int      @default(0)   // 0-100 종합 점수 (viralScore 와 별개 지표)
+  productScore    Float    @default(0)   // 0-10 종합 점수, 소수 1자리 (viralScore 와 별개 지표)
   tier            String?                // "S" | "A" | "B" — 점수 컷 미달이면 null
   scoreBreakdown  Json     @default("{}")// {demand, velocity, product, market, measurableMax}
   flags           String[]               // REGULATED | SATURATED | BIG_BRAND | LARGE | NO_VISION | NO_COMMENTS

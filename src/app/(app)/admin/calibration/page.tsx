@@ -13,12 +13,13 @@ import { CALIBRATION_MODE, SCORE_CUT, TIER_S, TIER_A, TIER_B } from '@/lib/colle
  */
 export const dynamic = 'force-dynamic';
 
+/** 10점 척도 구간. max 는 배타적이라 최상단만 10 을 포함하도록 11 로 둔다. */
 const SCORE_BANDS = [
-  { min: 80, max: 101, label: '80–100' },
-  { min: 60, max: 80, label: '60–79' },
-  { min: 40, max: 60, label: '40–59' },
-  { min: 20, max: 40, label: '20–39' },
-  { min: 0, max: 20, label: '0–19' },
+  { min: 8, max: 11, label: '8.0 – 10' },
+  { min: 6, max: 8, label: '6.0 – 7.9' },
+  { min: 4, max: 6, label: '4.0 – 5.9' },
+  { min: 2, max: 4, label: '2.0 – 3.9' },
+  { min: 0, max: 2, label: '0 – 1.9' },
 ];
 
 interface Labeled {
@@ -100,7 +101,7 @@ export default async function CalibrationPage() {
 
   // 신호별 중앙값 비교 — 💰 와 ❌ 가 갈리는 지점이 곧 새 임계값 후보
   const signals = [
-    { name: '위닝 점수 (productScore)', get: (r: Labeled) => r.productScore, unit: '점' },
+    { name: '위닝 점수 (10점 만점)', get: (r: Labeled) => r.productScore, unit: '' },
     { name: '일 조회수 (viewsPerDay)', get: (r: Labeled) => r.viewsPerDay, unit: '' },
     { name: '좋아요율', get: likeRate, unit: '%' },
     { name: '구매의도 댓글 비율', get: (r: Labeled) => r.purchaseIntentScore, unit: '%' },
@@ -155,7 +156,7 @@ export default async function CalibrationPage() {
           현재 모드: <span className={CALIBRATION_MODE ? 'text-amber-400 font-semibold' : 'text-emerald-400 font-semibold'}>
             {CALIBRATION_MODE ? '캘리브레이션 (기준 완화, 점수 컷 없음)' : '정식 기준'}
           </span>
-          {' · '}저장 컷 {SCORE_CUT}점 · 티어 S {TIER_S} / A {TIER_A} / B {TIER_B}
+          {' · '}저장 컷 {SCORE_CUT} · 티어 S {TIER_S} / A {TIER_A} / B {TIER_B} (10점 만점)
         </div>
       </div>
 
@@ -214,7 +215,7 @@ export default async function CalibrationPage() {
         {enough && (
           <div className="px-6 py-4 border-t border-zinc-700 text-sm">
             {recommendedCut !== null ? (
-              <>권장 <code className="text-sky-400">SCORE_CUT</code>: <span className="text-zinc-50 font-bold">{recommendedCut}점</span>
+              <>권장 <code className="text-sky-400">SCORE_CUT</code>: <span className="text-zinc-50 font-bold">{recommendedCut.toFixed(1)}</span>
                 <span className="text-zinc-400"> — 이 구간부터 소싱감 비율이 50% 이상입니다.</span></>
             ) : (
               <span className="text-zinc-400">아직 소싱감 비율 50%를 넘는 구간이 없습니다. 배점(§4)이나 키워드를 손봐야 할 수 있습니다.</span>

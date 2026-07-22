@@ -344,7 +344,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
                         )}
                         {typeof video.productScore === 'number' && video.productScore > 0 && (
                           <span className="px-1.5 h-6 inline-flex items-center rounded-md bg-black/70 text-white text-[11px] font-semibold backdrop-blur-sm">
-                            {video.productScore}점
+                            {video.productScore.toFixed(1)}<span className="opacity-60">/10</span>
                           </span>
                         )}
                         {typeof video.viewsPerDay === 'number' && video.viewsPerDay > 0 && (
