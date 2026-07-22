@@ -31,8 +31,12 @@ function envNum(name: string, fallback: number): number {
 
 // ===== 하드 필터 (전부 통과해야 스코어링 단계로) =====
 
-/** H1 최신성 — 위닝 프로덕트는 수명이 짧다. 45일이면 이미 포화 구간. */
-export const RECENCY_WINDOW_DAYS = envNum('RECENCY_WINDOW_DAYS', tuned(30, 60));
+/**
+ * H1 최신성 — 위닝 프로덕트는 수명이 짧다. 정식 30일.
+ * 캘리브레이션은 90일: 첫 수집에서 탈락 사유 1위가 too_old(76건)였고, tikwm 검색이
+ * 최신순으로 주지 않아 60일로는 표본이 안 모였다.
+ */
+export const RECENCY_WINDOW_DAYS = envNum('RECENCY_WINDOW_DAYS', tuned(30, 90));
 
 /** H2 조회 속도 — 절대 조회수 대신 이게 트렌드의 본질. viewCount ÷ 경과일수. */
 export const MIN_VIEWS_PER_DAY = envNum('MIN_VIEWS_PER_DAY', tuned(10_000, 2_000));
@@ -55,6 +59,14 @@ export const REJECT_LARGE_PRODUCTS = tuned(true, false);
 
 /** 빅브랜드·라이선스 IP 제품은 소싱 불가 — 정식 기준에서만 컷, Phase 0 은 플래그만. */
 export const REJECT_BIG_BRAND = tuned(true, false);
+
+/**
+ * Gemini 분석 실패(쿼터 429 등) 시 처리.
+ * 정식 기준: H5(제품 여부)를 검증 못 했으면 들이지 않는다.
+ * 캘리브레이션: NO_VISION 플래그만 달고 수집 — 그런 표본이 실제로 쓸모없는지도
+ * 운영자 라벨링으로 판단할 대상이다.
+ */
+export const REQUIRE_VISION = tuned(true, false);
 
 // ===== 스코어링 (100점 만점) =====
 
@@ -147,16 +159,25 @@ const SEASONAL_KEYWORDS: Record<number, string[]> = {
 
 /**
  * 이번 회차에 검색할 키워드 목록.
- * 로테이션 인덱스는 "연중 일수 × 하루 수집 횟수(4회)" 기준으로 돌린다 —
- * 하루 4번 수집이 서로 다른 카테고리를 훑도록.
+ *
+ * 정식 기준에서는 카테고리를 한 묶음씩 순환한다 — 로테이션 인덱스는
+ * "연중 일수 × 하루 수집 횟수(4회)" 기준이라 하루 4번이 서로 다른 카테고리를 훑는다.
+ *
+ * 캘리브레이션에서는 전 카테고리를 한 번에 돈다. 첫 실측에서 8.6분 예산 중 2분만
+ * 쓰고 끝났다(예산이 아니라 tikwm 공급이 병목) — 표본 확보가 우선이라 넓게 훑는다.
  */
 export function getKeywordsForRun(now: Date = new Date()): string[] {
+  const seasonal = SEASONAL_KEYWORDS[now.getMonth()] || [];
+
+  if (CALIBRATION_MODE) {
+    return [...CORE_KEYWORDS, ...CATEGORY_KEYWORD_GROUPS.flat(), ...seasonal];
+  }
+
   const dayOfYear = Math.floor(
     (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86_400_000,
   );
   const slot = dayOfYear * 4 + Math.floor(now.getUTCHours() / 6);
   const group = CATEGORY_KEYWORD_GROUPS[slot % CATEGORY_KEYWORD_GROUPS.length];
-  const seasonal = SEASONAL_KEYWORDS[now.getMonth()] || [];
   return [...CORE_KEYWORDS, ...group, ...seasonal];
 }
 

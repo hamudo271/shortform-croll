@@ -105,14 +105,18 @@ export async function searchHashtagReels(
     );
     if (!res.ok) {
       console.error(`IG hashtag "${keyword}": HTTP ${res.status}`);
-      return [];
+      // 로그로만 남기면 수집 응답과 GitHub Actions 알림에 "0건"만 보이고 원인이 안 보인다.
+      // 429(RapidAPI 무료 30회/월 소진)가 대표적 — 코드 문제로 오인하기 쉬워 표면화한다.
+      throw new Error(`HTTP ${res.status}`);
     }
     const data = await res.json();
     const items = data?.data?.items || data?.items || [];
     return items.map(mapItemToReel).filter((r: InstagramReel | null): r is InstagramReel => r !== null);
   } catch (err) {
     console.error(`IG hashtag "${keyword}" error:`, err);
-    return [];
+    // 호출부(collectReelsByHashtags)가 태그별로 잡아 errors[] 에 모은다 —
+    // 여기서 []로 삼키면 실패가 "결과 0건"과 구분되지 않는다.
+    throw err;
   }
 }
 

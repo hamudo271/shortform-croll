@@ -118,8 +118,11 @@ export async function analyzeProductThumbnail(
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
+    // flash-lite 를 쓰는 이유: 무료 티어 일일 한도가 flash 보다 크다. 수집 1회에
+    // 영상당 1콜씩 나가므로 flash 로는 하루 몇 회 만에 429 로 막혀 제품 필터가
+    // 통째로 무력화된다(그러면 밈/얼굴캠이 그대로 들어옴).
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: process.env.GEMINI_VISION_MODEL || 'gemini-2.5-flash-lite',
       generationConfig: { responseMimeType: 'application/json' },
     });
 

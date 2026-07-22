@@ -31,6 +31,7 @@ import {
   REJECT_MIXED_THUMBNAIL,
   REJECT_LARGE_PRODUCTS,
   REJECT_BIG_BRAND,
+  REQUIRE_VISION,
   SCORE_CUT,
   computeViewsPerDay,
 } from '@/lib/collect-config';
@@ -140,6 +141,10 @@ export async function evaluateCandidate(candidate: Candidate): Promise<GateResul
   if (geminiKey) {
     analysis = await analyzeProductThumbnail(geminiKey, candidate.thumbnailUrl);
   }
+
+  // 분석 실패(쿼터 429/이미지 fetch 실패) — H5 를 검증할 수 없는 상태.
+  // 정식 기준에서는 들이지 않고, 캘리브레이션에서는 NO_VISION 플래그를 달고 통과시킨다.
+  if (!analysis && REQUIRE_VISION) return { pass: false, reason: 'vision_unavailable' };
 
   const extraFlags: string[] = [];
   if (analysis) {

@@ -42,6 +42,11 @@ interface CollectResults {
   videosSkipped: number;
   /** 탈락 사유별 건수 — 캘리브레이션 때 "왜 안 걸리는지" 진단용 */
   skipReasons: Record<string, number>;
+  /**
+   * Gemini 분석 없이 저장된 건수. 0 이 아니면 쿼터(429)에 막혀 제품 필터가
+   * 실질적으로 꺼진 상태라는 뜻 — 수집 품질 저하의 1순위 신호다.
+   */
+  visionUnavailable: number;
   errors: string[];
   partial: boolean;
 }
@@ -55,6 +60,10 @@ interface CollectCtx {
 function noteSkip(ctx: CollectCtx, reason: string) {
   ctx.results.videosSkipped++;
   ctx.results.skipReasons[reason] = (ctx.results.skipReasons[reason] || 0) + 1;
+}
+
+function noteMetrics(ctx: CollectCtx, m: GateMetrics) {
+  if (m.flags.includes('NO_VISION')) ctx.results.visionUnavailable++;
 }
 
 /** 저장할 영상의 원본 필드 — 플랫폼별 응답을 이 형태로 정규화해서 넘긴다. */
@@ -172,6 +181,7 @@ async function processTikTokVideo(
     return false;
   }
   ctx.processedVideoIds.add(video.id);
+  noteMetrics(ctx, verdict.metrics);
 
   return saveVideo(
     {
@@ -328,6 +338,7 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
         continue;
       }
       ctx.processedVideoIds.add(reel.id);
+      noteMetrics(ctx, verdict.metrics);
 
       const saved = await saveVideo(
         {
@@ -373,6 +384,7 @@ export async function POST(request: NextRequest) {
     videosCollected: 0,
     videosSkipped: 0,
     skipReasons: {},
+    visionUnavailable: 0,
     errors: [],
     partial: false,
   };
