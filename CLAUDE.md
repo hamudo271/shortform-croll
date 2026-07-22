@@ -78,13 +78,14 @@ GitHub Actions cron → POST /api/collect (Bearer)
 |---|---|
 | tikwm.com (TikTok) | 무료·불안정. 레이트리밋 상태가 모듈 전역변수라 병렬에 취약 |
 | RapidAPI `instagram-scraper-20251` | **무료 30회/월**. 초과 시 429 → IG 0건. 캘리브레이션은 TikTok 중심으로 |
-| Gemini | 썸네일 분석. 영상당 1콜 — 여기에 콜을 더 추가하면 wall-clock budget 초과 |
+| Gemini | 썸네일 분석, 영상당 1콜. **무료 티어는 하루 20회**(실측) — 사실상 못 씀. 소진되면 서킷 브레이커가 30분간 비전을 끄고 `NO_VISION` 플래그로 수집 지속. 유료 전환 시 `GEMINI_MIN_INTERVAL_MS=0` |
 | Railway PostgreSQL | 재시작마다 `db push` (위 §2) |
 
 ## 7. 작업할 때 조심할 것
 
-- **`HARD_BUDGET_MS`(520s) < GitHub Actions `curl --max-time`(600s)** 순서를 깨지 말 것.
-  넘기면 curl 이 먼저 끊어 그 회차 수집분이 통째로 날아간다.
+- **수집 트리거는 반드시 Railway 원본 도메인(`*.up.railway.app`)으로 호출**한다.
+  커스텀 도메인(`smartrend.co.kr`)은 Cloudflare 를 거쳐 ~100초에서 524 로 끊긴다.
+  `HARD_BUDGET_MS`(280s)는 이 제약들보다 앞서 끝나도록 잡은 값 — 올릴 때 같이 확인할 것.
 - **수집 기준을 바꿀 땐 `docs/COLLECTION_CRITERIA_V2.md` 를 먼저 고치고 코드를 맞춘다.** 반대로 하면 문서가 죽는다.
 - `CALIBRATION_MODE` 는 기본 ON(Phase 0). 임계값이 확정되면 Railway 에 `CALIBRATION_MODE=false`.
   이 값 하나로 하드필터 문턱과 `SCORE_CUT` 이 동시에 바뀐다 — 개별 상수만 고치고 끝내지 말 것.

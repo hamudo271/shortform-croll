@@ -202,6 +202,7 @@ export async function evaluateCandidate(candidate: Candidate): Promise<GateResul
     hasPurchaseConfirmation: signals.hasPurchaseConfirmation,
     linkQuestions: signals.linkQuestions,
     commentsAvailable,
+    commentRate: candidate.viewCount > 0 ? candidate.commentCount / candidate.viewCount : 0,
     appeal: analysis?.appeal || 'none',
     isCompact: analysis?.size === 'small',
     priceBand: analysis?.priceBand || 'unknown',

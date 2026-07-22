@@ -47,8 +47,10 @@ export interface ScoreInput {
   hasPurchaseConfirmation: boolean;
   /** A: "link?" / "where to buy" 류 직접 질문 건수 */
   linkQuestions: number;
-  /** A: 댓글 샘플을 실제로 받아왔는지 (IG는 API에 댓글 조회가 없어 false) */
+  /** A: 댓글 샘플을 실제로 받아왔는지 (IG는 댓글 API 없음, tikwm 은 빈 배열 반환 중) */
   commentsAvailable: boolean;
+  /** A 대체: commentCount ÷ viewCount. 댓글 본문을 못 볼 때의 축소 측정치 */
+  commentRate: number;
   /** C: 문제해결형/Wow-factor형 여부 */
   appeal: ProductAppeal;
   /** C: 소형·경량 (소량 수입 가능해 보이는지) */
@@ -86,6 +88,20 @@ const MAX_DEMAND = 35;
 const MAX_VELOCITY = 25;
 const MAX_PRODUCT = 25;
 const MAX_MARKET = 15;
+
+/**
+ * 댓글 본문을 못 읽을 때의 대체 측정 — 댓글 비율(commentCount÷viewCount).
+ * "무슨 말을 하는지"는 모르지만 "말이 많이 붙었는지"는 알 수 있다.
+ * 본문 분석(35점)보다 훨씬 약한 신호라 만점을 12점으로 낮춰 잡는다.
+ */
+const MAX_DEMAND_PROXY = 12;
+
+/**
+ * 측정된 항목의 합이 이 미만이면 티어를 붙이지 않는다.
+ * 속도와 시장검증(40점)만 보고 "S급"이라고 부르면 그 라벨이 거짓말이 된다 —
+ * 제품을 본 적도 없이 위닝 프로덕트라고 말할 수는 없다.
+ */
+const MIN_TIER_COVERAGE = 60;
 
 /** A. 수요 신호 — 35점 */
 function scoreDemand(i: ScoreInput): number {
@@ -136,13 +152,15 @@ function scoreMarket(i: ScoreInput): number {
  * "IG 점수가 낮은 게 실제 품질 탓인지 측정 공백 탓인지" 구분할 수 있게 한다.
  */
 export function scoreCandidate(input: ScoreInput): ScoreResult {
-  const demand = scoreDemand(input);
   const velocity = scoreVelocity(input);
   const product = scoreProduct(input);
   const market = scoreMarket(input);
 
-  let measurableMax = MAX_VELOCITY + MAX_MARKET;
-  if (input.commentsAvailable) measurableMax += MAX_DEMAND;
+  // 댓글 본문을 못 읽으면 댓글 비율로 축소 측정 (만점도 12점으로 낮춤)
+  const demand = input.commentsAvailable ? scoreDemand(input) : scoreDemandProxy(input.commentRate);
+  const demandMax = input.commentsAvailable ? MAX_DEMAND : MAX_DEMAND_PROXY;
+
+  let measurableMax = MAX_VELOCITY + MAX_MARKET + demandMax;
   if (input.visionAvailable) measurableMax += MAX_PRODUCT;
 
   const raw = demand + velocity + product + market;
@@ -153,12 +171,17 @@ export function scoreCandidate(input: ScoreInput): ScoreResult {
   if (!input.visionAvailable) flags.push(FLAG_NO_VISION);
   if (input.duplicateAccounts >= SATURATION_ACCOUNT_COUNT) flags.push(FLAG_SATURATED);
 
-  return {
-    total,
-    breakdown: { demand, velocity, product, market, measurableMax },
-    tier: toTier(total),
-    flags,
-  };
+  // 측정 공백이 크면 점수는 남기되 티어는 붙이지 않는다
+  const tier = measurableMax >= MIN_TIER_COVERAGE ? toTier(total) : null;
+
+  return { total, breakdown: { demand, velocity, product, market, measurableMax }, tier, flags };
+}
+
+function scoreDemandProxy(commentRate: number): number {
+  if (commentRate >= 0.01) return 12;
+  if (commentRate >= 0.005) return 7;
+  if (commentRate >= 0.002) return 3;
+  return 0;
 }
 
 export function toTier(total: number): Tier {
