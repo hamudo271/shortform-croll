@@ -110,10 +110,10 @@ export const CALIBRATION_TARGET_COUNT = 300;
  * 검색은 싸고 판정은 비싸므로(영상당 Gemini 1콜, 무료 티어 분당 10회)
  * 수집에 시간을 다 쓰면 정작 판정을 못 한다.
  */
-export const TK_FETCH_DEADLINE_MS = envNum('TK_FETCH_DEADLINE_MS', 60_000);
+export const TK_FETCH_DEADLINE_MS = envNum('TK_FETCH_DEADLINE_MS', 70_000);
 
 /** TikTok "판정" 마감 — 이후는 Instagram 슬롯. */
-export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 220_000);
+export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 245_000);
 
 /**
  * 전체 하드캡. 우리를 끊을 수 있는 주체 중 가장 빠른 것보다 먼저 끝나야 한다:
@@ -125,8 +125,12 @@ export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 220_000);
  */
 export const HARD_BUDGET_MS = envNum('HARD_BUDGET_MS', 280_000);
 
-/** 키워드 검색 간 간격 — tikwm 레이트리밋 완화. */
-export const KEYWORD_DELAY_MS = 300;
+/**
+ * 키워드 검색 간 추가 간격.
+ * tikwm 레이트리밋(1 req/sec)은 이제 `tikwmJson` 공용 게이트가 처리하므로
+ * 여기서 또 기다릴 필요가 없다 — 이중 대기는 예산만 태운다.
+ */
+export const KEYWORD_DELAY_MS = 0;
 
 // ===== 검색 키워드 (구매자 관점) =====
 

@@ -50,6 +50,12 @@ interface CollectResults {
    * 실질적으로 꺼진 상태라는 뜻 — 수집 품질 저하의 1순위 신호다.
    */
   visionUnavailable: number;
+  /**
+   * 후보로 잡혔지만 시간이 없어 판정조차 못 한 건수.
+   * 이게 크면 "기준이 빡세서" 가 아니라 "예산이 모자라서" 덜 모인 것 —
+   * 두 원인은 대응이 정반대라 반드시 구분해야 한다.
+   */
+  candidatesNotEvaluated: number;
   errors: string[];
   partial: boolean;
 }
@@ -260,14 +266,17 @@ async function collectTikTok(ctx: CollectCtx): Promise<number> {
   console.log(`  TikTok pool: ${pool.length} candidates (velocity-sorted)`);
 
   let collected = 0;
+  let evaluated = 0;
   for (const video of pool) {
     if (ctx.elapsedMs() > TK_DEADLINE_MS) {
-      console.log('⏱️ TikTok 판정 budget 초과 — 조기 종료');
+      console.log(`⏱️ TikTok 판정 budget 초과 — ${pool.length - evaluated}건 미판정`);
       ctx.results.partial = true;
       break;
     }
+    evaluated++;
     if (await processTikTokVideo(ctx, video)) collected++;
   }
+  ctx.results.candidatesNotEvaluated += pool.length - evaluated;
   return collected;
 }
 
@@ -401,6 +410,7 @@ export async function POST(request: NextRequest) {
     videosSkipped: 0,
     skipReasons: {},
     visionUnavailable: 0,
+    candidatesNotEvaluated: 0,
     errors: [],
     partial: false,
   };

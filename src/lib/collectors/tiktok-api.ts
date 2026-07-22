@@ -4,6 +4,8 @@
  * 상품/구매 관련 콘텐츠만 수집
  */
 
+import { tikwmJson } from '@/lib/tikwm';
+
 export interface TikTokVideo {
   id: string;
   title: string;
@@ -20,7 +22,7 @@ export interface TikTokVideo {
   createTime?: number;
 }
 
-const TIKWM_API = 'https://www.tikwm.com/api';
+// tikwm 호출은 전부 tikwmJson 을 거친다 — 무료 한도(1 req/sec) 공용 게이트
 
 /** tikwm 검색/피드 응답의 원본 비디오 항목(필요 필드만, 전부 optional). */
 interface RawTikwmVideo {
@@ -49,13 +51,16 @@ export async function fetchTikTokUser(uniqueId: string): Promise<{
   authorName: string;
 } | null> {
   try {
-    const res = await fetch(`${TIKWM_API}/user/info`, {
+    const data = await tikwmJson<{
+      data?: {
+        user?: { bioLink?: { link?: string }; signature?: string; nickname?: string; uniqueId?: string };
+        stats?: { followerCount?: number; videoCount?: number };
+      };
+    }>('/user/info', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ unique_id: uniqueId }),
     });
-    if (!res.ok) return null;
-    const data = await res.json();
     const user = data?.data?.user;
     if (!user) return null;
     const stats = data?.data?.stats || {};
@@ -78,13 +83,11 @@ export async function fetchTikTokUser(uniqueId: string): Promise<{
  */
 export async function fetchTikTokComments(videoUrl: string, count = 20): Promise<string[]> {
   try {
-    const res = await fetch(`${TIKWM_API}/comment/list`, {
+    const data = await tikwmJson<{ data?: { comments?: { text?: string }[] } }>('/comment/list', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ url: videoUrl, count: String(count), cursor: '0' }),
     });
-    if (!res.ok) return [];
-    const data = await res.json();
     const comments = data?.data?.comments || [];
     return comments.map((c: { text?: string }) => c?.text || '').filter(Boolean);
   } catch (err) {
@@ -233,7 +236,7 @@ export async function searchTikTokVideos(
   const { count = 30 } = options;
 
   try {
-    const res = await fetch(`${TIKWM_API}/feed/search`, {
+    const data = await tikwmJson<{ data?: { videos?: RawTikwmVideo[] } }>('/feed/search', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -242,10 +245,6 @@ export async function searchTikTokVideos(
         cursor: '0',
       }),
     });
-
-    if (!res.ok) return [];
-
-    const data = await res.json();
     const videos = data?.data?.videos || [];
 
     return videos
@@ -285,7 +284,7 @@ export async function getTikTokTrending(
   const { count = 30 } = options;
 
   try {
-    const res = await fetch(`${TIKWM_API}/feed/list`, {
+    const data = await tikwmJson<{ data?: RawTikwmVideo[] }>('/feed/list', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -293,10 +292,6 @@ export async function getTikTokTrending(
         count: String(count),
       }),
     });
-
-    if (!res.ok) return [];
-
-    const data = await res.json();
     const videos = data?.data || [];
 
     return videos
