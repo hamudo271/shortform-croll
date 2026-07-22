@@ -32,7 +32,18 @@ interface Labeled {
   priceBand: string | null;
   platform: string;
   flags: string[];
+  scoreBreakdown: unknown;
 }
+
+/**
+ * 측정된 배점 합. 비전/댓글이 막힌 회차에 저장된 레코드는 이 값이 작고,
+ * 그런 점수를 정상 점수와 같은 표에 섞으면 "몇 점부터 소싱감인가" 가 왜곡된다.
+ */
+function coverageOf(r: Labeled): number {
+  const b = r.scoreBreakdown as { measurableMax?: number } | null;
+  return typeof b?.measurableMax === 'number' ? b.measurableMax : 0;
+}
+const MIN_COMPARABLE_COVERAGE = 60;
 
 function median(values: number[]): number {
   if (values.length === 0) return 0;
@@ -68,6 +79,7 @@ export default async function CalibrationPage() {
       select: {
         userVerdict: true, productScore: true, viewsPerDay: true, purchaseIntentScore: true,
         viewCount: true, likeCount: true, category: true, priceBand: true, platform: true, flags: true,
+        scoreBreakdown: true,
       },
       take: 3000,
     }),
@@ -78,6 +90,10 @@ export default async function CalibrationPage() {
   const winners = rows.filter((r) => r.userVerdict === 'WINNER');
   const maybes = rows.filter((r) => r.userVerdict === 'MAYBE');
   const rejects = rows.filter((r) => r.userVerdict === 'REJECT');
+
+  // 점수 비교는 측정 조건이 같은 것끼리만 — 그래야 점수 컷을 옮길 근거가 된다
+  const comparable = rows.filter((r) => coverageOf(r) >= MIN_COMPARABLE_COVERAGE);
+  const excluded = rows.length - comparable.length;
 
   const likeRate = (r: Labeled) =>
     Number(r.viewCount) > 0 ? Math.round((Number(r.likeCount) / Number(r.viewCount)) * 1000) / 10 : 0;
@@ -91,7 +107,7 @@ export default async function CalibrationPage() {
   ];
 
   const bands = SCORE_BANDS.map((b) => {
-    const inBand = rows.filter((r) => r.productScore >= b.min && r.productScore < b.max);
+    const inBand = comparable.filter((r) => r.productScore >= b.min && r.productScore < b.max);
     return { ...b, count: inBand.length, win: inBand.filter((r) => r.userVerdict === 'WINNER').length, rate: winRate(inBand) };
   });
 
@@ -162,6 +178,10 @@ export default async function CalibrationPage() {
           <h2 className="text-sm font-bold text-zinc-50">점수 구간별 소싱감 비율</h2>
           <p className="text-xs text-zinc-400 mt-1">
             비율 = 💰 ÷ (💰 + ❌). 🤔 는 판단 보류라 제외했습니다.
+            {excluded > 0 && (
+              <> · 측정 공백이 큰 <span className="text-amber-400 font-semibold">{excluded}건</span>은
+                점수 비교에서 제외 (비전/댓글이 막힌 회차에 저장돼 같은 잣대로 못 봅니다)</>
+            )}
           </p>
         </div>
         <table className="w-full text-sm">

@@ -161,6 +161,15 @@ export const CATEGORY_KEYWORD_GROUPS: string[][] = [
   ['petgadgets', 'petmusthaves'],
   ['beautygadgets', 'hairtools'],
   ['homefinds', 'roomdecor', 'ledlights'],
+  // 아래는 실측 후 증설분 — 검색 80초/판정 245초 예산에 여유가 크게 남아
+  // (회차당 80초 소요, 미판정 0건) 표본을 넓히는 데 썼다.
+  ['desksetup', 'officegadgets', 'workfromhomeessentials'],
+  ['travelessentials', 'travelgadgets', 'luggagehacks'],
+  ['babyproducts', 'momhacks', 'kidsgadgets'],
+  ['fitnessgear', 'homegym', 'workoutessentials'],
+  ['phoneaccessories', 'techfinds', 'gadgetsdaily'],
+  ['storagehacks', 'closetorganization', 'spacesaving'],
+  ['giftsforhim', 'giftsforher', 'stockingstuffers'],
 ];
 
 /** 계절 슬롯 — 분기별 1~2개 교체. 월(0-11) 기준. */
