@@ -5,6 +5,7 @@ import {
   getTikTokTrending,
   fetchTikTokUser,
   fetchTikTokComments,
+  type TikTokVideo,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
 import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagram-api';
@@ -19,7 +20,9 @@ import {
   TIKTOK_SEARCH_COUNT,
   TIKTOK_TRENDING_COUNT,
   TK_DEADLINE_MS,
+  TK_FETCH_DEADLINE_MS,
   computeViralScore,
+  computeViewsPerDay,
   getKeywordsForRun,
 } from '@/lib/collect-config';
 import { Platform } from '@prisma/client';
@@ -143,7 +146,7 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
 }
 
 /** TikTok 응답 → 게이트 후보 + 저장 입력. 두 루프가 공유. */
-function toTikTokCandidate(video: Awaited<ReturnType<typeof getTikTokTrending>>[number]) {
+function toTikTokCandidate(video: TikTokVideo) {
   const publishedAt = video.createTime ? new Date(video.createTime * 1000) : null;
   const candidate: Candidate = {
     platform: Platform.TIKTOK,
@@ -170,7 +173,7 @@ function toTikTokCandidate(video: Awaited<ReturnType<typeof getTikTokTrending>>[
 
 async function processTikTokVideo(
   ctx: CollectCtx,
-  video: Awaited<ReturnType<typeof getTikTokTrending>>[number],
+  video: TikTokVideo,
 ): Promise<boolean> {
   if (ctx.processedVideoIds.has(video.id)) return false;
   const { candidate, publishedAt } = toTikTokCandidate(video);
@@ -203,54 +206,67 @@ async function processTikTokVideo(
   );
 }
 
-async function collectTikTokTrending(ctx: CollectCtx): Promise<number> {
-  let collected = 0;
-  try {
-    const trending = await getTikTokTrending({ count: TIKTOK_TRENDING_COUNT });
-    console.log(`  Found ${trending.length} trending TikTok videos`);
-    ctx.results.videosSearched += trending.length;
+/**
+ * TikTok 수집 — 먼저 싸게 다 긁어 모으고(트렌딩 + 키워드), 급상승 순으로 정렬한 뒤
+ * 판정한다.
+ *
+ * 순서가 중요한 이유: 판정 1건당 Gemini 콜이 1회 나가는데 무료 티어가 분당 10회라
+ * 사실상 회차당 수십 건이 상한이다. 즉 비전 콜은 희소 자원이고, API 가 준 순서대로
+ * 쓰면 시시한 영상에 다 써버린다. 일 조회수 높은 후보부터 쓰는 게 맞다.
+ */
+async function collectTikTok(ctx: CollectCtx): Promise<number> {
+  const pool: TikTokVideo[] = [];
+  const seen = new Set<string>();
 
-    for (const video of trending) {
-      if (ctx.elapsedMs() > TK_DEADLINE_MS) {
-        console.log('⏱️ TikTok 트렌딩 budget 초과 — 조기 종료');
-        ctx.results.partial = true;
-        break;
-      }
-      if (await processTikTokVideo(ctx, video)) collected++;
+  const addAll = (videos: TikTokVideo[]) => {
+    ctx.results.videosSearched += videos.length;
+    for (const v of videos) {
+      if (seen.has(v.id)) continue;
+      seen.add(v.id);
+      pool.push(v);
     }
+  };
+
+  try {
+    addAll(await getTikTokTrending({ count: TIKTOK_TRENDING_COUNT }));
   } catch (err) {
     console.error('TikTok trending error:', err);
     ctx.results.errors.push('TikTok trending failed');
   }
-  return collected;
-}
 
-async function collectTikTokKeywords(ctx: CollectCtx): Promise<number> {
-  let collected = 0;
   const keywords = getKeywordsForRun();
-  console.log(`  Keywords this run: ${keywords.join(', ')}`);
-
+  console.log(`  Keywords this run (${keywords.length}): ${keywords.join(', ')}`);
   for (const kw of keywords) {
-    if (ctx.elapsedMs() > TK_DEADLINE_MS) {
-      console.log('⏱️ TikTok 키워드 budget 초과 — 남은 키워드 스킵');
+    // 수집 단계에도 마감을 둔다 — 여기서 다 써버리면 판정할 시간이 없다
+    if (ctx.elapsedMs() > TK_FETCH_DEADLINE_MS) {
+      console.log('⏱️ TikTok 검색 budget 초과 — 남은 키워드 스킵');
       ctx.results.partial = true;
       break;
     }
     try {
-      const videos = await searchTikTokVideos(kw, { count: TIKTOK_SEARCH_COUNT });
-      ctx.results.videosSearched += videos.length;
-
-      for (const video of videos) {
-        if (ctx.elapsedMs() > TK_DEADLINE_MS) {
-          ctx.results.partial = true;
-          break;
-        }
-        if (await processTikTokVideo(ctx, video)) collected++;
-      }
+      addAll(await searchTikTokVideos(kw, { count: TIKTOK_SEARCH_COUNT }));
       await delay(KEYWORD_DELAY_MS);
     } catch (err) {
       console.error(`TikTok search error for "${kw}":`, err);
     }
+  }
+
+  // 급상승 순 — 비전 콜을 좋은 후보에 먼저 쓴다
+  pool.sort(
+    (a, b) =>
+      computeViewsPerDay(b.viewCount, b.createTime ? new Date(b.createTime * 1000) : null) -
+      computeViewsPerDay(a.viewCount, a.createTime ? new Date(a.createTime * 1000) : null),
+  );
+  console.log(`  TikTok pool: ${pool.length} candidates (velocity-sorted)`);
+
+  let collected = 0;
+  for (const video of pool) {
+    if (ctx.elapsedMs() > TK_DEADLINE_MS) {
+      console.log('⏱️ TikTok 판정 budget 초과 — 조기 종료');
+      ctx.results.partial = true;
+      break;
+    }
+    if (await processTikTokVideo(ctx, video)) collected++;
   }
   return collected;
 }
@@ -404,8 +420,7 @@ export async function POST(request: NextRequest) {
     console.log(`\n🎯 Collect start (calibration=${CALIBRATION_MODE})`);
 
     console.log('\n🎵 Collecting TikTok videos...');
-    let tiktokCollected = await collectTikTokTrending(ctx);
-    tiktokCollected += await collectTikTokKeywords(ctx);
+    const tiktokCollected = await collectTikTok(ctx);
     console.log(`🎵 TikTok: collected ${tiktokCollected} videos`);
 
     const instagramCollected = await collectInstagram(ctx);

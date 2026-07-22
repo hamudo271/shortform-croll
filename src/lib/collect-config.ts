@@ -105,8 +105,15 @@ export const CALIBRATION_TARGET_COUNT = 300;
 
 // ===== Wall-clock budget =====
 
-/** TikTok 단계 마감 — 이후는 Instagram 슬롯. */
-export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 300_000);
+/**
+ * TikTok "검색" 마감 — 후보를 긁어모으는 단계는 여기서 끊는다.
+ * 검색은 싸고 판정은 비싸므로(영상당 Gemini 1콜, 무료 티어 분당 10회)
+ * 수집에 시간을 다 쓰면 정작 판정을 못 한다.
+ */
+export const TK_FETCH_DEADLINE_MS = envNum('TK_FETCH_DEADLINE_MS', 90_000);
+
+/** TikTok "판정" 마감 — 이후는 Instagram 슬롯. */
+export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 400_000);
 
 /**
  * 전체 하드캡. GitHub Actions 의 `curl --max-time 600` 보다 먼저 끝나야 한다.

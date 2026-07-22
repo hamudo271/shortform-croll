@@ -99,6 +99,31 @@ Definitions:
 
 JSON only, no markdown fence:`;
 
+/**
+ * Gemini 무료 티어는 **분당 10회** 제한이다(실측: quotaId
+ * GenerateRequestsPerMinutePerProjectPerModel-FreeTier, quotaValue 10).
+ * 수집 루프가 백투백으로 쏘면 대부분 429 로 죽고, 그러면 제품 필터(H5)가 통째로
+ * 꺼진 채 밈/얼굴캠이 그대로 들어온다 — 실제로 43건 전부 NO_VISION 이었다.
+ *
+ * 그래서 호출 간격을 강제로 벌린다. 유료 키로 전환하면
+ * GEMINI_MIN_INTERVAL_MS=0 으로 꺼서 수집량을 크게 늘릴 수 있다.
+ * (단일 프로세스 기준 — 인스턴스가 여러 개면 각자 세는 점은 한계)
+ */
+const MIN_INTERVAL_MS = Number(process.env.GEMINI_MIN_INTERVAL_MS ?? 7000);
+let lastCallAt = 0;
+
+async function throttle(): Promise<void> {
+  const wait = MIN_INTERVAL_MS - (Date.now() - lastCallAt);
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastCallAt = Date.now();
+}
+
+/** 429 응답에 담겨 오는 권장 대기 시간(초). 없으면 null. */
+function parseRetryDelaySec(err: unknown): number | null {
+  const m = /"retryDelay"\s*:\s*"(\d+)s"/.exec(String(err));
+  return m ? Number(m[1]) : null;
+}
+
 const VALID_APPEAL: ProductAppeal[] = ['problem_solver', 'wow', 'none'];
 const VALID_SIZE = ['small', 'medium', 'large'] as const;
 const VALID_PRICE: PriceBand[] = ['under_10', '10_60', 'over_60', 'unknown'];
@@ -118,15 +143,29 @@ export async function analyzeProductThumbnail(
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    // flash-lite 를 쓰는 이유: 무료 티어 일일 한도가 flash 보다 크다. 수집 1회에
-    // 영상당 1콜씩 나가므로 flash 로는 하루 몇 회 만에 429 로 막혀 제품 필터가
-    // 통째로 무력화된다(그러면 밈/얼굴캠이 그대로 들어옴).
+    // flash 를 쓴다 — flash-lite 는 무료 일일 한도가 20회뿐이라(실측) 쓸 수 없다.
     const model = genAI.getGenerativeModel({
-      model: process.env.GEMINI_VISION_MODEL || 'gemini-2.5-flash-lite',
+      model: process.env.GEMINI_VISION_MODEL || 'gemini-2.5-flash',
       generationConfig: { responseMimeType: 'application/json' },
     });
 
-    const result = await model.generateContent([{ inlineData: image }, { text: ANALYSIS_PROMPT }]);
+    const call = async () => {
+      await throttle();
+      return model.generateContent([{ inlineData: image }, { text: ANALYSIS_PROMPT }]);
+    };
+
+    let result;
+    try {
+      result = await call();
+    } catch (err) {
+      // 분당 한도에 걸린 경우만 한 번 더 시도한다. 대기가 길면(일일 한도 소진 등)
+      // 수집 budget 을 태우느니 포기하고 NO_VISION 으로 넘긴다.
+      const retrySec = parseRetryDelaySec(err);
+      if (retrySec === null || retrySec > 15) throw err;
+      await new Promise((r) => setTimeout(r, (retrySec + 1) * 1000));
+      result = await call();
+    }
+
     // responseMimeType 을 줘도 모델이 가끔 ```json 펜스를 붙인다
     const text = result.response.text().trim().replace(/^```(?:json)?|```$/g, '').trim();
     const raw = JSON.parse(text) as Record<string, unknown>;
