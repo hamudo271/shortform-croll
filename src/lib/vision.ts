@@ -124,6 +124,22 @@ function parseRetryDelaySec(err: unknown): number | null {
   return m ? Number(m[1]) : null;
 }
 
+/**
+ * 서킷 브레이커 — 무료 티어 **일일** 한도(실측: gemini-2.5-flash 20회/일)에 걸리면
+ * 그 뒤 호출은 회차 내내 전부 실패한다. 그런데도 계속 시도하면 영상마다
+ * 7초 대기 + 실패 콜을 반복해 수집이 기어간다(실측: 225초 동안 38건만 판정).
+ *
+ * 한 번 막히면 즉시 포기하고 빠르게 지나간다 — 비전 없이라도 표본은 모아야 하고,
+ * 빠진 건 NO_VISION 플래그로 남아 나중에 구분된다.
+ * 근본 해결은 Gemini 유료 전환(월 몇 달러 수준)이다.
+ */
+const CIRCUIT_COOLDOWN_MS = Number(process.env.GEMINI_CIRCUIT_COOLDOWN_MS ?? 30 * 60_000);
+let circuitOpenUntil = 0;
+
+function isDailyQuotaError(err: unknown): boolean {
+  return /PerDayPerProject|GenerateRequestsPerDay/.test(String(err));
+}
+
 const VALID_APPEAL: ProductAppeal[] = ['problem_solver', 'wow', 'none'];
 const VALID_SIZE = ['small', 'medium', 'large'] as const;
 const VALID_PRICE: PriceBand[] = ['under_10', '10_60', 'over_60', 'unknown'];
@@ -137,6 +153,8 @@ export async function analyzeProductThumbnail(
   thumbnailUrl: string,
 ): Promise<ProductAnalysis | null> {
   if (!apiKey || !thumbnailUrl) return null;
+  // 일일 한도에 막힌 상태면 이미지 fetch/스로틀까지 통째로 건너뛴다
+  if (Date.now() < circuitOpenUntil) return null;
 
   const image = await fetchImageAsBase64(thumbnailUrl);
   if (!image) return null;
@@ -161,7 +179,7 @@ export async function analyzeProductThumbnail(
       // 분당 한도에 걸린 경우만 한 번 더 시도한다. 대기가 길면(일일 한도 소진 등)
       // 수집 budget 을 태우느니 포기하고 NO_VISION 으로 넘긴다.
       const retrySec = parseRetryDelaySec(err);
-      if (retrySec === null || retrySec > 15) throw err;
+      if (isDailyQuotaError(err) || retrySec === null || retrySec > 15) throw err;
       await new Promise((r) => setTimeout(r, (retrySec + 1) * 1000));
       result = await call();
     }
@@ -201,7 +219,15 @@ export async function analyzeProductThumbnail(
       isRegulated: raw.isRegulated === true,
     };
   } catch (err) {
-    console.error('Gemini analyzeProductThumbnail error:', err);
+    if (isDailyQuotaError(err)) {
+      circuitOpenUntil = Date.now() + CIRCUIT_COOLDOWN_MS;
+      console.error(
+        '⚠️ Gemini 일일 무료 한도(20회/일) 소진 — 이후 비전 분석 중단. ' +
+          '수집은 NO_VISION 플래그로 계속됩니다. 해결하려면 Gemini API 유료 전환 필요.',
+      );
+    } else {
+      console.error('Gemini analyzeProductThumbnail error:', err);
+    }
     return null;
   }
 }
