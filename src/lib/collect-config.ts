@@ -110,16 +110,20 @@ export const CALIBRATION_TARGET_COUNT = 300;
  * 검색은 싸고 판정은 비싸므로(영상당 Gemini 1콜, 무료 티어 분당 10회)
  * 수집에 시간을 다 쓰면 정작 판정을 못 한다.
  */
-export const TK_FETCH_DEADLINE_MS = envNum('TK_FETCH_DEADLINE_MS', 90_000);
+export const TK_FETCH_DEADLINE_MS = envNum('TK_FETCH_DEADLINE_MS', 60_000);
 
 /** TikTok "판정" 마감 — 이후는 Instagram 슬롯. */
-export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 400_000);
+export const TK_DEADLINE_MS = envNum('TK_DEADLINE_MS', 220_000);
 
 /**
- * 전체 하드캡. GitHub Actions 의 `curl --max-time 600` 보다 먼저 끝나야 한다.
- * 이 값을 600s 이상으로 올리면 curl 이 먼저 끊어 수집분이 통째로 날아간다.
+ * 전체 하드캡. 우리를 끊을 수 있는 주체 중 가장 빠른 것보다 먼저 끝나야 한다:
+ *   - Cloudflare(커스텀 도메인 smartrend.co.kr) ~100s → 524. 그래서 수집 트리거는
+ *     반드시 Railway 원본 도메인(*.up.railway.app)으로 호출한다.
+ *   - GitHub Actions 의 `curl --max-time 600`
+ * Gemini 호출 간격 제어(7s/건)가 들어간 뒤로 실제로 길게 도는 경로가 생겨서
+ * 520s → 280s 로 낮췄다. 여유를 두고 프록시 한계 아래를 유지한다.
  */
-export const HARD_BUDGET_MS = envNum('HARD_BUDGET_MS', 520_000);
+export const HARD_BUDGET_MS = envNum('HARD_BUDGET_MS', 280_000);
 
 /** 키워드 검색 간 간격 — tikwm 레이트리밋 완화. */
 export const KEYWORD_DELAY_MS = 300;
