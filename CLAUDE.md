@@ -30,7 +30,7 @@ docs/COLLECTION_CRITERIA_V2.md   ← 수집 기준 원문. 코드보다 이 문�
 |---|---|
 | `collect-config.ts` | **수집 기준 v2 파라미터 전부.** 임계값·키워드·budget·캘리브레이션 토글 |
 | `collect-gate.ts` | 후보 1건 판정 — 하드필터 → 비전 → 댓글 → 스코어링. 세 수집 루프가 공유 |
-| `scoring.ts` | 100점 배점 모델(수요35/속도25/제품성25/시장15) → S/A/B 티어 + 플래그 |
+| `scoring.ts` | 배점 모델(수요35/속도25/제품성25/시장15, 내부 100점) → **10점 만점 환산** + S/A/B 티어 + 플래그. 측정 커버리지 60 미만이면 티어 미부여 |
 | `vision.ts` | Gemini 썸네일 분석. `analyzeProductThumbnail()` 이 제품여부·제품명·가격대·브랜드를 **1콜로** 반환 |
 | `comments.ts` | 댓글 구매 신호 추출(`analyzeComments`) + DPM 계산 |
 | `collectors/` | 외부 수집기. `tiktok-api`(tikwm), `instagram-api`(RapidAPI), `instagram-public`(fallback) |
