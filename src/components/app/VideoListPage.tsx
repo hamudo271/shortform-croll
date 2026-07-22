@@ -27,7 +27,34 @@ interface Video {
   tags: string[];
   collectedAt: string;
   hidden?: boolean; // 관리자 응답에만 의미 있음 (일반 유저에겐 숨김 영상 자체가 안 옴)
+  // v2 스코어링 (docs/COLLECTION_CRITERIA_V2.md) — 관리자 화면에서만 노출
+  productScore?: number;
+  tier?: string | null;
+  viewsPerDay?: number;
+  flags?: string[];
+  userVerdict?: string | null;
 }
+
+/** Phase 0 라벨 — 운영자가 카드에서 바로 찍는 평가값. */
+const VERDICT_BUTTONS = [
+  { value: 'WINNER', label: '💰 소싱감', on: 'bg-emerald-500 text-white' },
+  { value: 'MAYBE', label: '🤔 애매', on: 'bg-amber-500 text-white' },
+  { value: 'REJECT', label: '❌ 탈락', on: 'bg-rose-600 text-white' },
+] as const;
+
+const VERDICT_FILTERS = [
+  { value: '', label: '전체' },
+  { value: 'UNRATED', label: '평가 대기' },
+  { value: 'WINNER', label: '💰' },
+  { value: 'MAYBE', label: '🤔' },
+  { value: 'REJECT', label: '❌' },
+] as const;
+
+const TIER_STYLE: Record<string, string> = {
+  S: 'bg-gradient-to-r from-amber-400 to-orange-500 text-white',
+  A: 'bg-sky-500 text-white',
+  B: 'bg-zinc-600 text-zinc-100',
+};
 
 interface Props {
   /** Restrict to a single platform; omit for all platforms. */
@@ -61,6 +88,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
   const [offset, setOffset] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [verdictFilter, setVerdictFilter] = useState('');
   const gridRef = useRef<HTMLDivElement>(null);
   const LIMIT = 24;
 
@@ -86,6 +114,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
       if (filters.search) params.append('search', filters.search);
       if (filters.days) params.append('days', filters.days.toString());
       if (filters.sortBy) params.append('sortBy', filters.sortBy);
+      if (verdictFilter) params.append('verdict', verdictFilter);
       params.set('limit', String(LIMIT));
       params.set('offset', String(currentOffset));
       const response = await fetch(`/api/videos?${params.toString()}`);
@@ -101,7 +130,7 @@ export default function VideoListPage({ platform, category, initialFilters, show
       if (reset) setLoading(false);
       setLoadingMore(false);
     }
-  }, [filters, platform, category]);
+  }, [filters, platform, category, verdictFilter]);
 
   useEffect(() => { fetchVideos(0, true); }, [fetchVideos]);
 
@@ -159,6 +188,25 @@ export default function VideoListPage({ platform, category, initialFilters, show
     setTotal(t => Math.max(0, t - 1));
   };
 
+  // ===== Phase 0 캘리브레이션: 운영자 라벨링 =====
+  // 같은 버튼을 다시 누르면 평가 취소 — 잘못 찍은 라벨이 학습 데이터를 오염시키지 않게.
+  const setVerdict = async (video: Video, verdict: string) => {
+    const next = video.userVerdict === verdict ? null : verdict;
+    setVideos(prev => prev.map(v => (v.id === video.id ? { ...v, userVerdict: next } : v)));
+    const res = await fetch(`/api/admin/videos/${video.id}/verdict`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ verdict: next }),
+    });
+    if (!res.ok) {
+      // 실패 시 원래 값으로 되돌림 (낙관적 업데이트 롤백)
+      setVideos(prev => prev.map(v => (v.id === video.id ? { ...v, userVerdict: video.userVerdict } : v)));
+      const d = await res.json().catch(() => ({}));
+      setError(d.error || '평가 저장에 실패했습니다');
+    }
+  };
+
+  const ratedCount = videos.filter(v => v.userVerdict).length;
+
   return (
     <>
       <div className="space-y-6" ref={gridRef}>
@@ -188,6 +236,32 @@ export default function VideoListPage({ platform, category, initialFilters, show
           <div className="bg-blue-50 border border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/30 rounded-lg px-4 py-2.5 text-sm text-blue-700 dark:text-blue-400 flex items-center gap-2">
             {scraping && <Refresh size={12} className="animate-spin" />}
             {scrapingStatus}
+          </div>
+        )}
+
+        {/* 캘리브레이션 라벨링 바 — 평가 대기분만 걸러 빠르게 찍고 진행률을 본다 */}
+        {isAdmin && (
+          <div className="flex items-center justify-between gap-3 flex-wrap bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">평가</span>
+              {VERDICT_FILTERS.map((f) => (
+                <button
+                  key={f.value}
+                  onClick={() => setVerdictFilter(f.value)}
+                  className={`px-2.5 h-7 rounded-md text-xs font-semibold transition-colors ${
+                    verdictFilter === f.value
+                      ? 'bg-zinc-100 text-zinc-900'
+                      : 'bg-zinc-900 text-zinc-400 hover:text-zinc-100'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            <div className="text-xs text-zinc-400">
+              이 목록 {videos.length}개 중 <span className="text-zinc-100 font-semibold">{ratedCount}</span>개 평가됨
+              <a href="/admin/calibration" className="ml-3 text-sky-400 hover:text-sky-300 font-semibold">분석 보기 →</a>
+            </div>
           </div>
         )}
 
@@ -243,22 +317,60 @@ export default function VideoListPage({ platform, category, initialFilters, show
                     onClick={() => setSelectedVideo(video)}
                   />
                   {isAdmin && (
-                    <div className="absolute top-2 right-2 z-10 flex gap-1">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); toggleHideVideo(video); }}
-                        title={video.hidden ? '숨김 해제' : '회원에게 숨김'}
-                        className="px-2 h-7 rounded-md bg-black/70 hover:bg-black/90 text-white text-[11px] font-semibold backdrop-blur-sm"
-                      >
-                        {video.hidden ? '해제' : '숨김'}
-                      </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); deleteVideo(video); }}
-                        title="완전 삭제"
-                        className="px-2 h-7 rounded-md bg-rose-600/80 hover:bg-rose-600 text-white text-[11px] font-semibold backdrop-blur-sm"
-                      >
-                        삭제
-                      </button>
-                    </div>
+                    <>
+                      <div className="absolute top-2 right-2 z-10 flex gap-1">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); toggleHideVideo(video); }}
+                          title={video.hidden ? '숨김 해제' : '회원에게 숨김'}
+                          className="px-2 h-7 rounded-md bg-black/70 hover:bg-black/90 text-white text-[11px] font-semibold backdrop-blur-sm"
+                        >
+                          {video.hidden ? '해제' : '숨김'}
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); deleteVideo(video); }}
+                          title="완전 삭제"
+                          className="px-2 h-7 rounded-md bg-rose-600/80 hover:bg-rose-600 text-white text-[11px] font-semibold backdrop-blur-sm"
+                        >
+                          삭제
+                        </button>
+                      </div>
+
+                      {/* 점수 배지 — 캘리브레이션 중엔 점수가 아직 검증 전이라 관리자에게만 보인다 */}
+                      <div className="absolute top-2 left-2 z-10 flex items-center gap-1">
+                        {video.tier && (
+                          <span className={`px-1.5 h-6 inline-flex items-center rounded-md text-[11px] font-bold ${TIER_STYLE[video.tier] || 'bg-zinc-700 text-zinc-100'}`}>
+                            {video.tier}
+                          </span>
+                        )}
+                        {typeof video.productScore === 'number' && video.productScore > 0 && (
+                          <span className="px-1.5 h-6 inline-flex items-center rounded-md bg-black/70 text-white text-[11px] font-semibold backdrop-blur-sm">
+                            {video.productScore}점
+                          </span>
+                        )}
+                        {typeof video.viewsPerDay === 'number' && video.viewsPerDay > 0 && (
+                          <span className="px-1.5 h-6 inline-flex items-center rounded-md bg-black/70 text-white text-[11px] font-semibold backdrop-blur-sm" title="일 평균 조회수">
+                            {Math.round(video.viewsPerDay / 1000).toLocaleString()}k/일
+                          </span>
+                        )}
+                      </div>
+
+                      {/* 라벨링 버튼 — 이 평가가 임계값 보정의 정답지가 된다 */}
+                      <div className="mt-1.5 flex gap-1">
+                        {VERDICT_BUTTONS.map((b) => (
+                          <button
+                            key={b.value}
+                            onClick={(e) => { e.stopPropagation(); setVerdict(video, b.value); }}
+                            className={`flex-1 h-7 rounded-md text-[11px] font-semibold transition-colors ${
+                              video.userVerdict === b.value
+                                ? b.on
+                                : 'bg-zinc-900 text-zinc-400 hover:text-zinc-100 border border-zinc-700'
+                            }`}
+                          >
+                            {b.label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
               ))}

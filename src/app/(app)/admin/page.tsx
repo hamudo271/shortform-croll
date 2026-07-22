@@ -108,6 +108,12 @@ export default function AdminPage() {
       <PageHeader title="관리자" accent="시스템" emoji="🛡️">
         <div className="flex items-center gap-2">
           <Link
+            href="/admin/calibration"
+            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-100 text-sm font-semibold transition-colors"
+          >
+            🎯 수집 기준 보정
+          </Link>
+          <Link
             href="/admin/payments"
             className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-100 text-sm font-semibold transition-colors"
           >

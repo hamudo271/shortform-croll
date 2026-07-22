@@ -125,6 +125,9 @@ export default function FilterBar({ onFilterChange, initialFilters }: FilterBarP
               value: filters.sortBy,
               key: 'sortBy' as keyof FilterState,
               options: [
+                // 위닝 점수 = 수요·속도·제품성·시장검증 종합 (docs/COLLECTION_CRITERIA_V2.md)
+                { value: 'productScore', label: '위닝 점수순' },
+                { value: 'viewsPerDay', label: '급상승순 (일 조회수)' },
                 { value: 'viralScore', label: '바이럴 점수순' },
                 { value: 'viewCount', label: '조회수순' },
                 { value: 'likeCount', label: '좋아요순' },

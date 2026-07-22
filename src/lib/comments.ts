@@ -1,40 +1,62 @@
 /**
- * 댓글 구매 의도 분석 — "정보 남겨달라" / "어디서 사요" / "link please" 같은
- * 명확한 purchase intent 표현이 상위 댓글에서 얼마나 자주 나오는지 점수화.
+ * 댓글 수요 분석 — "어디서 사요" / "link please" 같은 구매 신호가 상위 댓글에
+ * 얼마나 나오는지 점수화. 기준서 docs/COLLECTION_CRITERIA_V2.md §4-A 의 입력을 만든다.
  *
- * 영상이 광고지만 사람들이 안 사는 경우 (예: lint roller에 "lol" 댓글뿐)와
- * 실제 셀링 영상 (Daily Sunbeam에 "how much / where to buy" 댓글)을 구분하기 위함.
+ * 영상이 광고지만 아무도 안 사는 경우("lol" 댓글뿐)와 실제로 수요가 붙은 영상을
+ * 구분하는 게 목적. v2에서는 이 결과가 관문이 아니라 35점짜리 점수 항목이다
+ * (관문으로 쓰면 이미 판매자가 붙은 포화 제품만 남는다).
  */
 
-// 영어 + 한국어 양쪽
+/** 구매 의도 — "사고 싶다 / 얼마냐 / 어디서 사냐" 계열. 영어권 중심 + 한국어 보조. */
 const PURCHASE_INTENT_RE =
-  /\b(where (can|do) i (buy|get|order|find)|where (to |can i )?(buy|get|find)|how (much|do i (buy|order|get)|to (buy|order|get))|link (in bio|please|plz)|drop the link|what'?s (the |this )?(name|brand|product)|i (just |also )?(bought|ordered|got mine|ordering|need this|want this)|take my money|how much|the price|cost\??|i'?m (interested|buying))\b|어디서 (사|구매|살|살수|구매할)|링크 좀|정보 좀|어디서 파|어디 사|얼마(에)?\??|구매 (어디|링크)/i;
+  /\b(where (can|do) i (buy|get|order|find)|where (to |can i )?(buy|get|find)|how (much|do i (buy|order|get)|to (buy|order|get))|link (in bio|please|plz)|drop the link|what'?s (the |this )?(name|brand|product)|i (just |also )?(bought|ordered|got mine|ordering|need this|want this)|need this|take my money|adding to cart|add to cart|shut up and take my money|how much|the price|cost\??|i'?m (interested|buying))\b|어디서 (사|구매|살|살수|구매할)|링크 좀|정보 좀|어디서 파|어디 사|얼마(에)?\??|구매 (어디|링크)/i;
 
-// 댓글 의도 비율 (top-N 샘플 중 % 매칭)
-export const MIN_INTENT_SCORE_STRONG = 30; // 단독 통과 임계값 (의도 비율만으로 강함)
-// 하위 호환
-export const MIN_INTENT_SCORE = MIN_INTENT_SCORE_STRONG;
+/**
+ * 구매 "확정" 표현 — 의도보다 강한 신호. 이미 돈이 오갔다는 뜻이라
+ * 이 영상이 실제 매출을 만들고 있다는 직접 증거로 취급한다(+10점).
+ */
+const PURCHASE_CONFIRM_RE =
+  /\b(just (bought|ordered|got|purchased)|i (bought|ordered|purchased) (one|it|this|mine|two)|bought (one|it|this|mine)|ordered (one|it|this|mine)|mine (just )?(arrived|came)|on its way|got mine|already ordered|copped (one|it|this))\b|나도 샀|주문했|구매했/i;
 
-// DPM (Demand Per Million views) — Phase 2 신규 메트릭
-// intent_rate × commentCount / viewCount × 1e6
-//
-// 의미: "이 영상에 수요-시그널 댓글이 100만 뷰당 몇 개 달렸는가"
-// - Daily Sunbeam (의뢰인 골든): DPM 153
-// - 혈압계 (의뢰인 부적합): DPM 16.7
-// 5배 차이로 깨끗하게 분리됨.
-export const MIN_DPM_PAIRED = 17; // intent_rate 보통일 때 DPM이 이 정도 있어야
-export const MIN_DPM_STRONG = 30; // intent_rate 약해도 DPM 매우 높으면 단독 통과
+/** 링크를 직접 요구하는 질문 — 판매자가 없다는 뜻이기도 해서 선점 기회 신호. */
+const LINK_QUESTION_RE =
+  /\b(link\?|link please|link plz|link in bio\?|drop the link|send the link|where to buy|where can i buy|need the link|whats the link|what'?s the link)\b|링크 (좀|어디)|어디서 사요/i;
+
+export interface CommentSignals {
+  /** 구매 의도 댓글 비율 0-100 */
+  intentRate: number;
+  /** 구매 확정 표현이 하나라도 있는지 */
+  hasPurchaseConfirmation: boolean;
+  /** 링크 직접 요구 건수 */
+  linkQuestions: number;
+  /** 분석에 쓰인 댓글 수 */
+  sampleSize: number;
+}
+
+/** 댓글 샘플에서 §4-A 점수에 필요한 신호를 한 번에 뽑는다. */
+export function analyzeComments(commentTexts: string[]): CommentSignals {
+  const texts = commentTexts.filter((t) => typeof t === 'string' && t.trim().length > 0);
+  if (texts.length === 0) {
+    return { intentRate: 0, hasPurchaseConfirmation: false, linkQuestions: 0, sampleSize: 0 };
+  }
+  const matched = texts.filter((t) => PURCHASE_INTENT_RE.test(t)).length;
+  return {
+    intentRate: Math.round((matched / texts.length) * 100),
+    hasPurchaseConfirmation: texts.some((t) => PURCHASE_CONFIRM_RE.test(t)),
+    linkQuestions: texts.filter((t) => LINK_QUESTION_RE.test(t)).length,
+    sampleSize: texts.length,
+  };
+}
 
 export function scorePurchaseIntent(commentTexts: string[]): number {
-  if (commentTexts.length === 0) return 0;
-  const matched = commentTexts.filter((t) => t && PURCHASE_INTENT_RE.test(t)).length;
-  return Math.round((matched / commentTexts.length) * 100);
+  return analyzeComments(commentTexts).intentRate;
 }
 
 /**
- * Demand Per Million — 영상의 진짜 구매 수요 추정치.
+ * Demand Per Million — 영상의 구매 수요 추정치.
  * 댓글 샘플의 의도 비율 × 전체 댓글 수 / 조회수 × 1,000,000
  *
+ * v2에서는 통과 관문이 아니라 진단 지표(상품 랭킹 정렬 등)로만 쓴다.
  * 0이면 댓글 수나 조회수 데이터 부재.
  */
 export function computeDemandPerMillion(
@@ -45,34 +67,4 @@ export function computeDemandPerMillion(
   if (viewCount <= 0 || totalComments <= 0) return 0;
   const estimatedIntent = totalComments * (intentRate / 100);
   return Math.round((estimatedIntent / viewCount) * 1_000_000 * 10) / 10; // 소수 1자리
-}
-
-/**
- * 최종 통과 판정.
- *
- * 의뢰인 기준 ③ "**필수적으로** 프로필 링크에는 제품구매할 수 있는 링크가
- * 있어야합니다" — creator_link 는 hard requirement. comment_intent 단독
- * 통과 경로는 제거됨.
- *
- * PASS 조건 (creator_link 필수 + 아래 중 하나):
- *   (a) intent_rate ≥ 30%
- *   (b) DPM ≥ 30
- *   (c) intent_rate ≥ 10% AND DPM ≥ 17
- */
-export function evaluatePass(
-  hasSalesLink: boolean,
-  intentRate: number,
-  totalComments: number,
-  viewCount: number,
-): { passReason: 'both' | null; dpm: number } {
-  const dpm = computeDemandPerMillion(intentRate, totalComments, viewCount);
-
-  // creator_link 없으면 즉시 거부 — 의뢰인 기준 ③
-  if (!hasSalesLink) return { passReason: null, dpm };
-
-  if (intentRate >= MIN_INTENT_SCORE_STRONG) return { passReason: 'both', dpm };
-  if (dpm >= MIN_DPM_STRONG) return { passReason: 'both', dpm };
-  if (intentRate >= 10 && dpm >= MIN_DPM_PAIRED) return { passReason: 'both', dpm };
-
-  return { passReason: null, dpm };
 }

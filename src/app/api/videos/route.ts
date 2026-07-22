@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const days = parseInt(searchParams.get('days') || '30', 10);
     const country = searchParams.get('country');
+    // v2 스코어링 필터 — tier=S|A|B, verdict=WINNER|MAYBE|REJECT|UNRATED (관리자 라벨링용)
+    const tier = searchParams.get('tier');
+    const verdict = searchParams.get('verdict');
 
     // Filter by collection date
     const dateThreshold = new Date();
@@ -38,17 +41,22 @@ export async function GET(request: NextRequest) {
       ...(country && { country }),
       ...(search && { title: { contains: search, mode: 'insensitive' } }),
       ...(isAdmin ? {} : { hidden: false }),
+      ...(tier && { tier }),
+      ...(verdict && (verdict === 'UNRATED' ? { userVerdict: null } : { userVerdict: verdict })),
       collectedAt: { gte: dateThreshold },
       publishedAt: { gte: MIN_PUBLISHED_AT },
     };
 
     // Build orderBy
-    type OrderByField = 'viralScore' | 'viewCount' | 'likeCount' | 'collectedAt';
+    type OrderByField = 'viralScore' | 'viewCount' | 'likeCount' | 'collectedAt' | 'productScore' | 'viewsPerDay';
     const orderByMap: Record<OrderByField, { [key: string]: 'desc' }> = {
       viralScore: { viralScore: 'desc' },
       viewCount: { viewCount: 'desc' },
       likeCount: { likeCount: 'desc' },
       collectedAt: { collectedAt: 'desc' },
+      // v2: 위닝 프로덕트 점수 / 확산 속도
+      productScore: { productScore: 'desc' },
+      viewsPerDay: { viewsPerDay: 'desc' },
     };
 
     const orderBy = orderByMap[sortBy as OrderByField] || orderByMap.viralScore;

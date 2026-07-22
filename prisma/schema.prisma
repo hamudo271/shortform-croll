@@ -45,9 +45,23 @@ model Video {
 
   // Seller-validation signals (creator profile + comment intent)
   hasPurchaseIntent    Boolean @default(false)
-  purchaseIntentScore  Int     @default(0)  // 0-100, 상위 20 댓글 중 구매 의도 비율
-  passReason           String?              // "creator_link" | "comment_intent" | "both"
+  purchaseIntentScore  Int     @default(0)  // 0-100, 상위 댓글 중 구매 의도 비율
+  passReason           String?              // "creator_link" | "comment_intent" | "both" (v1 잔존)
   visualClass          String?              // "product" | "face" | "mixed" — Gemini Vision 분석 결과
+
+  // 위닝 프로덕트 스코어링 v2 — docs/COLLECTION_CRITERIA_V2.md
+  productScore    Int      @default(0)   // 0-100 종합 점수 (viralScore 와 별개 지표)
+  tier            String?                // "S" | "A" | "B" — 점수 컷 미달이면 null
+  scoreBreakdown  Json     @default("{}")// {demand, velocity, product, market, measurableMax}
+  flags           String[]               // REGULATED | SATURATED | BIG_BRAND | LARGE | NO_VISION | NO_COMMENTS
+  viewsPerDay     Int      @default(0)   // 절대 조회수보다 이게 트렌드 신호
+  productType     String?                // Gemini 추정 일반명 — 동일제품 교차 카운트 키
+  priceBand       String?                // "under_10" | "10_60" | "over_60" | "unknown"
+  brand           String?
+
+  // Phase 0 캘리브레이션 — 운영자 라벨. 임계값 보정의 정답지가 된다.
+  userVerdict     String?                // "WINNER" | "MAYBE" | "REJECT" (null = 미평가)
+  verdictAt       DateTime?
 
   @@index([platform])
   @@index([category])
@@ -55,6 +69,10 @@ model Video {
   @@index([viralScore(sort: Desc)])
   @@index([collectedAt(sort: Desc)])
   @@index([hasPurchaseIntent])
+  @@index([productScore(sort: Desc)])
+  @@index([tier])
+  @@index([userVerdict])
+  @@index([productType])
 }
 
 model Creator {
