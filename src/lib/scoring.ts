@@ -37,6 +37,7 @@ export const FLAG_BIG_BRAND = 'BIG_BRAND'; // 빅브랜드/라이선스 IP — �
 export const FLAG_LARGE = 'LARGE'; // 대형/중량물 — 물류비로 마진 붕괴
 export const FLAG_NO_VISION = 'NO_VISION'; // Gemini 분석 실패 — 제품성 점수 미측정
 export const FLAG_NO_COMMENTS = 'NO_COMMENTS'; // 댓글 미수집(IG) — 수요 점수 미측정
+export const FLAG_PROVEN_DEMAND = 'PROVEN_DEMAND'; // 운영자가 💰 라벨을 준 제품 유형과 동일 — 검증된 수요
 
 export interface ScoreInput {
   /** B: 일 평균 조회수 */
@@ -67,6 +68,8 @@ export interface ScoreInput {
   hasSalesLink: boolean;
   /** D: TikTok Shop 태그 존재 */
   hasShopTag: boolean;
+  /** D: 운영자 💰 라벨이 붙었던 제품 유형과 동일 — 학습 루프에서 옴 */
+  provenWinner: boolean;
 }
 
 export interface ScoreBreakdown {
@@ -145,6 +148,8 @@ function scoreMarket(i: ScoreInput): number {
   let s = 0;
   if (i.duplicateAccounts >= MIN_DUPLICATE_ACCOUNTS) s += 8;
   if (i.hasSalesLink || i.hasShopTag) s += 7;
+  // 운영자가 💰 를 준 제품 유형 — 사람의 판단이 가장 강한 시장 검증이다
+  if (i.provenWinner) s += 8;
   return Math.min(s, MAX_MARKET);
 }
 

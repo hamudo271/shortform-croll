@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import PageHeader from '@/components/app/PageHeader';
 import { ChevronRight } from '@/components/ui/Icon';
 import { CALIBRATION_MODE, SCORE_CUT, TIER_S, TIER_A, TIER_B } from '@/lib/collect-config';
+import { loadLearnedRules } from '@/lib/learning';
 
 /**
  * Phase 0 보정 분석 — 기준서 docs/COLLECTION_CRITERIA_V2.md "학습 루프" 3단계.
@@ -74,7 +75,7 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
 }
 
 export default async function CalibrationPage() {
-  const [labeled, totalVideos] = await Promise.all([
+  const [labeled, totalVideos, learned] = await Promise.all([
     prisma.video.findMany({
       where: { userVerdict: { not: null } },
       select: {
@@ -85,6 +86,7 @@ export default async function CalibrationPage() {
       take: 3000,
     }),
     prisma.video.count(),
+    loadLearnedRules(),
   ]);
 
   const rows = labeled as Labeled[];
@@ -149,9 +151,10 @@ export default async function CalibrationPage() {
       <PageHeader title="수집 기준 보정" accent="캘리브레이션" emoji="🎯" />
 
       <div className="bg-zinc-950 border border-zinc-700 rounded-2xl p-5 text-sm text-zinc-300 leading-relaxed">
-        대시보드 영상 카드의 <strong className="text-zinc-50">💰 소싱감 / 🤔 애매 / ❌ 탈락</strong> 버튼으로 평가한 결과를
-        정답지 삼아 지금 수집 기준이 맞는지 역산합니다. 아래 <strong className="text-zinc-50">점수 구간별 소싱감 비율</strong>에서
-        건질 게 있는 구간을 찾아 <code className="text-sky-400">SCORE_CUT</code> 을 옮기면 됩니다.
+        대시보드 영상 카드의 <strong className="text-zinc-50">💰 소싱감 / 🤔 애매 / ❌ 탈락</strong> 버튼으로 평가하면,
+        그 라벨이 <strong className="text-zinc-50">다음 수집에 자동 반영</strong>됩니다 — ❌ 반복 제품·계정은 재수집 차단,
+        💰 제품 유형은 가점, 키워드는 적중률순 검색, 표본이 쌓이면 점수 컷도 자동 조정됩니다.
+        아래 표는 그 학습의 근거 데이터입니다.
         <div className="mt-2 text-xs text-zinc-400">
           현재 모드: <span className={CALIBRATION_MODE ? 'text-amber-400 font-semibold' : 'text-emerald-400 font-semibold'}>
             {CALIBRATION_MODE ? '캘리브레이션 (기준 완화, 점수 컷 없음)' : '정식 기준'}
@@ -165,6 +168,47 @@ export default async function CalibrationPage() {
         <Stat label="💰 소싱감" value={winners.length.toLocaleString()} sub={`${pct(winners.length, rows.length)}%`} />
         <Stat label="🤔 애매" value={maybes.length.toLocaleString()} sub={`${pct(maybes.length, rows.length)}%`} />
         <Stat label="❌ 탈락" value={rejects.length.toLocaleString()} sub={`${pct(rejects.length, rows.length)}%`} />
+      </section>
+
+      {/* 지금 수집기에 자동 반영 중인 학습 규칙 — 라벨이 헛돌지 않는다는 증거 */}
+      <section className="bg-zinc-950 border border-zinc-700 rounded-2xl overflow-hidden shadow-card">
+        <div className="px-6 py-4 border-b border-zinc-700 flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-bold text-zinc-50">🔁 다음 수집에 자동 반영 중인 규칙</h2>
+            <p className="text-xs text-zinc-400 mt-1">라벨 {learned.labelCount}건에서 학습. 라벨을 더 찍을수록 규칙이 늘어납니다.</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-zinc-800 text-center">
+          {[
+            { n: learned.rejectedProductTypes.size, label: '재수집 차단 제품', hint: '❌만 2회+' },
+            { n: learned.rejectedCreators.size, label: '차단 계정', hint: '❌만 3회+' },
+            { n: learned.provenProductTypes.size, label: '검증된 제품 유형', hint: '💰 1회+ → 가점' },
+            { n: learned.benchedKeywords.size, label: '벤치된 키워드', hint: '5회+ 평가에 💰 0' },
+          ].map((c) => (
+            <div key={c.label} className="py-5">
+              <div className="text-display text-xl font-bold text-zinc-50">{c.n}</div>
+              <div className="text-[11px] text-zinc-400 mt-0.5">{c.label}</div>
+              <div className="text-[10px] text-zinc-600">{c.hint}</div>
+            </div>
+          ))}
+        </div>
+        <div className="px-6 py-3 border-t border-zinc-800 text-xs text-zinc-400 space-y-1">
+          <div>
+            학습된 점수 컷:{' '}
+            {learned.learnedScoreCut !== null ? (
+              <span className="text-emerald-400 font-semibold">{learned.learnedScoreCut.toFixed(1)} / 10
+                <span className="text-zinc-500 font-normal"> — 정식 모드 전환 시 이 값이 자동 적용됩니다</span></span>
+            ) : (
+              <span className="text-zinc-500">표본 부족 (측정조건 정상인 평가 30건 필요) — 그 전까지 기본값 {TIER_B} 사용</span>
+            )}
+          </div>
+          {learned.rejectedProductTypes.size > 0 && (
+            <div className="text-zinc-500">차단 중: {[...learned.rejectedProductTypes].slice(0, 8).join(', ')}{learned.rejectedProductTypes.size > 8 ? ' 외' : ''}</div>
+          )}
+          {learned.benchedKeywords.size > 0 && (
+            <div className="text-zinc-500">벤치: {[...learned.benchedKeywords].join(', ')}</div>
+          )}
+        </div>
       </section>
 
       {!enough && (

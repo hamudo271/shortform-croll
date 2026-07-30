@@ -15,8 +15,10 @@ import { isExcludedContent } from '@/lib/exclude';
 import { isListicleTitle } from '@/lib/collectors/tiktok-api';
 import { analyzeComments } from '@/lib/comments';
 import { analyzeProductThumbnail, type ProductAnalysis } from '@/lib/vision';
+import { EMPTY_RULES, effectiveScoreCut, type LearnedRules } from '@/lib/learning';
 import {
   scoreCandidate,
+  FLAG_PROVEN_DEMAND,
   FLAG_BIG_BRAND,
   FLAG_LARGE,
   FLAG_REGULATED,
@@ -112,8 +114,16 @@ async function countDuplicateAccounts(
  * 하드필터만 통과하면 전부 저장하고, 어떤 점수대가 실제 소싱감인지는
  * 운영자 라벨링(Video.userVerdict)으로 역산한다.
  */
-export async function evaluateCandidate(candidate: Candidate): Promise<GateResult> {
+export async function evaluateCandidate(
+  candidate: Candidate,
+  rules: LearnedRules = EMPTY_RULES,
+): Promise<GateResult> {
   const text = `${candidate.title} ${candidate.description}`;
+
+  // ===== 학습 규칙 (운영자 ❌ 라벨의 축적) — 외부 호출 전에 거른다 =====
+  if (candidate.authorName && rules.rejectedCreators.has(candidate.authorName)) {
+    return { pass: false, reason: 'learned_reject_creator' };
+  }
 
   // ===== H1~H4, H6: 외부 호출 없는 로컬 필터부터 =====
   if (candidate.viewCount < MIN_VIEW_COUNT) return { pass: false, reason: 'low_views' };
@@ -165,7 +175,16 @@ export async function evaluateCandidate(candidate: Candidate): Promise<GateResul
       extraFlags.push(FLAG_LARGE);
     }
     if (analysis.isRegulated) extraFlags.push(FLAG_REGULATED);
+
+    // 같은 제품 유형이 ❌만 반복 → 더 볼 것 없음. 댓글/크리에이터 호출 전에 끊는다
+    if (analysis.productType && rules.rejectedProductTypes.has(analysis.productType)) {
+      return { pass: false, reason: 'learned_reject_product' };
+    }
   }
+
+  // 💰 가 나온 적 있는 제품 유형 — 검증된 수요 (스코어링에 가점 전달)
+  const provenWinner = !!analysis?.productType && rules.provenProductTypes.has(analysis.productType);
+  if (provenWinner) extraFlags.push(FLAG_PROVEN_DEMAND);
 
   // ===== §4-A: 댓글 수요 (H5 통과분만 조회) =====
   let comments: string[] | null = null;
@@ -210,9 +229,12 @@ export async function evaluateCandidate(candidate: Candidate): Promise<GateResul
     duplicateAccounts,
     hasSalesLink,
     hasShopTag: SHOP_TAG_RE.test(text),
+    provenWinner,
   });
 
-  if (score.total < SCORE_CUT) return { pass: false, reason: 'low_score' };
+  // 정식 모드의 컷은 라벨에서 역산한 학습값이 우선한다 (표본 부족 시 기준서 기본값)
+  const cut = SCORE_CUT === 0 ? 0 : effectiveScoreCut(rules);
+  if (score.total < cut) return { pass: false, reason: 'low_score' };
 
   return {
     pass: true,

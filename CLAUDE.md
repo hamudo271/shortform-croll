@@ -29,7 +29,8 @@ docs/COLLECTION_CRITERIA_V2.md   ← 수집 기준 원문. 코드보다 이 문�
 | 파일 | 역할 |
 |---|---|
 | `collect-config.ts` | **수집 기준 v2 파라미터 전부.** 임계값·키워드·budget·캘리브레이션 토글 |
-| `collect-gate.ts` | 후보 1건 판정 — 하드필터 → 비전 → 댓글 → 스코어링. 세 수집 루프가 공유 |
+| `collect-gate.ts` | 후보 1건 판정 — 학습규칙 → 하드필터 → 비전 → 댓글 → 스코어링. 세 수집 루프가 공유 |
+| `learning.ts` | **학습 루프.** 운영자 라벨(userVerdict)에서 차단제품/차단계정/키워드 적중률/점수 컷을 도출 — 매 수집 시작 시 로드되어 자동 반영 |
 | `scoring.ts` | 배점 모델(수요35/속도25/제품성25/시장15, 내부 100점) → **10점 만점 환산** + S/A/B 티어 + 플래그. 측정 커버리지 60 미만이면 티어 미부여 |
 | `vision.ts` | Gemini 썸네일 분석. `analyzeProductThumbnail()` 이 제품여부·제품명·가격대·브랜드를 **1콜로** 반환 |
 | `comments.ts` | 댓글 구매 신호 추출(`analyzeComments`) + DPM 계산 |
@@ -90,7 +91,9 @@ GitHub Actions cron → POST /api/collect (Bearer)
 - `CALIBRATION_MODE` 는 기본 ON(Phase 0). 임계값이 확정되면 Railway 에 `CALIBRATION_MODE=false`.
   이 값 하나로 하드필터 문턱과 `SCORE_CUT` 이 동시에 바뀐다 — 개별 상수만 고치고 끝내지 말 것.
 - `collect-gate.ts` 를 건드리면 `scoring.ts` 배점과 `docs/COLLECTION_CRITERIA_V2.md` §4 를 같이 봐야 한다.
-- `Video.userVerdict` 는 **학습 데이터**다. `hidden` (노출 제어)과 다른 축이니 섞지 말 것.
+- `Video.userVerdict` 는 **학습 데이터이자 수집기의 입력**이다 — `learning.ts` 가 매 회차
+  이 라벨에서 규칙(차단/가점/키워드 순서/점수 컷)을 도출한다. `hidden` (노출 제어)과 다른 축.
+  라벨 관련 로직을 바꾸면 `learning.ts` 의 최소 표본 임계값(LEARN_*)도 같이 볼 것.
 - `EXCLUDE_PATTERNS` 가 `lib/exclude.ts` 와 `api/cleanup/route.ts` 에 각각 있고 **값이 다르다**.
   한쪽만 고치면 수집/정리 기준이 어긋난다 (통합은 아직 안 됨).
 - 운영에 `AUTH_SECRET` 미설정 → 세션 HMAC 키가 `COLLECT_API_KEY` 로 폴백된다 (`auth.ts`). **알려진 보안 취약점, 미해결.**

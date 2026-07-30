@@ -62,6 +62,7 @@ model Video {
   // Phase 0 캘리브레이션 — 운영자 라벨. 임계값 보정의 정답지가 된다.
   userVerdict     String?                // "WINNER" | "MAYBE" | "REJECT" (null = 미평가)
   verdictAt       DateTime?
+  sourceKeyword   String?                // 이 영상을 찾아낸 검색 키워드 — 키워드별 적중률 학습의 키
 
   @@index([platform])
   @@index([category])

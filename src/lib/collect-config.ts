@@ -103,6 +103,25 @@ export const SCORE_CUT = tuned(TIER_B, 0);
 /** 캘리브레이션 1회 수집 목표치 — 평가 가능한 분량. */
 export const CALIBRATION_TARGET_COUNT = 300;
 
+// ===== 학습 루프 (라벨 → 다음 수집 자동 반영) 임계값 =====
+// 원칙: 표본이 적을 때 성급하게 배우면 우연을 규칙으로 착각한다.
+// 아래 최소 건수를 채운 신호만 수집기에 반영된다.
+
+/** 같은 제품 유형이 ❌만 N번 이상 (💰 0번) → 그 제품 유형은 재수집하지 않음 */
+export const LEARN_REJECT_PRODUCT_MIN = 2;
+
+/** 같은 계정이 ❌만 N번 이상 (💰 0번) → 그 계정 영상은 스킵 */
+export const LEARN_REJECT_CREATOR_MIN = 3;
+
+/** 키워드의 평가 완료(💰+❌) 표본이 N건 이상인데 💰 0건 → 키워드 벤치 */
+export const LEARN_KEYWORD_MIN_DECIDED = 5;
+
+/** 점수 컷 자동 학습에 필요한 최소 평가 표본 (측정조건 정상인 것만 카운트) */
+export const LEARN_SCORE_CUT_MIN_SAMPLE = 30;
+
+/** 학습 규칙 캐시 TTL — 수집 도중 라벨이 바뀌는 경우는 드물어 5분이면 충분 */
+export const LEARN_CACHE_TTL_MS = 5 * 60_000;
+
 // ===== Wall-clock budget =====
 
 /**

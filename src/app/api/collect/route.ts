@@ -12,6 +12,7 @@ import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagra
 import { getOrFetchCreator } from '@/lib/creators';
 import { classifyByKeywords } from '@/lib/classifier';
 import { evaluateCandidate, type Candidate, type GateMetrics } from '@/lib/collect-gate';
+import { applyKeywordLearning, loadLearnedRules, type LearnedRules } from '@/lib/learning';
 import {
   CALIBRATION_MODE,
   COMMENT_SAMPLE,
@@ -64,6 +65,8 @@ interface CollectCtx {
   results: CollectResults;
   processedVideoIds: Set<string>;
   elapsedMs: () => number;
+  /** 운영자 라벨에서 학습한 규칙 — 회차 시작 시 1회 로드 */
+  rules: LearnedRules;
 }
 
 function noteSkip(ctx: CollectCtx, reason: string) {
@@ -90,6 +93,8 @@ interface SaveInput {
   commentCount: number;
   shareCount: number;
   publishedAt: Date;
+  /** 이 영상을 찾아낸 검색 키워드 — 키워드별 적중률 학습의 키 */
+  sourceKeyword: string | null;
 }
 
 /**
@@ -127,6 +132,7 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
     productType: m.productType,
     priceBand: m.priceBand,
     brand: m.brand,
+    sourceKeyword: v.sourceKeyword,
   };
 
   try {
@@ -180,11 +186,17 @@ function toTikTokCandidate(video: TikTokVideo) {
 async function processTikTokVideo(
   ctx: CollectCtx,
   video: TikTokVideo,
+  sourceKeyword: string | null,
 ): Promise<boolean> {
   if (ctx.processedVideoIds.has(video.id)) return false;
+  // 운영자가 이미 ❌ 를 준 영상 — 재판정은 Gemini/댓글 쿼터 낭비다
+  if (ctx.rules.rejectedVideoIds.has(`tiktok_${video.id}`)) {
+    noteSkip(ctx, 'already_rejected');
+    return false;
+  }
   const { candidate, publishedAt } = toTikTokCandidate(video);
 
-  const verdict = await evaluateCandidate(candidate);
+  const verdict = await evaluateCandidate(candidate, ctx.rules);
   if (!verdict.pass) {
     noteSkip(ctx, verdict.reason);
     return false;
@@ -207,6 +219,7 @@ async function processTikTokVideo(
       commentCount: video.commentCount,
       shareCount: video.shareCount,
       publishedAt: publishedAt!,
+      sourceKeyword,
     },
     verdict.metrics,
   );
@@ -221,26 +234,28 @@ async function processTikTokVideo(
  * 쓰면 시시한 영상에 다 써버린다. 일 조회수 높은 후보부터 쓰는 게 맞다.
  */
 async function collectTikTok(ctx: CollectCtx): Promise<number> {
-  const pool: TikTokVideo[] = [];
+  // 후보와 함께 "어느 키워드가 찾았는지"를 들고 다닌다 — 키워드 적중률 학습의 원료
+  const pool: { video: TikTokVideo; sourceKeyword: string | null }[] = [];
   const seen = new Set<string>();
 
-  const addAll = (videos: TikTokVideo[]) => {
+  const addAll = (videos: TikTokVideo[], sourceKeyword: string | null) => {
     ctx.results.videosSearched += videos.length;
     for (const v of videos) {
       if (seen.has(v.id)) continue;
       seen.add(v.id);
-      pool.push(v);
+      pool.push({ video: v, sourceKeyword });
     }
   };
 
   try {
-    addAll(await getTikTokTrending({ count: TIKTOK_TRENDING_COUNT }));
+    addAll(await getTikTokTrending({ count: TIKTOK_TRENDING_COUNT }), 'trending');
   } catch (err) {
     console.error('TikTok trending error:', err);
     ctx.results.errors.push('TikTok trending failed');
   }
 
-  const keywords = getKeywordsForRun();
+  // 학습 반영: 적중률 높은 키워드부터. 예산이 끊겨도 성적 좋은 키워드는 이미 돈다.
+  const keywords = applyKeywordLearning(getKeywordsForRun(), ctx.rules, CALIBRATION_MODE);
   console.log(`  Keywords this run (${keywords.length}): ${keywords.join(', ')}`);
   for (const kw of keywords) {
     // 수집 단계에도 마감을 둔다 — 여기서 다 써버리면 판정할 시간이 없다
@@ -250,7 +265,7 @@ async function collectTikTok(ctx: CollectCtx): Promise<number> {
       break;
     }
     try {
-      addAll(await searchTikTokVideos(kw, { count: TIKTOK_SEARCH_COUNT }));
+      addAll(await searchTikTokVideos(kw, { count: TIKTOK_SEARCH_COUNT }), kw);
       await delay(KEYWORD_DELAY_MS);
     } catch (err) {
       console.error(`TikTok search error for "${kw}":`, err);
@@ -258,23 +273,21 @@ async function collectTikTok(ctx: CollectCtx): Promise<number> {
   }
 
   // 급상승 순 — 비전 콜을 좋은 후보에 먼저 쓴다
-  pool.sort(
-    (a, b) =>
-      computeViewsPerDay(b.viewCount, b.createTime ? new Date(b.createTime * 1000) : null) -
-      computeViewsPerDay(a.viewCount, a.createTime ? new Date(a.createTime * 1000) : null),
-  );
+  const vpd = (v: TikTokVideo) =>
+    computeViewsPerDay(v.viewCount, v.createTime ? new Date(v.createTime * 1000) : null);
+  pool.sort((a, b) => vpd(b.video) - vpd(a.video));
   console.log(`  TikTok pool: ${pool.length} candidates (velocity-sorted)`);
 
   let collected = 0;
   let evaluated = 0;
-  for (const video of pool) {
+  for (const { video, sourceKeyword } of pool) {
     if (ctx.elapsedMs() > TK_DEADLINE_MS) {
       console.log(`⏱️ TikTok 판정 budget 초과 — ${pool.length - evaluated}건 미판정`);
       ctx.results.partial = true;
       break;
     }
     evaluated++;
-    if (await processTikTokVideo(ctx, video)) collected++;
+    if (await processTikTokVideo(ctx, video, sourceKeyword)) collected++;
   }
   ctx.results.candidatesNotEvaluated += pool.length - evaluated;
   return collected;
@@ -328,6 +341,11 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
         break;
       }
       if (ctx.processedVideoIds.has(reel.id)) continue;
+      // 운영자가 이미 ❌ 를 준 릴 — 재판정은 쿼터 낭비
+      if (ctx.rules.rejectedVideoIds.has(`ig_${reel.id}`)) {
+        noteSkip(ctx, 'already_rejected');
+        continue;
+      }
 
       const publishedAt = reel.takenAt ? new Date(reel.takenAt * 1000) : null;
       const candidate: Candidate = {
@@ -357,7 +375,7 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
         },
       };
 
-      const verdict = await evaluateCandidate(candidate);
+      const verdict = await evaluateCandidate(candidate, ctx.rules);
       if (!verdict.pass) {
         noteSkip(ctx, verdict.reason);
         continue;
@@ -380,6 +398,7 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
           commentCount: reel.commentCount,
           shareCount: reel.shareCount,
           publishedAt: publishedAt!,
+          sourceKeyword: 'ig_hashtag', // IG 는 해시태그 풀이 합쳐져 개별 태그 추적 불가
         },
         verdict.metrics,
       );
@@ -420,14 +439,23 @@ export async function POST(request: NextRequest) {
   // 정상 종료하고 200 partial 을 반환한다. 플랫폼별 deadline 으로 슬롯을 나눠
   // 어느 날이든 두 채널 모두 일부는 수집되게 함.
   const startedAt = Date.now();
+
+  // 학습 규칙 로드 — 운영자 라벨(💰/🤔/❌)이 여기서 다음 수집에 반영된다
+  const rules = await loadLearnedRules();
   const ctx: CollectCtx = {
     results,
     processedVideoIds: new Set<string>(),
     elapsedMs: () => Date.now() - startedAt,
+    rules,
   };
 
   try {
-    console.log(`\n🎯 Collect start (calibration=${CALIBRATION_MODE})`);
+    console.log(
+      `\n🎯 Collect start (calibration=${CALIBRATION_MODE}, ` +
+        `학습: 라벨 ${rules.labelCount}건 → 차단제품 ${rules.rejectedProductTypes.size} · ` +
+        `차단계정 ${rules.rejectedCreators.size} · 검증제품 ${rules.provenProductTypes.size} · ` +
+        `벤치키워드 ${rules.benchedKeywords.size} · 학습컷 ${rules.learnedScoreCut ?? '없음'})`,
+    );
 
     console.log('\n🎵 Collecting TikTok videos...');
     const tiktokCollected = await collectTikTok(ctx);
@@ -440,6 +468,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       calibrationMode: CALIBRATION_MODE,
+      learning: {
+        labelCount: rules.labelCount,
+        rejectedProductTypes: rules.rejectedProductTypes.size,
+        rejectedCreators: rules.rejectedCreators.size,
+        provenProductTypes: rules.provenProductTypes.size,
+        benchedKeywords: rules.benchedKeywords.size,
+        learnedScoreCut: rules.learnedScoreCut,
+      },
       partial: results.partial,
       elapsedMs: ctx.elapsedMs(),
       results: { ...results, tiktokCollected, instagramCollected },
