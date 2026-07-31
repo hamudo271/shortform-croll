@@ -96,6 +96,8 @@ GitHub Actions cron → POST /api/collect (Bearer)
   라벨 관련 로직을 바꾸면 `learning.ts` 의 최소 표본 임계값(LEARN_*)도 같이 볼 것.
 - `EXCLUDE_PATTERNS` 가 `lib/exclude.ts` 와 `api/cleanup/route.ts` 에 각각 있고 **값이 다르다**.
   한쪽만 고치면 수집/정리 기준이 어긋난다 (통합은 아직 안 됨).
-- 운영에 `AUTH_SECRET` 미설정 → 세션 HMAC 키가 `COLLECT_API_KEY` 로 폴백된다 (`auth.ts`). **알려진 보안 취약점, 미해결.**
-- 나이스페이 webhook 에 서명 검증이 없다. **알려진 취약점, 미해결.**
+- 세션 HMAC 키는 운영 env `AUTH_SECRET` (2026-07-31 설정됨). 지우면 `COLLECT_API_KEY` 폴백으로
+  떨어지며 경고 로그가 찍힌다 — 이 값을 바꾸면 전 사용자 세션이 무효화(재로그인)된다.
+- 나이스페이 webhook 은 통보를 믿지 않는다 — `fetchNicepayPayment(tid)` 로 나이스페이 원장을
+  직접 조회해 상태·금액이 맞아야 활성화 (2026-07-31). 이 검증을 우회하는 코드를 넣지 말 것.
 - 테스트가 0개다. 변경 후 검증은 `npm run lint` → `npx tsc --noEmit` → `npm run build` → 실제 수집 1회.

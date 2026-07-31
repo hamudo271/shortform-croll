@@ -9,6 +9,11 @@ const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 const BCRYPT_ROUNDS = 10;
 
 function getSecret(): string {
+  // AUTH_SECRET 이 없으면 세션 서명 키가 수집용 공유키로 떨어진다 — 그 키를 아는
+  // 누구나 세션을 위조할 수 있으므로 운영에서는 반드시 AUTH_SECRET 을 설정할 것.
+  if (!process.env.AUTH_SECRET && process.env.NODE_ENV === 'production') {
+    console.warn('[auth] AUTH_SECRET 미설정 — 세션 서명이 약한 폴백 키를 쓰는 중 (보안 위험)');
+  }
   return process.env.AUTH_SECRET || process.env.COLLECT_API_KEY || 'fallback-secret';
 }
 

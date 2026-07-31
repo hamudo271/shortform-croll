@@ -69,6 +69,42 @@ export interface NicepayApproveResult {
 }
 
 /**
+ * 결제 조회 (GET /v1/payments/{tid}) — 웹훅 검증용.
+ * 웹훅 통보 자체는 누구나 위조할 수 있지만, 나이스페이 서버의 원장은 못 속인다.
+ * 통보를 받으면 이걸로 실제 결제 존재·상태·금액을 확인한 뒤에만 구독을 활성화한다.
+ */
+export async function fetchNicepayPayment(tid: string): Promise<NicepayApproveResult> {
+  try {
+    const res = await fetch(`${apiBase()}/v1/payments/${encodeURIComponent(tid)}`, {
+      method: 'GET',
+      headers: { Authorization: authHeader() },
+    });
+    const text = await res.text();
+    let data: Record<string, unknown> = {};
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch {
+      data = { raw: text };
+    }
+    const resultCode = String(data.resultCode || data.ResultCode || '');
+    if (resultCode !== '0000') {
+      return { ok: false, resultCode, error: String(data.resultMsg || '조회 실패'), raw: data };
+    }
+    return {
+      ok: true,
+      resultCode,
+      status: String(data.status || data.Status || ''),
+      amount: Number(data.amount ?? data.Amount ?? 0),
+      tid: String(data.tid || data.TID || tid),
+      method: String(data.payMethod || data.method || ''),
+      raw: data,
+    };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : '조회 중 오류' };
+  }
+}
+
+/**
  * 결제 승인. /v1/payments/{tid} 에 { amount } 로 POST. resultCode "0000" = 성공.
  */
 export async function approveNicepay(tid: string, amount: number): Promise<NicepayApproveResult> {
