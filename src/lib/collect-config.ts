@@ -151,6 +151,33 @@ export const HARD_BUDGET_MS = envNum('HARD_BUDGET_MS', 280_000);
  */
 export const KEYWORD_DELAY_MS = 0;
 
+// ===== Instagram 쿼터 배분 (RapidAPI 무료 30회/월) =====
+// 해시태그 조회 1건 = API 1콜. 기존엔 회당 12개 × 하루 4회라 리셋 첫날에 한 달치를
+// 다 태우고 나머지 30일은 0건이었다. 하루 1회차 × 해시태그 1개 = 월 ~30콜로
+// 무료 쿼터에 정확히 맞춘다. 유료 전환 시 env 로 늘리면 됨(재배포 불필요).
+
+/** IG 수집을 돌릴 회차 — 이 UTC 시각 미만인 회차에서만 (하루 4회 중 1회만 해당) */
+export const IG_RUN_UTC_HOUR_MAX = envNum('IG_RUN_UTC_HOUR_MAX', 6);
+
+/** 회차당 조회할 해시태그 수 */
+export const IG_HASHTAGS_PER_RUN = envNum('IG_HASHTAGS_PER_RUN', 1);
+
+/** 오늘이 IG 수집 회차인가. */
+export function isIgRunSlot(now: Date = new Date()): boolean {
+  return now.getUTCHours() < IG_RUN_UTC_HOUR_MAX;
+}
+
+/** 이번 회차에 조회할 해시태그 — 날짜 기준으로 전체 목록을 순환. */
+export function pickIgHashtags(all: string[], now: Date = new Date()): string[] {
+  if (all.length === 0) return [];
+  const dayOfYear = Math.floor(
+    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86_400_000,
+  );
+  const n = Math.min(IG_HASHTAGS_PER_RUN, all.length);
+  const start = (dayOfYear * n) % all.length;
+  return Array.from({ length: n }, (_, i) => all[(start + i) % all.length]);
+}
+
 // ===== 검색 키워드 (구매자 관점) =====
 
 /**

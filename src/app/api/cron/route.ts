@@ -30,17 +30,19 @@ export async function GET(request: NextRequest) {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
+    // 라벨(userVerdict) 있는 영상은 학습 루프의 정답지 — 오래돼도 지우지 않는다
     const deleteOld = await prisma.video.deleteMany({
-      where: { collectedAt: { lt: thirtyDaysAgo } },
+      where: { collectedAt: { lt: thirtyDaysAgo }, userVerdict: null },
     });
     results.deletedOld = deleteOld.count;
 
     // Step 2: 한글 들어간 영상 삭제 (해외 풀 전환에 따른 정리)
     const allVideos = await prisma.video.findMany({
-      select: { id: true, title: true, description: true },
+      select: { id: true, title: true, description: true, userVerdict: true },
     });
     const koreanIds = allVideos
-      .filter(v => /[가-힣]/.test(v.title) || /[가-힣]/.test(v.description || ''))
+      // 라벨 달린 영상은 보존 — 삭제하면 학습 데이터가 사라진다
+      .filter(v => !v.userVerdict && (/[가-힣]/.test(v.title) || /[가-힣]/.test(v.description || '')))
       .map(v => v.id);
 
     if (koreanIds.length > 0) {

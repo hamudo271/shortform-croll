@@ -104,8 +104,9 @@ export async function POST(request: NextRequest) {
   try {
     // Step 1: 최신성 컷오프 — 2025-12-01 이전 업로드 영상 일괄 삭제
     const MIN_PUBLISHED_AT = new Date('2025-12-01T00:00:00Z');
+    // 라벨(userVerdict) 있는 영상은 학습 루프의 정답지 — 정리 대상에서 제외
     const oldDeleted = await prisma.video.deleteMany({
-      where: { publishedAt: { lt: MIN_PUBLISHED_AT } },
+      where: { publishedAt: { lt: MIN_PUBLISHED_AT }, userVerdict: null },
     });
 
     // Step 2: 키워드 기반 비커머스/제외국가 영상 정리
@@ -114,13 +115,15 @@ export async function POST(request: NextRequest) {
         id: true,
         title: true,
         authorName: true,
+        userVerdict: true,
       },
     });
 
     const toDelete: string[] = [];
 
     for (const video of allVideos) {
-      if (shouldExclude(video.title, video.authorName)) {
+      // 라벨 달린 영상은 보존 — ❌ 라벨조차 학습에 쓰이는 정답지다
+      if (!video.userVerdict && shouldExclude(video.title, video.authorName)) {
         toDelete.push(video.id);
       }
     }

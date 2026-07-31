@@ -8,7 +8,7 @@ import {
   type TikTokVideo,
 } from '@/lib/collectors/tiktok-api';
 import { collectKoreanReelsPublic } from '@/lib/collectors/instagram-public';
-import { collectReelsByHashtags, fetchUserInfo } from '@/lib/collectors/instagram-api';
+import { collectReelsByHashtags, IG_BUYINTENT_HASHTAGS } from '@/lib/collectors/instagram-api';
 import { getOrFetchCreator } from '@/lib/creators';
 import { classifyByKeywords } from '@/lib/classifier';
 import { evaluateCandidate, type Candidate, type GateMetrics } from '@/lib/collect-gate';
@@ -17,7 +17,10 @@ import {
   CALIBRATION_MODE,
   COMMENT_SAMPLE,
   HARD_BUDGET_MS,
+  IG_HASHTAGS_PER_RUN,
   KEYWORD_DELAY_MS,
+  isIgRunSlot,
+  pickIgHashtags,
   TIKTOK_SEARCH_COUNT,
   TIKTOK_TRENDING_COUNT,
   TK_DEADLINE_MS,
@@ -305,6 +308,12 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
   // RAPIDAPI_KEY 가 있으면 RapidAPI(자기 IP로 우회) 사용 — Railway DC IP 차단 회피.
   // 없으면 공개 API fallback (대개 prod 에서 0건).
   const rapidKey = process.env.RAPIDAPI_KEY;
+
+  // 무료 쿼터(30콜/월) 배분 — 하루 1회차만, 해시태그도 로테이션으로 소수만 조회
+  if (rapidKey && !isIgRunSlot()) {
+    console.log('📷 Instagram: 이 회차는 IG 슬롯 아님 (쿼터 절약) — 스킵');
+    return 0;
+  }
   console.log(`\n📷 Collecting Instagram Reels (${rapidKey ? 'RapidAPI 해시태그' : 'public API'})...`);
 
   try {
@@ -312,7 +321,9 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
     const igErrors: string[] = [];
 
     if (rapidKey) {
-      const r = await collectReelsByHashtags(rapidKey);
+      const tags = pickIgHashtags(IG_BUYINTENT_HASHTAGS);
+      console.log(`  IG hashtags this run (${IG_HASHTAGS_PER_RUN}): ${tags.join(', ')}`);
+      const r = await collectReelsByHashtags(rapidKey, tags);
       reels = r.reels;
       igErrors.push(...r.errors);
     } else {
@@ -360,17 +371,15 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
         commentCount: reel.commentCount,
         shareCount: reel.shareCount,
         publishedAt,
-        // IG 는 댓글 조회 API 가 없어 수요(§4-A) 미측정 → NO_COMMENTS 플래그로 남는다
+        // IG 는 댓글 조회 API 가 없어 수요(§4-A) 미측정 → NO_COMMENTS 플래그로 남는다.
+        // 판매링크도 userinfo API 콜(쿼터 소모) 대신 DB 캐시만 본다 — 없으면 가점 7점을
+        // 못 받을 뿐. 유료 전환 시 fetchUserInfo 경유로 되돌릴 것.
         fetchSalesLink: async () => {
-          const creator = rapidKey
-            ? await getOrFetchCreator(Platform.INSTAGRAM, reel.authorId, () =>
-                fetchUserInfo(reel.authorId, rapidKey),
-              )
-            : await prisma.creator.findUnique({
-                where: {
-                  platform_authorId: { platform: Platform.INSTAGRAM, authorId: reel.authorId },
-                },
-              });
+          const creator = await prisma.creator.findUnique({
+            where: {
+              platform_authorId: { platform: Platform.INSTAGRAM, authorId: reel.authorId },
+            },
+          });
           return !!creator?.hasSalesLink;
         },
       };
