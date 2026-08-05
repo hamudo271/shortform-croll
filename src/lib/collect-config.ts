@@ -103,6 +103,18 @@ export const SCORE_CUT = tuned(TIER_B, 0);
 /** 캘리브레이션 1회 수집 목표치 — 평가 가능한 분량. */
 export const CALIBRATION_TARGET_COUNT = 300;
 
+// ===== RISING (§7) — 워치리스트 승격 감지 =====
+
+/**
+ * A티어 영상이 재수집 시 일 조회수가 직전 대비 이 배수 이상이면 RISING.
+ * 1.2 = +20%. viewsPerDay 는 누적조회÷경과일이라 시간이 갈수록 자연 감소하는 값 —
+ * 그런데도 오히려 올랐다는 건 최근 하루 유입이 가속 중이라는 뜻이다.
+ */
+export const RISING_MIN_RATIO = 1.2;
+
+/** viewCountHistory 보관 길이 — 하루 1엔트리(마지막 값)씩, 약 한 달치. */
+export const VIEW_HISTORY_MAX = 30;
+
 // ===== 학습 루프 (라벨 → 다음 수집 자동 반영) 임계값 =====
 // 원칙: 표본이 적을 때 성급하게 배우면 우연을 규칙으로 착각한다.
 // 아래 최소 건수를 채운 신호만 수집기에 반영된다.

@@ -337,6 +337,14 @@ export default function VideoListPage({ platform, category, initialFilters, show
 
                       {/* 점수 배지 — 캘리브레이션 중엔 점수가 아직 검증 전이라 관리자에게만 보인다 */}
                       <div className="absolute top-2 left-2 z-10 flex items-center gap-1">
+                        {video.flags?.includes('RISING') && (
+                          <span
+                            title="재수집 시 일 조회수 +20% 이상 — 워치리스트 승격 후보"
+                            className="px-1.5 h-6 inline-flex items-center rounded-md bg-gradient-to-r from-rose-500 to-orange-500 text-white text-[11px] font-bold"
+                          >
+                            🚀
+                          </span>
+                        )}
                         {video.tier && (
                           <span className={`px-1.5 h-6 inline-flex items-center rounded-md text-[11px] font-bold ${TIER_STYLE[video.tier] || 'bg-zinc-700 text-zinc-100'}`}>
                             {video.tier}

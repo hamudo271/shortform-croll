@@ -12,6 +12,7 @@ import { collectReelsByHashtags, IG_BUYINTENT_HASHTAGS } from '@/lib/collectors/
 import { getOrFetchCreator } from '@/lib/creators';
 import { classifyByKeywords } from '@/lib/classifier';
 import { evaluateCandidate, type Candidate, type GateMetrics } from '@/lib/collect-gate';
+import { FLAG_RISING } from '@/lib/scoring';
 import { applyKeywordLearning, loadLearnedRules, type LearnedRules } from '@/lib/learning';
 import {
   CALIBRATION_MODE,
@@ -23,8 +24,10 @@ import {
   pickIgHashtags,
   TIKTOK_SEARCH_COUNT,
   TIKTOK_TRENDING_COUNT,
+  RISING_MIN_RATIO,
   TK_DEADLINE_MS,
   TK_FETCH_DEADLINE_MS,
+  VIEW_HISTORY_MAX,
   computeViralScore,
   computeViewsPerDay,
   getKeywordsForRun,
@@ -112,6 +115,34 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
     description: `${v.description} ${m.productType || ''}`,
   });
 
+  // ===== RISING (§7) + 조회수 추이 =====
+  // 재수집이면 직전 기록과 비교한다. A티어인데 일 조회수가 오히려 +20% 이상
+  // 올랐으면(자연 감소하는 지표라 상승 자체가 가속 신호) 워치리스트 승격 후보.
+  const existing = await prisma.video.findUnique({
+    where: { videoId: v.videoId },
+    select: { tier: true, viewsPerDay: true, viewCountHistory: true },
+  });
+
+  let flags = m.flags;
+  if (existing) {
+    const rising =
+      existing.tier === 'A' &&
+      existing.viewsPerDay > 0 &&
+      m.viewsPerDay >= existing.viewsPerDay * RISING_MIN_RATIO;
+    // 매 재수집마다 재판정 — 기세가 꺾이면 플래그도 내려간다
+    flags = rising ? [...new Set([...flags, FLAG_RISING])] : flags.filter((f) => f !== FLAG_RISING);
+  }
+
+  // 조회수 추이 — 하루 1엔트리(그날 마지막 값), 최근 한 달치만 보관
+  const today = new Date().toISOString().slice(0, 10);
+  const prevHistory = Array.isArray(existing?.viewCountHistory)
+    ? (existing.viewCountHistory as { date: string; count: number }[])
+    : [];
+  const viewCountHistory = [
+    ...prevHistory.filter((h) => h?.date !== today),
+    { date: today, count: v.viewCount },
+  ].slice(-VIEW_HISTORY_MAX);
+
   const shared = {
     title: v.title,
     thumbnailUrl: v.thumbnailUrl,
@@ -130,7 +161,8 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
     productScore: m.productScore,
     tier: m.tier,
     scoreBreakdown: m.scoreBreakdown as unknown as object,
-    flags: m.flags,
+    flags,
+    viewCountHistory,
     viewsPerDay: m.viewsPerDay,
     productType: m.productType,
     priceBand: m.priceBand,
