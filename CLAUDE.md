@@ -41,6 +41,7 @@ docs/COLLECTION_CRITERIA_V2.md   ← 수집 기준 원문. 코드보다 이 문�
 | `auth.ts` / `oauth.ts` / `page-guards.ts` / `admin.ts` | 세션·소셜로그인·페이지 게이트·`requireAdmin()` |
 | `subscription.ts` / `nicepay.ts` | 구독 활성화 · 나이스페이 결제(운영). `toss.ts` 는 미사용 잔재 |
 | `utils.ts` | 표시 포맷(formatDate/formatKRW/PLATFORM_BADGE 등) |
+| `notify.ts` | 텔레그램 알림 — S티어 진입·RISING 발생 시 회차당 1통. `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` 미설정이면 no-op |
 
 ## 4. 핵심 동작 흐름
 

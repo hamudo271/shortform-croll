@@ -13,6 +13,7 @@ import { getOrFetchCreator } from '@/lib/creators';
 import { classifyByKeywords } from '@/lib/classifier';
 import { evaluateCandidate, type Candidate, type GateMetrics } from '@/lib/collect-gate';
 import { FLAG_RISING } from '@/lib/scoring';
+import { sendCollectAlerts } from '@/lib/notify';
 import { applyKeywordLearning, loadLearnedRules, type LearnedRules } from '@/lib/learning';
 import {
   CALIBRATION_MODE,
@@ -73,6 +74,8 @@ interface CollectCtx {
   elapsedMs: () => number;
   /** 운영자 라벨에서 학습한 규칙 — 회차 시작 시 1회 로드 */
   rules: LearnedRules;
+  /** 회차 중 발생한 S티어 진입·급상승 이벤트 — 종료 시 텔레그램 1통으로 발송 */
+  alerts: string[];
 }
 
 function noteSkip(ctx: CollectCtx, reason: string) {
@@ -108,7 +111,10 @@ interface SaveInput {
  * v1은 TikTok 키워드 루프의 update 블록만 필드가 빠져 있어, 재수집될 때마다
  * category/tags/댓글수가 낡은 값으로 남는 문제가 있었다.
  */
-async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
+async function saveVideo(
+  v: SaveInput,
+  m: GateMetrics,
+): Promise<{ saved: boolean; alert: string | null }> {
   // 카테고리 분류는 Gemini 가 뽑아준 제품 일반명을 함께 넣어 정확도를 올린다
   const classification = classifyByKeywords({
     title: v.title,
@@ -120,17 +126,27 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
   // 올랐으면(자연 감소하는 지표라 상승 자체가 가속 신호) 워치리스트 승격 후보.
   const existing = await prisma.video.findUnique({
     where: { videoId: v.videoId },
-    select: { tier: true, viewsPerDay: true, viewCountHistory: true },
+    select: { tier: true, viewsPerDay: true, viewCountHistory: true, flags: true },
   });
 
   let flags = m.flags;
+  let rising = false;
   if (existing) {
-    const rising =
+    rising =
       existing.tier === 'A' &&
       existing.viewsPerDay > 0 &&
       m.viewsPerDay >= existing.viewsPerDay * RISING_MIN_RATIO;
     // 매 재수집마다 재판정 — 기세가 꺾이면 플래그도 내려간다
     flags = rising ? [...new Set([...flags, FLAG_RISING])] : flags.filter((f) => f !== FLAG_RISING);
+  }
+
+  // ===== 알림 이벤트 — "새로" 발생한 것만 (재수집마다 반복 발송 방지) =====
+  let alert: string | null = null;
+  if (m.tier === 'S' && existing?.tier !== 'S') {
+    alert = `🏆 S티어 진입 ${m.productScore}/10 · 일조회 ${Math.round(m.viewsPerDay / 1000)}k\n${v.title.slice(0, 60)}\n${v.videoUrl}`;
+  } else if (rising && existing && !(existing.flags || []).includes(FLAG_RISING)) {
+    const gain = Math.round((m.viewsPerDay / existing.viewsPerDay - 1) * 100);
+    alert = `🚀 급상승 +${gain}% (A티어 ${m.productScore}/10)\n${v.title.slice(0, 60)}\n${v.videoUrl}`;
   }
 
   // 조회수 추이 — 하루 1엔트리(그날 마지막 값), 최근 한 달치만 보관
@@ -185,10 +201,10 @@ async function saveVideo(v: SaveInput, m: GateMetrics): Promise<boolean> {
         viralScore: computeViralScore(v.viewCount),
       },
     });
-    return true;
+    return { saved: true, alert };
   } catch (err) {
     console.error(`save error (${v.videoId}):`, err);
-    return false;
+    return { saved: false, alert: null };
   }
 }
 
@@ -239,7 +255,7 @@ async function processTikTokVideo(
   ctx.processedVideoIds.add(video.id);
   noteMetrics(ctx, verdict.metrics);
 
-  return saveVideo(
+  const result = await saveVideo(
     {
       platform: Platform.TIKTOK,
       videoId: `tiktok_${video.id}`,
@@ -258,6 +274,8 @@ async function processTikTokVideo(
     },
     verdict.metrics,
   );
+  if (result.alert) ctx.alerts.push(result.alert);
+  return result.saved;
 }
 
 /**
@@ -424,7 +442,7 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
       ctx.processedVideoIds.add(reel.id);
       noteMetrics(ctx, verdict.metrics);
 
-      const saved = await saveVideo(
+      const igResult = await saveVideo(
         {
           platform: Platform.INSTAGRAM,
           videoId: `ig_${reel.id}`,
@@ -443,7 +461,8 @@ async function collectInstagram(ctx: CollectCtx): Promise<number> {
         },
         verdict.metrics,
       );
-      if (saved) collected++;
+      if (igResult.alert) ctx.alerts.push(igResult.alert);
+      if (igResult.saved) collected++;
     }
 
     if (igErrors.length > 0) ctx.results.errors.push(...igErrors.slice(0, 3));
@@ -488,6 +507,7 @@ export async function POST(request: NextRequest) {
     processedVideoIds: new Set<string>(),
     elapsedMs: () => Date.now() - startedAt,
     rules,
+    alerts: [],
   };
 
   try {
@@ -506,6 +526,9 @@ export async function POST(request: NextRequest) {
 
     results.videosCollected = tiktokCollected + instagramCollected;
 
+    // S티어 진입·급상승 알림 — 회차당 1통 (텔레그램 미설정이면 로그만)
+    await sendCollectAlerts(ctx.alerts);
+
     return NextResponse.json({
       success: true,
       calibrationMode: CALIBRATION_MODE,
@@ -518,6 +541,7 @@ export async function POST(request: NextRequest) {
         learnedScoreCut: rules.learnedScoreCut,
       },
       partial: results.partial,
+      alerts: ctx.alerts.length,
       elapsedMs: ctx.elapsedMs(),
       results: { ...results, tiktokCollected, instagramCollected },
       timestamp: new Date().toISOString(),
